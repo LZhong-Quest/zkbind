@@ -1,0 +1,62 @@
+/* CommandBindingImpl.java
+
+	Purpose:
+		
+	Description:
+		
+	History:
+		Aug 8, 2011 3:28:41 PM, Created by henri
+
+Copyright (C) 2011 Potix Corporation. All Rights Reserved.
+*/
+
+package org.zkoss.zkbind.impl;
+
+import java.lang.reflect.Method;
+import java.util.Map;
+
+import org.zkoss.lang.Classes;
+import org.zkoss.xel.ExpressionX;
+import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.UiException;
+import org.zkoss.zkbind.BindContext;
+import org.zkoss.zkbind.Binder;
+import org.zkoss.zkbind.sys.BindEvaluatorX;
+import org.zkoss.zkbind.sys.CommandBinding;
+
+/**
+ * Implementation of CommandBinding.
+ * @author henri
+ *
+ */
+public class CommandBindingImpl extends BindingImpl implements CommandBinding {
+	private final String _evtnm;
+	private final ExpressionX _command;
+	public CommandBindingImpl(Binder binder, Component comp, String evtnm, String cmdScript, Map args) {
+		super(binder, comp, args);
+		_evtnm = evtnm;
+		final BindEvaluatorX eval = binder.getEvaluatorX();
+		_command = eval.parseExpressionX(null, cmdScript, String.class);
+	}
+	public String getEventName() {
+		return _evtnm;
+	}
+	public ExpressionX getCommand() {
+		return _command;
+	}
+	public String getCommandString() {
+		return getPureExpressionString(_command);
+	}
+	public void execute(BindContext ctx) {
+		final Object base = getBinder().getViewModel();
+		final Component comp = ctx.getComponent();
+		final BindEvaluatorX eval = getBinder().getEvaluatorX();
+		final String methodName = (String) eval.getValue(ctx, comp, getCommand());
+		try {
+			final Method method = Classes.getMethodInPublic(base.getClass(), methodName, new Class[] {Map.class});
+			method.invoke(getBinder().getViewModel(), ctx.getAttributes());
+		} catch (Exception e) {
+			throw UiException.Aide.wrap(e);
+		}
+	}
+}
