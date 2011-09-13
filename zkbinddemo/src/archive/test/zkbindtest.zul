@@ -1,0 +1,50 @@
+<window title = "ZK Bind Example 1" id="win" width="500px" height="300px" border="normal" apply="test.PersonViewModel1">
+	<custom-attributes composerName="vm"/>
+	<label value="@{vm.persons[0], converter='fullName'}"/>
+    <hlayout vflex="1">
+		<listbox model="@{vm.persons}" selectedItem="@{vm.curPerson}" onSelect="@{'selectPerson'}" hflex="1" vflex="1">
+			<listhead>
+				<listheader width="16px"/>
+				<listheader label="Name"/>
+				<listheader label="Age" hflex="min"/>
+				<listheader label="Birthday" hflex="min"/>
+			</listhead>
+			<listitem self="@{each=p}">
+				<listcell image="@{p.gender ? '/img/man.png' : '/img/woman.png'}"/>
+				<listcell label="@{p, converter='fullName'}"/>
+				<listcell label="@{p, converter='age'}"/>
+				<listcell label="@{p.birthday, converter='formatedDate', format='MM/dd/yyyy'}"/>
+			</listitem>
+		</listbox>
+		<vlayout hflex="1" vflex="1" self="@{form(id='fx', load=vm.curPerson, 
+			save=vm.curPerson when 'modifyPerson', save=vm.newPerson when 'addPerson', 
+			confirm='selectPerson' template 'confirmDlg.zul', validate=true)}">
+			<hlayout visible="@{not empty vm.validMessage}">
+				<image src="/img/error.png"/>
+				<label tyle="color:red" value="@{vm.validMessage}"/>
+			</hlayout>
+			<radiogroup id="rg" selectedItem="@{fx.gender, converter='objectBoolean', true=male, false=female}"/>
+			<grid vflex="1"><rows>
+				<row>First Name: <textbox value="@{fx.firstName}"/></row>       
+				<row>Last Name: <textbox value="@{fx.lastName}"/></row>
+				<row>Full Name: <label value="@{fx, converter='fullName'}"/></row>
+				<row>Birthday: <datebox value="@{fx.birthday}"/></row>
+				<row>Gender: 
+					<hlayout>
+						<radio id="male" label="male" checked="true" radiogroup="rg"/>
+						<radio id="female" label="female" radiogroup="rg"/>
+					</hlayout>
+				</row>
+				<row>City: <listbox model="@{vm.citys}" selectedItem="@{fx.address.city, save=vm.city}"/></row>
+				<row>District: <listbox model="@{vm.districts}" selectedItem="@{fx.address.district, save=vm.district}"/></row>
+				<row>Road: <listbox model="@{vm.roads}" selectedItem="@{fx.address.road}"/></row>
+				<row>Other:<textbox value="@{fx.address.other}"/></row>
+			</rows></grid>
+			<hbox pack="center" hflex="1">
+				<button label="Add" onClick="@{'addPerson'}"/>
+				<button label="Modify" onClick="@{'modifyPerson'}"/>
+				<button label="Remove" onClick="@{'removePerson', person=vm.curPerson}"/>
+			</hbox>
+		</vlayout>
+	</hlayout>
+</window>
