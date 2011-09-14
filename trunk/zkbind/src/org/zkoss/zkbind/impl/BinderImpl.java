@@ -96,7 +96,7 @@ public class BinderImpl implements Binder {
 	private static final String LOADEVENT = "$LE$"; //load trigger event
 	private static final String SAVEEVENT = "$SE$"; //save trigger event
 	private static final String ACCESS = "$A$"; //access type (load|save|both), load is default
-	private static final String CONVERTER = "$C$"; //system _converter for binding
+	private static final String CONVERTER = "$C$"; //system converter for binding
 	
 	//Command lifecycle result
 	private static final int SUCCESS = 0;
@@ -174,19 +174,19 @@ public class BinderImpl implements Binder {
 		return _rootComp.getAttribute(BinderImpl.VM);
 	}
 	
-	//Note: assume system _converter is state-less
+	//Note: assume system converter is state-less
 	public Converter getConverter(String name) {
 		Converter converter = CONVERTERS.get(name);
 		if (converter == null && name.indexOf('.') > 0) { //might be a class path
 			try {
 				converter = (Converter) Classes.newInstanceByThread(name);
-				CONVERTERS.put(name, converter); //assume _converter is state-less
+				CONVERTERS.put(name, converter); //assume converter is state-less
 			} catch (Exception e) {
 				throw UiException.Aide.wrap(e);
 			}
 		}
 		if (converter == null) {
-			throw new UiException("Cannot find the named _converter:" + name);
+			throw new UiException("Cannot find the named converter:" + name);
 		}
 		return converter;
 	}
@@ -278,6 +278,9 @@ public class BinderImpl implements Binder {
 	public void addPropertyBinding(Component comp, String attr, String[] loadExprs, String[] saveExprs, String converter, String validate, Map args) {
 		if (Strings.isBlank(converter)) {
 			converter = getSystemConverter(comp, attr);
+			if (converter != null) {
+				converter = "'"+converter+"'";
+			}
 		}
 		for(String loadExpr : loadExprs) {
 			addLoadBinding(comp, attr, loadExpr, converter, args);
@@ -293,7 +296,7 @@ public class BinderImpl implements Binder {
 		final Annotation ann = compCtrl.getAnnotation(attr, BinderImpl.SYSBIND);
 		if (ann != null) {
 			final Map attrs = ann.getAttributes(); //(tag, tagExpr)
-			return (String) attrs.get(BinderImpl.CONVERTER); //system _converter if exists
+			return (String) attrs.get(BinderImpl.CONVERTER); //system converter if exists
 		}
 		return null;
 	}
@@ -818,18 +821,21 @@ public class BinderImpl implements Binder {
 	
 	//validate a prompt save property binding
 	private boolean doValidateSaveEvent(Component comp, SavePropertyBinding binding) {
-		final Map<String, Object> args = evalArgs(comp, binding.getArgs());
-		final BindContext ctx = new BindContextImpl(this, binding, true, null, binding.getComponent(), args);
-		try {
-			doBeforePhase(PhaseListener.VALIDATE, ctx);
-			final Method m = getValidateMethod();
-			final Set<Property> validates = binding.getValidates(ctx);
-			return (Boolean) m.invoke(getViewModel(), new Object[] {null, validates, ctx});
-		} catch (Exception e) {
-			throw UiException.Aide.wrap(e);
-		} finally {
-			doAfterPhase(PhaseListener.VALIDATE, ctx);
+		if (binding.isValidate()) {
+			final Map<String, Object> args = evalArgs(comp, binding.getArgs());
+			final BindContext ctx = new BindContextImpl(this, binding, true, null, binding.getComponent(), args);
+			try {
+				doBeforePhase(PhaseListener.VALIDATE, ctx);
+				final Method m = getValidateMethod();
+				final Set<Property> validates = binding.getValidates(ctx);
+				return (Boolean) m.invoke(getViewModel(), new Object[] {null, validates, ctx});
+			} catch (Exception e) {
+				throw UiException.Aide.wrap(e);
+			} finally {
+				doAfterPhase(PhaseListener.VALIDATE, ctx);
+			}
 		}
+		return true;
 	}
 	
 	//validate a command save binding

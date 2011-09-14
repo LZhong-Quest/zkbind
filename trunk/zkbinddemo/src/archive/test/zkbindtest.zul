@@ -18,7 +18,7 @@
 		</listbox>
 		<vlayout hflex="1" vflex="1" self="@{form(id='fx', load=vm.curPerson, 
 			save=vm.curPerson when 'modifyPerson', save=vm.newPerson when 'addPerson', 
-			confirm='selectPerson' template 'confirmDlg.zul', validate=true)}">
+			confirm={'selectPerson' action 'confirmDlg', ...}, validate=true)}">
 			<hlayout visible="@{not empty vm.validMessage}">
 				<image src="/img/error.png"/>
 				<label tyle="color:red" value="@{vm.validMessage}"/>

@@ -13,11 +13,9 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 package org.zkoss.zkbind.sys;
 
 import org.zkoss.xel.ExpressionX;
-import org.zkoss.xel.XelContext;
+import org.zkoss.xel.ValueReference;
 import org.zkoss.xel.XelException;
-import org.zkoss.zel.ValueReference;
 import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.Page;
 import org.zkoss.zk.xel.Evaluator;
 import org.zkoss.zkbind.BindContext;
 
