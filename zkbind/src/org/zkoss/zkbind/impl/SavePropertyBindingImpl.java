@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.zkoss.xel.ExpressionX;
-import org.zkoss.zel.ValueReference;
+import org.zkoss.xel.ValueReference;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.UiException;
 import org.zkoss.zkbind.BindContext;

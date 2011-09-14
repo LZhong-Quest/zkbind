@@ -19,7 +19,7 @@ import org.zkoss.xel.VariableResolver;
 import org.zkoss.xel.XelContext;
 import org.zkoss.xel.XelException;
 import org.zkoss.xel.util.SimpleXelContext;
-import org.zkoss.zel.ValueReference;
+import org.zkoss.xel.ValueReference;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Page;
 import org.zkoss.zk.xel.impl.SimpleEvaluator;
