@@ -114,7 +114,7 @@ public class TrackerNodeImpl implements TrackerNode {
 	public Object getBean() {
 		Object bean = _bean == null ? null : ((WeakReference<Object>)_bean).get();
 		if (bean == null && _bean != null) { //Help GC
-			_bean = null;
+			setBean(null);
 		}
 		return bean;
 	}

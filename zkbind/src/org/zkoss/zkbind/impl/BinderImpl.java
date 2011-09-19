@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -581,7 +582,7 @@ public class BinderImpl implements Binder {
 			//must sort the command sequence?
 			final Component comp = event.getTarget();
 			final String evtnm = event.getName();
-			final Set<Property> notifys = new HashSet<Property>();
+			final Set<Property> notifys = new LinkedHashSet<Property>();
 			int result = SUCCESS; //command execution result, default to success
 			String command = null;
 			if (_commandBinding != null) {
@@ -1011,7 +1012,7 @@ public class BinderImpl implements Binder {
 			doAfterPhase(phase, ctx);
 		}
 		
-		Set<Property> xnotifys = (Set<Property>) ctx.getAttribute(BinderImpl.NOTIFYS);
+		final Set<Property> xnotifys = (Set<Property>) ctx.getAttribute(BinderImpl.NOTIFYS);
 		if (xnotifys != null) {
 			notifys.addAll(xnotifys);
 		}
@@ -1042,7 +1043,7 @@ public class BinderImpl implements Binder {
 			doAfterPhase(phase, ctx);
 		}
 		
-		Set<Property> xnotifys = (Set<Property>) ctx.getAttribute(BinderImpl.NOTIFYS);
+		final Set<Property> xnotifys = (Set<Property>) ctx.getAttribute(BinderImpl.NOTIFYS);
 		if (xnotifys != null) {
 			notifys.addAll(xnotifys);
 		}

@@ -45,12 +45,13 @@ public class BindRowRenderer implements RowRenderer {
 			label.setParent(row);
 			row.setValue(data);
 		} else {
+			//will call into BindUiLifeCycle#afterComponentAttached, and apply binding management there
 			final String varnm = (String) grid.getAttribute(BinderImpl.VAR); //see BinderImpl#initRendererIfAny
 			final Component[] items = tm.create(rows, row,
 				new VariableResolverX() {
 					public Object resolveVariable(String name) {
 						//shall never call here
-						return null;
+						return varnm.equals(name) ? data : null;
 					}
 
 					public Object resolveVariable(XelContext ctx, Object base, Object name) throws XelException {
@@ -66,12 +67,7 @@ public class BindRowRenderer implements RowRenderer {
 				throw new UiException("The model template must have exactly one row, not "+items.length);
 
 			final Row nr = (Row)items[0];
-			
-			//apply binding
 			nr.setAttribute(varnm, data); //kept the value
-			final Binder binder = (Binder) rows.getAttribute(BinderImpl.BINDER, true);
-			new AnnotateBinderHelper(binder).initComponentBindings(nr); //parse binding meta-info of this row
-			((BinderImpl)binder).loadComponent(nr); //evaluate binding of this row
 			
 			if (nr.getValue() == null) //template might set it
 				nr.setValue(data);

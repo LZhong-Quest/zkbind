@@ -12,21 +12,16 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 
 package org.zkoss.zkbind.impl;
 
-import org.zkoss.xel.Expression;
 import org.zkoss.xel.ExpressionX;
 import org.zkoss.xel.FunctionMapper;
-import org.zkoss.xel.VariableResolver;
+import org.zkoss.xel.ValueReference;
 import org.zkoss.xel.XelContext;
 import org.zkoss.xel.XelException;
-import org.zkoss.xel.util.SimpleXelContext;
-import org.zkoss.xel.ValueReference;
+import org.zkoss.zel.PropertyNotFoundException;
 import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.Page;
 import org.zkoss.zk.xel.impl.SimpleEvaluator;
 import org.zkoss.zkbind.BindContext;
-import org.zkoss.zkbind.Property;
 import org.zkoss.zkbind.sys.BindEvaluatorX;
-import org.zkoss.zkbind.sys.Binding;
 
 /**
  * A simple implementation of {@link BindEvaluatorX}.
@@ -46,7 +41,11 @@ public class BindEvaluatorXImpl extends SimpleEvaluator implements BindEvaluator
 
 	public void setValue(BindContext ctx, Component comp, ExpressionX expression, Object value)
 	throws XelException {
-		expression.setValue(newXelContext(ctx, comp), value);
+		try {
+			expression.setValue(newXelContext(ctx, comp), value);
+		} catch (PropertyNotFoundException ex) { 
+			//ignore if fail to locate base
+		}
 	}
 
 	public ExpressionX parseExpressionX(BindContext ctx, String expression, Class expectedType)

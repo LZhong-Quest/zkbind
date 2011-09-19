@@ -37,12 +37,13 @@ public class BindListitemRenderer implements ListitemRenderer {
 			item.setLabel(Objects.toString(data));
 			item.setValue(data);
 		} else {
+			//will call into BindUiLifeCycle#afterComponentAttached, and apply binding management there
 			final String varnm = (String) listbox.getAttribute(BinderImpl.VAR); //see BinderImpl#initRendererIfAny
-			final Component[] items = tm.create(listbox, item,
+			final Component[] items = tm.create(listbox, item, 
 				new VariableResolverX() {
 					public Object resolveVariable(String name) {
 						//shall never call here
-						return null;
+						return varnm.equals(name) ? data : null;
 					}
 
 					public Object resolveVariable(XelContext ctx, Object base, Object name) throws XelException {
@@ -58,12 +59,7 @@ public class BindListitemRenderer implements ListitemRenderer {
 				throw new UiException("The model template must have exactly one item, not "+items.length);
 
 			final Listitem nli = (Listitem)items[0];
-
-			//apply binding
 			nli.setAttribute(varnm, data); //kept the value
-			final Binder binder = (Binder) listbox.getAttribute(BinderImpl.BINDER, true);
-			new AnnotateBinderHelper(binder).initComponentBindings(nli); //parse binding meta-info of this listitem
-			((BinderImpl)binder).loadComponent(nli); //evaluate binding of this listitem
 			
 			if (nli.getValue() == null) //template might set it
 				nli.setValue(data);

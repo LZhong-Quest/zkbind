@@ -37,12 +37,13 @@ public class BindComboitemRenderer implements ComboitemRenderer {
 			item.setLabel(Objects.toString(data));
 			item.setValue(data);
 		} else {
+			//will call into BindUiLifeCycle#afterComponentAttached, and apply binding management there
 			final String varnm = (String) cb.getAttribute(BinderImpl.VAR); //see BinderImpl#initRendererIfAny
 			final Component[] items = tm.create(cb, item,
 				new VariableResolverX() {
 					public Object resolveVariable(String name) {
 						//shall never call here
-						return null;
+						return varnm.equals(name) ? data : null;
 					}
 
 					public Object resolveVariable(XelContext ctx, Object base, Object name) throws XelException {
@@ -58,13 +59,8 @@ public class BindComboitemRenderer implements ComboitemRenderer {
 				throw new UiException("The model template must have exactly one item, not "+items.length);
 
 			final Comboitem nci = (Comboitem)items[0];
-			
-			//apply binding
 			nci.setAttribute(varnm, data); //kept the value
-			final Binder binder = (Binder) cb.getAttribute(BinderImpl.BINDER, true);
-			new AnnotateBinderHelper(binder).initComponentBindings(nci); //parse binding meta-info of this comboitem
-			((BinderImpl)binder).loadComponent(nci); //evaluate binding of this comboitem
-
+			
 			if (nci.getValue() == null) //template might set it
 				nci.setValue(data);
 			item.setAttribute("org.zkoss.zul.model.renderAs", nci);

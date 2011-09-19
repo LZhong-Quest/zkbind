@@ -36,7 +36,7 @@ public class FormatedDateConverter implements Converter {
 	public Object coerceToUi(Object val, Component comp, BindContext ctx) {
 		final String format = (String) ctx.getAttribute("format");
 		final Date date = (Date) val;
-		return new SimpleDateFormat(format).format(date);
+		return date == null ? null : new SimpleDateFormat(format).format(date);
 	}
 	
 	/**
