@@ -1,6 +1,14 @@
-/**
- * 
- */
+/* GenericBindComposer.java
+
+	Purpose:
+		
+	Description:
+		
+	History:
+		Jun 22, 2011 10:09:50 AM, Created by henri
+
+Copyright (C) 2011 Potix Corporation. All Rights Reserved.
+*/
 package org.zkoss.zkbind;
 
 import java.util.HashMap;

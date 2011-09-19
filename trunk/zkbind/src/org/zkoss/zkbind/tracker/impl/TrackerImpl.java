@@ -141,12 +141,14 @@ public class TrackerImpl implements Tracker {
 		if (base == null) { //track from component
 			//locate head TrackerNodes of this component
 			final Map<Object, TrackerNode> bindingNodes = _compMap.get(comp);
-			final TrackerNode node = bindingNodes.get(script);
-			if (value != null) {
-				addBeanMap(node, value);
-			} else {
-				removeAllBeanMap(node); //dependent nodes shall be null, too. Remove them from _beanMap 
-				addNullMap(node); //head TrackerNode evaluate to null
+			if (bindingNodes != null) {
+				final TrackerNode node = bindingNodes.get(script);
+				if (value != null) {
+					addBeanMap(node, value);
+				} else {
+					removeAllBeanMap(node); //dependent nodes shall be null, too. Remove them from _beanMap 
+					addNullMap(node); //head TrackerNode evaluate to null
+				}
 			}
 		} else {
 			final Set<TrackerNode> baseNodes = _beanMap.get(base);
@@ -183,8 +185,9 @@ public class TrackerImpl implements Tracker {
 					_beanMap.put(value, nodes);
 				}
 				nodes.add(node);
+				//only when value is not a primitive that we shall store it
+				node.setBean(value);
 			}
-			node.setBean(value);
 		}
 		
 		//maybe a head node, try remove it from the nullMap
@@ -231,12 +234,14 @@ public class TrackerImpl implements Tracker {
 	//remove node from the _beanMap
 	private void removeBeanMap(TrackerNode node) {
 		final Object value = node.getBean();
-		node.setBean(null);
-		final Set<TrackerNode> nodes = _beanMap.get(value);
-		if (nodes != null) {
-			nodes.remove(node); //remove this node from the _beanMap
-			if (nodes.isEmpty()) {
-				_beanMap.remove(value);
+		if (value != null) {
+			node.setBean(null);
+			final Set<TrackerNode> nodes = _beanMap.get(value);
+			if (nodes != null) {
+				nodes.remove(node); //remove this node from the _beanMap
+				if (nodes.isEmpty()) {
+					_beanMap.remove(value);
+				}
 			}
 		}
 	}

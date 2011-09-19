@@ -16,6 +16,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -87,7 +88,7 @@ public class BindELContext extends XelELContext {
 	
 	//check method annotation and collect NotifyChange annotation
 	public static Set<Property> getNotifys(Method m, Object base, String prop, Object value) {
-		final Set<Property> notifys = new HashSet<Property>();
+		final Set<Property> notifys = new LinkedHashSet<Property>();
 		final NotifyChange annt = m == null ? 
 			null : m.getAnnotation(NotifyChange.class);
 		if (annt != null) {
@@ -115,7 +116,7 @@ public class BindELContext extends XelELContext {
 		}
 		Set<Property> notifys = (Set<Property>) ctx.getAttribute(BinderImpl.NOTIFYS);
 		if (notifys == null) {
-			notifys = new HashSet<Property>();
+			notifys = new LinkedHashSet<Property>();
 			ctx.setAttribute(BinderImpl.NOTIFYS, notifys);
 		}
 		notifys.addAll(props);
@@ -127,7 +128,7 @@ public class BindELContext extends XelELContext {
 		}
 		Set<Property> validates = (Set<Property>) ctx.getAttribute(BinderImpl.VALIDATES);
 		if (validates == null) {
-			validates = new HashSet<Property>();
+			validates = new LinkedHashSet<Property>();
 			ctx.setAttribute(BinderImpl.VALIDATES, validates);
 		}
 		validates.addAll(props);
