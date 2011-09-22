@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.zkoss.zk</groupId>
+	<artifactId>zkbindtest</artifactId>
+	<version>2.0.0</version>
+	<properties>
+		<zk.version>5.5.0-SNAPSHOT</zk.version>
+	</properties>
+	<packaging>jar</packaging>
+	<name>ZK Bind Test</name>
+	<url>http://www.zkoss.org/zkbind</url>
+	<description>ZK Bind Test</description>
+	<dependencies>
+		<dependency>
+			<groupId>org.zkoss.zk</groupId>
+			<artifactId>zkbind</artifactId>
+			<version>2.0.0</version>
+		</dependency>
+			<dependency>
+				<groupId>org.zkoss.zktc</groupId>
+				<artifactId>zktc-core</artifactId>
+				<version>0.9-SNAPSHOT</version>
+			</dependency>
+	</dependencies>
+</project> 
