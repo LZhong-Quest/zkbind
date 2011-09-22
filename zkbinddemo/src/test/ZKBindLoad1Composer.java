@@ -36,7 +36,7 @@ public class ZKBindLoad1Composer extends GenericBindComposer {
 			_persons.add(new Person("First"+j , "Last"+j));
 		}
 		_selected = _persons.get(1); //2nd person
-		Address addr = new Address("台北市鄭州路87號", "103");
+		Address addr = new Address("87 Zhengzhou Road #11F-2 Taipei", "103");
 		_selected.setAddress(addr);
 	}
 	
