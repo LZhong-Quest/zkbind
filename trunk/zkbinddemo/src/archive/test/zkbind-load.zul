@@ -8,9 +8,9 @@
 	</columns>
 	<rows>
 		<row id="row1">
-			<label value="@bind(vm.p1.firstName)"/>
-			<label value="@bind(vm.p1.lastName)"/>
-			<label value="@bind(vm.p1.fullName)"/>
+			<label id="l1" value="@bind(vm.p1.firstName)"/>
+			<label id="l2" value="@bind(vm.p1.lastName)"/>
+			<label id="l3" value="@bind(vm.p1.fullName)"/>
 		</row>
 	</rows>
 </grid>

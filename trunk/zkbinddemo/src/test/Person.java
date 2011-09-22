@@ -26,6 +26,8 @@ public class Person {
 		firstName = fname;
 		lastName = lname;
 	}
+	
+	//fire property change to base.firstName
 	@NotifyChange
 	public void setFirstName(String n) {
 		this.firstName = n;

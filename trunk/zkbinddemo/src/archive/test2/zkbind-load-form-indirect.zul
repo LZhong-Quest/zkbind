@@ -1,0 +1,37 @@
+<window apply="test2.Test2ZKBindLoadIndirectComposer">
+	<custom-attributes composerName="vm"/>
+<grid width="500px" >
+	<columns>
+		<column label="First Name"></column>
+		<column label="Last Name"></column>
+		<column label="Full Name"></column>
+		<column label="Current Field"></column>
+	</columns>
+	<rows>
+		<row id="row1" self="@form(id='fx', load=vm.p1, save=vm.p1 before 'saveForm')">
+			<textbox id="l1" value="@bind(fx.firstName)"/>
+			<label id="l2" value="@bind(fx.lastName)"/>
+			<label id="l3" value="@bind(fx.fullName)"/>
+			<hbox>
+			<!-- this indirect only load a available value when loading is fire by form load, because only at that time have fx in context -->
+			<label id="l4" value="@bind(fx[vm.currField])"/>/
+			<label id="l5" value="@bind(vm.p1[vm.currField])"/>
+			</hbox>
+		</row>
+	</rows>
+</grid>
+<hbox>
+	<textbox id="l9" value="@bind(vm.p2.firstName)"/>
+	<label id="la" value="@bind(vm.p2.lastName)"/>
+	<label id="lb" value="@bind(vm.p2.fullName)"/>
+	<label id="lc" value="@bind(vm.p2.address.street)"/>
+</hbox>
+<hbox>
+<button label="to firstName" onClick="@bind('toFirstName')"/>
+<button label="to lastName" onClick="@bind('toLastName')"/>
+<button label="to fullName" onClick="@bind('toFullName')"/>
+<button label="save form" onClick="@bind('saveForm')"/>
+</hbox>
+
+<button label="Dump" onClick="binder.getTracker().dump()"/>
+</window>
