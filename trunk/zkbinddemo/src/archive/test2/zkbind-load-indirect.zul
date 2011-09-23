@@ -21,7 +21,7 @@
 <button id="btn2" label="to lastName" onClick="@bind('toLastName')"/>
 <button id="btn3" label="to fullName" onClick="@bind('toFullName')"/>
 
-<listbox selectedItem="@bind(vm.currField)" id="select">
+<listbox selectedItem="@bind(vm.currField)" id="select" mold="select">
 <listitem label="firstName" value="firstName" />
 <listitem label="lastName" value="lastName" />
 <listitem label="fullName" value="fullName" />
