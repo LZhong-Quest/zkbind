@@ -19,6 +19,7 @@ import java.util.Map;
 import org.zkoss.zkbind.NotifyChange;
 import org.zkoss.zkbind.GenericBindComposer;
 import org.zkoss.zkplus.databind.BindingListModelList;
+import org.zkoss.zul.ListModel;
 import org.zkoss.zul.ListModelList;
 import test.Person.Address;
 
@@ -31,11 +32,11 @@ public class ZKBindLoad1Composer extends GenericBindComposer {
 	private List<Person> _persons;
 	
 	public ZKBindLoad1Composer() {
-		_persons = new ArrayList<Person>();
+		_persons = new ListModelList();
 		for(int j = 0; j < 4; ++j) {
 			_persons.add(new Person("First"+j , "Last"+j));
 		}
-		_selected = _persons.get(1); //2nd person
+		_selected = (Person) _persons.get(1); //2nd person
 		Address addr = new Address("87 Zhengzhou Road #11F-2 Taipei", "103");
 		_selected.setAddress(addr);
 	}
@@ -55,7 +56,7 @@ public class ZKBindLoad1Composer extends GenericBindComposer {
 	public Person getP1() {
 		return getSelected();
 	}
-	@NotifyChange({"p1", "persons"})
+	@NotifyChange("p1")
 	public void removeP1() {
 		_selected = null;
 		_persons.remove(1);

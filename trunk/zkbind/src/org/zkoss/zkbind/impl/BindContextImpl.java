@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zkbind.BindContext;
 import org.zkoss.zkbind.Binder;
 import org.zkoss.zkbind.sys.Binding;
@@ -32,14 +33,16 @@ public class BindContextImpl implements BindContext {
 	private final boolean save;
 	private final String command;
 	private final Component component; //ZK context
+	private final Event event; //ZK event
 	private final Map<Object, Object> attrs;
 	
-	public BindContextImpl(Binder binder, Binding binding, boolean save, String command, Component comp, Map args) {
+	public BindContextImpl(Binder binder, Binding binding, boolean save, String command, Component comp, Event event, Map args) {
 		this.binder = binder;
 		this.binding = binding;
 		this.save = save;
 		this.command = command;
 		this.component = comp;
+		this.event = event;
 		this.attrs = new HashMap<Object, Object>();
 		if (args != null) {
 			attrs.putAll(args);
@@ -76,5 +79,9 @@ public class BindContextImpl implements BindContext {
 
 	public Component getComponent() {
 		return this.component;
+	}
+	
+	public Event getTriggerEvent() {
+		return this.event;
 	}
 }
