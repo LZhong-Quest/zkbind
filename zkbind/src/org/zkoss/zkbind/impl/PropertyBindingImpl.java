@@ -71,4 +71,12 @@ public abstract class PropertyBindingImpl extends BindingImpl implements Propert
 	/*package*/ ExpressionX getProperty() {
 		return this._accessInfo.getProperty();
 	}
+	
+	public String toString(){
+		return new StringBuilder().append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode()))
+		.append(",component:").append(getComponent())
+		.append(",field:").append(getFieldName())
+		.append(",access:").append(getProperty().getExpressionString())
+		.append(",command:").append(getCommandName()).toString();
+	}
 }

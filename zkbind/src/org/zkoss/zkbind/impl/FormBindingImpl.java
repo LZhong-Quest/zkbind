@@ -92,4 +92,12 @@ public class FormBindingImpl extends BindingImpl implements FormBinding {
 		}
 		return expr;
 	}
+	
+	public String toString(){
+		return new StringBuilder().append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode()))
+		.append(",component:").append(getComponent())
+		.append(",id:").append(getFormId())
+		.append(",access:").append(getPropertyString())
+		.append(",command:").append(getCommandName()).toString();
+	}
 }

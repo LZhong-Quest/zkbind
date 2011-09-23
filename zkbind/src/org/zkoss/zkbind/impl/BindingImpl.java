@@ -71,6 +71,8 @@ public class BindingImpl implements Binding {
 		return evalstr.substring(2, evalstr.length() - 1);
 	}
 	
+	//to pars args of BindingImpl to expressions map
+	//TODO DENNIS , check if args spec was changed.?
 	private Map<String, ExpressionX> parsedArgs(Map args) {
 		final BindEvaluatorX eval = getBinder().getEvaluatorX();
 		final Map<String, ExpressionX> result = new LinkedHashMap<String, ExpressionX>(args.size()); 
@@ -79,6 +81,8 @@ public class BindingImpl implements Binding {
 			final String key = entry.getKey();
 			final Object value = entry.getValue();
 			if (value instanceof String[]) {
+				//TODO DENNIS, BUG, the impl. of addArg always keep last value only. 
+				//and, should we accept a expression in array in args? over kill?
 				for(String v : (String[]) value) {
 					addArg(eval, result, key, v);
 				}

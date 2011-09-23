@@ -38,6 +38,7 @@ public class FormELResolver extends ELResolver {
             throw new NullPointerException();
         }
         if (base instanceof Form) {
+        	//don't care the property, at there, get the path (the key of field in form), the path was built by PathResolver) 
         	final int nums = ((Integer) ctx.getContext(Integer.class)).intValue(); //get numOfKids, see #PathResolver
         	final List<String> path = (List<String>) ctx.getContext(Path.class); //get path, see #PathResolver
         	

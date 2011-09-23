@@ -31,6 +31,7 @@ import org.zkoss.zel.impl.parser.Node;
 import org.zkoss.zkbind.Binder;
 import org.zkoss.zkbind.Form;
 import org.zkoss.zkbind.impl.LoadFormBindingImpl;
+import org.zkoss.zkbind.impl.LogUtil;
 import org.zkoss.zkbind.sys.Binding;
 import org.zkoss.zkbind.sys.LoadFormBinding;
 import org.zkoss.zkbind.sys.LoadPropertyBinding;
@@ -43,6 +44,9 @@ import org.zkoss.zkbind.tracker.impl.TrackerImpl;
  *
  */
 public class BindExpressionBuilder extends ExpressionBuilder {
+	
+	private static final LogUtil log = new LogUtil(BindExpressionBuilder.class.getName());
+			
 	private final BindELContext _ctx;
     public BindExpressionBuilder(String expression, ELContext ctx) throws ELException {
 		super(expression, ctx);
@@ -57,7 +61,7 @@ public class BindExpressionBuilder extends ExpressionBuilder {
     }
 	private void addTracking(List<String> series) {
 		final Binding binding = _ctx.getBinding();
-		if (binding != null && series != null && !series.isEmpty()) {
+		if (series != null && !series.isEmpty()) {
 			final Iterator<String> it = series.iterator();
 			final String prop = (String) it.next();
 			final Binder binder = binding.getBinder();
@@ -70,8 +74,10 @@ public class BindExpressionBuilder extends ExpressionBuilder {
 				final String fieldName = fieldName(it);
 				if (fieldName != null) {
 					if (binding instanceof SavePropertyBinding) {
+						log.debug("add save-filed %s to form %s", fieldName,formBean);
 						formBean.addSaveFieldName(fieldName);
 					} else if (binding instanceof LoadPropertyBinding) {
+						log.debug("add load-filed %s to form %s", fieldName,formBean);
 						formBean.addLoadFieldName(fieldName);
 					}
 					//initialize Tracker per the series (in special Form way)
@@ -93,12 +99,17 @@ public class BindExpressionBuilder extends ExpressionBuilder {
 	}
 	
 	private void visitNode(Node node) {
+		final Binding binding = _ctx.getBinding();
+		if(binding==null) return; //no need to build tracker, we are not in binding expression
+		
 		final List<String> path = new ArrayList<String>();
+		//find the path from AST value node or AST identifier node
     	if (node instanceof AstValue) {
     		for(int j = 0, len = node.jjtGetNumChildren(); j < len; ++j) {
     			final Node kid = node.jjtGetChild(j);
     			path.add(BindELContext.toNodeString(kid, new StringBuffer()));
     		}
+    		//path example, [vm,.p1,.firstName]
     		addTracking(path);
     	} else if (node instanceof AstIdentifier) {
     		if (!(node.jjtGetParent() instanceof AstValue)) { //one variable series

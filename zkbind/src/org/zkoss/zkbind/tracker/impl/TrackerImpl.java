@@ -73,6 +73,7 @@ public class TrackerImpl implements Tracker {
 			}
 			parentNode = node;
 		}
+		//parentNode is leaf of this series, add the binding to it
 		parentNode.addBinding(binding);
 	}
 
@@ -373,6 +374,7 @@ public class TrackerImpl implements Tracker {
 	}
 	
 	private void dumpBindings(TrackerNode node, int spaces) {
+		if(node.getBindings().size()==0) return;//don't dump if empty
 		System.out.println(dumpSpace(spaces)+"[bindings:");
 		for(Binding binding : node.getBindings()) {
 			dumpBinding(binding, spaces+4);
@@ -389,6 +391,7 @@ public class TrackerImpl implements Tracker {
 	}
 	
 	private void dumpPropNameMapping(TrackerNode node, int spaces) {
+		if(((TrackerNodeImpl)node).getPropNameMapping().size()==0) return;//don't dump if empty
 		System.out.println(dumpSpace(spaces)+"[propertys:");
 		for(Entry entry : ((TrackerNodeImpl)node).getPropNameMapping().entrySet()) {
 			dumpEntry(entry, spaces+4);
