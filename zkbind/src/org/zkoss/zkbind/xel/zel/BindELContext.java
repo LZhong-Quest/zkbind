@@ -184,11 +184,11 @@ public class BindELContext extends XelELContext {
 		final String path = BindELContext.appendFields(basepath, prop);
 		
 		//parse depends on series
-		BindContext ctxparse = new BindContextImpl(binder, binding, false, null, comp, null);
+		BindContext ctxparse = new BindContextImpl(binder, binding, false, null, comp, null, null);
 		ExpressionX expr = eval.parseExpressionX(ctxparse, path, Object.class); //prepare the tracking
 		
 		//bean association
-		BindContext ctx = new BindContextImpl(binder, binding, false, null, comp, null);
+		BindContext ctx = new BindContextImpl(binder, binding, false, null, comp, null, null);
 		ctx.setAttribute(TRACKING_DEPENDS_ON, m); //avoid endless loop
 		eval.getValue(ctx, comp, expr); //will call tieValue() and recursive back via BindELResolver
 	}

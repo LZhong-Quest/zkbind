@@ -84,7 +84,7 @@ public class AccessInfo {
 			throw new IllegalArgumentException("command must be a literal text rather than an expression: " + comm.getExpressionString());
 		}
 		final BindContext ctx = commandName != null ? null : 
-				new BindContextImpl(binder, binding, false, null, null, null); //only prompt loading shall track dependency
+				new BindContextImpl(binder, binding, false, null, null, null, null); //only prompt loading shall track dependency
 		final ExpressionX prop = eval.parseExpressionX(ctx, property.toString().trim(), expectedType);
 		final boolean af = after != null ? after.booleanValue() : false;
 		return new AccessInfo(prop, af, commandName);

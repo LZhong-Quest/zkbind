@@ -36,7 +36,7 @@ public class SaveFormBindingImpl extends FormBindingImpl implements	SaveFormBind
 	public SaveFormBindingImpl(Binder binder, Component comp, Form form, String access, String validate, Map args) {
 		super(binder, comp, form, access, args);
 		final BindEvaluatorX eval = binder.getEvaluatorX();
-		final BindContext ctx = new BindContextImpl(binder, this, true, null, comp, null);
+		final BindContext ctx = new BindContextImpl(binder, this, true, null, comp, null, null);
 		this.validate = validate != null ? eval.parseExpressionX(ctx, validate, Boolean.class) : null;
 	}
 	

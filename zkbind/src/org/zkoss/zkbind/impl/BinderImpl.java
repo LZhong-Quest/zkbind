@@ -173,7 +173,7 @@ public class BinderImpl implements Binder {
 		final Tracker tracker = getTracker();
 		final Set<LoadBinding> bindings = tracker.getLoadBindings(base, prop);
 		for(LoadBinding binding : bindings) {
-			final BindContext ctx = new BindContextImpl(this, binding, false, null, binding.getComponent(), null);
+			final BindContext ctx = new BindContextImpl(this, binding, false, null, binding.getComponent(), null, null);
 			log.debug("loadOnPropertyChange:binding.load(),binding=[%s],context=[%s]",binding,ctx);
 			binding.load(ctx);
 		}
@@ -609,7 +609,7 @@ public class BinderImpl implements Binder {
 				final BindEvaluatorX eval = getEvaluatorX();
 				command = (String) eval.getValue(null, comp, ((CommandBindingImpl)_commandBinding).getCommand());
 				final Map<String, Object> args = evalArgs(comp, _commandBinding.getArgs());
-				result = BinderImpl.this.doCommand(comp, command, evtnm, args, notifys, false);
+				result = BinderImpl.this.doCommand(comp, command, event, args, notifys, false);
 			}
 			//check confirm
 			switch(result) {
@@ -625,9 +625,9 @@ public class BinderImpl implements Binder {
 			if (_prompt) {
 				log.debug("This is a prompt command");
 				if (command != null) { //command has own VALIDATE phase, don't do validate again
-					BinderImpl.this.doSaveEventNoValidate(comp, evtnm, notifys); //save on event without validation
+					BinderImpl.this.doSaveEventNoValidate(comp, event, notifys); //save on event without validation
 				} else {
-					BinderImpl.this.doSaveEvent(comp, evtnm, notifys); //save on event
+					BinderImpl.this.doSaveEvent(comp, event, notifys); //save on event
 				}
 				BinderImpl.this.doLoadEvent(comp, evtnm); //load on event
 			}
@@ -675,14 +675,15 @@ public class BinderImpl implements Binder {
 	//comp the component that trigger the command
 	//major life cycle of binding (on event trigger)
 	//command is the command name after evaluation
-	//evtnm event name that fire this command
+	//evt event that fire this command
 	//args the passed in argument for executing command
 	//notifies container for properties that is to be notifyChange
 	//skipConfirm whether skip checking confirm 
 	//return properties to be notified change
-	private int doCommand(Component comp, String command, String evtnm, Map<String, Object> args, Set<Property> notifys, boolean skipConfirm) {
+	private int doCommand(Component comp, String command, Event evt, Map<String, Object> args, Set<Property> notifys, boolean skipConfirm) {
+		final String evtnm = evt == null ? null : evt.getName();
 		log.debug("Start doCommand comp=%s,command=%s,evtnm=%s",comp,command,evtnm);
-		BindContext ctx = new BindContextImpl(this, null, false, command, comp, args);
+		BindContext ctx = new BindContextImpl(this, null, false, command, comp, evt, args);
 		try {
 			doBeforePhase(PhaseListener.COMMAND, ctx); //begin of Command
 			boolean success = true;
@@ -695,13 +696,13 @@ public class BinderImpl implements Binder {
 			}
 			
 			//validate
-			success = doValidate(comp, command, evtnm, args, ctx);
+			success = doValidate(comp, command, evt, args, ctx);
 			if (!success) {
 				return FAIL_VALIDATE;
 			}
 			
 			//save before command bindings
-			doSaveBefore(comp, command, notifys);
+			doSaveBefore(comp, command, evt, notifys);
 			
 			//load before command bindings
 			doLoadBefore(comp, command);
@@ -710,7 +711,7 @@ public class BinderImpl implements Binder {
 			doExecute(comp, command, args, ctx, notifys);
 			
 			//save after command bindings
-			doSaveAfter(comp, command, notifys);
+			doSaveAfter(comp, command, evt, notifys);
 			
 			//load after command bindings
 			doLoadAfter(comp, command);
@@ -734,30 +735,31 @@ public class BinderImpl implements Binder {
 			_phaseListener.afterPhase(phase, ctx);
 		}
 	}
-	
 	//for event -> prompt only, no command 
-	private void doSaveEventNoValidate(Component comp, String evtnm, Set<Property> notifys) {
+	private void doSaveEventNoValidate(Component comp, Event evt, Set<Property> notifys) {
+		final String evtnm = evt == null ? null : evt.getName();
 		log.debug("doSaveEventNoValidate comp=%s,evtnm=%s,notifys=%s",comp,evtnm,notifys);
 		final String evtId = dualId(comp.getUuid(), evtnm);
 		final List<SavePropertyBinding> bindings = _saveEventBindings.get(evtId);
 		if (bindings != null) {
 			for (SavePropertyBinding binding : bindings) {
-				doSavePropertyBinding(comp, binding, null, 0, notifys);
+				doSavePropertyBinding(comp, binding, null, evt, 0, notifys);
 			}
 		}
 	}
 	//for event -> prompt only, no command 
-	private boolean doSaveEvent(Component comp, String evtnm, Set<Property> notifys) {
+	private boolean doSaveEvent(Component comp, Event evt, Set<Property> notifys) {
+		final String evtnm = evt == null ? null : evt.getName(); 
 		log.debug("doSaveEvent comp=%s,evtnm=%s,notifys=%s",comp,evtnm,notifys);
 		final String evtId = dualId(comp.getUuid(), evtnm);
 		final List<SavePropertyBinding> bindings = _saveEventBindings.get(evtId);
 		if (bindings != null) {
 			for (SavePropertyBinding binding : bindings) {
-				final boolean success = doValidateSaveEvent(comp, binding);
+				final boolean success = doValidateSaveEvent(comp, binding, evt);
 				if (!success) { //failed validation
 					return false;
 				}
-				doSavePropertyBinding(comp, binding, null, 0, notifys);
+				doSavePropertyBinding(comp, binding, null, evt, 0, notifys);
 			}
 		}
 		return true;
@@ -797,16 +799,16 @@ public class BinderImpl implements Binder {
 	}
 	
 	//doCommand -> doValidate
-	private boolean doValidate(Component comp, String command, String evtnm, Map args, BindContext ctx) {
+	private boolean doValidate(Component comp, String command, Event evt, Map args, BindContext ctx) {
 		final Set<Property> validates = new HashSet<Property>();
 		try {
 			doBeforePhase(PhaseListener.VALIDATE, ctx);
 			
-			//collect Property for validation in validates from all save-binding(save-before,save-after,
-			collectValidateSaveBefore(comp, command, validates);
-			collectValidateSaveAfter(comp, command, validates);
-			if (evtnm != null) {
-				collectValidateSaveEvent(comp, command, evtnm, validates);
+			//collect Property for validation in validates
+			collectValidateSaveBefore(comp, command, evt, validates);
+			collectValidateSaveAfter(comp, command, evt, validates);
+			if (evt != null) {
+				collectValidateSaveEvent(comp, command, evt, validates);
 			}
 			
 			//do validation (defined by application)
@@ -824,73 +826,74 @@ public class BinderImpl implements Binder {
 	}
 	
 	//doValidate -> 
-	private void collectValidateSaveEvent(Component comp, String command, String evtnm, Set<Property> validates) {
+	private void collectValidateSaveEvent(Component comp, String command, Event evt, Set<Property> validates) {
+		final String evtnm = evt == null ? null : evt.getName(); 
 		final String evtId = dualId(comp.getUuid(), evtnm);
 		final List<SavePropertyBinding> bindings = _saveEventBindings.get(evtId);
 		if (bindings != null) {
 			for (SavePropertyBinding binding : bindings) {
-				collectValidateSavePropertyBinding(comp, binding, command, validates);
+				collectValidateSavePropertyBinding(comp, binding, command, evt, validates);
 			}
 		}
 	}
 
 	//doCommand -> doValidate ->
-	private void collectValidateSaveBefore(Component comp, String command, Set<Property> validates){
-		collectValidateSavePropertyBefore(comp, command, validates);
-		collectValidateSaveFormBefore(comp, command, validates);
+	private void collectValidateSaveBefore(Component comp, String command, Event evt, Set<Property> validates){
+		collectValidateSavePropertyBefore(comp, command, evt, validates);
+		collectValidateSaveFormBefore(comp, command, evt, validates);
 	}
 	
 	//doCommand -> doValidate -> collectValidateSaveBefore ->
-	private void collectValidateSavePropertyBefore(Component comp, String command, Set<Property> validates) {
+	private void collectValidateSavePropertyBefore(Component comp, String command, Event evt, Set<Property> validates) {
 		final List<SavePropertyBinding> bindings = _saveBeforeBindings.get(command);
 		if (bindings != null) {
 			for (SavePropertyBinding binding : bindings) {
-				collectValidateSavePropertyBinding(comp, binding, command, validates);
+				collectValidateSavePropertyBinding(comp, binding, command, evt, validates);
 			}
 		}
 	}
 	
 	//doCommand -> doValidate -> collectValidateSaveBefore ->
-	private void collectValidateSaveFormBefore(Component comp, String command, Set<Property> validates) {
+	private void collectValidateSaveFormBefore(Component comp, String command, Event evt, Set<Property> validates) {
 		final List<SaveFormBinding> bindings = _saveFormBeforeBindings.get(command);
 		if (bindings != null) {
 			for (SaveFormBinding binding : bindings) {
-				collectValidateSaveFormBinding(comp, binding, command, validates);
+				collectValidateSaveFormBinding(comp, binding, command, evt, validates);
 			}
 		}
 	}
 	
 	//doValidate -> 
-	private void collectValidateSaveAfter(Component comp, String command, Set<Property> validates) {
-		collectValidateSavePropertyAfter(comp, command, validates);
-		collectValidateSaveFormAfter(comp, command, validates);
+	private void collectValidateSaveAfter(Component comp, String command, Event evt, Set<Property> validates) {
+		collectValidateSavePropertyAfter(comp, command, evt, validates);
+		collectValidateSaveFormAfter(comp, command, evt, validates);
 	}
 	
 	//doValidate -> collectValidateSaveAfter ->
-	private void collectValidateSavePropertyAfter(Component comp, String command, Set<Property> validates) {
+	private void collectValidateSavePropertyAfter(Component comp, String command, Event evt, Set<Property> validates) {
 		final List<SavePropertyBinding> bindings = _saveAfterBindings.get(command);
 		if (bindings != null) {
 			for (SavePropertyBinding binding : bindings) {
-				collectValidateSavePropertyBinding(comp, binding, command, validates);
+				collectValidateSavePropertyBinding(comp, binding, command, evt, validates);
 			}
 		}
 	}
 	
 	//doValidate -> collectValidateSaveAfter ->
-	private void collectValidateSaveFormAfter(Component comp, String command, Set<Property> validates) {
+	private void collectValidateSaveFormAfter(Component comp, String command, Event evt, Set<Property> validates) {
 		final List<SaveFormBinding> bindings = _saveFormAfterBindings.get(command);
 		if (bindings != null) {
 			for (SaveFormBinding binding : bindings) {
-				collectValidateSaveFormBinding(comp, binding, command, validates);
+				collectValidateSaveFormBinding(comp, binding, command, evt, validates);
 			}
 		}
 	}
 	
 	//validate a prompt save property binding
-	private boolean doValidateSaveEvent(Component comp, SavePropertyBinding binding) {
+	private boolean doValidateSaveEvent(Component comp, SavePropertyBinding binding, Event evt) {
 		if (binding.isValidate()) {
 			final Map<String, Object> args = evalArgs(comp, binding.getArgs());
-			final BindContext ctx = new BindContextImpl(this, binding, true, null, binding.getComponent(), args);
+			final BindContext ctx = new BindContextImpl(this, binding, true, null, binding.getComponent(), evt, args);
 			try {
 				doBeforePhase(PhaseListener.VALIDATE, ctx);
 				final Method m = getValidateMethod();
@@ -906,16 +909,16 @@ public class BinderImpl implements Binder {
 	}
 	
 	//collect properties from a save-binding
-	private void collectValidateSavePropertyBinding(Component comp, SavePropertyBinding binding, String command, Set<Property> validates) {
+	private void collectValidateSavePropertyBinding(Component comp, SavePropertyBinding binding, String command, Event evt, Set<Property> validates) {
 		final Map<String, Object> args = evalArgs(comp, binding.getArgs());
-		final BindContext ctx = new BindContextImpl(this, binding, true, command, binding.getComponent(), args);
+		final BindContext ctx = new BindContextImpl(this, binding, true, command, binding.getComponent(), evt, args);
 		validates.addAll(binding.getValidates(ctx)); //collect properties to be validated
 	}
 	
 	//correct properties form a save-form-binding
-	private void collectValidateSaveFormBinding(Component comp, SaveFormBinding binding, String command, Set<Property> validates) {
+	private void collectValidateSaveFormBinding(Component comp, SaveFormBinding binding, String command, Event evt, Set<Property> validates) {
 		final Map<String, Object> args = evalArgs(comp, binding.getArgs());
-		final BindContext ctx = new BindContextImpl(this, binding, true, command, binding.getComponent(), args);
+		final BindContext ctx = new BindContextImpl(this, binding, true, command, binding.getComponent(), evt, args);
 		//by spec., no way to do prompt save of a form 
 		//validate command save, no VALIDATE phase for each binding save
 		validates.addAll(binding.getValidates(ctx)); //collect properties to be validated
@@ -935,9 +938,14 @@ public class BinderImpl implements Binder {
 				try {
 					method = Classes.getMethodInPublic(base.getClass(), command, new Class[] {Map.class});
 					param = new Object[] {args == null ? Collections.emptyMap() : args};
-				} catch (NoSuchMethodException e1) {
-					//TODO, DENNIS , if not method to excute, should we just ignore it?
-					throw UiException.Aide.wrap(e1);
+				} catch (NoSuchMethodException e1) { //try one with BindContext argument
+					try {
+						method = Classes.getMethodInPublic(base.getClass(), command, new Class[] {BindContext.class});
+						param = new Object[] {ctx};
+					} catch (NoSuchMethodException e2) {
+						//TODO, DENNIS , if not method to excute, should we just ignore it?
+						throw UiException.Aide.wrap(e);
+					}
 				}
 			}
 			if (method != null) {
@@ -954,52 +962,52 @@ public class BinderImpl implements Binder {
 	}
 	
 	//doCommand -> doSaveBefore
-	private void doSaveBefore(Component comp, String command, Set<Property> notifys) {
-		doSavePropertyBefore(comp, command, notifys);
-		doSaveFormBefore(comp, command, notifys);
+	private void doSaveBefore(Component comp, String command, Event evt, Set<Property> notifys) {
+		doSavePropertyBefore(comp, command, evt, notifys);
+		doSaveFormBefore(comp, command, evt, notifys);
 	}
 	
 	//doCommand -> doSaveBefore -> doSavePropertyBefore
-	private void doSavePropertyBefore(Component comp, String command, Set<Property> notifys) {
+	private void doSavePropertyBefore(Component comp, String command, Event evt, Set<Property> notifys) {
 		final List<SavePropertyBinding> bindings = _saveBeforeBindings.get(command);
 		if (bindings != null) {
 			for (SavePropertyBinding binding : bindings) {
-				doSavePropertyBinding(comp, binding, command, PhaseListener.SAVE_BEFORE, notifys);
+				doSavePropertyBinding(comp, binding, command, evt, PhaseListener.SAVE_BEFORE, notifys);
 			}
 		}
 	}
 	
 	//doCommand -> doSaveBefore -> doSaveFormBefore
-	private void doSaveFormBefore(Component comp, String command, Set<Property> notifys) {
+	private void doSaveFormBefore(Component comp, String command, Event evt, Set<Property> notifys) {
 		final List<SaveFormBinding> bindings = _saveFormBeforeBindings.get(command);
 		if (bindings != null) {
 			for (SaveFormBinding binding : bindings) {
-				doSaveFormBinding(comp, binding, command, PhaseListener.SAVE_BEFORE, notifys);
+				doSaveFormBinding(comp, binding, command, evt, PhaseListener.SAVE_BEFORE, notifys);
 			}
 		}
 	}
 	
-	private void doSaveAfter(Component comp, String command, Set<Property> notifys) {
-		doSavePropertyAfter(comp, command, notifys);
-		doSaveFormAfter(comp, command, notifys);
+	private void doSaveAfter(Component comp, String command, Event evt, Set<Property> notifys) {
+		doSavePropertyAfter(comp, command, evt, notifys);
+		doSaveFormAfter(comp, command, evt, notifys);
 	}
 	
-	private void doSavePropertyAfter(Component comp, String command, Set<Property> notifys) {
+	private void doSavePropertyAfter(Component comp, String command, Event evt, Set<Property> notifys) {
 		final BindEvaluatorX eval = getEvaluatorX(); 
 		final List<SavePropertyBinding> bindings = _saveAfterBindings.get(command);
 		if (bindings != null) {
 			for (SavePropertyBinding binding : bindings) {
-				doSavePropertyBinding(comp, binding, command, PhaseListener.SAVE_AFTER, notifys);
+				doSavePropertyBinding(comp, binding, command, evt, PhaseListener.SAVE_AFTER, notifys);
 			}
 		}
 	}
 	
-	private void doSaveFormAfter(Component comp, String command, Set<Property> notifys) {
+	private void doSaveFormAfter(Component comp, String command, Event evt, Set<Property> notifys) {
 		final BindEvaluatorX eval = getEvaluatorX(); 
 		final List<SaveFormBinding> bindings = _saveFormAfterBindings.get(command);
 		if (bindings != null) {
 			for (SaveFormBinding binding : bindings) {
-				doSaveFormBinding(comp, binding, command, PhaseListener.SAVE_AFTER, notifys);
+				doSaveFormBinding(comp, binding, command, evt, PhaseListener.SAVE_AFTER, notifys);
 			}
 		}
 	}
@@ -1051,9 +1059,9 @@ public class BinderImpl implements Binder {
 	}
 	
 	//generic operation to save a property binding
-	private void doSavePropertyBinding(Component comp, SavePropertyBinding binding, String command, int phase, Set<Property> notifys) {
+	private void doSavePropertyBinding(Component comp, SavePropertyBinding binding, String command, Event evt, int phase, Set<Property> notifys) {
 		final Map<String, Object> args = evalArgs(comp, binding.getArgs());
-		final BindContext ctx = new BindContextImpl(this, binding, true, command, binding.getComponent(), args);
+		final BindContext ctx = new BindContextImpl(this, binding, true, command, binding.getComponent(), evt, args);
 		
 		try {
 			doBeforePhase(phase, ctx);
@@ -1071,7 +1079,7 @@ public class BinderImpl implements Binder {
 	//generic operation to load a property binding
 	private void doLoadPropertyBinding(Component comp, LoadPropertyBinding binding, String command, int phase) {
 		final Map<String, Object> args = evalArgs(comp, binding.getArgs());
-		final BindContext ctx = new BindContextImpl(this, binding, false, command, binding.getComponent(), args);
+		final BindContext ctx = new BindContextImpl(this, binding, false, command, binding.getComponent(), null, args);
 		
 		try { 
 			doBeforePhase(phase, ctx);
@@ -1083,9 +1091,9 @@ public class BinderImpl implements Binder {
 	}
 	
 	//generic operation to save a property binding
-	private void doSaveFormBinding(Component comp, SaveFormBinding binding, String command, int phase, Set<Property> notifys) {
+	private void doSaveFormBinding(Component comp, SaveFormBinding binding, String command, Event evt, int phase, Set<Property> notifys) {
 		final Map<String, Object> args = evalArgs(comp, binding.getArgs());
-		final BindContext ctx = new BindContextImpl(this, binding, true, command, binding.getComponent(), args);
+		final BindContext ctx = new BindContextImpl(this, binding, true, command, binding.getComponent(), evt, args);
 		
 		try {
 			doBeforePhase(phase, ctx);
@@ -1103,7 +1111,7 @@ public class BinderImpl implements Binder {
 	//generic operation to load a property binding
 	private void doLoadFormBinding(Component comp, LoadFormBinding binding, String command, int phase) {
 		final Map<String, Object> args = evalArgs(comp, binding.getArgs());
-		final BindContext ctx = new BindContextImpl(this, binding, false, command, binding.getComponent(), args);
+		final BindContext ctx = new BindContextImpl(this, binding, false, command, binding.getComponent(), null, args);
 		
 		try {
 			doBeforePhase(phase, ctx);
@@ -1221,7 +1229,7 @@ public class BinderImpl implements Binder {
 				if (formBindings != null) {
 					for (LoadFormBinding binding : formBindings) {
 						final Map<String, Object> args = evalArgs(binding.getComponent(), binding.getArgs());
-						final BindContext ctx = new BindContextImpl(this, binding, false, null, comp, args);
+						final BindContext ctx = new BindContextImpl(this, binding, false, null, comp, null, args);
 						log.debug("loadComponentProperties:form-binding.load(),component=%s,binding=%s,context=%s",comp,binding,ctx);
 						binding.load(ctx);
 					}
@@ -1233,7 +1241,7 @@ public class BinderImpl implements Binder {
 				if (propBindings != null) {
 					for (LoadPropertyBinding binding : propBindings) {
 						final Map<String, Object> args = evalArgs(comp, binding.getArgs());
-						final BindContext ctx = new BindContextImpl(this, binding, false, null, comp, args);
+						final BindContext ctx = new BindContextImpl(this, binding, false, null, comp, null, args);
 						log.debug("loadComponentProperties:binding.load(),component=%s,binding=%s,context=%s",comp,binding,ctx);
 						binding.load(ctx);
 					}

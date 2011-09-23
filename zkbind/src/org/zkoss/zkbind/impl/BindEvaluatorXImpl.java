@@ -43,7 +43,8 @@ public class BindEvaluatorXImpl extends SimpleEvaluator implements BindEvaluator
 	throws XelException {
 		try {
 			expression.setValue(newXelContext(ctx, comp), value);
-		} catch (PropertyNotFoundException ex) { 
+		} catch (PropertyNotFoundException ex) {
+			//TODO, Henri, shall log here
 			//ignore if fail to locate base
 		}
 	}

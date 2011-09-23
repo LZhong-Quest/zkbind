@@ -14,6 +14,7 @@ package org.zkoss.zkbind;
 import java.util.Map;
 
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zkbind.sys.Binding;
 
 /**
@@ -66,4 +67,10 @@ public interface BindContext {
 	 * @return the associated component context.
 	 */
 	public Component getComponent();
+	
+	/**
+	 * Returns associated event that trigger the associated command; null if not involved.
+	 * @return associated event that trigger the associated command; null if not involved.
+	 */
+	public Event getTriggerEvent();
 }

@@ -130,7 +130,11 @@ public class FormELResolver extends ELResolver {
 
     @Override
     public Class<?> getCommonPropertyType(ELContext context, Object base) {
-        if (base instanceof Form) {
+        if (context == null) {
+            throw new NullPointerException();
+        }
+
+        if (base != null) {
             return Object.class;
         }
         return null;
