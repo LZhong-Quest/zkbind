@@ -43,4 +43,10 @@ public class PropertyImpl implements Property {
 	public String getProperty() {
 		return _property;
 	}
+	
+	public String toString(){
+		return new StringBuilder().append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode()))
+		.append(",base:").append(getBase())
+		.append(",property:").append(getProperty()).toString();
+	}
 }

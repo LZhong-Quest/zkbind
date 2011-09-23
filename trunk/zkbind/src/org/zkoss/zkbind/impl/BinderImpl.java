@@ -150,6 +150,9 @@ public class BinderImpl implements Binder {
 		_loadBeforeBindings = new HashMap<String, List<LoadPropertyBinding>>();
 		_saveBeforeBindings = new HashMap<String, List<SavePropertyBinding>>();
 		_listenerMap = new HashMap<String, CommandEventListener>();
+		
+		//use same queue name if user was not specified, 
+		//this means, binder in same scope, same queue, they will share the notification by "base"."property" 
 		_quename = qname != null && !qname.isEmpty() ? qname : BinderImpl.QUE;
 		_quescope = qscope != null && !qscope.isEmpty() ? qscope : EventQueues.DESKTOP;
 		
@@ -159,8 +162,11 @@ public class BinderImpl implements Binder {
 		//subscribe change listener
 		subscribeChangeListener(_quename, _quescope, new EventListener() {
 			public void onEvent(Event event) throws Exception {
-				final PropertyChangeEvent evt = (PropertyChangeEvent) event;
-				BinderImpl.this.loadOnPropertyChange(evt.getBase(), evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
+				//only when a event in queue is our event
+				if(event instanceof PropertyChangeEvent){
+					final PropertyChangeEvent evt = (PropertyChangeEvent) event;
+					BinderImpl.this.loadOnPropertyChange(evt.getBase(), evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
+				}
 			}
 		});
 	}
@@ -394,15 +400,20 @@ public class BinderImpl implements Binder {
 		
 		final String command = binding.getCommandName();
 		if (command == null) {
+			log.debug("add event(prompt)-load-binding: comp=%s,attr=%s,expr=%s,evtnm=%s,converter=%s", comp,attr,loadExpr,evtnm,converter);
 			if (evtnm != null) { //special case, load on an event
 				addEventCommandListenerIfNotExists(comp, evtnm, null); //local command
 				final String evtId = dualId(uuid, evtnm);
 				addLoadEventBinding(comp, evtId, binding);
 			}
+			//if no command , always add to prompt binding, a prompt binding will be load when , 
+			//1.load a component property binding
+			//2.property change (TODO, DENNIS, ISSUE, I think loading of property change is triggered by tracker in loadOnPropertyChange, not by prompt-binding 
 			final String compId = dualId(uuid, attr);
 			addLoadPromptBinding(comp, compId, binding);
 		} else {
 			final boolean after = binding.isAfter();
+			log.debug("add command-load-binding: comp=%s,attr=%s,expr=%s,after=%s,converter=%s", comp,attr,loadExpr,after,converter);
 			if (after) {
 				addLoadAfterBinding(command, binding);
 			} else {
@@ -434,11 +445,13 @@ public class BinderImpl implements Binder {
 		
 		final String command = binding.getCommandName();
 		if (command == null) { //save on event
+			log.debug("add event(prompt)-save-binding: comp=%s,attr=%s,expr=%s,evtnm=%s,converter=%s,validate=%s", comp,attr,saveExpr,evtnm,converter,validate);
 			addEventCommandListenerIfNotExists(comp, evtnm, null); //local command
 			final String evtId = dualId(uuid, evtnm);
 			addSavePromptBinding(comp, evtId, binding);
 		} else {
 			final boolean after = binding.isAfter();
+			log.debug("add command-save-binding: comp=%s,att=r%s,expr=%s,after=%s,converter=%s,validate=%s", comp,attr,saveExpr,after,converter,validate);
 			if (after) {
 				addSaveAfterBinding(command, binding);
 			} else {
@@ -589,6 +602,8 @@ public class BinderImpl implements Binder {
 			//TODO DENNIS QUESTION, what if add more than one command?
 			//In current spec. one event only fire one command. 
 			//should I rewrite the code here to make it more easy to read?
+			
+			//if 1.add a non-null command then 2.add a null command, the prompt will be true and commandBinding is not null 
 			if (!_prompt && command == null) {
 				_prompt = true;
 			} else {
@@ -625,6 +640,7 @@ public class BinderImpl implements Binder {
 			if (_prompt) {
 				log.debug("This is a prompt command");
 				if (command != null) { //command has own VALIDATE phase, don't do validate again
+					//TODO, DENNIS, ISSUES, is it possible prompt & command != null??
 					BinderImpl.this.doSaveEventNoValidate(comp, event, notifys); //save on event without validation
 				} else {
 					BinderImpl.this.doSaveEvent(comp, event, notifys); //save on event
@@ -777,15 +793,16 @@ public class BinderImpl implements Binder {
 		}
 	}
 	
-//	private void doLoadPrompt(Component comp, String attr) {
-//		final String compId = dualId(comp.getUuid(), attr); 
-//		final List<LoadPropertyBinding> bindings = _loadPromptBindings.get(compId);
-//		if (bindings != null) {
-//			for (LoadPropertyBinding binding : bindings) {
-//				doLoadPropertyBinding(comp, binding, null, 0);
-//			}
-//		}
-//	}	
+	//DENNIS, who, when , will call this? currently no one
+	private void doLoadPrompt(Component comp, String attr) {
+		final String compId = dualId(comp.getUuid(), attr); 
+		final List<LoadPropertyBinding> bindings = _loadPromptBindings.get(compId);
+		if (bindings != null) {
+			for (LoadPropertyBinding binding : bindings) {
+				doLoadPropertyBinding(comp, binding, null, 0);
+			}
+		}
+	}	
 
 	//doCommand -> doConfirm
 	private boolean doConfirm(Component comp, String command, Map args, BindContext ctx) {
@@ -926,9 +943,16 @@ public class BinderImpl implements Binder {
 	
 	private void doExecute(Component comp, String command, Map args, BindContext ctx, Set<Property> notifys) {
 		try {
+			log.debug("before doExecute comp=%s,command=%s,notifys=%s",comp,command,notifys);
 			doBeforePhase(PhaseListener.EXECUTE, ctx);
 			
 			final Object base = getViewModel();
+			
+			//TODO, DENNIS, FEATURE,
+			//search if there is any method with command annotation. @Command(command), if yes, call this method
+			//command = searchMethodByAnnotation(base,command);
+			
+			
 			Method method = null;
 			Object[] param = null;
 			try { //try one without arguments
@@ -956,6 +980,7 @@ public class BinderImpl implements Binder {
 				}
 				notifys.addAll(BindELContext.getNotifys(method, base, (String)null, (Object) null)); //collect notifyChange
 			}
+			log.debug("after doExecute notifys=%s",notifys);
 		} finally {
 			doAfterPhase(PhaseListener.EXECUTE, ctx);
 		}
@@ -1199,6 +1224,8 @@ public class BinderImpl implements Binder {
 			attrMap.put(attr, bindings);
 		}
 		bindings.add(binding);
+		
+		//associate component with this binder, which means, one component can only bind by one binder
 		comp.setAttribute(BINDER, this);
 	}
 

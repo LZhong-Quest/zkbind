@@ -12,11 +12,6 @@
 			<textbox id="l1" value="@bind(fx.firstName)"/>
 			<label id="l2" value="@bind(fx.lastName)"/>
 			<label id="l3" value="@bind(fx.fullName)"/>
-			<hbox>
-			<!-- this indirect only load a available value when loading is fire by form load, because only at that time have fx in context -->
-			<label id="l4" value="@bind(fx[vm.currField])"/>/
-			<label id="l5" value="@bind(vm.p1[vm.currField])"/>
-			</hbox>
 		</row>
 	</rows>
 </grid>

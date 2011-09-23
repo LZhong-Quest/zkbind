@@ -78,13 +78,17 @@ public class AccessInfo {
 		}
 		final BindEvaluatorX eval = binder.getEvaluatorX();
 		final String script = command.toString().trim();
+		//parse the script to a expression, in default implementation it will add ${} to the script, 
 		final ExpressionX comm = script.length() > 0 ? eval.parseExpressionX(null, script, String.class) : null;
+		//in current spec. we only allow literal string in command.
 		final String commandName = comm == null ? null : (String) eval.getValue((BindContext)null, (Component)null, comm);
 		if (comm != null && !isLiteralString(script, commandName)) {
 			throw new IllegalArgumentException("command must be a literal text rather than an expression: " + comm.getExpressionString());
 		}
+		//only prompt loading shall track dependency
+		//(dependency only be tracing when has a bindcontext in evaluating)
 		final BindContext ctx = commandName != null ? null : 
-				new BindContextImpl(binder, binding, false, null, null, null, null); //only prompt loading shall track dependency
+				new BindContextImpl(binder, binding, false, null, null, null, null); 
 		final ExpressionX prop = eval.parseExpressionX(ctx, property.toString().trim(), expectedType);
 		final boolean af = after != null ? after.booleanValue() : false;
 		return new AccessInfo(prop, af, commandName);

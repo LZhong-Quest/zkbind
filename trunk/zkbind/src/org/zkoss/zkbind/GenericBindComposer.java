@@ -16,7 +16,9 @@ import java.util.Map;
 
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Page;
+import org.zkoss.zk.ui.metainfo.Annotation;
 import org.zkoss.zk.ui.metainfo.ComponentInfo;
+import org.zkoss.zk.ui.sys.ComponentCtrl;
 import org.zkoss.zk.ui.util.Composer;
 import org.zkoss.zk.ui.util.ComposerExt;
 import org.zkoss.zkbind.impl.AnnotateBinderImpl;
@@ -68,22 +70,35 @@ public class GenericBindComposer implements Composer, ComposerExt {
 
 	//--Composer--//
 	public void doAfterCompose(Component comp) throws Exception {
+		//TODO, Dennis, need to confirm with henri about annotation or attribute
 		//name this composer
-		final String cname = (String) comp.getAttribute("composerName");
+		final String cname = getAnnotationOrAttribute(comp,"composerName");
 		comp.setAttribute(cname != null ? cname : comp.getId()+"$composer", this);
 		
 		//init the binder
-		final String qname = (String) comp.getAttribute("queueName");
-		final String qscope = (String) comp.getAttribute("queueScope");
+		final String qname = getAnnotationOrAttribute(comp,"queueName");
+		final String qscope = getAnnotationOrAttribute(comp,"queueScope");
 		_binder = new AnnotateBinderImpl(comp, _viewModel, qname, qscope);
 		
 		//assign binder name
-		final String bname = (String) comp.getAttribute("binderName");
+		final String bname = getAnnotationOrAttribute(comp,"binderName");
 		comp.setAttribute(BinderImpl.BINDER, _binder);
 		comp.setAttribute(bname != null ? bname : "binder", _binder);
 		
 		//load data
 		((BinderImpl)_binder).loadComponent(comp); //load all bindings
+	}
+	
+	private static String getAnnotationOrAttribute(Component comp,String attr){
+		final ComponentCtrl compCtrl = (ComponentCtrl) comp;
+		final Annotation cnameann = compCtrl.getAnnotation(attr);
+		final String value;
+		if(cnameann!=null){
+			value = cnameann.getAttribute("value");
+		}else{
+			value = (String) comp.getAttribute(attr);
+		}
+		return value;
 	}
 	
 	//--ComposerExt//
