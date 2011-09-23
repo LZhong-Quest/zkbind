@@ -31,7 +31,8 @@ import org.zkoss.zkbind.xel.zel.BindELContext;
  */
 public class LoadPropertyBindingImpl extends PropertyBindingImpl implements
 		LoadPropertyBinding {
-	private Set<Method> _doneDependsOn = new WeakHashSet<Method>();
+	private Set<Method> _doneDependsOn = new WeakHashSet<Method>(4);
+	private Set<Class> _doneConverterDependsOn = new WeakHashSet<Class>(4);
 	
 	public LoadPropertyBindingImpl(Binder binder, Component comp,
 		String attr, String loadScript, String converter, Map args) {
@@ -48,7 +49,7 @@ public class LoadPropertyBindingImpl extends PropertyBindingImpl implements
 		if (_converter != null) {
 			final Converter conv = (Converter) eval.getValue(null, comp, _converter);
 			if (conv != null) {
-				addDependsOnTrackings(conv, ctx);
+				addConverterDependsOnTrackings(conv, ctx);
 				value = conv.coerceToUi(value, comp, ctx);
 			}
 		}
@@ -57,11 +58,13 @@ public class LoadPropertyBindingImpl extends PropertyBindingImpl implements
 		eval.setValue(null, comp, _fieldExpr, value);
 	}
 	
-	private void addDependsOnTrackings(Converter conv, BindContext ctx) {
-		final Method m = getConverterMethod(conv.getClass());
-		if (_doneDependsOn.contains(m)) { //already done @DependsOn for this binding
+	private void addConverterDependsOnTrackings(Converter conv, BindContext ctx) {
+		final Class convClz = conv.getClass();
+		if (_doneConverterDependsOn.contains(convClz)) { //avoid to eval converter @DependsOn again if not exists
 			return;
 		}
+		_doneConverterDependsOn.add(convClz);
+		final Method m = getConverterMethod(convClz);
 		BindELContext.addDependsOnTrackings(m, getPropertyString(), this, ctx);
 	}
 	
@@ -72,5 +75,18 @@ public class LoadPropertyBindingImpl extends PropertyBindingImpl implements
 			//ignore
 		}
 		return null; //shall never come here
+	}
+	
+	/**
+	 * Internal Use Only.
+	 */
+	public void addDependsOnTrackings(Method m, String basepath, String[] props) {
+		if (_doneDependsOn.contains(m)) { //this method has already done @DependsOn in this binding
+			return;
+		}
+		_doneDependsOn.add(m); //mark method as done @DependsOn
+		for(String prop : props) {
+			BindELContext.addDependsOnTracking(m, basepath, prop, this);
+		}
 	}
 }

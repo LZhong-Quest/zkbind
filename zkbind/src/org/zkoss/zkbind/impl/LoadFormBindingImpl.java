@@ -12,7 +12,9 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 
 package org.zkoss.zkbind.impl;
 
+import java.lang.reflect.Method;
 import java.util.Map;
+import java.util.Set;
 
 import org.zkoss.xel.ExpressionX;
 import org.zkoss.zk.ui.Component;
@@ -22,6 +24,7 @@ import org.zkoss.zkbind.Form;
 import org.zkoss.zkbind.sys.BindEvaluatorX;
 import org.zkoss.zkbind.sys.LoadBinding;
 import org.zkoss.zkbind.sys.LoadFormBinding;
+import org.zkoss.zkbind.xel.zel.BindELContext;
 
 /**
  * Implementation of {@link LoadFormBinding}
@@ -30,6 +33,7 @@ import org.zkoss.zkbind.sys.LoadFormBinding;
  */
 public class LoadFormBindingImpl extends FormBindingImpl implements	LoadFormBinding {
 	private int _len;
+	private Set<Method> _doneDependsOn = new WeakHashSet<Method>();
 	
 	protected LoadFormBindingImpl(Binder binder, Component comp, Form form, String loadExpr, Map args) {
 		super(binder, comp, form, loadExpr, args);
@@ -59,5 +63,18 @@ public class LoadFormBindingImpl extends FormBindingImpl implements	LoadFormBind
 	
 	public int getSeriesLength() {
 		return _len;
+	}
+
+	/**
+	 * Internal Use Only.
+	 */
+	public void addDependsOnTrackings(Method m, String basepath, String[] props) {
+		if (_doneDependsOn.contains(m)) { //this method has already done @DependsOn in this binding
+			return;
+		}
+		_doneDependsOn.add(m); //mark method as done @DependsOn
+		for(String prop : props) {
+			BindELContext.addDependsOnTracking(m, basepath, prop, this);
+		}
 	}
 }
