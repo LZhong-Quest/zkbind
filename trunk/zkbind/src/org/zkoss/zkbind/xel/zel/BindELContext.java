@@ -13,14 +13,10 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 package org.zkoss.zkbind.xel.zel;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.zkoss.lang.Strings;
 import org.zkoss.xel.ExpressionX;
 import org.zkoss.xel.XelContext;
 import org.zkoss.xel.zel.XelELContext;
@@ -34,23 +30,15 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zkbind.BindContext;
 import org.zkoss.zkbind.Binder;
 import org.zkoss.zkbind.DependsOn;
-import org.zkoss.zkbind.Form;
 import org.zkoss.zkbind.NotifyChange;
 import org.zkoss.zkbind.Property;
 import org.zkoss.zkbind.impl.BindContextImpl;
 import org.zkoss.zkbind.impl.BinderImpl;
-import org.zkoss.zkbind.impl.FormImpl;
-import org.zkoss.zkbind.impl.Path;
+import org.zkoss.zkbind.impl.LoadFormBindingImpl;
+import org.zkoss.zkbind.impl.LoadPropertyBindingImpl;
 import org.zkoss.zkbind.impl.PropertyImpl;
 import org.zkoss.zkbind.sys.BindEvaluatorX;
 import org.zkoss.zkbind.sys.Binding;
-import org.zkoss.zkbind.sys.FormBinding;
-import org.zkoss.zkbind.sys.LoadBinding;
-import org.zkoss.zkbind.sys.LoadPropertyBinding;
-import org.zkoss.zkbind.sys.PropertyBinding;
-import org.zkoss.zkbind.sys.SaveBinding;
-import org.zkoss.zkbind.sys.SavePropertyBinding;
-import org.zkoss.zkbind.tracker.impl.TrackerImpl;
 
 /**
  * ELContext for Binding.
@@ -160,24 +148,23 @@ public class BindELContext extends XelELContext {
 		return prefix + (isBracket(field) ? "" : '.') + field; 
 	}
 	
-	private static final String TRACKING_DEPENDS_ON = "$TRACKING_DEPENDS_ON$";
 	//check method annotation and collect NotifyChange annotation
 	public static void addDependsOnTrackings(Method m, String basepath, Binding binding, BindContext ctx) {
 		final DependsOn annt = m.getAnnotation(DependsOn.class);
 		if (annt != null) {
 			String[] props = annt.value();
 			if (props.length > 0) {
-				if (ctx == null || !m.equals(ctx.getAttribute(TRACKING_DEPENDS_ON))) { //see addDependsOnTracking
-					for(String prop : props) {
-						addDependsOnTracking(m, basepath, prop, binding);
-					}
+				if (binding instanceof LoadPropertyBindingImpl) {
+					((LoadPropertyBindingImpl)binding).addDependsOnTrackings(m, basepath, props);
+				} else if (binding instanceof LoadFormBindingImpl) {
+					((LoadFormBindingImpl)binding).addDependsOnTrackings(m, basepath, props);
 				}
 			}
 		}
 	}
 	
 	//prepare the dependsOn nodes
-	private static void addDependsOnTracking(Method m, String basepath, String prop, Binding binding) {
+	public static void addDependsOnTracking(Method m, String basepath, String prop, Binding binding) {
 		final Component comp = binding.getComponent();
 		final Binder binder = binding.getBinder();
 		final BindEvaluatorX eval = binder.getEvaluatorX();
@@ -189,7 +176,6 @@ public class BindELContext extends XelELContext {
 		
 		//bean association
 		BindContext ctx = new BindContextImpl(binder, binding, false, null, comp, null, null);
-		ctx.setAttribute(TRACKING_DEPENDS_ON, m); //avoid endless loop
 		eval.getValue(ctx, comp, expr); //will call tieValue() and recursive back via BindELResolver
 	}
 }

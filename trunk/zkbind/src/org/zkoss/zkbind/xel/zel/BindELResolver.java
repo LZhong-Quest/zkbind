@@ -13,11 +13,8 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 package org.zkoss.zkbind.xel.zel;
 
 import java.lang.reflect.Method;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-import org.zkoss.xel.ExpressionX;
 import org.zkoss.xel.XelContext;
 import org.zkoss.xel.zel.XelELResolver;
 import org.zkoss.zel.CompositeELResolver;
@@ -27,17 +24,12 @@ import org.zkoss.zel.ELResolver;
 import org.zkoss.zel.PropertyNotFoundException;
 import org.zkoss.zel.PropertyNotWritableException;
 import org.zkoss.zel.impl.lang.EvaluationContext;
-import org.zkoss.zk.ui.Component;
 import org.zkoss.zkbind.BindContext;
 import org.zkoss.zkbind.Binder;
-import org.zkoss.zkbind.DependsOn;
 import org.zkoss.zkbind.Form;
-import org.zkoss.zkbind.Property;
-import org.zkoss.zkbind.impl.BindContextImpl;
 import org.zkoss.zkbind.impl.BinderImpl;
 import org.zkoss.zkbind.impl.LoadFormBindingImpl;
 import org.zkoss.zkbind.impl.Path;
-import org.zkoss.zkbind.sys.BindEvaluatorX;
 import org.zkoss.zkbind.sys.Binding;
 import org.zkoss.zkbind.sys.LoadBinding;
 import org.zkoss.zkbind.sys.SaveBinding;
