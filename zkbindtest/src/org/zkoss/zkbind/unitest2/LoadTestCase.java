@@ -5,6 +5,7 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 import org.zkoss.zktc.core.junit.TestCaseBase;
+import org.zkoss.zktc.core.widget.SelectWidget;
 import org.zkoss.zktc.core.widget.Widget;
 import org.zkoss.zktc.core.widget.WidgetDriver;
 
@@ -201,7 +202,7 @@ public class LoadTestCase extends TestCaseBase{
 		
 		
 		
-		findWidget("$select @listitem:eq(1)").click();
+		((SelectWidget)findWidget("$select")).select(1);
 		
 		Assert.assertEquals("AAA",findWidget("$l1").getAttribute("value"));
 		Assert.assertEquals("Last1",findWidget("$l2").getAttribute("value"));
@@ -216,7 +217,7 @@ public class LoadTestCase extends TestCaseBase{
 		Assert.assertEquals("Last1",findWidget("$l4").getAttribute("value"));
 		
 		
-		findWidget("$select @listitem:eq(2)").click();
+		((SelectWidget)findWidget("$select")).select(2);
 		
 		Assert.assertEquals("BBB",findWidget("$l1").getAttribute("value"));
 		Assert.assertEquals("Last1",findWidget("$l2").getAttribute("value"));
@@ -224,7 +225,7 @@ public class LoadTestCase extends TestCaseBase{
 		Assert.assertEquals("BBB Last1",findWidget("$l4").getAttribute("value"));
 		Assert.assertEquals(2L,findWidget("$select").getAttribute("selectedIndex"));
 		
-		findWidget("$select @listitem:eq(0)").click();
+		((SelectWidget)findWidget("$select")).select(0);
 		
 		Assert.assertEquals("BBB",findWidget("$l1").getAttribute("value"));
 		Assert.assertEquals("Last1",findWidget("$l2").getAttribute("value"));
