@@ -1,0 +1,45 @@
+<window apply="test2.Test2ZKBindPropertyComposer"
+	self="@composerName(vm)">
+	<grid width="500px">
+		<columns>
+			<column />
+			<column />
+			<column />
+		</columns>
+		<rows>
+			<row>
+				<textbox id="t1" value="@bind(vm.value1)" />
+				<label id="l1" value="@bind(vm.value1)" />
+				<!-- only load when commandA1 -->
+				<label id="l1x" value="@bind(load = vm.value1 after 'commandA1')" />
+			</row>
+			<row>
+				<!-- always change, but only load when commandA2 -->
+				<textbox id="t2" value="@bind(vm.value2, load=vm.value2 after 'commandA2')" />
+				<label id="l2" value="@bind(vm.value2)" />
+				<label id="l2x" value="@bind(load = vm.value2 after 'commandA2')" />
+			</row> 
+			<row>
+				<textbox id="t3" value="@bind(load=vm.value3, save = vm.value3 before 'commandA3')" />
+				<label id="l3" value="@bind(load = vm.value3 before 'commandA3')" />
+				<label id="l3x" value="@bind(load = vm.value3 after 'commandA3')" />
+			</row>
+			<row>
+				<textbox id="t4" value="@bind(load=vm.value4, save = vm.value4 before 'commandA4')" />
+				<label id="l4" value="@bind(load = vm.value4 before 'commandA4')" />
+				<label id="l4x" value="@bind(load = vm.value4 after 'commandA4')" />
+			</row>
+		</rows>
+
+	</grid>
+	<hbox>
+		<button label="c1" onClick="@bind('commandA1')" />
+		<button label="c2" onClick="@bind('commandA2')" />
+		<button label="c3" onClick="@bind('commandA3')" />
+		<button label="c4" onClick="@bind('commandA4')" />
+	</hbox>
+	<hbox>
+		<button label="Dump" onClick="binder.getTracker().dump()" />
+	</hbox>
+
+</window>

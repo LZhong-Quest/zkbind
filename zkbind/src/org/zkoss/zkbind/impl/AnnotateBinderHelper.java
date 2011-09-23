@@ -46,13 +46,14 @@ public class AnnotateBinderHelper {
 	
 	private void initAllComponentsBindings(Component comp, String annotName) {
 		final Binder selfBinder = (Binder) comp.getAttribute(BinderImpl.BINDER);
+		//check if a component was binded already(by any binder)
 		if (selfBinder != null) //already binded !
 			return;
-		initFormBindings(comp);
-		initComponentPropertiesBindings(comp, annotName);
+		initFormBindings(comp);//initial form binding on comp, ex self="form(...)"
+		initComponentPropertiesBindings(comp, annotName); //initial property binding on comp, ex value="bind(...)"
 		for(final Iterator it = comp.getChildren().iterator(); it.hasNext();) {
 			final Component kid = (Component) it.next();
-			initAllComponentsBindings(kid, annotName); //recursive
+			initAllComponentsBindings(kid, annotName); //recursive to each child
 		}
 	}
 	
@@ -65,7 +66,7 @@ public class AnnotateBinderHelper {
 			final List<String> loadExprs = new ArrayList<String>();
 			final List<String> confirmExprs = new ArrayList<String>();
 			String id = null;
-			String value = null;
+			Object value = null;
 			String validate = null;
 			Map<String, Object> args = null;
 			for (final Iterator it = attrs.entrySet().iterator(); it.hasNext();) {
@@ -83,7 +84,7 @@ public class AnnotateBinderHelper {
 				} else if ("validate".equals(tag)) {
 					validate = (String) tagExpr;
 				} else if ("value".equals(tag)) {
-					value = (String) tagExpr;
+					value = tagExpr;
 				} else { //other unknown tag, keep as arguments
 					if (args == null) {
 						args = new HashMap<String, Object>();
@@ -95,11 +96,15 @@ public class AnnotateBinderHelper {
 				throw new UiException("Must specify a form id!");
 			}
 			if (value != null) {
+				//default value will apply to load or save if they were empty
+				//TODO, DENNIS, should we allow this spec.?
 				if (loadExprs.isEmpty()) { //might be both
-					loadExprs.add(value);
+//					loadExprs.add(value);
+					addTagExpr(loadExprs, value);
 				}
 				if (saveExprs.isEmpty()) { //might be both
-					saveExprs.add(value);
+//					saveExprs.add(value);
+					addTagExpr(saveExprs, value);
 				}
 			}
 			_binder.addFormBindings(comp, id, 
@@ -164,7 +169,7 @@ public class AnnotateBinderHelper {
 			final Map attrs = ann.getAttributes(); //(tag, tagExpr)
 			final List<String> saveExprs = new ArrayList<String>();
 			final List<String> loadExprs = new ArrayList<String>();
-			String value = null;
+			Object value = null;
 			String converter = null;
 			String validate = null;
 			Map<String, Object> args = null;
@@ -181,7 +186,7 @@ public class AnnotateBinderHelper {
 				} else if ("validate".equals(tag)) {
 					validate = (String) tagExpr;
 				} else if ("value".equals(tag)) {
-					value = (String) tagExpr;
+					value = tagExpr;
 				} else { //other unknown tag, keep as arguments
 					if (args == null) {
 						args = new HashMap<String, Object>();
@@ -190,11 +195,15 @@ public class AnnotateBinderHelper {
 				}
 			}
 			if (value != null) {
+				//default value will apply to load or save if they were empty
+				//TODO, DENNIS, should we allow this spec.?
 				if (loadExprs.isEmpty()) { //might be both
-					loadExprs.add(value);
+//					loadExprs.add(value);
+					addTagExpr(loadExprs, value);
 				}
 				if (saveExprs.isEmpty()) { //might be both
-					saveExprs.add(value);
+//					saveExprs.add(value);
+					addTagExpr(saveExprs, value);
 				}
 			}
 			_binder.addPropertyBinding(comp, propName, 
