@@ -73,6 +73,7 @@ public class BindELResolver extends XelELResolver {
 		tieValue((BindELContext)((EvaluationContext)ctx).getELContext(), base, property, value);
 	}
 	
+	//update dependency and notify changed
 	private void tieValue(BindELContext ctx, Object base, Object propName, Object value) {
 		final Binding binding = ctx.getBinding();
 		

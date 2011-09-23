@@ -91,4 +91,11 @@ public class FormImpl implements Form {
 	public void addSaveFieldName(String fieldName) {
 		_saveFieldNames.add(fieldName);
 	}
+	
+	public String toString(){
+		return new StringBuilder().append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode()))
+		.append(",id:").append(getId())
+		.append(",fields:").append(getFieldNames()).toString();
+	}
+	
 }

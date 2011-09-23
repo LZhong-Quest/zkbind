@@ -59,4 +59,11 @@ public class CommandBindingImpl extends BindingImpl implements CommandBinding {
 			throw UiException.Aide.wrap(e);
 		}
 	}
+	
+	public String toString(){
+		return new StringBuilder().append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode()))
+		.append(",component:").append(getComponent())
+		.append(",evtnm:").append(_evtnm)
+		.append(",command:").append(getCommandString()).toString();
+	}
 }

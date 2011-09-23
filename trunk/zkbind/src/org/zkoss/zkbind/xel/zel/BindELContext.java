@@ -92,6 +92,7 @@ public class BindELContext extends XelELContext {
 		final NotifyChange annt = m == null ? 
 			null : m.getAnnotation(NotifyChange.class);
 		if (annt != null) {
+			//if has annotation, use annotated value or prop (if no value in annotation)
 			String[] notifies = annt.value();
 			if (notifies.length > 0) {
 				for(String notify : notifies) {
