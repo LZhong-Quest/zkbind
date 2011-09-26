@@ -97,7 +97,6 @@ public class AnnotateBinderHelper {
 			}
 			if (value != null) {
 				//default value will apply to load or save if they were empty
-				//TODO, DENNIS, should we allow this spec.?
 				if (loadExprs.isEmpty()) { //might be both
 //					loadExprs.add(value);
 					addTagExpr(loadExprs, value);
@@ -196,7 +195,6 @@ public class AnnotateBinderHelper {
 			}
 			if (value != null) {
 				//default value will apply to load or save if they were empty
-				//TODO, DENNIS, should we allow this spec.?
 				if (loadExprs.isEmpty()) { //might be both
 //					loadExprs.add(value);
 					addTagExpr(loadExprs, value);

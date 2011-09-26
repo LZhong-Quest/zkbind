@@ -30,7 +30,7 @@ public class FormTestCase extends TestCaseBase{
 		Assert.assertEquals("",findWidget("$lb").getAttribute("value"));
 		
 		findWidget("$l1").clear().keys("XXX");
-		findWidget("$btn1").focus(0,1,2000);
+		findWidget("$btn1").focus();
 		
 		Assert.assertEquals("XXX",findWidget("$l1").getAttribute("value"));
 		Assert.assertEquals("Last1",findWidget("$l2").getAttribute("value"));
@@ -45,7 +45,7 @@ public class FormTestCase extends TestCaseBase{
 		Assert.assertEquals("",findWidget("$lb").getAttribute("value"));
 		
 		findWidget("$l5").clear().keys("YYY");
-		findWidget("$btn1").focus(0,1,2000);
+		findWidget("$btn1").focus();
 		
 		Assert.assertEquals("XXX",findWidget("$l1").getAttribute("value"));
 		Assert.assertEquals("Last1",findWidget("$l2").getAttribute("value"));
@@ -92,7 +92,7 @@ public class FormTestCase extends TestCaseBase{
 		Assert.assertEquals("",findWidget("$l8").getAttribute("value"));
 		
 		findWidget("$l1").clear().keys("XXX");
-		findWidget("$btn1").focus(0,1,2000);
+		findWidget("$btn1").focus();
 		
 		
 		Assert.assertEquals("XXX",findWidget("$l1").getAttribute("value"));
@@ -128,7 +128,7 @@ public class FormTestCase extends TestCaseBase{
 		Assert.assertEquals("XXX Last1",findWidget("$l8").getAttribute("value"));
 		
 		findWidget("$l1").clear().keys("YYY");
-		findWidget("$btn1").focus(0,1,2000);
+		findWidget("$btn1").focus();
 		
 		
 		findWidget("$btn1").click();

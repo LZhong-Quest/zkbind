@@ -81,12 +81,13 @@ public class BindingImpl implements Binding {
 			final String key = entry.getKey();
 			final Object value = entry.getValue();
 			if (value instanceof String[]) {
-				//TODO DENNIS, BUG, the impl. of addArg always keep last value only. 
+				//TODO DENNIS, BUG?, the impl. of addArg always keep last value only. 
 				//and, should we accept a expression in array in args? over kill?
 				for(String v : (String[]) value) {
 					addArg(eval, result, key, v);
 				}
 			} else {
+				//TODO,DENNIS, possible to accept non-string args? since binder.addPropertyBinding could be call by java program.
 				addArg(eval, result, key, value.toString());
 			}
 		}

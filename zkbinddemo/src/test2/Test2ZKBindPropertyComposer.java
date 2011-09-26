@@ -68,20 +68,25 @@ public class Test2ZKBindPropertyComposer extends GenericBindComposer {
 	}
 
 	
-	public void commandA1(){
+	public void cmd1(){
 		
 	}
 	
-	public void commandA2(){
-		
+	public void cmd2(){
+		value2 += "-by-cmd2";
 	}
 	
-	public void commandA3(){
-		value3 += "-byA3";
+	public void cmd3(){
+		value3 += "-by-cmd3";
+	}
+	
+	@NotifyChange("value3")
+	public void change3(){
+		value3 += "-by-change3";
 	}
 	
 	//@Command("commandA4")
-	public void commandA4(){
+	public void cmd4(){
 		
 	}
 }
