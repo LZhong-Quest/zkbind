@@ -49,6 +49,10 @@ public class LoadPropertyBindingImpl extends PropertyBindingImpl implements
 		if (_converter != null) {
 			final Converter conv = (Converter) eval.getValue(null, comp, _converter);
 			if (conv != null) {
+				//if a converter depends on some property, we should also add tracker
+				//TODO, Dennis, ISSUES, currently, a base path of a converter, is its binding path.
+				//ex @bind(vm.person.firstName) , it's base path is 'vm.person.firstName', not 'vm.person'
+				//this sepc is different with DependsOn of a property
 				addConverterDependsOnTrackings(conv, ctx);
 				value = conv.coerceToUi(value, comp, ctx);
 			}

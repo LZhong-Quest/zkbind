@@ -109,6 +109,9 @@ public class BindELResolver extends XelELResolver {
 		}
 	}
 
+	//get the path before the last dot, to be a basepath 
+	//ex, base path of 'vm.person.address.fullstr' will become 'vm.person.address'
+	//so, a depends-on(city) on fullstr in address will add a depends to 'vm.person.address'.'city'
 	private String basePath(List<String> path) {
     	final StringBuffer sb = new StringBuffer();
 		for(String prop : path.subList(0, path.size()-1)) { //remove the last one
