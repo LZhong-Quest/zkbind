@@ -32,6 +32,7 @@ import org.zkoss.zkbind.Property;
  */
 public class ValidationComposer extends GenericBindComposer {
 	private int value1;
+	private String value2;
 	public ValidationComposer() {
 	}
 	
@@ -44,11 +45,31 @@ public class ValidationComposer extends GenericBindComposer {
 		this.value1 = value1;
 	}
 	
+	
+	
+	public String getValue2() {
+		return value2;
+	}
+
+	@NotifyChange
+	public void setValue2(String value2) {
+		this.value2 = value2;
+	}
+
+
+
 	private String lastMessage;
 	
 	public String getLastMessage() {
 		return lastMessage;
 	}
+
+	@NotifyChange
+	public void setLastMessage(String lastMessage) {
+		this.lastMessage = lastMessage;
+	}
+	
+	
 
 	public boolean validate(String cmd,Set<Property> ps, BindContext ctx){
 		System.out.println(">>>validate "+cmd+",prop:"+ps);
@@ -63,11 +84,17 @@ public class ValidationComposer extends GenericBindComposer {
 			}
 		}
 		
-		//
+		setLastMessage("fail to validate "+cmd+","+ps);
+		//TODO notify change not work, it only work by call by EL, we have to notify it manually
+		getBinder().notifyChange(this, "lastMessage", null,null);
 		return false;
 	}
 
 	public void cmd1(){
+		
+	}
+	
+	public void cmd2(){
 		
 	}
 }

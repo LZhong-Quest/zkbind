@@ -300,4 +300,50 @@ public class LoadTestCase extends TestCaseBase{
 		Assert.assertEquals("CZZ-by-cmd3",findWidget("$l3x").getAttribute("value"));
 	}
 	
+	@Test
+	public void testConverter(){
+		WidgetDriver driver = getDriver();
+		driver.navigate(getTestCaseUrl("/test2/zkbind-converter.zul"));
+		
+		Assert.assertEquals("1975/02/13",findWidget("$t1").getAttribute("value"));
+		Assert.assertEquals("36",findWidget("$l1").getAttribute("value"));
+		Assert.assertEquals("1975/02/13",findWidget("$t2").getAttribute("value"));
+		Assert.assertEquals("36",findWidget("$l2").getAttribute("value"));
+		
+		findWidget("$t1").clear().keys("1980/02/AA");
+		findWidget("$saveForm").focus();
+		
+		Assert.assertEquals("",findWidget("$t1").getAttribute("value"));
+		Assert.assertEquals("0",findWidget("$l1").getAttribute("value"));
+		Assert.assertEquals("",findWidget("$t2").getAttribute("value"));
+		Assert.assertEquals("0",findWidget("$l2").getAttribute("value"));
+		
+		
+		findWidget("$t1").clear().keys("1980/02/13");
+		findWidget("$saveForm").focus();
+		
+		Assert.assertEquals("1980/02/13",findWidget("$t1").getAttribute("value"));
+		Assert.assertEquals("31",findWidget("$l1").getAttribute("value"));
+		Assert.assertEquals("1980/02/13",findWidget("$t2").getAttribute("value"));
+		Assert.assertEquals("31",findWidget("$l2").getAttribute("value"));
+		
+		
+		findWidget("$t2").clear().keys("1985/02/13");
+		findWidget("$saveForm").focus();
+		
+		Assert.assertEquals("1980/02/13",findWidget("$t1").getAttribute("value"));
+		Assert.assertEquals("31",findWidget("$l1").getAttribute("value"));
+		Assert.assertEquals("1985/02/13",findWidget("$t2").getAttribute("value"));
+		Assert.assertEquals("31",findWidget("$l2").getAttribute("value"));
+		
+		findWidget("$saveForm").click();
+		
+		Assert.assertEquals("1985/02/13",findWidget("$t1").getAttribute("value"));
+		Assert.assertEquals("26",findWidget("$l1").getAttribute("value"));
+		Assert.assertEquals("1985/02/13",findWidget("$t2").getAttribute("value"));
+		Assert.assertEquals("26",findWidget("$l2").getAttribute("value"));
+		
+		
+	}
+	
 }
