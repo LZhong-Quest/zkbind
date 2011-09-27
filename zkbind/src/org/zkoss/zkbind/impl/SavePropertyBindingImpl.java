@@ -56,11 +56,8 @@ public class SavePropertyBindingImpl extends PropertyBindingImpl implements Save
 				final Converter conv = (Converter) eval.getValue(null, comp, _converter);
 				if (conv != null) {
 					value = conv.coerceToBean(value, comp, ctx);
-					ValueReference ref = (ValueReference) getAttribute(ctx, $VALUEREF$);
-					if (ref == null) {
-						ref = eval.getValueReference(ctx, comp, _accessInfo.getProperty());
-						setAttribute(ctx, $VALUEREF$, ref);
-					}
+					
+					ValueReference ref = getValueReference(ctx);
 					//collect Property for @NotifyChange, kept in BindContext
 					//see BinderImpl$CommandEventListener#onEvent()
 					BindELContext.addNotifys(getConverterMethod(conv.getClass()), ref.getBase(), null, value, ctx);
@@ -80,6 +77,18 @@ public class SavePropertyBindingImpl extends PropertyBindingImpl implements Save
 		final BindEvaluatorX eval = getBinder().getEvaluatorX();
 		eval.setValue(ctx, comp, _accessInfo.getProperty(), value);
 	}
+	
+	//get and cache value reference of this binding
+	private ValueReference getValueReference(BindContext ctx){
+		ValueReference ref = (ValueReference) getAttribute(ctx, $VALUEREF$);
+		if (ref == null) {
+			final Component comp = ctx.getComponent();
+			final BindEvaluatorX eval = getBinder().getEvaluatorX();
+			ref = eval.getValueReference(ctx, comp, _accessInfo.getProperty());
+			setAttribute(ctx, $VALUEREF$, ref);
+		}
+		return ref;
+	}
 
 	//--SaveBinding--//
 	public Set<Property> getValidates(BindContext ctx) {
@@ -88,12 +97,7 @@ public class SavePropertyBindingImpl extends PropertyBindingImpl implements Save
 		if (isValidate()) {
 			final Object value = getComponentValue(ctx);
 			try {
-				ValueReference ref = (ValueReference) getAttribute(ctx, $VALUEREF$);
-				if (ref == null) {
-					final Component comp = ctx.getComponent();
-					final BindEvaluatorX eval = getBinder().getEvaluatorX();
-					ref = eval.getValueReference(ctx, comp, _accessInfo.getProperty());
-				}
+				ValueReference ref = getValueReference(ctx);
 				properties.add(new PropertyImpl(ref.getBase(), (String) ref.getProperty(), value));
 			} catch (Exception e) {
 				throw UiException.Aide.wrap(e);

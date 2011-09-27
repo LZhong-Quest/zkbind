@@ -47,7 +47,7 @@ public class SaveFormBindingImpl extends FormBindingImpl implements	SaveFormBind
 		final Form form = getFormBean();
 
 		//update form field into backing bean
-		final boolean vali = isValidate();
+//		final boolean vali = isValidate();
 		for (String field : form.getSaveFieldNames()) {
 			final ExpressionX expr = getFieldExpression(eval, field);
 			if (expr != null) {

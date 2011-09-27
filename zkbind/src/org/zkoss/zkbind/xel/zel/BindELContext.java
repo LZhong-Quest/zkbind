@@ -99,6 +99,7 @@ public class BindELContext extends XelELContext {
 		addNotifys(props, ctx);
 	}
 	
+	//utility method to add notifys to BindContext
 	private static void addNotifys(Set<Property> props, BindContext ctx) {
 		if (ctx == null) {
 			return;
@@ -111,7 +112,8 @@ public class BindELContext extends XelELContext {
 		notifys.addAll(props);
 	}
 	
-	public static void addValidates(Set<Property> props, BindContext ctx) {
+	//utility method to add validates to BindContext
+	private static void addValidates(Set<Property> props, BindContext ctx) {
 		if (ctx == null) {
 			return;
 		}

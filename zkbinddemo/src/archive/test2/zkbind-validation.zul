@@ -1,0 +1,16 @@
+<window apply="test2.ValidationComposer">
+	<custom-attributes composerName="vm"/>
+	<hbox>
+		<textbox id="t1" value="@bind(vm.value1, save=vm.value1 before 'cmd1', validate=true)" />
+		<label id="l1" value="@bind(vm.value1)"/>
+	</hbox>
+	<hbox>
+		<textbox id="t2" value="@bind(vm.value1, validate=true)" />
+		<label id="l2" value="@bind(vm.value1)"/>
+	</hbox>
+
+	<hbox>
+	
+		<button label="cmd1" onClick="@bind('cmd1')"/>
+	</hbox>
+</window>
