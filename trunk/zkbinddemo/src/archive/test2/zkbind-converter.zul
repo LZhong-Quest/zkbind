@@ -10,7 +10,7 @@
 		<label id="l2" value="@bind(fx.age1)"/>
 	</vbox>
 	<hbox>
-		<button label="saveForm" onClick="@bind('saveForm')" />
+		<button id="saveForm" label="saveForm" onClick="@bind('saveForm')" />
 	</hbox>
 	<hbox>
 		<button label="Dump" onClick="binder.getTracker().dump()" />
