@@ -640,9 +640,12 @@ public class BinderImpl implements Binder {
 			if (_prompt) {
 				log.debug("This is a prompt command");
 				if (command != null) { //command has own VALIDATE phase, don't do validate again
-					//TODO, DENNIS, ISSUES, is it possible prompt & command != null??
 					BinderImpl.this.doSaveEventNoValidate(comp, event, notifys); //save on event without validation
 				} else {
+					//TODO, DENNIS, ISSUE, What is the Spec of validation of prompt save?
+					//1.if a validation failed, should we break it?
+					//2.if a validation passed, should we save it?
+					//3.if any validation failed, should we do load-binding 
 					BinderImpl.this.doSaveEvent(comp, event, notifys); //save on event
 				}
 				BinderImpl.this.doLoadEvent(comp, evtnm); //load on event
@@ -770,6 +773,7 @@ public class BinderImpl implements Binder {
 		final String evtId = dualId(comp.getUuid(), evtnm);
 		final List<SavePropertyBinding> bindings = _saveEventBindings.get(evtId);
 		if (bindings != null) {
+			//TODO, DENNIS, ISSUE, What is the Spec of validation of prompt save?, check comment of onEvent also
 			for (SavePropertyBinding binding : bindings) {
 				final boolean success = doValidateSaveEvent(comp, binding, evt);
 				if (!success) { //failed validation
@@ -820,13 +824,14 @@ public class BinderImpl implements Binder {
 	private boolean doValidate(Component comp, String command, Event evt, Map args, BindContext ctx) {
 		final Set<Property> validates = new HashSet<Property>();
 		try {
-			log.debug("doValidate, comp=[%s],command=[%s],evt=[%s],context=[%s]",comp,command,evt,ctx);
+			log.debug("doValidate comp=[%s],command=[%s],evt=[%s],context=[%s]",comp,command,evt,ctx);
 			doBeforePhase(PhaseListener.VALIDATE, ctx);
 			
-			//collect Property for validation in validates
+			//collect Property of special command for validation in validates
 			collectValidateSaveBefore(comp, command, evt, validates);
 			collectValidateSaveAfter(comp, command, evt, validates);
 			if (evt != null) {
+				//also collect the validate on the prompt save-bind related to evt 
 				collectValidateSaveEvent(comp, command, evt, validates);
 			}
 			
@@ -834,9 +839,9 @@ public class BinderImpl implements Binder {
 			if (validates.isEmpty()) {
 				return true;
 			} else {
-				log.debug("doValidate, validates=[%s]",validates);
+				log.debug("doValidate validates=[%s]",validates);
 				final Method m = getValidateMethod();
-				return (Boolean) m.invoke(command, validates, ctx);
+				return (Boolean) m.invoke(getViewModel(),command, validates, ctx);
 			}
 		} catch (Exception e) {
 			throw UiException.Aide.wrap(e);
@@ -918,7 +923,10 @@ public class BinderImpl implements Binder {
 				doBeforePhase(PhaseListener.VALIDATE, ctx);
 				final Method m = getValidateMethod();
 				final Set<Property> validates = binding.getValidates(ctx);
-				return (Boolean) m.invoke(getViewModel(), new Object[] {null, validates, ctx});
+				log.debug("doValidateSaveEvent comp=[%s],binding=[%s],evt=[%s],validates=[%s]",comp,binding,evt,validates);
+				Boolean r = (Boolean) m.invoke(getViewModel(), new Object[] {null, validates, ctx});
+				log.debug("doValidateSaveEvent result=[%s]",r);
+				return r;
 			} catch (Exception e) {
 				throw UiException.Aide.wrap(e);
 			} finally {

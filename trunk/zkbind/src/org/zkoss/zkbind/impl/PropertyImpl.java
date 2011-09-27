@@ -47,6 +47,7 @@ public class PropertyImpl implements Property {
 	public String toString(){
 		return new StringBuilder().append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode()))
 		.append(",base:").append(getBase())
-		.append(",property:").append(getProperty()).toString();
+		.append(",property:").append(getProperty())
+		.append(",value:").append(getValue()).toString();
 	}
 }

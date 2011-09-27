@@ -49,7 +49,7 @@ public interface Binder {
 	 * @param args other key-value pairs. 
 	 */
 	public void addFormBindings(Component comp, String id, 
-			String[] loadExprs, String[] saveExprs, String[] confirmExprs, String validate, Map args);
+			String[] loadExprs, String[] saveExprs, String[] confirmExprs, String validateExprs, Map args);
 
 	/**
 	 * Add new property Bindings.
@@ -62,7 +62,7 @@ public interface Binder {
 	 * @param args other key-value pairs. 
 	 */
 	public void addPropertyBinding(Component comp, String attr, 
-			String[] loadExprs, String[] saveExprs, String converter, String validate, Map args);
+			String[] loadExprs, String[] saveExprs, String converterExprs, String validateExprs, Map args);
 
 	/**
 	 * Remove all managed bindings that associated with the specified component.
