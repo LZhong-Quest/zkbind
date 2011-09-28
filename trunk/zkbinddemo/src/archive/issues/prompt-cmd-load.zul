@@ -1,0 +1,16 @@
+<window apply="issues.PromptCmdLoadComposer">
+	<custom-attributes composerName="vm"/>
+	<vbox>
+		<textbox value="@bind(vm.value1)" />
+		<hbox>Prompt load : <label value="@bind(vm.value1)"/></hbox>
+		<hbox>load after cmd1 : <label value="@bind(load = vm.value1 after 'cmd1')"/></hbox>
+		<hbox>still only load after cmd1 : <label value="@bind(vm.value1, load = vm.value1 after 'cmd1')"/></hbox>
+		<hbox>still prompt load : <label value="@bind(load={vm.value1, vm.value1 after 'cmd1'})"/></hbox>
+	</vbox>
+	
+	<hbox>
+		<button label="cmd1" onClick="@bind('cmd1')"/>
+		
+		<button label="Dump" onClick="binder.getTracker().dump()" />
+	</hbox>	
+</window>

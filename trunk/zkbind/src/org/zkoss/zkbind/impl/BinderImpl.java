@@ -384,6 +384,9 @@ public class BinderImpl implements Binder {
 		//check attribute _accessInfo natural characteristics to register Command event listener 
 		final ComponentCtrl compCtrl = (ComponentCtrl) comp;
 		final Annotation ann = compCtrl.getAnnotation(attr, BinderImpl.SYSBIND);
+		//check which attribute of component should load to component on which event.
+		//the event is usually a engine lifecycle event.
+		//ex, listbox's 'selectedIndex' should be loaded to component on 'onAfterRender'
 		String evtnm = null;
 		if (ann != null) {
 			final Map attrs = ann.getAttributes(); //(tag, tagExpr)
@@ -426,6 +429,9 @@ public class BinderImpl implements Binder {
 		//check attribute _accessInfo natural characteristics to register Command event listener 
 		final ComponentCtrl compCtrl = (ComponentCtrl) comp;
 		final Annotation ann = compCtrl.getAnnotation(attr, BinderImpl.SYSBIND);
+		//check which attribute of component should fire save on which event.
+		//ex, listbox's 'selectedIndex' should be loaded to component on 'onSelect'
+		//ex, checkbox's 'checked' should be saved to bean on 'onCheck'
 		String evtnm = null;
 		if (ann != null) {
 			final Map attrs = ann.getAttributes(); //(tag, tagExpr)
@@ -831,7 +837,7 @@ public class BinderImpl implements Binder {
 			collectValidateSaveBefore(comp, command, evt, validates);
 			collectValidateSaveAfter(comp, command, evt, validates);
 			if (evt != null) {
-				//also collect the validate on the prompt save-bind related to evt 
+				//also collect the validate on the prompt save-bind that is related to evt 
 				collectValidateSaveEvent(comp, command, evt, validates);
 			}
 			

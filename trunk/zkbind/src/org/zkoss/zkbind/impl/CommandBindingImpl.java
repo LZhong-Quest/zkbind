@@ -47,6 +47,8 @@ public class CommandBindingImpl extends BindingImpl implements CommandBinding {
 	public String getCommandString() {
 		return getPureExpressionString(_command);
 	}
+	
+	//TODO, DENNIS, Nobody call this
 	public void execute(BindContext ctx) {
 		final Object base = getBinder().getViewModel();
 		final Component comp = ctx.getComponent();

@@ -52,16 +52,13 @@ public class SavePropertyBindingImpl extends PropertyBindingImpl implements Save
 			Object value = eval.getValue(null, comp, _fieldExpr);
 			
 			//use converter to convert type if any
-			if (_converter != null) {
-				final Converter conv = (Converter) eval.getValue(null, comp, _converter);
-				if (conv != null) {
-					value = conv.coerceToBean(value, comp, ctx);
-					
-					ValueReference ref = getValueReference(ctx);
+			final Converter conv = getConverter();
+			if (conv != null) {
+				value = conv.coerceToBean(value, comp, ctx);
+				ValueReference ref = getValueReference(ctx);
 					//collect Property for @NotifyChange, kept in BindContext
 					//see BinderImpl$CommandEventListener#onEvent()
-					BindELContext.addNotifys(getConverterMethod(conv.getClass()), ref.getBase(), null, value, ctx);
-				}
+				BindELContext.addNotifys(getConverterMethod(conv.getClass()), ref.getBase(), null, value, ctx);
 			}
 			setAttribute(ctx, $COMPVALUE$, value);
 		}
