@@ -16,7 +16,7 @@ import org.zkoss.zkbind.GenericBindComposer;
 import org.zkoss.zkbind.NotifyChange;
 
 /**
- * @author henri
+ * @author Dennis Chen
  * 
  */
 public class Test2ZKBindPropertyComposer extends GenericBindComposer {

@@ -34,7 +34,7 @@ import org.zkoss.zkbind.sys.PropertyBinding;
 public abstract class PropertyBindingImpl extends BindingImpl implements PropertyBinding {
 	protected final ExpressionX _fieldExpr;
 	protected final AccessInfo _accessInfo;
-	protected final ExpressionX _converter;
+	private final ExpressionX _converter;
 
 	protected PropertyBindingImpl(Binder binder, Component comp, String fieldScript, String accessScript, String converter, Map args) {
 		super(binder,comp, args);
@@ -42,12 +42,13 @@ public abstract class PropertyBindingImpl extends BindingImpl implements Propert
 		final Class returnType = Object.class;
 		this._fieldExpr = eval.parseExpressionX(null, fieldScript, returnType);
 		this._accessInfo = AccessInfo.create(this, accessScript, returnType);
+		//converter comes form viewmodel by el
 		this._converter = converter == null ? 
 				null : eval.parseExpressionX(null, BinderImpl.VM+ ".getConverter("+converter+")", Converter.class);
 	}
 	
 	public Converter getConverter() {
-		return (Converter) getBinder().getEvaluatorX().getValue(null, getComponent(), _converter);
+		return _converter==null?null:(Converter) getBinder().getEvaluatorX().getValue(null, getComponent(), _converter);
 	}
 	
 	public String getFieldName() {

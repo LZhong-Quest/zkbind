@@ -25,7 +25,7 @@ import test.Person;
 import test.Person.Address;
 
 /**
- * @author henri
+ * @author Dennis Chen
  *
  */
 public class Test2ZKBindLoadComposer extends GenericBindComposer {

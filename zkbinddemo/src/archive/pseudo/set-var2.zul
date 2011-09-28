@@ -1,0 +1,13 @@
+
+<window >
+	<include src="set-var1.zul" />
+	<!-- 
+	currently no possible to bind to attribute(no impl.) or args(life-cycle issue)
+	-->
+	<div  ctrl="@bind(vm.ctrl1)">
+		<include src="set-var1.zul"/>
+	</div>
+	<div  ctrl="@bind(vm.ctrl2)">
+		<include src="set-var1.zul"/>
+	</div>
+</window>
