@@ -5,7 +5,7 @@
 	Description:
 		
 	History:
-		Aug 9, 2011 12:28:17 PM, Created by henri
+		Aug 9, 2011 12:28:17 PM, Created by henrichen
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 */
@@ -24,7 +24,7 @@ import org.zkoss.zkbind.Form;
 
 /**
  * Implementation of the {@link Form}.
- * @author henri
+ * @author henrichen
  *
  */
 public class FormImpl implements Form {

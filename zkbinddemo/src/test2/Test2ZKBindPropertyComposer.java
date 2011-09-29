@@ -5,7 +5,7 @@
 	Description:
 		
 	History:
-		Aug 2, 2011 1:01:07 PM, Created by henri
+		Aug 2, 2011 1:01:07 PM, Created by Dennis Chen
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
  */

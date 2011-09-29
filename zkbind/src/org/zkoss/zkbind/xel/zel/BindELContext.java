@@ -5,7 +5,7 @@
 	Description:
 		
 	History:
-		Aug 10, 2011 4:52:27 PM, Created by henri
+		Aug 10, 2011 4:52:27 PM, Created by henrichen
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 */
@@ -42,7 +42,7 @@ import org.zkoss.zkbind.sys.Binding;
 
 /**
  * ELContext for Binding.
- * @author henri
+ * @author henrichen
  *
  */
 public class BindELContext extends XelELContext {

@@ -5,7 +5,7 @@
 	Description:
 		
 	History:
-		Aug 1, 2011 2:43:33 PM, Created by henri
+		Aug 1, 2011 2:43:33 PM, Created by henrichen
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 */
@@ -27,7 +27,7 @@ import org.zkoss.zkbind.xel.zel.BindELContext;
 
 /**
  * Implementation of {@link LoadPropertyBinding}.
- * @author henri
+ * @author henrichen
  */
 public class LoadPropertyBindingImpl extends PropertyBindingImpl implements
 		LoadPropertyBinding {

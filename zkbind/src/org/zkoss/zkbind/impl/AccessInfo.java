@@ -5,7 +5,7 @@
 	Description:
 		
 	History:
-		Jul 28, 2011 5:17:48 PM, Created by henri
+		Jul 28, 2011 5:17:48 PM, Created by henrichen
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 */
@@ -28,7 +28,7 @@ import org.zkoss.zkbind.sys.Binding;
  * "load = property (before|after) command"
  * "save = property (before|after) command"
  * </p>
- * @author henri
+ * @author henrichen
  *
  */
 public class AccessInfo {

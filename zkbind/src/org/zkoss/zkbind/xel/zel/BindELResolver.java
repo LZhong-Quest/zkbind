@@ -5,7 +5,7 @@
 	Description:
 		
 	History:
-		Aug 10, 2011 4:31:51 PM, Created by henri
+		Aug 10, 2011 4:31:51 PM, Created by henrichen
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 */
@@ -36,7 +36,7 @@ import org.zkoss.zkbind.sys.SaveBinding;
 
 /**
  * ELResolver for Binding; handle Form bean.
- * @author henri
+ * @author henrichen
  *
  */
 public class BindELResolver extends XelELResolver {

@@ -1,11 +1,11 @@
-/* SelectedItemConverter.java
+/* SelectedListitemConverter.java
 
 	Purpose:
 		
 	Description:
 		
 	History:
-		Aug 17, 2011 6:10:20 PM, Created by henri
+		Aug 17, 2011 6:10:20 PM, Created by henrichen
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 */
@@ -24,7 +24,7 @@ import org.zkoss.zul.Listitem;
 
 /**
  * Convert listbox selected listitem to bean and vice versa.
- * @author henri
+ * @author henrichen
  *
  */
 public class SelectedListitemConverter implements Converter, java.io.Serializable {

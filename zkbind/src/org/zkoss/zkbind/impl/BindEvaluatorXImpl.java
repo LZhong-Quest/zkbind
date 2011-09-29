@@ -5,7 +5,7 @@
 	Description:
 		
 	History:
-		Jul 29, 2011 9:30:30 AM, Created by henri
+		Jul 29, 2011 9:30:30 AM, Created by henrichen
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 */
@@ -26,7 +26,7 @@ import org.zkoss.zkbind.sys.BindEvaluatorX;
 /**
  * A simple implementation of {@link BindEvaluatorX}.
  * 
- * @author henri
+ * @author henrichen
  *
  */
 public class BindEvaluatorXImpl extends SimpleEvaluator implements BindEvaluatorX {

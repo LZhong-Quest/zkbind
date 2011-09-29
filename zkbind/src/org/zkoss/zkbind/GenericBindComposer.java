@@ -5,7 +5,7 @@
 	Description:
 		
 	History:
-		Jun 22, 2011 10:09:50 AM, Created by henri
+		Jun 22, 2011 10:09:50 AM, Created by henrichen
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 */
@@ -26,7 +26,7 @@ import org.zkoss.zkbind.impl.BinderImpl;
 
 /**
  * Base composer to apply ZK Bind.
- * @author henri
+ * @author henrichen
  *
  */
 public class GenericBindComposer implements Composer, ComposerExt {
@@ -70,7 +70,7 @@ public class GenericBindComposer implements Composer, ComposerExt {
 
 	//--Composer--//
 	public void doAfterCompose(Component comp) throws Exception {
-		//TODO, Dennis, need to confirm with henri about annotation or attribute
+		//TODO, Dennis, need to confirm with henrichen about annotation or attribute
 		//name this composer
 		final String cname = getAnnotationOrAttribute(comp,"composerName");
 		comp.setAttribute(cname != null ? cname : comp.getId()+"$composer", this);

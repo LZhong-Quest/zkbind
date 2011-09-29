@@ -5,7 +5,7 @@
 	Description:
 		
 	History:
-		Jul 26, 2011 5:00:34 PM, Created by henri
+		Jul 26, 2011 5:00:34 PM, Created by henrichen
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 */
@@ -17,7 +17,7 @@ import org.zkoss.zel.impl.parser.Node;
 
 /**
  * Represent a property of a base object in the binding.
- * @author henri
+ * @author henrichen
  *
  */
 public interface Property {

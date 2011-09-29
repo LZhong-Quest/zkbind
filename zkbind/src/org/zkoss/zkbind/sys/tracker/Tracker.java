@@ -5,7 +5,7 @@
 	Description:
 		
 	History:
-		Jun 29, 2011 6:33:22 PM, Created by henri
+		Jun 29, 2011 6:33:22 PM, Created by henrichen
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 */
@@ -22,7 +22,7 @@ import org.zkoss.zkbind.sys.PropertyBinding;
 /**
  * Bind tracker to maintain a binding dependency graph.
  * e.g. @{a.b.c, save-onchange:d.e.f} then it forms a dependency from d.e.f to a.b.c for save. 
- * @author henri
+ * @author henrichen
  */
 public interface Tracker {
 	/**

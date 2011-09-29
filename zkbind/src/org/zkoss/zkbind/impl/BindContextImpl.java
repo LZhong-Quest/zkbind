@@ -5,7 +5,7 @@
 	Description:
 		
 	History:
-		Aug 2, 2011 1:09:16 PM, Created by henri
+		Aug 2, 2011 1:09:16 PM, Created by henrichen
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 */
@@ -24,7 +24,7 @@ import org.zkoss.zkbind.sys.Binding;
 
 /**
  * Implementation of {@link BindContext}.
- * @author henri
+ * @author henrichen
  *
  */
 public class BindContextImpl implements BindContext {

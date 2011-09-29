@@ -5,7 +5,7 @@
 	Description:
 		
 	History:
-		Sep 2, 2011 1:19:14 PM, Created by henri
+		Sep 2, 2011 1:19:14 PM, Created by henrichen
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 */
@@ -26,7 +26,7 @@ import org.zkoss.zkbind.sys.tracker.Tracker;
 
 /**
  * Track Binding CRUD and dependent tracking management. 
- * @author henri
+ * @author henrichen
  */
 public class BindUiLifeCycle implements UiLifeCycle {
 	public void afterComponentAttached(Component comp, Page page) {

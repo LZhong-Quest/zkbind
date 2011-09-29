@@ -5,7 +5,7 @@
 	Description:
 		
 	History:
-		Jun 29, 2011 6:37:03 PM, Created by henri
+		Jun 29, 2011 6:37:03 PM, Created by henrichen
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 */
@@ -19,7 +19,7 @@ import org.zkoss.zkbind.sys.Binding;
 
 /**
  * Tracker Node in a binding dependency graph.
- * @author henri
+ * @author henrichen
  *
  */
 public interface TrackerNode {

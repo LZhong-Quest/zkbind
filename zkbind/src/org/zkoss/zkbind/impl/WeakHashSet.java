@@ -5,7 +5,7 @@
 	Description:
 		
 	History:
-		Sep 2, 2011 12:15:42 PM, Created by henri
+		Sep 2, 2011 12:15:42 PM, Created by henrichen
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 */
@@ -20,7 +20,7 @@ import java.util.WeakHashMap;
 
 /**
  * A {@link Set} that each entry is weakly referenced.
- * @author henri
+ * @author henrichen
  */
 public class WeakHashSet<E> implements Set<E> {
 	private final Map<E, Object> _map; 

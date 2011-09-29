@@ -5,7 +5,7 @@
 	Description:
 		
 	History:
-		Jun 24, 2011 6:36:05 PM, Created by henri
+		Jun 24, 2011 6:36:05 PM, Created by henrichen
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 */
@@ -16,7 +16,7 @@ import java.util.Set;
 
 /**
  * Virtual Bean that associated with a form. 
- * @author henri
+ * @author henrichen
  *
  */
 public interface Form {

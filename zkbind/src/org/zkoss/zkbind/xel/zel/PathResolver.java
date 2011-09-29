@@ -5,7 +5,7 @@
 	Description:
 		
 	History:
-		Sep 8, 2011 9:05:13 AM, Created by henri
+		Sep 8, 2011 9:05:13 AM, Created by henrichen
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 */
@@ -31,7 +31,7 @@ import org.zkoss.zkbind.impl.Path;
 
 /**
  * Handle dot series path when evaluating expression.
- * @author henri
+ * @author henrichen
  *
  */
 public class PathResolver extends ELResolver {
