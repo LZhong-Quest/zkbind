@@ -13,7 +13,6 @@
 	    $SE$ is the save trigger event; meaningful only when $A$ is "both" or "save".
 	    $LE$ is the load trigger event; meaningful only when $A$ is "both" or "load" or not found(default to "load").
 	    $R$ is the special renderer for binding
-	    $T$ is the possible template field for binding(e.g. rows in grid)
 	    $SYSBIND$ is the system annotation
 	    (see BinderImpl.java)
 	    
@@ -275,14 +274,6 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 			<attribute>
 				<attribute-name>$R$</attribute-name>
 				<attribute-value>rowRenderer=org.zkoss.zkbind.impl.BindRowRenderer</attribute-value>
-			</attribute>
-		</annotation>
-		
-		<annotation>
-			<annotation-name>$SYSBIND$</annotation-name>
-			<attribute>
-				<attribute-name>$T$</attribute-name>
-				<attribute-value>rows</attribute-value>
 			</attribute>
 		</annotation>
 		
@@ -695,10 +686,38 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 		<component-name>toolbarbutton</component-name>
 		<extends>toolbarbutton</extends>
 	</component-->
-	<!--component>
+	<component>
 		<component-name>tree</component-name>
 		<extends>tree</extends>
-	</component-->
+		<annotation>
+			<annotation-name>$SYSBIND$</annotation-name>
+			<attribute>
+				<attribute-name>$R$</attribute-name>
+				<attribute-value>itemRenderer=org.zkoss.zkbind.impl.BindTreeitemRenderer</attribute-value>
+			</attribute>
+		</annotation>
+		
+		<annotation>
+			<annotation-name>$SYSBIND$</annotation-name>
+			<property-name>selectedItem</property-name>
+			<attribute>
+				<attribute-name>$SE$</attribute-name>
+				<attribute-value>onSelect</attribute-value>
+			</attribute>
+			<attribute>
+				<attribute-name>$LE$</attribute-name>
+				<attribute-value>onAfterRender</attribute-value>
+			</attribute>
+			<attribute>
+				<attribute-name>$A$</attribute-name>
+				<attribute-value>both</attribute-value>
+			</attribute>
+			<attribute>
+				<attribute-name>$C$</attribute-name>
+				<attribute-value>org.zkoss.zkbind.converter.sys.SelectedTreeitemConverter</attribute-value>
+			</attribute>
+		</annotation>
+	</component>
 	<!--component>
 		<component-name>treecell</component-name>
 		<extends>treecell</extends>
