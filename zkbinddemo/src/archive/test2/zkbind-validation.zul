@@ -1,22 +1,29 @@
 <window apply="test2.ValidationComposer">
 	<custom-attributes composerName="vm"/>
 	<hbox>
+		Command
 		<textbox id="t1" value="@bind(vm.value1, save=vm.value1 before 'cmd1', validate=true)" />
 		<textbox id="t1x" value="@bind(vm.value2, save=vm.value2 before 'cmd1', validate=true)" />
-		<label id="l1" value="@bind(vm.value1)"/>
 	</hbox>
 	<hbox>
-		<textbox id="t2" value="@bind(vm.value1, validate=true)" />
-		<textbox id="t2x" value="@bind(vm.value2, validate=true)" />
-		<label id="l2" value="@bind(vm.value1)"/>
+		Prompt
+		<textbox id="t2" value="@bind(vm.value1, validate=true)" errorMessage="@bind(vm.lastMessage1)" />
+		<textbox id="t2x" value="@bind(vm.value2, validate=true)" errorMessage="@bind(vm.lastMessage2)"/>
 	</hbox>
+	<!--
+	there is a nested validation value issue
+	t3->fx.value1, validation fail, fx.value will be initial-value or last-validated value
+	fx.value1->vm, validation passed, form the ui, you see a wrong value(ex,2), however vm will have last validated value(ex 13)
+	-->	
 	<hbox self="@form(id='fx',load=vm, save=vm before 'cmd2' ,validate=true)">
+		Form
 		<textbox id="t3" value="@bind(fx.value1, validate=true)" />
 		<textbox id="t4" value="@bind(fx.value2, validate=true)" />
 	</hbox>
-	<hbox>
-		<label value="@bind(vm.lastMessage)"></label>
-	</hbox>
+	<vbox>
+		<label value="@bind(vm.lastMessage1)"></label>
+		<label value="@bind(vm.lastMessage2)"></label>
+	</vbox>
 	<hbox>
 	
 		<button label="cmd1" onClick="@bind('cmd1')"/>

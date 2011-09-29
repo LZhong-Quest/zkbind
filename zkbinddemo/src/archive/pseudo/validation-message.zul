@@ -1,0 +1,40 @@
+<zk>
+	<!-- case 1 -->
+	<!-- default wrong value like error -->
+	<textbox value="@bind(vm.value1, validator=vm.validator1')" errorMessage="messages[self]"  />
+	
+	
+	<!-- case 2-->
+	<hbox>
+		<textbox id="tx" value="@bind(vm.value1, validator=vm.validator1')" />
+		<!--  
+		1.the scope of messages
+		2.the notify scope of message, if messages scope is execution, and notify to messages.* 
+		2.null value of messages['tx'] when notify
+		-->
+		<div visible="@bind(!messages[tx])">
+			<label value="messages[tx].value" />
+		</div>
+	</hbox>
+	
+	<!-- a special message component of zk binding?-->
+	<!-- template could come form global configuration -->
+	<hbox>
+		<textbox id="tx" value="@bind(vm.value1, validator=vm.validator1')" />
+		<message for="tx" template="field-msg"/> 
+		<!-- 
+		rendered when there is message for tx
+		it is ok for command case ?
+		-->
+		
+	</hbox>
+	<template id="field-msg">
+		<div>
+			<image src="@bind(message.error?'error.png':'info.png')"/>
+			<label value="@bind(message.value)" />
+		</div>
+	</template>
+
+
+
+</zk>

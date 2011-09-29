@@ -1,0 +1,5 @@
+<window>
+	<textbox value="@bind(vm.person.firstName,notify=vm.person)"/>
+	<textbox value="@bind(vm.person.firstName,notify=vm.person.fullName)"/>
+	<textbox value="@bind(vm.person.firstName,notify=fullName)"/>
+</window>
