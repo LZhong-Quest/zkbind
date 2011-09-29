@@ -5,7 +5,7 @@
 	Description:
 		
 	History:
-		Aug 10, 2011 6:49:34 PM, Created by henri
+		Aug 10, 2011 6:49:34 PM, Created by henrichen
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 */
@@ -22,7 +22,7 @@ package org.zkoss.zkbind;
  * <li>{@link SAVE_AFTER}: do save bindings after executing the command</li>
  * <li>{@link LOAD_AFTER}: do load bindings after executing the command</li>
  * </ul>
- * @author henri
+ * @author henrichen
  *
  */
 public interface PhaseListener {

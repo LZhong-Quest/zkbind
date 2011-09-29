@@ -5,7 +5,7 @@
 	Description:
 		
 	History:
-		Aug 2, 2011 1:01:07 PM, Created by henri
+		Aug 2, 2011 1:01:07 PM, Created by henrichen
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 */
@@ -24,7 +24,7 @@ import org.zkoss.zul.ListModelList;
 import test.Person.Address;
 
 /**
- * @author henri
+ * @author henrichen
  *
  */
 public class ZKBindLoad1Composer extends GenericBindComposer {

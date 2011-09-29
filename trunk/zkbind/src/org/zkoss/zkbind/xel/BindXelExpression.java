@@ -5,7 +5,7 @@
 	Description:
 		
 	History:
-		Aug 10, 2011 5:42:27 PM, Created by henri
+		Aug 10, 2011 5:42:27 PM, Created by henrichen
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 */
@@ -19,7 +19,7 @@ import org.zkoss.zel.ValueExpression;
 import org.zkoss.zkbind.xel.zel.BindELContext;
 
 /**
- * @author henri
+ * @author henrichen
  *
  */
 public class BindXelExpression extends ELXelExpression {

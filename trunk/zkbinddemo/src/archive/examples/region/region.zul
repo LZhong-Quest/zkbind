@@ -1,0 +1,19 @@
+<groupbox apply="org.zkoss.mvvm.examples.region.RegionViewModel">
+	<custom-attributes composerName="vm"/>
+	<caption label="Region"/>
+	<listbox model="@bind(vm.regions)" selectedItem="@bind(vm.region)" mold="select">
+		<template name="model" var="r">
+			<listitem label="@bind(r.name)"/>
+		</template>
+	</listbox>
+	<listbox model="@bind(vm.states)" selectedItem="@bind(vm.state)" mold="select">
+		<template name="model" var="s">
+			<listitem label="@bind(s.name)"/>
+		</template>
+	</listbox>
+	<listbox model="@bind(vm.cities)" selectedItem="@bind(vm.city)" mold="select">
+		<template name="model" var="c">
+			<listitem label="@bind(c.name)"/>
+		</template>
+	</listbox>
+</groupbox>

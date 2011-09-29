@@ -5,7 +5,7 @@
 	Description:
 		
 	History:
-		Jul 26, 2011 3:48:41 PM, Created by henri
+		Jul 26, 2011 3:48:41 PM, Created by henrichen
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 */
@@ -17,7 +17,7 @@ import org.zkoss.zkbind.Converter;
 /**
  * A binding tells how to deal with Load or Save a field of a source object
  * (usually an UI component) and a property of a target object(usually a backing bean).
- * @author henri
+ * @author henrichen
  */
 public interface PropertyBinding extends Binding {
 	/**

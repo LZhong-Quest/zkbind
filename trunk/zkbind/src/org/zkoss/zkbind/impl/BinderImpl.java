@@ -175,7 +175,8 @@ public class BinderImpl implements Binder {
 		final Tracker tracker = getTracker();
 		final Set<LoadBinding> bindings = tracker.getLoadBindings(base, prop);
 		for(LoadBinding binding : bindings) {
-			final BindContext ctx = new BindContextImpl(this, binding, false, null, binding.getComponent(), null, null);
+			final Map<String, Object> args = evalArgs(binding.getComponent(), binding.getArgs());
+			final BindContext ctx = new BindContextImpl(this, binding, false, null, binding.getComponent(), null, args);
 			log.debug("loadOnPropertyChange:binding.load(),binding=[%s],context=[%s]",binding,ctx);
 			binding.load(ctx);
 		}

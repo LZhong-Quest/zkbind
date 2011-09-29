@@ -5,7 +5,7 @@
 	Description:
 		
 	History:
-		Aug 16, 2011 10:34:50 AM, Created by henri
+		Aug 16, 2011 10:34:50 AM, Created by henrichen
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 */
@@ -28,17 +28,14 @@ import org.zkoss.zul.Rows;
 
 /**
  * Row renderer for binding.
- * @author henri
+ * @author henrichen
  *
  */
 public class BindRowRenderer implements RowRenderer {
 	public void render(final Row row, final Object data) {
 		final Rows rows = (Rows)row.getParent();
-		Template tm = rows.getTemplate("model");
 		final Grid grid = (Grid)rows.getParent();
-		if (tm == null) {
-			tm = grid.getTemplate("model");
-		}
+		final Template tm = grid.getTemplate("model");
 		if (tm == null) {
 			final Label label = newRenderLabel(Objects.toString(data));
 			label.applyProperties();

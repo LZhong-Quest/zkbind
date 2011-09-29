@@ -5,7 +5,7 @@
 	Description:
 		
 	History:
-		Aug 17, 2011 3:47:56 PM, Created by henri
+		Aug 17, 2011 3:47:56 PM, Created by henrichen
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 */
@@ -26,7 +26,7 @@ import org.zkoss.zul.ComboitemRenderer;
 
 /**
  * comboitem renderer for binding.
- * @author henri
+ * @author henrichen
  *
  */
 public class BindComboitemRenderer implements ComboitemRenderer {

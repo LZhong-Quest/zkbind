@@ -5,7 +5,7 @@
 	Description:
 		
 	History:
-		Jun 22, 2011 11:22:20 AM, Created by henri
+		Jun 22, 2011 11:22:20 AM, Created by henrichen
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 */
@@ -22,7 +22,7 @@ import org.zkoss.zkbind.Converter;
 
 /**
  * Converter to convert String to Date.
- * @author henri
+ * @author henrichen
  *
  */
 public class FormatedDateConverter implements Converter {

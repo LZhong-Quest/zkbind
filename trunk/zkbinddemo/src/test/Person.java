@@ -11,7 +11,7 @@ import org.zkoss.zkbind.NotifyChange;
 
 /**
  * A Person bean.
- * @author henri
+ * @author henrichen
  *
  */
 public class Person {

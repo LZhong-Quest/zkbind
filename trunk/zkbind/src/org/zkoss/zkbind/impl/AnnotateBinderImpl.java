@@ -5,7 +5,7 @@
 	Description:
 		
 	History:
-		Aug 4, 2011 10:56:14 AM, Created by henri
+		Aug 4, 2011 10:56:14 AM, Created by henrichen
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 */
@@ -16,7 +16,7 @@ import org.zkoss.zk.ui.Component;
 
 /**
  * ZK Annotated Binder.
- * @author henri
+ * @author henrichen
  *
  */
 public class AnnotateBinderImpl extends BinderImpl {

@@ -5,7 +5,7 @@
 	Description:
 		
 	History:
-		Jun 22, 2011 9:56:43 AM, Created by henri
+		Jun 22, 2011 9:56:43 AM, Created by henrichen
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 */
@@ -19,7 +19,7 @@ import org.zkoss.zkbind.Binder;
 /**
  * A Binding represent a relation between a source object
  * (usually an UI component) and a target object(usually a backing bean).
- * @author henri
+ * @author henrichen
  */
 public interface Binding {
 	/**

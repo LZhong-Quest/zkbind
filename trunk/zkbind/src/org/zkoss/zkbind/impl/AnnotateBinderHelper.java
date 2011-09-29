@@ -5,7 +5,7 @@
 	Description:
 		
 	History:
-		Sep 9, 2011 6:06:10 PM, Created by henri
+		Sep 9, 2011 6:06:10 PM, Created by henrichen
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 */
@@ -27,7 +27,7 @@ import org.zkoss.zkbind.Binder;
 
 /**
  * Helper class to parse binding annotations and create bindings. 
- * @author henri
+ * @author henrichen
  *
  */
 public class AnnotateBinderHelper {

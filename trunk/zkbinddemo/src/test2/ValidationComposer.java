@@ -5,7 +5,7 @@
 	Description:
 		
 	History:
-		Aug 2, 2011 1:01:07 PM, Created by henri
+		Aug 2, 2011 1:01:07 PM, Created by henrichen
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
  */
@@ -27,7 +27,7 @@ import org.zkoss.zkbind.NotifyChange;
 import org.zkoss.zkbind.Property;
 
 /**
- * @author henri
+ * @author henrichen
  * 
  */
 public class ValidationComposer extends GenericBindComposer {

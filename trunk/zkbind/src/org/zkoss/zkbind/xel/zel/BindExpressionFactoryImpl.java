@@ -5,7 +5,7 @@
 	Description:
 		
 	History:
-		Aug 15, 2011 11:07:43 AM, Created by henri
+		Aug 15, 2011 11:07:43 AM, Created by henrichen
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 */
@@ -18,7 +18,7 @@ import org.zkoss.zel.impl.lang.ExpressionBuilder;
 import org.zkoss.zkbind.xel.BindXelFactory;
 /**
  * Handle dot series script.
- * @author henri
+ * @author henrichen
  * @see BindExpressionBuilder
  * @see BindXelFactory
  */

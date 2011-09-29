@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 
 /**
  * Notify value change.
- * @author henri
+ * @author henrichen
  *
  */
 @Target(ElementType.METHOD)

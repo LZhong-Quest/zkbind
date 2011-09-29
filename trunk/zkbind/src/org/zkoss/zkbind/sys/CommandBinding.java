@@ -5,7 +5,7 @@
 	Description:
 		
 	History:
-		Jul 26, 2011 3:55:28 PM, Created by henri
+		Jul 26, 2011 3:55:28 PM, Created by henrichen
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 */
@@ -16,7 +16,7 @@ import org.zkoss.zkbind.BindContext;
 
 /**
  * A binding tells which command to call(usually used with UI event).
- * @author henri
+ * @author henrichen
  *
  */
 public interface CommandBinding extends Binding {

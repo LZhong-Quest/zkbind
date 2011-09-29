@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 
 /**
  * Specify variable dependency.
- * @author henri
+ * @author henrichen
  *
  */
 @Target(ElementType.METHOD)

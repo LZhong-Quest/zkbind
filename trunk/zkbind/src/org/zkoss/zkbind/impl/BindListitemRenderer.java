@@ -5,7 +5,7 @@
 	Description:
 		
 	History:
-		Aug 17, 2011 3:35:42 PM, Created by henri
+		Aug 17, 2011 3:35:42 PM, Created by henrichen
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 */
@@ -19,14 +19,13 @@ import org.zkoss.xel.XelException;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.UiException;
 import org.zkoss.zk.ui.util.Template;
-import org.zkoss.zkbind.Binder;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listitem;
 import org.zkoss.zul.ListitemRenderer;
 
 /**
  * Listitem renderer for binding.
- * @author henri
+ * @author henrichen
  *
  */
 public class BindListitemRenderer implements ListitemRenderer {

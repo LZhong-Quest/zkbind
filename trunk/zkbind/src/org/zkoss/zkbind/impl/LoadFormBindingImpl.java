@@ -5,7 +5,7 @@
 	Description:
 		
 	History:
-		Aug 9, 2011 6:25:44 PM, Created by henri
+		Aug 9, 2011 6:25:44 PM, Created by henrichen
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 */
@@ -28,7 +28,7 @@ import org.zkoss.zkbind.xel.zel.BindELContext;
 
 /**
  * Implementation of {@link LoadFormBinding}
- * @author henri
+ * @author henrichen
  *
  */
 public class LoadFormBindingImpl extends FormBindingImpl implements	LoadFormBinding {

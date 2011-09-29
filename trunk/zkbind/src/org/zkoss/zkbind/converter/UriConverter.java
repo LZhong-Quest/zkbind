@@ -5,7 +5,7 @@
 	Description:
 		
 	History:
-		Jun 23, 2011 12:18:59 PM, Created by henri
+		Jun 23, 2011 12:18:59 PM, Created by henrichen
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 */
@@ -17,7 +17,7 @@ import org.zkoss.zkbind.Converter;
 
 /**
  * Convert String into Uri
- * @author henri
+ * @author henrichen
  *
  */
 public class UriConverter implements Converter {

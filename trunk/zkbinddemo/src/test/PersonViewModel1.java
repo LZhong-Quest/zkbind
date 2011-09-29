@@ -5,7 +5,7 @@
 	Description:
 		
 	History:
-		Jun 22, 2011 11:13:54 AM, Created by henri
+		Jun 22, 2011 11:13:54 AM, Created by henrichen
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 */
@@ -34,7 +34,7 @@ import org.zkoss.zul.Messagebox;
 
 /**
  * The ViewModel to show {@link Person}, example 1.
- * @author henri
+ * @author henrichen
  *
  */
 public class PersonViewModel1 extends GenericBindComposer {

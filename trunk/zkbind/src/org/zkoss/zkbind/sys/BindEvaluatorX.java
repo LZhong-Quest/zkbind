@@ -5,7 +5,7 @@
 	Description:
 		
 	History:
-		Jul 29, 2011 9:11:31 AM, Created by henri
+		Jul 29, 2011 9:11:31 AM, Created by henrichen
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 */
@@ -24,7 +24,7 @@ import org.zkoss.zkbind.BindContext;
  *
  * <p>With {@link BindEvaluatorX}, you are allow to parse a Method expression or set value into property
  * resolved by the provided expression.</p>
- * @author henri
+ * @author henrichen
  * @since 2.0.0
  */
 public interface BindEvaluatorX extends Evaluator {

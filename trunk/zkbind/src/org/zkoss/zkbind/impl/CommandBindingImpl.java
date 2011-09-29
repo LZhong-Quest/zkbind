@@ -5,7 +5,7 @@
 	Description:
 		
 	History:
-		Aug 8, 2011 3:28:41 PM, Created by henri
+		Aug 8, 2011 3:28:41 PM, Created by henrichen
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 */
@@ -26,7 +26,7 @@ import org.zkoss.zkbind.sys.CommandBinding;
 
 /**
  * Implementation of CommandBinding.
- * @author henri
+ * @author henrichen
  *
  */
 public class CommandBindingImpl extends BindingImpl implements CommandBinding {

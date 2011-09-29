@@ -5,7 +5,7 @@
 	Description:
 		
 	History:
-		Aug 25, 2011 9:24:41 AM, Created by henri
+		Aug 25, 2011 9:24:41 AM, Created by henrichen
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 */
@@ -25,7 +25,7 @@ import org.zkoss.zkbind.sys.tracker.TrackerNode;
 import org.zkoss.zkbind.xel.zel.BindELContext;
 
 /**
- * @author henri
+ * @author henrichen
  *
  */
 public class TrackerNodeImpl implements TrackerNode {

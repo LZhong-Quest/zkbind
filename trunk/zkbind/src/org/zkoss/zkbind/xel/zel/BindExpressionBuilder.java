@@ -5,7 +5,7 @@
 	Description:
 		
 	History:
-		Aug 15, 2011 11:04:37 AM, Created by henri
+		Aug 15, 2011 11:04:37 AM, Created by henrichen
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 */
@@ -40,7 +40,7 @@ import org.zkoss.zkbind.tracker.impl.TrackerImpl;
 
 /**
  * Handle value dot series script for Binding.
- * @author henri
+ * @author henrichen
  *
  */
 public class BindExpressionBuilder extends ExpressionBuilder {

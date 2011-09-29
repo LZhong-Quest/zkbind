@@ -5,7 +5,7 @@
 	Description:
 		
 	History:
-		Aug 5, 2011 11:02:23 AM, Created by henri
+		Aug 5, 2011 11:02:23 AM, Created by henrichen
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 */
@@ -32,7 +32,7 @@ import org.zkoss.zkbind.sys.Binding;
 
 /**
  * Base implementation for implementing a {@link Binding}
- * @author henri
+ * @author henrichen
  *
  */
 public class BindingImpl implements Binding {

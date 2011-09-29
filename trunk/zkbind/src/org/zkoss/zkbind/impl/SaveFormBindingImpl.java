@@ -5,7 +5,7 @@
 	Description:
 		
 	History:
-		Aug 9, 2011 6:30:34 PM, Created by henri
+		Aug 9, 2011 6:30:34 PM, Created by henrichen
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 */
@@ -28,7 +28,7 @@ import org.zkoss.zkbind.sys.SaveFormBinding;
 
 /**
  * Implementation of {@link SaveFormBinding}.
- * @author henri
+ * @author henrichen
  *
  */
 public class SaveFormBindingImpl extends FormBindingImpl implements	SaveFormBinding {

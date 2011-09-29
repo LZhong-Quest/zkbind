@@ -5,7 +5,7 @@
 	Description:
 		
 	History:
-		Aug 12, 2011 12:45:49 PM, Created by henri
+		Aug 12, 2011 12:45:49 PM, Created by henrichen
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 */
@@ -19,7 +19,7 @@ import org.zkoss.zkbind.Property;
 
 /**
  * Implementation of a property.
- * @author henri
+ * @author henrichen
  *
  */
 public class PropertyImpl implements Property {

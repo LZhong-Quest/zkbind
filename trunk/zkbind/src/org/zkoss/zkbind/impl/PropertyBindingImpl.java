@@ -5,7 +5,7 @@
 	Description:
 		
 	History:
-		Thu Jul 28 11:59:20     2011, Created by henri
+		Thu Jul 28 11:59:20     2011, Created by henrichen
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 */
@@ -29,7 +29,7 @@ import org.zkoss.zkbind.sys.PropertyBinding;
 
 /**
  * A base implementation of {@link PropertyBinding}.
- * @author henri
+ * @author henrichen
  */
 public abstract class PropertyBindingImpl extends BindingImpl implements PropertyBinding {
 	protected final ExpressionX _fieldExpr;
@@ -42,7 +42,7 @@ public abstract class PropertyBindingImpl extends BindingImpl implements Propert
 		final Class returnType = Object.class;
 		this._fieldExpr = eval.parseExpressionX(null, fieldScript, returnType);
 		this._accessInfo = AccessInfo.create(this, accessScript, returnType);
-		//converter comes form viewmodel by el
+		//converter comes from viewmodel by el
 		this._converter = converter == null ? 
 				null : eval.parseExpressionX(null, BinderImpl.VM+ ".getConverter("+converter+")", Converter.class);
 	}
