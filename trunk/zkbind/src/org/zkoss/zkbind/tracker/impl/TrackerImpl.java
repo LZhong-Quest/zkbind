@@ -5,7 +5,7 @@
 	Description:
 		
 	History:
-		Aug 24, 2011 7:31:14 PM, Created by henri
+		Aug 24, 2011 7:31:14 PM, Created by henrichen
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 */
@@ -21,6 +21,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.WeakHashMap;
 
 import org.zkoss.lang.Primitives;
 import org.zkoss.zk.ui.Component;
@@ -35,12 +36,13 @@ import org.zkoss.zkbind.xel.zel.BindELContext;
 
 /**
  * Implementation of dependency tracking.
- * @author henri
+ * @author henrichen
  *
  */
 public class TrackerImpl implements Tracker {
 	private Map<Component, Map<Object, TrackerNode>> _compMap = new LinkedHashMap<Component, Map<Object, TrackerNode>>(); //comp -> path -> head TrackerNode
 	private Map<Object, Set<TrackerNode>> _beanMap = new WeakIdentityMap<Object, Set<TrackerNode>>(); //bean -> Set of TrackerNode
+	private Map<Object, Object> _equalBeanMap = new WeakHashMap<Object, Object>(); //bean -> bean (use to locate proxy bean)
 	private Map<Object, Set<TrackerNode>> _nullMap = new HashMap<Object, Set<TrackerNode>>(); //property -> Set of head TrackerNode that eval to null
 	
 	public void addTracking(Component comp, String[] series, Binding binding) {
@@ -91,23 +93,30 @@ public class TrackerImpl implements Tracker {
 		}
 	}
 
-	private void getLoadBindingsPerProperty(Collection<TrackerNode> nodes, String prop, Set<LoadBinding> bindings) {
+	private void getLoadBindingsPerProperty(Collection<TrackerNode> nodes, String prop, Set<LoadBinding> bindings, Set<Object> kidbases) {
 		if ("*".equals(prop)) { //all binding properties of the base object
 			for (TrackerNode node : nodes) {
-				final Set<TrackerNode> kids = node.getDependents();
-				getNodesLoadBindings(kids, bindings);
+				final Set<TrackerNode> kids = node.getDirectDependents();
+				getNodesLoadBindings(kids, bindings, kidbases);
 			}
 		} else {
 			for (TrackerNode node : nodes) {
 				final TrackerNode kid = node.getDependent(prop);
 				if (kid != null) {
-					getLoadBindings0(kid, bindings);
+					getLoadBindings0(kid, bindings, kidbases);
 				}
 			}
 		}
 	}
+	
 	public Set<LoadBinding> getLoadBindings(Object base, String prop) {
 		final Set<LoadBinding> bindings = new HashSet<LoadBinding>();
+		collectLoadBindings(base, prop, bindings);
+		return bindings;
+	}
+	
+	private void collectLoadBindings(Object base, String prop, Set<LoadBinding> bindings) {
+		final Set<Object> kidbases = new HashSet<Object>(); //collect kid as base bean
 		if (base != null) {
 			if ("*".equals(base)) { //loadAll
 				final Collection<Map<Object, TrackerNode>> nodesMaps = _compMap.values();
@@ -115,27 +124,30 @@ public class TrackerImpl implements Tracker {
 					for(Map<Object, TrackerNode> nodesMap : nodesMaps) {
 						final Collection<TrackerNode> nodes = nodesMap.values();
 						if (nodes != null) {
-							getLoadBindingsPerProperty(nodes, prop, bindings);
+							getLoadBindingsPerProperty(nodes, prop, bindings, kidbases);
 						}
 					}
 				}
 			} else {
-				final Set<TrackerNode> nodes = _beanMap.get(base);
+				final Set<TrackerNode> nodes = getTrackerNodesByBean(base);
 				if (nodes != null) {
-					getLoadBindingsPerProperty(nodes, prop, bindings);
+					getLoadBindingsPerProperty(nodes, prop, bindings, kidbases);
 				}
 			}
 		} else { //base == null)
 			if ("*".equals(prop)) {
 				for (Set<TrackerNode> basenodes : _nullMap.values()) {
-					getNodesLoadBindings(basenodes, bindings);
+					getNodesLoadBindings(basenodes, bindings, kidbases);
 				}
 			} else {
 				final Set<TrackerNode> basenodes = _nullMap.get(prop);
-				getNodesLoadBindings(basenodes, bindings);
+				getNodesLoadBindings(basenodes, bindings, kidbases);
 			}
 		}
-		return bindings;
+		
+		for (Object kidbase : kidbases) {
+			collectLoadBindings(kidbase, "*", bindings); //recursive, for kid base
+		}
 	}
 	
 	public void tieValue(Object comp, Object base, Object script, Object propName, Object value) {
@@ -152,7 +164,7 @@ public class TrackerImpl implements Tracker {
 				}
 			}
 		} else {
-			final Set<TrackerNode> baseNodes = _beanMap.get(base);
+			final Set<TrackerNode> baseNodes = getTrackerNodesByBean(base);
 			if (baseNodes != null) { //FormBinding will keep base nodes only (so no associated dependent nodes)
 				for (TrackerNode baseNode : baseNodes) {
 					final TrackerNode node = baseNode.getDependent(script);
@@ -180,10 +192,11 @@ public class TrackerImpl implements Tracker {
 			
 			//add into _beanMap
 			if (!isPrimitive(value)) {
-				Set<TrackerNode> nodes = _beanMap.get(value);
+				Set<TrackerNode> nodes = getTrackerNodesByBean(value);
 				if (nodes == null) {
 					nodes = new HashSet<TrackerNode>();
 					_beanMap.put(value, nodes);
+					_equalBeanMap.put(value, value); //prepare proxy bean map
 				}
 				nodes.add(node);
 				//only when value is not a primitive that we shall store it
@@ -237,11 +250,16 @@ public class TrackerImpl implements Tracker {
 		final Object value = node.getBean();
 		if (value != null) {
 			node.setBean(null);
-			final Set<TrackerNode> nodes = _beanMap.get(value);
+			final Set<TrackerNode> nodes = getTrackerNodesByBean(value);
 			if (nodes != null) {
 				nodes.remove(node); //remove this node from the _beanMap
 				if (nodes.isEmpty()) {
-					_beanMap.remove(value);
+					final Object proxy = _equalBeanMap.remove(value);
+					if (proxy != null) {
+						_beanMap.remove(proxy);
+					} else {
+						_beanMap.remove(value);
+					}
 				}
 			}
 		}
@@ -258,30 +276,36 @@ public class TrackerImpl implements Tracker {
 			|| value instanceof String; //or a String
 	}
 
-	private void getNodesLoadBindings(Set<TrackerNode> basenodes, Set<LoadBinding> bindings) {
+	private void getNodesLoadBindings(Set<TrackerNode> basenodes, Set<LoadBinding> bindings, Set<Object> kidbases) {
 		if (basenodes != null) {
 			for (TrackerNode node : basenodes) {
 				if (node != null) {
-					getLoadBindings0(node, bindings);
+					getLoadBindings0(node, bindings, kidbases);
 				}
 			}
 		}
 	}
 	
-	private void getLoadBindings0(TrackerNode node, Set<LoadBinding> bindings) {
+	private void getLoadBindings0(TrackerNode node, Set<LoadBinding> bindings, Set<Object> kidbases) {
 		final Set<Binding> nodebindings = node.getBindings();
 		for(Binding binding : nodebindings) {
 			if (binding instanceof LoadBinding) {
 				bindings.add((LoadBinding)binding);
 			}
 		}
-		//check all dependents
-		Set<TrackerNode> nodes = node.getDependents(); //include all decendent nodes 
-		for (TrackerNode kid : nodes) {
-			final Set<Binding> kidbindings = kid.getBindings();
-			for (Binding binding : kidbindings) {
-				if (binding instanceof LoadBinding) {
-					bindings.add((LoadBinding)binding);
+		
+		final Object kidbase = node.getBean();
+		if (kidbase != null) {
+			kidbases.add(kidbase);
+		} else {
+			//check all dependents
+			Set<TrackerNode> nodes = node.getDependents(); //include all decendent nodes 
+			for (TrackerNode kid : nodes) {
+				final Set<Binding> kidbindings = kid.getBindings();
+				for (Binding binding : kidbindings) {
+					if (binding instanceof LoadBinding) {
+						bindings.add((LoadBinding)binding);
+					}
 				}
 			}
 		}
@@ -289,7 +313,7 @@ public class TrackerImpl implements Tracker {
 	
 	//given base and postfix, found the associated TrackerNode. 
 	private Set<TrackerNode> getNodes(Object base, String postfix) {
-		Set<TrackerNode> nodes = _beanMap.get(base);
+		Set<TrackerNode> nodes = getTrackerNodesByBean(base);
 		String[] props = postfix.split("\\.");
 		for (String prop : props) {
 			nodes = getDependents(nodes, prop);
@@ -317,6 +341,11 @@ public class TrackerImpl implements Tracker {
 				it.remove();
 			}
 		}
+	}
+	
+	private Set<TrackerNode> getTrackerNodesByBean(Object bean) {
+		final Object proxy = _equalBeanMap.get(bean);
+		return proxy != null ? _beanMap.get(proxy) : _beanMap.get(bean);
 	}
 	
 	//------ debug dump ------//
@@ -408,4 +437,5 @@ public class TrackerImpl implements Tracker {
 		Arrays.fill(spaces, ' ');
 		return new String(spaces);
 	}
+	
 }
