@@ -58,36 +58,59 @@ public class ValidationComposer extends GenericBindComposer {
 
 
 
-	private String lastMessage;
+	private String lastMessage1;
+	private String lastMessage2;
 	
-	public String getLastMessage() {
-		return lastMessage;
+	public String getLastMessage1() {
+		return lastMessage1;
 	}
 
 	@NotifyChange
-	public void setLastMessage(String lastMessage) {
-		this.lastMessage = lastMessage;
+	public void setLastMessage1(String lastMessage1) {
+		this.lastMessage1 = lastMessage1;
 	}
 	
 	
+	
+	
+
+	public String getLastMessage2() {
+		return lastMessage2;
+	}
+
+	public void setLastMessage2(String lastMessage2) {
+		this.lastMessage2 = lastMessage2;
+	}
 
 	public boolean validate(String cmd,Set<Property> ps, BindContext ctx){
 		System.out.println(">>>validate "+cmd+",prop:"+ps);
+		boolean r = true;
 		for(Property p :ps){
 			Object base = p.getBase();
 			String prop = p.getProperty();
 			Object val = p.getValue();
 			if("value1".equals(prop)){
-				if(Integer.parseInt(val.toString())>10){
-					return true;
+				if(val!=null && Integer.parseInt(val.toString())>10){
+					setLastMessage1(null);
+				}else{
+					r &= false;
+					setLastMessage1("value 1 have to large than 10");
 				}
+				
+				//TODO notify change not work, it only work by call by EL, we have to notify it manually
+				getBinder().notifyChange(this, "lastMessage1", null,null);
+			}else if("value2".equals(prop)){
+				if(val!=null && Integer.parseInt(val.toString())>20){
+					setLastMessage2(null);
+				}else{
+					r &= false;
+					setLastMessage2("value 2 have to large than 20");
+				}
+				//TODO notify change not work, it only work by call by EL, we have to notify it manually
+				getBinder().notifyChange(this, "lastMessage2", null,null);
 			}
 		}
-		
-		setLastMessage("fail to validate "+cmd+","+ps);
-		//TODO notify change not work, it only work by call by EL, we have to notify it manually
-		getBinder().notifyChange(this, "lastMessage", null,null);
-		return false;
+		return r;
 	}
 
 	public void cmd1(){
