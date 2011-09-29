@@ -5,7 +5,7 @@
 	Description:
 		
 	History:
-		Jul 29, 2011 6:08:51 PM, Created by henri
+		Jul 29, 2011 6:08:51 PM, Created by henrichen
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 */
@@ -24,8 +24,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.Set;
 
 import org.zkoss.lang.Classes;
@@ -64,7 +62,7 @@ import org.zkoss.zkbind.xel.zel.BindELContext;
 
 /**
  * Implementation of Binder.
- * @author henri
+ * @author henrichen
  *
  */
 public class BinderImpl implements Binder {
@@ -99,7 +97,6 @@ public class BinderImpl implements Binder {
 	//System Annotation, see lang-addon.xml
 	private static final String SYSBIND = "$SYSBIND$"; //system binding annotation name
 	private static final String RENDERER = "$R$"; //system renderer for binding
-	private static final String TEMPLATE = "$T$"; //possible template field for binding
 	private static final String LOADEVENT = "$LE$"; //load trigger event
 	private static final String SAVEEVENT = "$SE$"; //save trigger event
 	private static final String ACCESS = "$A$"; //access type (load|save|both), load is default
@@ -170,7 +167,6 @@ public class BinderImpl implements Binder {
 			}
 		});
 	}
-
 	
 	//called when onPropertyChange is fired to the subscribed event queue
 	private void loadOnPropertyChange(Object base, String prop, Object oldValue, Object newValue) {
@@ -321,26 +317,12 @@ public class BinderImpl implements Binder {
 		return null;
 	}
 	
-	private Template lookupTemplate(Component comp, String templateField) {
-		Template tm = comp.getTemplate("model");
-		if (tm == null && templateField != null) { //try template class
-			try {
-				final Component kid = (Component) Fields.get(comp, templateField);
-				tm = kid.getTemplate("model");
-			} catch (NoSuchMethodException e) {
-				throw UiException.Aide.wrap(e);
-			}
-		}
-		return tm;
-	}
-	
 	private void initRendererIfAny(Component comp) {
 		//check if exists template
 		final ComponentCtrl compCtrl = (ComponentCtrl) comp;
 		final Annotation ann = compCtrl.getAnnotation(BinderImpl.SYSBIND);
 		final Map attrs = ann != null ? ann.getAttributes() : null; //(tag, tagExpr)
-		final String templateField = attrs == null ? null : (String) attrs.get(BinderImpl.TEMPLATE); //possible template field 
-		final Template tm = lookupTemplate(comp, templateField);
+		final Template tm = comp.getTemplate("model");
 		if (tm == null) { //no template
 			return;
 		}
