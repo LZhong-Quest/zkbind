@@ -1,0 +1,25 @@
+<window apply="issues.FormException001ViewModel">
+	<custom-attributes composerName="vm" />
+	<vbox>
+		Detail
+		<grid self="@form(id='fx',load=vm.selected,save=vm.selected before 'update',validate=true)" width="500px">
+			<rows>
+				<row>
+					<cell>City</cell>
+					<cell>
+						<textbox value="@bind(fx.name)" />
+					</cell>
+				</row>
+				<row>
+					<cell>Population</cell>
+					<cell>
+						<intbox value="@bind(fx.population)" />
+					</cell>
+				</row>
+			</rows>
+		</grid>
+	</vbox>
+	<hbox>
+		<button label="update" disabled="@bind(empty vm.selected)" onClick="@bind('update')" />
+	</hbox>
+</window>
