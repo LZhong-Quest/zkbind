@@ -13,6 +13,8 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 package org.zkoss.zkbind.impl;
 
 import java.lang.reflect.Method;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -33,7 +35,7 @@ import org.zkoss.zkbind.xel.zel.BindELContext;
  */
 public class LoadFormBindingImpl extends FormBindingImpl implements	LoadFormBinding {
 	private int _len;
-	private Set<Method> _doneDependsOn = new WeakHashSet<Method>();
+	private Set<String> _doneDependsOn = new HashSet<String>(4);
 	
 	protected LoadFormBindingImpl(Binder binder, Component comp, Form form, String loadExpr, Map args) {
 		super(binder, comp, form, loadExpr, args);
@@ -68,13 +70,16 @@ public class LoadFormBindingImpl extends FormBindingImpl implements	LoadFormBind
 	/**
 	 * Internal Use Only.
 	 */
-	public void addDependsOnTrackings(Method m, String basepath, String[] props) {
-		if (_doneDependsOn.contains(m)) { //this method has already done @DependsOn in this binding
-			return;
+	public void addDependsOnTrackings(Method m, String basepath, List<String> srcpath, String[] props) {
+		if (srcpath != null) {
+			final String src = BindELContext.pathToString(srcpath);
+			if (_doneDependsOn.contains(src)) { //this method has already done @DependsOn in this binding
+				return;
+			}
+			_doneDependsOn.add(src); //mark method as done @DependsOn
 		}
-		_doneDependsOn.add(m); //mark method as done @DependsOn
 		for(String prop : props) {
-			BindELContext.addDependsOnTracking(m, basepath, prop, this);
+			BindELContext.addDependsOnTracking(m, basepath, srcpath, prop, this);
 		}
 	}
 }

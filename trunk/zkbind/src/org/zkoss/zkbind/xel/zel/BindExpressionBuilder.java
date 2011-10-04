@@ -28,8 +28,10 @@ import org.zkoss.zel.impl.parser.AstInteger;
 import org.zkoss.zel.impl.parser.AstString;
 import org.zkoss.zel.impl.parser.AstValue;
 import org.zkoss.zel.impl.parser.Node;
+import org.zkoss.zkbind.BindContext;
 import org.zkoss.zkbind.Binder;
 import org.zkoss.zkbind.Form;
+import org.zkoss.zkbind.impl.BinderImpl;
 import org.zkoss.zkbind.impl.LoadFormBindingImpl;
 import org.zkoss.zkbind.impl.LogUtil;
 import org.zkoss.zkbind.sys.Binding;
@@ -67,6 +69,10 @@ public class BindExpressionBuilder extends ExpressionBuilder {
 			final Binder binder = binding.getBinder();
 			final TrackerImpl tracker = (TrackerImpl) binder.getTracker();
 			
+			final BindContext bctx = (BindContext) _ctx.getAttribute(BinderImpl.BINDCTX);
+			final List<String> srcpath = bctx != null ? 
+					(List<String>) bctx.getAttribute(BinderImpl.SRCPATH) : null;
+			final String[] srcprops = srcpath != null ? properties(srcpath) : null;
 			//check if a PropertyBinding inside a Form
 			final Object base = binding.getComponent().getAttribute(prop, true);
 			if (base instanceof Form) {
@@ -81,15 +87,15 @@ public class BindExpressionBuilder extends ExpressionBuilder {
 						formBean.addLoadFieldName(fieldName);
 					}
 					//initialize Tracker per the series (in special Form way)
-					tracker.addTracking(binding.getComponent(), new String[] {prop, fieldName}, binding);
+					tracker.addTracking(binding.getComponent(), new String[] {prop, fieldName}, srcprops, binding);
 				} else {
-					tracker.addTracking(binding.getComponent(), new String[] {prop}, binding);
+					tracker.addTracking(binding.getComponent(), new String[] {prop}, srcprops, binding);
 				}
 			
 			} else {
 				//initialize Tracker per the series
 				String[] props = properties(series);
-				tracker.addTracking(binding.getComponent(), props, binding);
+				tracker.addTracking(binding.getComponent(), props, srcprops, binding);
 				
 				if (binding instanceof LoadFormBindingImpl) {
 					((LoadFormBindingImpl)binding).setSeriesLength(props.length);

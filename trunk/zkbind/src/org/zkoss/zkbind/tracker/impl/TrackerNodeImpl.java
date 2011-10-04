@@ -34,12 +34,18 @@ public class TrackerNodeImpl implements TrackerNode {
 	private final Set<Binding> _bindings; //associated bindings
 	private Object _bean; //associated bean value
 	private final Map<Object, Object> _brackets; //property -> bracket script
+	private final Set<TrackerNode> _associates; //dependent nodes of this node (e.g. fullname node is dependent node of this firstname node) 
 	
 	public TrackerNodeImpl(Object property) {
 		_script = property;
 		_dependents = new HashMap<Object, TrackerNode>(4);
 		_bindings = new WeakHashSet<Binding>(4);
 		_brackets = new HashMap<Object, Object>(4);
+		_associates = new WeakHashSet<TrackerNode>(4);
+	}
+	
+	/*package*/ void addAssociate(TrackerNode node) {
+		_associates.add(node);
 	}
 	
 	public TrackerNode getDependent(Object property) {
@@ -98,17 +104,31 @@ public class TrackerNodeImpl implements TrackerNode {
 	}
 
 	public Set<TrackerNode> getDependents() {
-		final Set<TrackerNode> nodes = new HashSet<TrackerNode>();
+		return collectDependents0(new HashSet<TrackerNode>());
+	}
+	
+	//bug# 1: depends-on is not working in nested C->B->A when A changed
+	private Set<TrackerNode> collectDependents0(Set<TrackerNode> nodes) {
 		final Set<TrackerNode> kids = getDirectDependents();
 		nodes.addAll(kids);
 		for(TrackerNode kid : kids) {
-			nodes.addAll(kid.getDependents());
+			((TrackerNodeImpl)kid).collectDependents0(nodes); //recursive
+		}
+		for(TrackerNode associate : _associates) {
+			if (!nodes.contains(associate)) { //avoid endless loop
+				nodes.add(associate);
+				((TrackerNodeImpl)associate).collectDependents0(nodes); //recursive
+			}
 		}
 		return nodes;
 	}
 
 	public Set<TrackerNode> getDirectDependents() {
 		return new HashSet<TrackerNode>(_dependents.values());
+	}
+	
+	public Set<TrackerNode> getAssociates() {
+		return _associates;
 	}
 
 	public Object getBean() {

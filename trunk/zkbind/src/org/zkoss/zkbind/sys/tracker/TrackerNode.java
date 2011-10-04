@@ -36,6 +36,12 @@ public interface TrackerNode {
 	public Set<TrackerNode> getDirectDependents();
 	
 	/**
+	 * Returns all associate nodes of this node.
+	 * @return
+	 */
+	public Set<TrackerNode> getAssociates();
+	
+	/**
 	 * Returns the associated TrackerNode of the associated field script of this tracker node.
 	 * @param script field script to get the dependent 
 	 * @return the linked TrackerNode

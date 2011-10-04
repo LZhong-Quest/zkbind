@@ -93,6 +93,7 @@ public class BinderImpl implements Binder {
 	public static final String QUE = "$QUE$"; //the associated event queue name
 	public static final String NOTIFYS = "$NOTIFYS$"; //changed properties to be notified
 	public static final String VALIDATES = "$VALIDATES$"; //properties to be validated
+	public static final String SRCPATH = "$SRCPATH$"; //source path that trigger @DependsOn tracking
 	
 	//System Annotation, see lang-addon.xml
 	private static final String SYSBIND = "$SYSBIND$"; //system binding annotation name
