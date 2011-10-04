@@ -85,6 +85,7 @@ public class BindELContext extends XelELContext {
 					notifys.add(propx);
 				}
 			} else if (prop != null) {
+				//prpoerty is null in doExecute case
 				notifys.add(new PropertyImpl(base, prop, value));
 			}
 		}

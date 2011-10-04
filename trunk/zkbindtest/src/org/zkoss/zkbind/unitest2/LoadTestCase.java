@@ -102,6 +102,7 @@ public class LoadTestCase extends TestCaseBase{
 		Assert.assertEquals("87 Zhengzhou Road #11F-2 Taipei",findWidget("$l8").getAttribute("value"));
 		
 
+		//we have spec change here since 10/29, revision 18, notify p1 will also cause selected reload(they are same instance)
 		findWidget("$btn7").click();
 		
 		Assert.assertEquals("Ian",findWidget("$l1").getAttribute("value"));
@@ -109,17 +110,27 @@ public class LoadTestCase extends TestCaseBase{
 		Assert.assertEquals("Ian Tasi",findWidget("$l3").getAttribute("value"));
 		Assert.assertEquals("87 Zhengzhou Road #11F-2 Taipei",findWidget("$l4").getAttribute("value"));
 		
-		Assert.assertEquals("Alex",findWidget("$l5").getAttribute("value"));
-		Assert.assertEquals("Wang",findWidget("$l6").getAttribute("value"));
-		Assert.assertEquals("Alex Wang",findWidget("$l7").getAttribute("value"));
+//		Assert.assertEquals("Alex",findWidget("$l5").getAttribute("value"));
+//		Assert.assertEquals("Wang",findWidget("$l6").getAttribute("value"));
+//		Assert.assertEquals("Alex Wang",findWidget("$l7").getAttribute("value"));
+//		Assert.assertEquals("87 Zhengzhou Road #11F-2 Taipei",findWidget("$l8").getAttribute("value"));
+		Assert.assertEquals("Ian",findWidget("$l5").getAttribute("value"));
+		Assert.assertEquals("Tasi",findWidget("$l6").getAttribute("value"));
+		Assert.assertEquals("Ian Tasi",findWidget("$l7").getAttribute("value"));
 		Assert.assertEquals("87 Zhengzhou Road #11F-2 Taipei",findWidget("$l8").getAttribute("value"));
 		
+		//we have spec change here since 10/29, revision 18, notify selected will also cause p1 reload(they are same instance)
 		findWidget("$btn8").click();
-		
-		Assert.assertEquals("Ian",findWidget("$l1").getAttribute("value"));
-		Assert.assertEquals("Tasi",findWidget("$l2").getAttribute("value"));
-		Assert.assertEquals("Ian Tasi",findWidget("$l3").getAttribute("value"));
+
+		Assert.assertEquals("Jumper",findWidget("$l1").getAttribute("value"));
+		Assert.assertEquals("Chen",findWidget("$l2").getAttribute("value"));
+		Assert.assertEquals("Jumper Chen",findWidget("$l3").getAttribute("value"));
 		Assert.assertEquals("87 Zhengzhou Road #11F-2 Taipei",findWidget("$l4").getAttribute("value"));
+		
+//		Assert.assertEquals("Ian",findWidget("$l1").getAttribute("value"));
+//		Assert.assertEquals("Tasi",findWidget("$l2").getAttribute("value"));
+//		Assert.assertEquals("Ian Tasi",findWidget("$l3").getAttribute("value"));
+//		Assert.assertEquals("87 Zhengzhou Road #11F-2 Taipei",findWidget("$l4").getAttribute("value"));
 		
 		Assert.assertEquals("Jumper",findWidget("$l5").getAttribute("value"));
 		Assert.assertEquals("Chen",findWidget("$l6").getAttribute("value"));
