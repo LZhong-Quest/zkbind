@@ -46,9 +46,6 @@ import org.zkoss.zkbind.sys.Binding;
  *
  */
 public class BindELContext extends XelELContext {
-	private List<Object> _path = null;
-	private List<Property> _properties;
-	
 	public BindELContext(XelContext xelc) {
 		super(xelc);
 	}
@@ -151,22 +148,30 @@ public class BindELContext extends XelELContext {
 	}
 	
 	//check method annotation and collect NotifyChange annotation
-	public static void addDependsOnTrackings(Method m, String basepath, Binding binding, BindContext ctx) {
+	public static void addDependsOnTrackings(Method m, String basepath, List<String> srcpath, Binding binding, BindContext ctx) {
 		final DependsOn annt = m.getAnnotation(DependsOn.class);
 		if (annt != null) {
 			String[] props = annt.value();
 			if (props.length > 0) {
 				if (binding instanceof LoadPropertyBindingImpl) {
-					((LoadPropertyBindingImpl)binding).addDependsOnTrackings(m, basepath, props);
+					((LoadPropertyBindingImpl)binding).addDependsOnTrackings(m, basepath, srcpath, props);
 				} else if (binding instanceof LoadFormBindingImpl) {
-					((LoadFormBindingImpl)binding).addDependsOnTrackings(m, basepath, props);
+					((LoadFormBindingImpl)binding).addDependsOnTrackings(m, basepath, srcpath, props);
 				}
 			}
 		}
 	}
 	
+	public static String pathToString(List<String> path) {
+		final StringBuffer sb = new StringBuffer();
+		for(String prop : path) {
+			sb.append(prop);
+		}
+		return sb.toString();
+	}
+	
 	//prepare the dependsOn nodes
-	public static void addDependsOnTracking(Method m, String basepath, String prop, Binding binding) {
+	public static void addDependsOnTracking(Method m, String basepath, List<String> srcpath, String prop, Binding binding) {
 		final Component comp = binding.getComponent();
 		final Binder binder = binding.getBinder();
 		final BindEvaluatorX eval = binder.getEvaluatorX();
@@ -174,7 +179,8 @@ public class BindELContext extends XelELContext {
 		
 		//parse depends on series
 		BindContext ctxparse = new BindContextImpl(binder, binding, false, null, comp, null, null);
-		ExpressionX expr = eval.parseExpressionX(ctxparse, path, Object.class); //prepare the tracking
+		ctxparse.setAttribute(BinderImpl.SRCPATH, srcpath);
+		ExpressionX expr = eval.parseExpressionX(ctxparse, path, Object.class); //prepare the tracking and association
 		
 		//bean association
 		BindContext ctx = new BindContextImpl(binder, binding, false, null, comp, null, null);

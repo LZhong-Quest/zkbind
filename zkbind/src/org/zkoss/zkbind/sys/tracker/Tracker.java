@@ -29,9 +29,10 @@ public interface Tracker {
 	 * Add a tracking that associate a binding to a dot series under the specified {@link Component}
 	 * @param comp the associated component
 	 * @param series the dot series as an array of property name
+	 * @param dependentpath the dot series as an array of property name of the dependent property 
 	 * @param binding the binding
 	 */
-	public void addTracking(Component comp, String[] series, Binding binding);
+	public void addTracking(Component comp, String[] series, String[] dependentpath, Binding binding);
 	
 	/**
 	 * Remove all tracking associated with the specified {@link Component}. 

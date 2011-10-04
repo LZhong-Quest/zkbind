@@ -9,7 +9,7 @@
 	 1. Properties defined here are assigned to all instances of the
 		specified definition, no matter it is created by ZUML or by program.
 	 2. $A$ is the access direction: can be "both", "save", "load"; default to "load" if not found
-	    $C$ is the system converter for special properties. e.g. model in listbox/grid/tree. see ListModelConverter.java
+	    $C$ is the system converter for special properties. e.g. SelectedItem in listbox. see SelectedListitemConverter.java
 	    $SE$ is the save trigger event; meaningful only when $A$ is "both" or "save".
 	    $LE$ is the load trigger event; meaningful only when $A$ is "both" or "load" or not found(default to "load").
 	    $R$ is the special renderer for binding
@@ -149,14 +149,6 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 		
 		<annotation>
 			<annotation-name>$SYSBIND$</annotation-name>
-			<property-name>model</property-name>
-			<attribute>
-				<attribute-name>$C$</attribute-name>
-				<attribute-value>org.zkoss.zkbind.converter.sys.ListModelConverter</attribute-value>
-			</attribute>
-		</annotation>
-		<annotation>
-			<annotation-name>$SYSBIND$</annotation-name>
 			<property-name>selectedItem</property-name>
 			<attribute>
 				<attribute-name>$SE$</attribute-name>
@@ -276,15 +268,6 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 				<attribute-value>rowRenderer=org.zkoss.zkbind.impl.BindRowRenderer</attribute-value>
 			</attribute>
 		</annotation>
-		
-		<annotation>
-			<annotation-name>$SYSBIND$</annotation-name>
-			<property-name>model</property-name>
-			<attribute>
-				<attribute-name>$C$</attribute-name>
-				<attribute-value>org.zkoss.zkbind.converter.sys.ListModelConverter</attribute-value>
-			</attribute>
-		</annotation>
 	</component>
 	<!--component>
 		<component-name>groupbox</component-name>
@@ -341,14 +324,6 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 			</attribute>
 		</annotation>
 		
-		<annotation>
-			<annotation-name>$SYSBIND$</annotation-name>
-			<property-name>model</property-name>
-			<attribute>
-				<attribute-name>$C$</attribute-name>
-				<attribute-value>org.zkoss.zkbind.converter.sys.ListModelConverter</attribute-value>
-			</attribute>
-		</annotation>
 		<annotation>
 			<annotation-name>$SYSBIND$</annotation-name>
 			<property-name>selectedItem</property-name>

@@ -95,7 +95,7 @@ public class BindELResolver extends XelELResolver {
 				if (prompt && binding instanceof LoadBinding && m != null) {
 					//FormBinding shall not check @DependsOn() for dependent nodes
 					if (!(binding instanceof LoadFormBindingImpl) || ((LoadFormBindingImpl)binding).getSeriesLength() <= path.size()) {
-						BindELContext.addDependsOnTrackings(m, basePath(path), binding, bctx);
+						BindELContext.addDependsOnTrackings(m, basePath(path), path, binding, bctx);
 					}
 				}
 				
