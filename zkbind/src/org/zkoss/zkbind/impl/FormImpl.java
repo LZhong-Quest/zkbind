@@ -50,9 +50,9 @@ public class FormImpl implements Form {
 	}
 
 	public void setField(String field, Object value) {
+		_fields.put(field, value);
 		final Object init = _initFields.get(field);
 		if (!Objects.equals(init, value)) { //different from original
-			_fields.put(field, value);
 			_dirtyFieldNames.add(field);
 		} else {
 			_dirtyFieldNames.remove(field);
