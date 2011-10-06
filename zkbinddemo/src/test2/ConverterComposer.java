@@ -86,10 +86,8 @@ public class ConverterComposer extends GenericBindComposer {
 	}
 	
 	
+	@NotifyChange(".")
 	public void saveForm(){
-		
-		//TODO, 
-		//current no way to notify a root object was changed
-		
+		//notify vm is changed
 	}
 }
