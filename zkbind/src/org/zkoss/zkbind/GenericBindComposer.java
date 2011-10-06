@@ -16,6 +16,9 @@ import java.util.Map;
 
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Page;
+import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.EventListener;
+import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.metainfo.Annotation;
 import org.zkoss.zk.ui.metainfo.ComponentInfo;
 import org.zkoss.zk.ui.sys.ComponentCtrl;
@@ -34,6 +37,8 @@ public class GenericBindComposer implements Composer, ComposerExt {
 	private Binder _binder;
 	private Component _ownerComp;
 	private final Map<String, Converter> _converters;
+	
+//	private static final String ON_BINDER_POST_COMMAND = "onBinderPostCommand";
 	
 	public GenericBindComposer() {
 		setViewModel(this);
@@ -120,7 +125,28 @@ public class GenericBindComposer implements Composer, ComposerExt {
 	}
 	
 	//--notifyChange--//
-	public void notifyChange(Object bean, String field, Object oldValue, Object newValue) {
-		//TODO delegate to Binder.notifyChange()...
+	public void notifyChange(Object bean, String property) {
+		getBinder().notifyChange(bean, property);
 	}
+	
+	
+	
+	//--postCommand--//
+//	private class PostCommandListener implements EventListener{
+//		public void onEvent(Event event)
+//				throws Exception {
+//			Map<String,Object> data = (Map<String,Object>)event.getData();
+//			getBinder().notifyCommand((String)data.get("command"), (Map<String,Object>)data.get("args"));
+//			//don't leave listener on the component
+//			_ownerComp.removeEventListener(ON_BINDER_POST_COMMAND, this);
+//		}
+//	};
+//	
+//	public void postCommand(String command,Map<String, Object> args){
+//		_ownerComp.addEventListener(ON_BINDER_POST_COMMAND, new PostCommandListener());
+//		Map<String,Object> data = new HashMap<String,Object>();
+//		data.put("command", command);
+//		data.put("args", args);
+//		Events.postEvent(ON_BINDER_POST_COMMAND, _ownerComp, data);
+//	}
 }

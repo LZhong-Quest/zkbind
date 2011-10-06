@@ -66,6 +66,6 @@ public class F0013 extends GenericBindComposer {
 		this.value1 += "-cmd3";
 		this.value2 += "-cmd3";
 		//notify base object, include all it property
-		getBinder().notifyChange(this, ".", null,null);
+		notifyChange(this, ".");
 	}	
 }

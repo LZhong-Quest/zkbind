@@ -89,10 +89,8 @@ public interface Binder {
 	 * Notify change of the property.
 	 * @param bean the backing bean object.
 	 * @param property the property of the bean that change the value 
-	 * @param oldValue the old value of the property
-	 * @param newValue the new value of the property
 	 */
-	public void notifyChange(Object bean, String property, Object oldValue, Object newValue);
+	public void notifyChange(Object bean, String property);
 	
 	
 	/**

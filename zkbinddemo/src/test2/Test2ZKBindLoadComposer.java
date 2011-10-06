@@ -67,7 +67,7 @@ public class Test2ZKBindLoadComposer extends GenericBindComposer {
 	
 	public void changeLastName1() {
 		_selected.setLastName("Chen");
-		getBinder().notifyChange(_selected, "lastName",null,null);
+		notifyChange(_selected, "lastName");
 	}
 	
 	@NotifyChange({"p1","selected"})
@@ -77,7 +77,7 @@ public class Test2ZKBindLoadComposer extends GenericBindComposer {
 	
 	public void changeLastName2() {
 		_selected.setLastName("Wang");
-		getBinder().notifyChange(_selected, "lastName",null,null);
+		notifyChange(_selected, "lastName");
 	}
 	
 	@NotifyChange({"p1"})
