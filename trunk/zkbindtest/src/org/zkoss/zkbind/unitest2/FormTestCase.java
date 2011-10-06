@@ -36,9 +36,10 @@ public class FormTestCase extends TestCaseBase{
 		Assert.assertEquals("Last1",findWidget("$l2").getAttribute("value"));
 		Assert.assertEquals("XXX Last1",findWidget("$l3").getAttribute("value"));
 		
-		Assert.assertEquals("XXX",findWidget("$l5").getAttribute("value"));
+		//spec change, p1.first change will not effect p1 -> fx
+		Assert.assertEquals("First1",findWidget("$l5").getAttribute("value"));
 		Assert.assertEquals("Last1",findWidget("$l6").getAttribute("value"));
-		Assert.assertEquals("XXX Last1",findWidget("$l7").getAttribute("value"));
+		Assert.assertEquals("First1 Last1",findWidget("$l7").getAttribute("value"));
 		
 		Assert.assertEquals("",findWidget("$l9").getAttribute("value"));
 		Assert.assertEquals("",findWidget("$la").getAttribute("value"));
@@ -53,7 +54,7 @@ public class FormTestCase extends TestCaseBase{
 		
 		Assert.assertEquals("YYY",findWidget("$l5").getAttribute("value"));
 		Assert.assertEquals("Last1",findWidget("$l6").getAttribute("value"));
-		Assert.assertEquals("XXX Last1",findWidget("$l7").getAttribute("value"));
+		Assert.assertEquals("First1 Last1",findWidget("$l7").getAttribute("value"));
 		
 		Assert.assertEquals("",findWidget("$l9").getAttribute("value"));
 		Assert.assertEquals("",findWidget("$la").getAttribute("value"));

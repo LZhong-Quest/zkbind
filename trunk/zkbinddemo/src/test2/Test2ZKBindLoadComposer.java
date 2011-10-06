@@ -96,7 +96,7 @@ public class Test2ZKBindLoadComposer extends GenericBindComposer {
 		return _p2;
 	}
 	
-	@NotifyChange("p2")
+	@NotifyChange({"p1","p2"})
 	public void saveForm(){
 		_p2 = new Person(_selected.getFirstName(),_selected.getLastName());
 	}
