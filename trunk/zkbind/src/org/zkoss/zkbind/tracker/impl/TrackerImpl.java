@@ -105,7 +105,11 @@ public class TrackerImpl implements Tracker {
 	}
 
 	private void getLoadBindingsPerProperty(Collection<TrackerNode> nodes, String prop, Set<LoadBinding> bindings, Set<Object> kidbases, Set<TrackerNode> visited) {
-		if ("*".equals(prop)) { //all binding properties of the base object
+		if (".".equals(prop)) { //all base object
+			for (TrackerNode node : nodes) {
+				getLoadBindings0(node, bindings, kidbases, visited);
+			}
+		} else if ("*".equals(prop)) { //all binding properties of the base object
 			for (TrackerNode node : nodes) {
 				final Set<TrackerNode> kids = node.getDirectDependents();
 				getNodesLoadBindings(kids, bindings, kidbases, visited);

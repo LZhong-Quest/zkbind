@@ -352,7 +352,6 @@ public class LoadTestCase extends TestCaseBase{
 		Assert.assertEquals("1985/02/13",findWidget("$t1").getAttribute("value"));
 		Assert.assertEquals("26",findWidget("$l1").getAttribute("value"));
 		Assert.assertEquals("1985/02/13",findWidget("$t2").getAttribute("value"));
-		//TODO ,will error here, current no way to notify root is changed,. ex vm. see ConverterComposer
 		Assert.assertEquals("26",findWidget("$l2").getAttribute("value"));
 		
 		
