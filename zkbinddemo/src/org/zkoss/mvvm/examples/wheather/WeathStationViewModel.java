@@ -77,7 +77,7 @@ public class WeathStationViewModel extends GenericBindComposer {
 		return !this.isValidToAdd();
 	}
 
-	@DependsOn({"station.actual", "station.target"})
+	@DependsOn({"station.variance"})
 	public boolean isLessThan10() { //less than 10%
 		if( this.station != null) {
 			if (this.station.getVariance() < 0) {
@@ -87,7 +87,7 @@ public class WeathStationViewModel extends GenericBindComposer {
 		return false;
 	}
 
-	@DependsOn({"station.actual", "station.target"})
+	@DependsOn({"station.variance"})
 	public boolean isMoreThan5() { //more than 5%
 		if( this.station != null) {
 			if (this.station.getVariance() > 0) {

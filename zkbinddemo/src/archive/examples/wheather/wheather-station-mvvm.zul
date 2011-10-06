@@ -14,6 +14,7 @@ http://martinfowler.com/eaaDev/uiArchs.html
 </style>
 	<window title="Model-View-Binder (MVB) aka MVVM with Databindings, Statebindings &amp; CommandBindings" 
 		apply="org.zkoss.mvvm.examples.wheather.WeathStationViewModel" width="640px" border="normal">
+		<custom-attributes composerName="testBean"/>
 		<hbox spacing="10px" align="top">
 			<div width="200px">
 				<listbox id="list" multiple="true" rows="12"
@@ -32,7 +33,7 @@ http://martinfowler.com/eaaDev/uiArchs.html
 				<rows>
 					<row>
 						Station
-						<textbox id="nameTextbox" value="@bind(testBean.station.name)" disabled="@bind(testBean.stationIsNotNew)" />
+						<textbox id="nameTextbox" value="@bind(testBean.station.name)" instant="true" disabled="@bind(testBean.stationIsNotNew)" />
 					</row>
 					<row>
 						Date
@@ -66,6 +67,5 @@ http://martinfowler.com/eaaDev/uiArchs.html
 			</grid>
 		</hbox>
 		<label value="This was inspired by Martin Fowler's Weather Station example at http://martinfowler.com/eaaDev/uiArchs.html"/>
-		<custom-attributes composerName="testBean"/>
 	</window>
 </zk>
