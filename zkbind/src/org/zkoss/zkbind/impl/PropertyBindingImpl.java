@@ -42,13 +42,35 @@ public abstract class PropertyBindingImpl extends BindingImpl implements Propert
 		final Class returnType = Object.class;
 		this._fieldExpr = eval.parseExpressionX(null, fieldScript, returnType);
 		this._accessInfo = AccessInfo.create(this, accessScript, returnType);
-		//converter comes from viewmodel by el
-		this._converter = converter == null ? 
-				null : eval.parseExpressionX(null, BinderImpl.VM+ ".getConverter("+converter+")", Converter.class);
+		
+		_converter = converter==null?null:parseConverter(eval,converter);
 	}
 	
+	private ExpressionX parseConverter(BindEvaluatorX eval, String converterExpr) {
+		final BindContext ctx = new BindContextImpl(getBinder(), this, false, null, getComponent(), null, null);
+		//provide a bindcontext when pare expression of converter with this binding,
+		//do so, the tracker will also tracking the converter dependence with this binding.
+		return eval.parseExpressionX(ctx, converterExpr, Object.class);
+	}
+
 	public Converter getConverter() {
-		return _converter==null?null:(Converter) getBinder().getEvaluatorX().getValue(null, getComponent(), _converter);
+		if(_converter==null) return null;
+
+		final BindContext ctx = new BindContextImpl(getBinder(), this, false, null, getComponent(), null, null);
+		final BindEvaluatorX eval = getBinder().getEvaluatorX();
+		Object obj = eval.getValue(ctx, getComponent(), _converter);
+		
+		if(obj instanceof Converter){
+			return (Converter)obj;
+		}else if(obj instanceof String){
+			ExpressionX vmconverter = eval.parseExpressionX(null, 
+					new StringBuilder().append(BinderImpl.VM).append(".getConverter('").append(obj).append("')").toString(),
+					Converter.class);
+			obj = eval.getValue(null, getComponent(), vmconverter);
+			return (Converter)obj;
+		}else{
+			throw new ClassCastException("result of expression '"+_converter.getExpressionString()+"' is not a Converter, is "+obj);
+		}
 	}
 	
 	public String getFieldName() {
