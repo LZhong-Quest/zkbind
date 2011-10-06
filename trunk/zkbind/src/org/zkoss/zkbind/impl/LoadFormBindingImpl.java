@@ -55,7 +55,7 @@ public class LoadFormBindingImpl extends FormBindingImpl implements	LoadFormBind
 		}
 		((FormImpl)form).initFields(); //initial loading, mark form as clean
 		
-		binder.notifyChange(form, "*", null, null); //notify change of fx.*
+		binder.notifyChange(form, "*"); //notify change of fx.*
 	}
 	
 	public void setSeriesLength(int len) {

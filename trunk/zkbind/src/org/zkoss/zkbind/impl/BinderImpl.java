@@ -163,16 +163,15 @@ public class BinderImpl implements Binder {
 				//only when a event in queue is our event
 				if(event instanceof PropertyChangeEvent){
 					final PropertyChangeEvent evt = (PropertyChangeEvent) event;
-					BinderImpl.this.loadOnPropertyChange(evt.getBase(), evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
+					BinderImpl.this.loadOnPropertyChange(evt.getBase(), evt.getPropertyName());
 				}
 			}
 		});
 	}
 	
 	//called when onPropertyChange is fired to the subscribed event queue
-	private void loadOnPropertyChange(Object base, String prop, Object oldValue, Object newValue) {
-		log.debug("loadOnPropertyChange:base=[%s],prop=[%s],oldValue=[%s],newValue=[%s]",base,prop,oldValue,newValue);
-		//TODO Dennis, why should caller provide oldValue and newValue in notify change? should it comes form EL when binder load the context?
+	private void loadOnPropertyChange(Object base, String prop) {
+		log.debug("loadOnPropertyChange:base=[%s],prop=[%s]",base,prop);
 		final Tracker tracker = getTracker();
 		final Set<LoadBinding> bindings = tracker.getLoadBindings(base, prop);
 		for(LoadBinding binding : bindings) {
@@ -677,7 +676,7 @@ public class BinderImpl implements Binder {
 
 	private void fireNotifyChanges(Set<Property> notifys) {
 		for(Property prop : notifys) {
-			notifyChange(prop.getBase(), prop.getProperty(), null, prop.getValue());
+			notifyChange(prop.getBase(), prop.getProperty());
 		}
 	}
 	
@@ -1284,9 +1283,9 @@ public class BinderImpl implements Binder {
 		}
 	}
 	
-	public void notifyChange(Object base, String attr, Object oldValue, Object newValue) {
-		log.debug("notifyChange base=[%s],attr=[%s],oldValue=[%s],newValue=[%s]",base,attr,oldValue,newValue);
-		getEventQueue().publish(new PropertyChangeEvent("onPropertyChange", _rootComp, base, attr, oldValue, newValue));
+	public void notifyChange(Object base, String attr) {
+		log.debug("notifyChange base=[%s],attr=[%s]",base,attr);
+		getEventQueue().publish(new PropertyChangeEvent("onPropertyChange", _rootComp, base, attr));
 	}
 	
 	public void setPhaseListener(PhaseListener listener) {
@@ -1302,15 +1301,11 @@ public class BinderImpl implements Binder {
 		private static final long serialVersionUID = 201109091736L;
 		private final Object _base;
 		private final String _propName;
-		private final Object _oldValue;
-		private final Object _newValue;
 
-		public PropertyChangeEvent(String name, Component comp, Object base, String propName, Object oldValue, Object newValue) {
+		public PropertyChangeEvent(String name, Component comp, Object base, String propName) {
 			super(name, comp);
 			this._base = base;
 			this._propName = propName;
-			this._oldValue = oldValue;
-			this._newValue = newValue;
 		}
 
 		public Object getBase() {
@@ -1319,14 +1314,6 @@ public class BinderImpl implements Binder {
 
 		public String getPropertyName() {
 			return _propName;
-		}
-
-		public Object getOldValue() {
-			return _oldValue;
-		}
-
-		public Object getNewValue() {
-			return _newValue;
 		}
 	}
 	

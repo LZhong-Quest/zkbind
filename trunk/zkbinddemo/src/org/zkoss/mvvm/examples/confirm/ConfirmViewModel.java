@@ -90,7 +90,7 @@ public class ConfirmViewModel extends GenericBindComposer {
 	public void setMessage(String message){
 		this.message = message;
 		//notify by java code, @NotifyChange doesn't work when internally
-		getBinder().notifyChange(this, "message",null,null);
+		notifyChange(this, "message");
 	}
 
 	public DialogBean getDialog() {
@@ -101,7 +101,7 @@ public class ConfirmViewModel extends GenericBindComposer {
 		dialog.setVisible(visible);
 		dialog.setCity(selected);
 		//notify by java code, @NotifyChange doesn't work when internally
-		getBinder().notifyChange(this, "dialog",null,null);
+		notifyChange(this, "dialog");
 	}
 
 	
@@ -130,7 +130,10 @@ public class ConfirmViewModel extends GenericBindComposer {
 							//Don't use notify, we are already in command lifecycle 
 //							getBinder().notifyCommand("confirmCancel", null);
 							
-							//TODO a way to postCommand
+							//TODO need to review this api
+//							postCommand("confirmCancel",null);
+							
+							//TODO a way to postCommand manually
 							final EventListener listener = new EventListener(){
 								public void onEvent(Event event)
 										throws Exception {

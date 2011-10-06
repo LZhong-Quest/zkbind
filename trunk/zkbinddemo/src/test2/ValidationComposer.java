@@ -98,7 +98,7 @@ public class ValidationComposer extends GenericBindComposer {
 				}
 				
 				//TODO notify change not work, it only work by call by EL, we have to notify it manually
-				getBinder().notifyChange(this, "lastMessage1", null,null);
+				notifyChange(this, "lastMessage1");
 			}else if("value2".equals(prop)){
 				if(val!=null && Integer.parseInt(val.toString())>20){
 					setLastMessage2(null);
@@ -107,7 +107,7 @@ public class ValidationComposer extends GenericBindComposer {
 					setLastMessage2("value 2 have to large than 20");
 				}
 				//TODO notify change not work, it only work by call by EL, we have to notify it manually
-				getBinder().notifyChange(this, "lastMessage2", null,null);
+				notifyChange(this, "lastMessage2");
 			}
 		}
 		return r;
