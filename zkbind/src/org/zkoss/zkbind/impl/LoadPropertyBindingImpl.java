@@ -37,7 +37,7 @@ public class LoadPropertyBindingImpl extends PropertyBindingImpl implements
 	private Set<Class> _doneConverterDependsOn = new WeakHashSet<Class>(4);
 	
 	public LoadPropertyBindingImpl(Binder binder, Component comp,
-		String attr, String loadScript, String converter, Map args) {
+		String attr, String loadScript, String converter, Map<String, Object> args) {
 		super(binder, comp, "self."+attr, loadScript, converter, args);
 	}
 	

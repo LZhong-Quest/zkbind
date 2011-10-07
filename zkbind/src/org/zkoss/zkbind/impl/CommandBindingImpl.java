@@ -32,7 +32,7 @@ import org.zkoss.zkbind.sys.CommandBinding;
 public class CommandBindingImpl extends BindingImpl implements CommandBinding {
 	private final String _evtnm;
 	private final ExpressionX _command;
-	public CommandBindingImpl(Binder binder, Component comp, String evtnm, String cmdScript, Map args) {
+	public CommandBindingImpl(Binder binder, Component comp, String evtnm, String cmdScript, Map<String, Object> args) {
 		super(binder, comp, args);
 		_evtnm = evtnm;
 		final BindEvaluatorX eval = binder.getEvaluatorX();

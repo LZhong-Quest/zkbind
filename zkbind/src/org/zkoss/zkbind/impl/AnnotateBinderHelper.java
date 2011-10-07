@@ -15,15 +15,19 @@ package org.zkoss.zkbind.impl;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.zkoss.lang.Strings;
+import org.zkoss.xel.ExpressionX;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.UiException;
 import org.zkoss.zk.ui.metainfo.Annotation;
 import org.zkoss.zk.ui.sys.ComponentCtrl;
 import org.zkoss.zkbind.Binder;
+import org.zkoss.zkbind.sys.BindEvaluatorX;
 
 /**
  * Helper class to parse binding annotations and create bindings. 
@@ -106,6 +110,9 @@ public class AnnotateBinderHelper {
 					addTagExpr(saveExprs, value);
 				}
 			}
+			
+			args = args == null ? null : parsedArgs(args);
+			
 			_binder.addFormBindings(comp, id, 
 					loadExprs.toArray(new String[loadExprs.size()]), 
 					saveExprs.toArray(new String[saveExprs.size()]), 
@@ -155,6 +162,9 @@ public class AnnotateBinderHelper {
 					args.put(tag, tagExpr);
 				}
 			}
+			
+			args = args == null ? null : parsedArgs(args);
+			
 			for(String cmd : cmdExprs) {
 				_binder.addCommandBinding(comp, propName, cmd, args);
 			}
@@ -204,6 +214,9 @@ public class AnnotateBinderHelper {
 					addTagExpr(saveExprs, value);
 				}
 			}
+			
+			args = args==null?null:parsedArgs(args);
+			
 			_binder.addPropertyBinding(comp, propName, 
 					loadExprs.toArray(new String[loadExprs.size()]), 
 					saveExprs.toArray(new String[saveExprs.size()]), 
@@ -219,5 +232,29 @@ public class AnnotateBinderHelper {
 		} else {
 			exprs.add((String)tagExpr);
 		}
+	}
+	
+	// parse args , if it is a string, than parse it to ExpressionX
+	private Map<String, Object> parsedArgs(Map<String,Object> args) {
+		final BindEvaluatorX eval = _binder.getEvaluatorX();
+		final Map<String, Object> result = new LinkedHashMap<String, Object>(args.size()); 
+		for(final Iterator<Entry<String, Object>> it = args.entrySet().iterator(); it.hasNext();) {
+			final Entry<String, Object> entry = it.next(); 
+			final String key = entry.getKey();
+			final Object value = entry.getValue();
+			if (value instanceof String){
+				addArg(eval, result, key, (String)value);
+			/*}else if (value instanceof String[]) {*/ // TODO, consider if it is a string array/collection
+			}else{
+				result.put(key, value);
+			}
+		}
+		return result;
+	}
+
+	
+	private void addArg(BindEvaluatorX eval, Map<String,Object> result, String key, String valueScript) {
+		final ExpressionX parsedValue = valueScript == null ? null : eval.parseExpressionX(null, valueScript, String.class);
+		result.put(key, parsedValue);
 	}
 }

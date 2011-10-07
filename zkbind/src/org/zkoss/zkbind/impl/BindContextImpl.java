@@ -36,7 +36,7 @@ public class BindContextImpl implements BindContext {
 	private final Event event; //ZK event
 	private final Map<Object, Object> attrs;
 	
-	public BindContextImpl(Binder binder, Binding binding, boolean save, String command, Component comp, Event event, Map args) {
+	public BindContextImpl(Binder binder, Binding binding, boolean save, String command, Component comp, Event event, Map<String,Object> args) {
 		this.binder = binder;
 		this.binding = binding;
 		this.save = save;

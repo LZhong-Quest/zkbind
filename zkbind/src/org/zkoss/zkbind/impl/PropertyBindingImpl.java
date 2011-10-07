@@ -36,7 +36,7 @@ public abstract class PropertyBindingImpl extends BindingImpl implements Propert
 	protected final AccessInfo _accessInfo;
 	private final ExpressionX _converter;
 
-	protected PropertyBindingImpl(Binder binder, Component comp, String fieldScript, String accessScript, String converter, Map args) {
+	protected PropertyBindingImpl(Binder binder, Component comp, String fieldScript, String accessScript, String converter, Map<String, Object> args) {
 		super(binder,comp, args);
 		final BindEvaluatorX eval = binder.getEvaluatorX();
 		final Class returnType = Object.class;

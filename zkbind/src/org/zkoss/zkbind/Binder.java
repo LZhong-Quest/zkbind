@@ -36,7 +36,7 @@ public interface Binder {
 	 * @param commandExpr the command expression
 	 * @param args other key-value pairs.
 	 */
-	public void addCommandBinding(Component comp, String evtnm, String commandExpr, Map args);
+	public void addCommandBinding(Component comp, String evtnm, String commandExpr, Map<String, Object> args);
 	
 	/**
 	 * Add new form Bindings. 
@@ -49,7 +49,7 @@ public interface Binder {
 	 * @param args other key-value pairs. 
 	 */
 	public void addFormBindings(Component comp, String id, 
-			String[] loadExprs, String[] saveExprs, String[] confirmExprs, String validateExprs, Map args);
+			String[] loadExprs, String[] saveExprs, String[] confirmExprs, String validateExprs, Map<String, Object> args);
 
 	/**
 	 * Add new property Bindings.
@@ -62,7 +62,7 @@ public interface Binder {
 	 * @param args other key-value pairs. 
 	 */
 	public void addPropertyBinding(Component comp, String attr, 
-			String[] loadExprs, String[] saveExprs, String converterExprs, String validateExprs, Map args);
+			String[] loadExprs, String[] saveExprs, String converterExprs, String validateExprs, Map<String, Object> args);
 
 	/**
 	 * Remove all managed bindings that associated with the specified component.
@@ -96,7 +96,7 @@ public interface Binder {
 	/**
 	 * Notify command fired to this binder.
 	 * @param command command name
-	 * @param passed in arguments
+	 * @param args , arguments when notifing this command, it will be passed as a arguments of execution method of vm
 	 */
 	public void notifyCommand(String command, Map<String, Object> args);
 	
