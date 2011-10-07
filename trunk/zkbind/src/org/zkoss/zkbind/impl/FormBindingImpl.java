@@ -40,7 +40,7 @@ public class FormBindingImpl extends BindingImpl implements FormBinding {
 	final protected AccessInfo _accessInfo;
 	final private Map<String, ExpressionX> _fieldExprs;
 
-	protected FormBindingImpl(Binder binder, Component comp, Form form, String accessScript, Map args) {
+	protected FormBindingImpl(Binder binder, Component comp, Form form, String accessScript, Map<String, Object> args) {
 		super(binder, comp, args);
 		this._form = form;
 		this._accessInfo = AccessInfo.create(this, accessScript, Form.class);

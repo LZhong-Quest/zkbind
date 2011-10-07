@@ -1,0 +1,15 @@
+<window apply="test2.ArgsComposer">
+	<custom-attributes composerName="vm"/>
+	<hbox>
+		<label id="l1" value="@bind(vm.value1, converter=vm.converter1, arg1 = 'Arg1', arg2 = 'Arg2')" />
+		<label id="l2" value="@bind(vm.value2, converter=vm.converter1, arg1 = vm.myArg1, arg2 = vm.myArg2)" />
+	</hbox>
+	<hbox>
+		<textbox id="t1" value="@bind(vm.value1, converter=vm.converter1, arg1 = 'Arg1', arg2 = 'Arg2')" />
+		<textbox id="t2" value="@bind(vm.value2, converter=vm.converter1, arg1 = vm.myArg1, arg2 = vm.myArg2)" />
+	</hbox>
+	<hbox>
+		<button id="btn1" label="cmd1" onClick="@bind('cmd1', param1='Dennis', param2=vm.param2)"/>
+		<button label="Dump" onClick="binder.getTracker().dump()" />
+	</hbox>	
+</window>

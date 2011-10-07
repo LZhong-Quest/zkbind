@@ -33,7 +33,7 @@ import org.zkoss.zkbind.sys.SaveFormBinding;
  */
 public class SaveFormBindingImpl extends FormBindingImpl implements	SaveFormBinding {
 	private final ExpressionX validate;
-	public SaveFormBindingImpl(Binder binder, Component comp, Form form, String access, String validate, Map args) {
+	public SaveFormBindingImpl(Binder binder, Component comp, Form form, String access, String validate, Map<String,Object> args) {
 		super(binder, comp, form, access, args);
 		final BindEvaluatorX eval = binder.getEvaluatorX();
 		final BindContext ctx = new BindContextImpl(binder, this, true, null, comp, null, null);

@@ -35,7 +35,7 @@ import org.zkoss.zkbind.xel.zel.BindELContext;
  */
 public class SavePropertyBindingImpl extends PropertyBindingImpl implements SavePropertyBinding {
 	private final ExpressionX _validate;
-	public SavePropertyBindingImpl(Binder binder, Component comp, String attr, String saveScript, String converter, String validate, Map args) {
+	public SavePropertyBindingImpl(Binder binder, Component comp, String attr, String saveScript, String converter, String validate, Map<String, Object> args) {
 		super(binder, comp, "self."+attr, saveScript, converter, args);
 		final BindEvaluatorX eval = binder.getEvaluatorX();
 		this._validate = validate != null ? eval.parseExpressionX(null, validate, Boolean.class) : null;
