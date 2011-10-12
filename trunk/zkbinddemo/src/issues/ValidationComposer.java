@@ -26,7 +26,7 @@ import org.zkoss.zkbind.GenericBindComposer;
 import org.zkoss.zkbind.NotifyChange;
 import org.zkoss.zkbind.Property;
 import org.zkoss.zkbind.ValidationContext;
-import org.zkoss.zkbind.validator.impl.ValidationContextImpl;
+import org.zkoss.zkbind.impl.ValidationContextImpl;
 
 /**
  * @author henrichen
