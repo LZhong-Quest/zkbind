@@ -20,7 +20,6 @@ import org.zkoss.zkbind.sys.Binding;
 import org.zkoss.zkbind.sys.SaveBinding;
 import org.zkoss.zkbind.sys.SaveFormBinding;
 import org.zkoss.zkbind.sys.SavePropertyBinding;
-import org.zkoss.zkbind.validator.impl.ValidationContextImpl;
 /**
  * a internal stateless helper to helps BindImpl to the validation.
  * 
