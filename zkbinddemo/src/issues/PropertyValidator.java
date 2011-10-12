@@ -12,12 +12,12 @@ public class PropertyValidator implements Validator{
 		if(obj instanceof Integer){
 			int i = (Integer)obj;
 			if(i<100 && i>0){
-				ctx.setMessage(p,"wrong value range");
-			}else{
-				ctx.setValid(true);
+//				ctx.setMessage(p,"wrong value range");
+				ctx.setFail();
 			}
 		}else{
-			ctx.setMessage(p,"not an integer");
+//			ctx.setMessage(p,"not an integer");
+			ctx.setFail();
 		}
 	}
 

@@ -16,6 +16,7 @@ import java.util.Set;
 
 import org.zkoss.zkbind.BindContext;
 import org.zkoss.zkbind.Property;
+import org.zkoss.zkbind.Validator;
 
 /**
  * Binding for saving.
@@ -41,4 +42,10 @@ public interface SaveBinding extends Binding {
 	 * @return whether to do validation.
 	 */
 	public boolean isValidate();
+	
+	/**
+	 * return {@Validator} to do validation
+	 * @return the validator if existed
+	 */
+	public Validator getValidator();
 }

@@ -8,21 +8,19 @@ public class PropertiesValidator implements Validator{
 
 	public void validate(ValidationContext ctx) {
 		
-		boolean v = true;
 		for(Property p:ctx.getProperties()){
 			Object obj = p.getValue();
 			if(obj instanceof Integer){
 				int i = (Integer)obj;
 				if(i<100 && i>0){
-					ctx.setMessage(p,"wrong value range");
-					v &= false;
+//					ctx.setMessage(p,"wrong value range");
+					ctx.setFail();
 				}
 			}else{
-				ctx.setMessage(p,"not an integer");
-				v &= false;
+//				ctx.setMessage(p,"not an integer");
+				ctx.setFail();
 			}
 		}
-		ctx.setValid(v);
 	}
 
 }

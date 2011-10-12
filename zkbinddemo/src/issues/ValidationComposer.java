@@ -44,7 +44,7 @@ public class ValidationComposer extends GenericBindComposer {
 	
 
 	public boolean validate(String cmd,Set<Property> ps, BindContext ctx){
-		ValidationContext vctx = new ValidationContextImpl(cmd, ps, ctx);
+		ValidationContext vctx = new ValidationContextImpl(cmd, ps.size()>0?ps.iterator().next():null,ps, ctx,true);
 		new PropertyValidator().validate(vctx);
 		
 		return vctx.isValid();

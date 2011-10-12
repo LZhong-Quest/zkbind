@@ -86,6 +86,13 @@ public interface Binder {
 	public Converter getConverter(String name);
 	
 	/**
+	 * Returns the _validator of the given _validator name.
+	 * @param name _validator name
+	 * @return the _validator of the given _validator name.
+	 */
+	public Validator getValidator(String name);
+	
+	/**
 	 * Notify change of the property.
 	 * @param bean the backing bean object.
 	 * @param property the property of the bean that change the value 
