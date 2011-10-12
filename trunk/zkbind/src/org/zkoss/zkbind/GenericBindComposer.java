@@ -37,12 +37,14 @@ public class GenericBindComposer implements Composer, ComposerExt {
 	private Binder _binder;
 	private Component _ownerComp;
 	private final Map<String, Converter> _converters;
+	private final Map<String, Validator> _validators;
 	
 //	private static final String ON_BINDER_POST_COMMAND = "onBinderPostCommand";
 	
 	public GenericBindComposer() {
 		setViewModel(this);
 		_converters = new HashMap<String, Converter>(8);
+		_validators = new HashMap<String, Validator>(8);
 	}
 	
 	public Binder getBinder() {
@@ -69,8 +71,20 @@ public class GenericBindComposer implements Composer, ComposerExt {
 		return conv;
 	}
 	
+	public Validator getValidator(String name) {
+		Validator validator = _validators.get(name);
+		if (validator == null) {
+			validator = _binder.getValidator(name);
+		}
+		return validator;
+	}
+	
 	public void addConverter(String name, Converter converter) {
 		_converters.put(name, converter);
+	}
+	
+	public void addValidator(String name, Validator validator) {
+		_validators.put(name, validator);
 	}
 
 	//--Composer--//

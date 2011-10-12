@@ -25,44 +25,52 @@ import org.zkoss.zkbind.ValidationContext;
  */
 public class ValidationContextImpl implements ValidationContext{
 
-	private boolean valid = true;
-	private String command;
-	private Set<Property> properties;
-	private BindContext ctx;
+	private boolean _valid = true;//default validation result is true
+	private String _command;
+	private Property _property; //main property
+	private Set<Property> _properties; //related properties
+	private BindContext _ctx;
 	
 	private Map<Property,String> messages;
 	
-	public ValidationContextImpl(String command, Set<Property> properties, BindContext ctx){
-		this.command = command;
-		this.properties = properties;
-		this.ctx = ctx;
+	public ValidationContextImpl(String command, Property property,Set<Property> properties, BindContext ctx,boolean valid){
+		this._command = command;
+		this._property = property;
+		this._properties = properties;
+		this._ctx = ctx;
+		this._valid = valid;
 	}
 	
 	
 	public BindContext getBindContext() {
-		return ctx;
+		return _ctx;
 	}
 
 	public String getCommand() {
-		return command;
+		return _command;
 	}
 
 	public Set<Property> getProperties() {
-		return properties;
+		return _properties;
 	}
 
 	public Property getProperty() {
-		return properties.iterator().next();
+		return _property;
 	}
 
 	public boolean isValid() {
-		return valid;
+		return _valid;
 	}
 
-	public void setValid(boolean valid) {
-		this.valid = valid;
+//	public void setValid(boolean valid) {
+//		this.valid = valid;
+//	}
+	
+	public void setFail(){
+		this._valid = false;
 	}
 
+	//TODO
 	public void setMessage(Property property, String message) {
 		if(messages==null){
 			messages = new HashMap<Property, String>();
@@ -70,6 +78,7 @@ public class ValidationContextImpl implements ValidationContext{
 		messages.put(property, message);
 	}
 	
+	//TODO
 	public String getMessage(Property property){
 		return messages==null?null:messages.get(property);
 	}

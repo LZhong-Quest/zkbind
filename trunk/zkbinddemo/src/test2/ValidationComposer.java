@@ -12,28 +12,80 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 
 package test2;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Set;
 
-import org.zkoss.zk.ui.Component;
 import org.zkoss.zkbind.BindContext;
-import org.zkoss.zkbind.Converter;
-import org.zkoss.zkbind.DependsOn;
 import org.zkoss.zkbind.GenericBindComposer;
 import org.zkoss.zkbind.NotifyChange;
 import org.zkoss.zkbind.Property;
+import org.zkoss.zkbind.ValidationContext;
+import org.zkoss.zkbind.Validator;
 
 /**
- * @author henrichen
+ * @author dennis
  * 
  */
 public class ValidationComposer extends GenericBindComposer {
 	private int value1;
 	private String value2;
+	
 	public ValidationComposer() {
+		addValidator("validator1",new Validator(){
+			public void validate(ValidationContext ctx) {
+				if(!ctx.isValid()) return;
+				Property p = ctx.getProperty();
+				Object val = p.getValue();
+				if(val!=null && Integer.parseInt(val.toString())>10){
+					setLastMessage1(null);
+				}else{
+					ctx.setFail();
+					setLastMessage1("value 1 have to large than 10");
+				}
+			}			
+		});
+		addValidator("validator2",new Validator(){
+			public void validate(ValidationContext ctx) {
+				if(!ctx.isValid()) return;
+				Property p = ctx.getProperty();
+				Object val = p.getValue();
+				if(val!=null && Integer.parseInt(val.toString())>20){
+					setLastMessage2(null);
+				}else{
+					ctx.setFail();
+					setLastMessage2("value 2 have to large than 20");
+				}
+			}			
+		});
+		addValidator("validator3",new Validator(){
+			public void validate(ValidationContext ctx) {
+				if(!ctx.isValid()) return;
+				Object val1=null;
+				Object val2=null;
+				for(Property p :ctx.getProperties()){
+					String prop = p.getProperty();
+					if("value1".equals(prop)){
+						val1 = p.getValue();
+					}else if("value2".equals(prop)){
+						val2 = p.getValue();
+					}
+				}
+				if(val1 == null){
+					setLastMessage1("value1 must not empty");
+				}else if(Integer.parseInt(val1.toString())>10){
+					setLastMessage1("value1 have to large than 10");
+				}else{
+					setLastMessage1(null);
+				}
+				
+				if(val2 == null){
+					setLastMessage2("value2 must not empty");
+				}else if(Integer.parseInt(val2.toString())>20){
+					setLastMessage2("value2 have to large than 20");
+				}else{
+					setLastMessage2(null);
+				}
+			}			
+		});
 	}
 	
 	public int getValue1() {
@@ -68,6 +120,7 @@ public class ValidationComposer extends GenericBindComposer {
 	@NotifyChange
 	public void setLastMessage1(String lastMessage1) {
 		this.lastMessage1 = lastMessage1;
+		notifyChange(this, "lastMessage1");
 	}
 	
 	
@@ -80,6 +133,7 @@ public class ValidationComposer extends GenericBindComposer {
 
 	public void setLastMessage2(String lastMessage2) {
 		this.lastMessage2 = lastMessage2;
+		notifyChange(this, "lastMessage2");
 	}
 
 	public boolean validate(String cmd,Set<Property> ps, BindContext ctx){
@@ -96,9 +150,6 @@ public class ValidationComposer extends GenericBindComposer {
 					r &= false;
 					setLastMessage1("value 1 have to large than 10");
 				}
-				
-				//TODO notify change not work, it only work by call by EL, we have to notify it manually
-				notifyChange(this, "lastMessage1");
 			}else if("value2".equals(prop)){
 				if(val!=null && Integer.parseInt(val.toString())>20){
 					setLastMessage2(null);
@@ -106,8 +157,6 @@ public class ValidationComposer extends GenericBindComposer {
 					r &= false;
 					setLastMessage2("value 2 have to large than 20");
 				}
-				//TODO notify change not work, it only work by call by EL, we have to notify it manually
-				notifyChange(this, "lastMessage2");
 			}
 		}
 		return r;

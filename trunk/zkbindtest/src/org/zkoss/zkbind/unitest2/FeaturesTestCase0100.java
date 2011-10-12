@@ -1,5 +1,8 @@
 package org.zkoss.zkbind.unitest2;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.zkoss.zktc.core.junit.TestCaseBase;
@@ -13,8 +16,7 @@ public class FeaturesTestCase0100 extends TestCaseBase{
 
 	@Test
 	public void f0010(){
-		WidgetDriver driver = getDriver();
-		driver.navigate(getTestCaseUrl("/test2/F0010.zul"));
+		navigate(getTestCaseUrl("/test2/F0010.zul"));
 		
 		Assert.assertEquals("A-toUI-c0",findWidget("$l0").getValue());
 		Assert.assertEquals("B-toUI-c1",findWidget("$l1").getValue());
@@ -91,11 +93,128 @@ public class FeaturesTestCase0100 extends TestCaseBase{
 		
 	}
 	
+	@Test
+	public void f0011(){
+		navigate(getTestCaseUrl("/test2/F0011.zul"));
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		Date now = new Date();
+		String today = sdf.format(now);
+		String yesterday = sdf.format(new Date(now.getTime()-1000*60*60*24));
+		String tomorrow = sdf.format(new Date(now.getTime()+1000*60*60*24));
+		
+		//validate date1
+		
+		Assert.assertEquals(today,findWidget("$db1").getText());
+		Assert.assertEquals(today,findWidget("$lb11").getValue());
+		Assert.assertEquals("",findWidget("$lb12").getValue());
+		
+		findWidget("$db1").clear().keys(tomorrow).tab();
+		Assert.assertEquals(tomorrow,findWidget("$db1").getText());
+		Assert.assertEquals(today,findWidget("$lb11").getValue());
+		Assert.assertEquals("date bday1 must small than today",findWidget("$lb12").getValue());
+		
+		findWidget("$db1").clear().keys(yesterday).tab();
+		Assert.assertEquals(yesterday,findWidget("$db1").getText());
+		Assert.assertEquals(yesterday,findWidget("$lb11").getValue());
+		Assert.assertEquals("",findWidget("$lb12").getValue());
+		
+		//validate date2
+		
+		Assert.assertEquals("",findWidget("$db2").getText());
+		Assert.assertEquals("",findWidget("$lb21").getValue());
+		Assert.assertEquals("",findWidget("$lb22").getValue());
+		
+		findWidget("$db2").clear().keys(yesterday).tab();
+		Assert.assertEquals(yesterday,findWidget("$db2").getText());
+		Assert.assertEquals("",findWidget("$lb21").getValue());
+		Assert.assertEquals("date bday2 must large than today",findWidget("$lb22").getValue());
+		
+		findWidget("$db2").clear().keys(tomorrow).tab();
+		Assert.assertEquals(tomorrow,findWidget("$db2").getText());
+		Assert.assertEquals(tomorrow,findWidget("$lb21").getValue());
+		Assert.assertEquals("",findWidget("$lb22").getValue());
+	}
+	
+	@Test
+	public void f0011_1(){
+		navigate(getTestCaseUrl("/test2/F0011.zul"));
+		
+		
+		//validate property before command
+		
+		Assert.assertEquals("",findWidget("$tb31").getValue());
+		Assert.assertEquals("",findWidget("$tb32").getValue());
+		Assert.assertEquals("",findWidget("$lb31").getValue());
+		Assert.assertEquals("",findWidget("$lb32").getValue());
+		
+		findWidget("$btn1").click();
+		Assert.assertEquals("value1 is empty",findWidget("$lb32").getValue());
+		
+		findWidget("$tb31").keys("abc").tab();
+		Assert.assertEquals("",findWidget("$lb31").getValue());
+		Assert.assertEquals("value1 is empty",findWidget("$lb32").getValue());
+		
+		findWidget("$btn1").click();
+		Assert.assertEquals("value2 must euqlas to value 1",findWidget("$lb32").getValue());
+		
+		findWidget("$tb32").keys("abc").tab();
+		Assert.assertEquals("",findWidget("$lb31").getValue());
+		Assert.assertEquals("value2 must euqlas to value 1",findWidget("$lb32").getValue());
+		
+		findWidget("$btn1").click();
+		Assert.assertEquals("abc",findWidget("$lb31").getValue());
+		Assert.assertEquals("do Command1",findWidget("$lb32").getValue());
+	}
+	
+	@Test
+	public void f0011_2(){
+		navigate(getTestCaseUrl("/test2/F0011.zul"));
+		
+		
+		//validate property before command
+		
+		Assert.assertEquals("",findWidget("$tb41").getValue());
+		Assert.assertEquals("",findWidget("$tb42").getValue());
+		Assert.assertEquals("",findWidget("$lb41").getValue());
+		Assert.assertEquals("",findWidget("$lb42").getValue());
+		
+		findWidget("$btn2").click();
+		Assert.assertEquals("",findWidget("$lb41").getValue());
+		Assert.assertEquals("value3 is empty",findWidget("$lb42").getValue());
+		
+		findWidget("$tb41").keys("abc").tab();
+		Assert.assertEquals("",findWidget("$lb41").getValue());
+		Assert.assertEquals("",findWidget("$lb42").getValue());
+		findWidget("$tb41").clear().tab();
+		Assert.assertEquals("",findWidget("$lb41").getValue());
+		Assert.assertEquals("value3 is empty",findWidget("$lb42").getValue());
+		
+		findWidget("$tb41").keys("abc").tab();
+		findWidget("$btn2").click();
+		Assert.assertEquals("",findWidget("$lb41").getValue());
+		Assert.assertEquals("value4 is empty",findWidget("$lb42").getValue());
+		
+		findWidget("$tb42").keys("def").tab();
+		Assert.assertEquals("",findWidget("$lb41").getValue());
+		Assert.assertEquals("",findWidget("$lb42").getValue());
+		
+		findWidget("$btn2").click();
+		Assert.assertEquals("",findWidget("$lb41").getValue());
+		Assert.assertEquals("value4 must euqlas to value 3",findWidget("$lb42").getValue());
+		
+		findWidget("$tb42").clear().keys("abc").tab();
+		Assert.assertEquals("",findWidget("$lb41").getValue());
+		Assert.assertEquals("",findWidget("$lb42").getValue());
+		
+		findWidget("$btn2").click();
+		Assert.assertEquals("abc",findWidget("$lb41").getValue());
+		Assert.assertEquals("do Command2",findWidget("$lb42").getValue());
+	}
+	
 	
 	@Test
 	public void f0013(){
-		WidgetDriver driver = getDriver();
-		driver.navigate(getTestCaseUrl("/test2/F0013.zul"));
+		navigate(getTestCaseUrl("/test2/F0013.zul"));
 		
 		Assert.assertEquals("A",findWidget("$l1").getValue());
 		Assert.assertEquals("B",findWidget("$l2").getValue());

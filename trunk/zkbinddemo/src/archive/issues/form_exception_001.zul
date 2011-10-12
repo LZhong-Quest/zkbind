@@ -2,7 +2,7 @@
 	<custom-attributes composerName="vm" />
 	<vbox>
 		Detail
-		<grid self="@form(id='fx',load=vm.selected,save=vm.selected before 'update',validate=true)" width="500px">
+		<grid self="@form(id='fx',load=vm.selected,save=vm.selected before 'update')" width="500px">
 			<rows>
 				<row>
 					<cell>City</cell>

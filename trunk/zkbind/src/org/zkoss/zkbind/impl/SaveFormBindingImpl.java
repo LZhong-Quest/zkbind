@@ -23,6 +23,7 @@ import org.zkoss.zkbind.BindContext;
 import org.zkoss.zkbind.Binder;
 import org.zkoss.zkbind.Form;
 import org.zkoss.zkbind.Property;
+import org.zkoss.zkbind.Validator;
 import org.zkoss.zkbind.sys.BindEvaluatorX;
 import org.zkoss.zkbind.sys.SaveFormBinding;
 
@@ -32,12 +33,40 @@ import org.zkoss.zkbind.sys.SaveFormBinding;
  *
  */
 public class SaveFormBindingImpl extends FormBindingImpl implements	SaveFormBinding {
-	private final ExpressionX validate;
-	public SaveFormBindingImpl(Binder binder, Component comp, Form form, String access, String validate, Map<String,Object> args) {
+	private final ExpressionX _validator;
+	public SaveFormBindingImpl(Binder binder, Component comp, Form form, String access, String validator, Map<String,Object> args) {
 		super(binder, comp, form, access, args);
 		final BindEvaluatorX eval = binder.getEvaluatorX();
 		final BindContext ctx = new BindContextImpl(binder, this, true, null, comp, null, null);
-		this.validate = validate != null ? eval.parseExpressionX(ctx, validate, Boolean.class) : null;
+		_validator = validator==null?null:parseValidator(eval,validator);
+	}
+	
+	private ExpressionX parseValidator(BindEvaluatorX eval, String validatorExpr) {
+		final BindContext ctx = new BindContextImpl(getBinder(), this, false, null, getComponent(), null, null);
+		//don't provide a bindcontext when pare expression of converter with this binding,
+		//do so, the tracker will not also tracking the converter dependence with this binding.
+		return eval.parseExpressionX(null, validatorExpr, Object.class);
+	}
+
+	public Validator getValidator() {
+		if(_validator==null) return null;
+
+		final BindContext ctx = new BindContextImpl(getBinder(), this, false, null, getComponent(), null, null);
+		final BindEvaluatorX eval = getBinder().getEvaluatorX();
+		Object obj = eval.getValue(ctx, getComponent(), _validator);
+		
+		if(obj instanceof Validator){
+			return (Validator)obj;
+		}else if(obj instanceof String){
+			//TODO provide getValidator in default VM, ex GenericBindComposer
+			ExpressionX vmconverter = eval.parseExpressionX(null, 
+					new StringBuilder().append(BinderImpl.VM).append(".getValidator('").append(obj).append("')").toString(),
+					Validator.class);
+			obj = eval.getValue(null, getComponent(), vmconverter);
+			return (Validator)obj;
+		}else{
+			throw new ClassCastException("result of expression '"+_validator.getExpressionString()+"' is not a Validator, is "+obj);
+		}
 	}
 	
 	public void save(BindContext ctx) {
@@ -81,7 +110,6 @@ public class SaveFormBindingImpl extends FormBindingImpl implements	SaveFormBind
 	}
 	
 	public boolean isValidate() {
-		return validate == null ? false : //default is no validation 
-			((Boolean) getBinder().getEvaluatorX().getValue(null, getComponent(), validate)).booleanValue();
+		return _validator == null ? false : true;
 	}
 }

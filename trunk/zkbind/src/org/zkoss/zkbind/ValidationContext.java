@@ -20,16 +20,16 @@ import java.util.Set;
 public interface ValidationContext {
 
 	/** 
-	 * is valid of current validation, 
-	 * default false
+	 * is valid 
+	 * default true
 	 */
 	boolean isValid();
 
 	/**
-	 * set valid result of this context
+	 * set validation fail
 	 * @param valid
 	 */
-	void setValid(boolean valid);
+	void setFail();
 
 	/**
 	 * get the command that trigger the validation
@@ -38,14 +38,16 @@ public interface ValidationContext {
 	String getCommand();
 
 	/**
-	 * get the properties that need to be validated.
+	 * get properties that need to be validated.
+	 * you usually use this method to get value of other properties to do complex validation or
+	 * form validation
 	 * @return the properties.
 	 */
 	Set<Property> getProperties();
 
 	/**
-	 * get the first property that need to be validated. 
-	 * @return the first property.
+	 * get the main property that need to be validated. 
+	 * @return the main property.
 	 */
 	Property getProperty();
 
@@ -54,10 +56,11 @@ public interface ValidationContext {
 	 */
 	BindContext getBindContext();
 
-	/**
-	 * the error message to property
-	 * @param property the property that message will attached to
-	 * @param message the message
-	 */
-	void setMessage(Property property, String message);
+	//TODO
+//	/**
+//	 * the error message to property
+//	 * @param property the property that message will attached to
+//	 * @param message the message
+//	 */
+//	void setMessage(Property property, String message);
 }

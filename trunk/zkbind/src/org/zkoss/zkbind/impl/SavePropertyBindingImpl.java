@@ -25,6 +25,7 @@ import org.zkoss.zkbind.BindContext;
 import org.zkoss.zkbind.Binder;
 import org.zkoss.zkbind.Converter;
 import org.zkoss.zkbind.Property;
+import org.zkoss.zkbind.Validator;
 import org.zkoss.zkbind.sys.BindEvaluatorX;
 import org.zkoss.zkbind.sys.SavePropertyBinding;
 import org.zkoss.zkbind.xel.zel.BindELContext;
@@ -34,12 +35,42 @@ import org.zkoss.zkbind.xel.zel.BindELContext;
  * @author henrichen
  */
 public class SavePropertyBindingImpl extends PropertyBindingImpl implements SavePropertyBinding {
-	private final ExpressionX _validate;
-	public SavePropertyBindingImpl(Binder binder, Component comp, String attr, String saveScript, String converter, String validate, Map<String, Object> args) {
+	private final ExpressionX _validator;
+	
+	public SavePropertyBindingImpl(Binder binder, Component comp, String attr, String saveScript, String converter, String validator, Map<String, Object> args) {
 		super(binder, comp, "self."+attr, saveScript, converter, args);
 		final BindEvaluatorX eval = binder.getEvaluatorX();
-		this._validate = validate != null ? eval.parseExpressionX(null, validate, Boolean.class) : null;
+		
+		_validator = validator==null?null:parseValidator(eval,validator);
 	}
+	
+	private ExpressionX parseValidator(BindEvaluatorX eval, String validatorExpr) {
+		final BindContext ctx = new BindContextImpl(getBinder(), this, false, null, getComponent(), null, null);
+		//don't provide a bindcontext when pare expression of converter with this binding,
+		//do so, the tracker will not also tracking the converter dependence with this binding.
+		return eval.parseExpressionX(null, validatorExpr, Object.class);
+	}
+
+	public Validator getValidator() {
+		if(_validator==null) return null;
+
+		final BindContext ctx = new BindContextImpl(getBinder(), this, false, null, getComponent(), null, null);
+		final BindEvaluatorX eval = getBinder().getEvaluatorX();
+		Object obj = eval.getValue(ctx, getComponent(), _validator);
+		
+		if(obj instanceof Validator){
+			return (Validator)obj;
+		}else if(obj instanceof String){
+			ExpressionX vmconverter = eval.parseExpressionX(null, 
+					new StringBuilder().append(BinderImpl.VM).append(".getValidator('").append(obj).append("')").toString(),
+					Validator.class);
+			obj = eval.getValue(null, getComponent(), vmconverter);
+			return (Validator)obj;
+		}else{
+			throw new ClassCastException("result of expression '"+_validator.getExpressionString()+"' is not a Validator, is "+obj);
+		}
+	}
+	
 
 	private static final String $COMPVALUE$ = "$COMPVALUE$";
 	private static final String $VALUEREF$ = "$VALUEREF$";
@@ -104,8 +135,7 @@ public class SavePropertyBindingImpl extends PropertyBindingImpl implements Save
 	}
 	
 	public boolean isValidate() {
-		return _validate == null ? false : //default is no validation 
-				((Boolean) getBinder().getEvaluatorX().getValue(null, getComponent(), _validate)).booleanValue();
+		return _validator == null ? false : true;
 	}
 	
 	private Method getConverterMethod(Class<? extends Converter> cls) {

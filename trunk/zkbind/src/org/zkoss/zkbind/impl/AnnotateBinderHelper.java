@@ -71,7 +71,7 @@ public class AnnotateBinderHelper {
 			final List<String> confirmExprs = new ArrayList<String>();
 			String id = null;
 			Object value = null;
-			String validate = null;
+			String validator = null;
 			Map<String, Object> args = null;
 			for (final Iterator it = attrs.entrySet().iterator(); it.hasNext();) {
 				final Map.Entry entry = (Map.Entry) it.next();
@@ -85,8 +85,8 @@ public class AnnotateBinderHelper {
 					addTagExpr(loadExprs, tagExpr);
 				} else if ("confirm".equals(tag)) {
 					addTagExpr(confirmExprs, tagExpr);
-				} else if ("validate".equals(tag)) {
-					validate = (String) tagExpr;
+				} else if ("validator".equals(tag)) {
+					validator = (String) tagExpr;
 				} else if ("value".equals(tag)) {
 					value = tagExpr;
 				} else { //other unknown tag, keep as arguments
@@ -117,7 +117,7 @@ public class AnnotateBinderHelper {
 					loadExprs.toArray(new String[loadExprs.size()]), 
 					saveExprs.toArray(new String[saveExprs.size()]), 
 					confirmExprs.toArray(new String[confirmExprs.size()]), 
-					validate, args);
+					validator, args);
 		}
 	}
 	
@@ -180,7 +180,7 @@ public class AnnotateBinderHelper {
 			final List<String> loadExprs = new ArrayList<String>();
 			Object value = null;
 			String converter = null;
-			String validate = null;
+			String validator = null;
 			Map<String, Object> args = null;
 			for (final Iterator it = attrs.entrySet().iterator(); it.hasNext();) {
 				final Map.Entry entry = (Map.Entry) it.next();
@@ -192,8 +192,8 @@ public class AnnotateBinderHelper {
 					addTagExpr(loadExprs, tagExpr);
 				} else if ("converter".equals(tag)) {
 					converter = (String) tagExpr;
-				} else if ("validate".equals(tag)) {
-					validate = (String) tagExpr;
+				} else if ("validator".equals(tag)) {
+					validator = (String) tagExpr;
 				} else if ("value".equals(tag)) {
 					value = tagExpr;
 				} else { //other unknown tag, keep as arguments
@@ -220,7 +220,7 @@ public class AnnotateBinderHelper {
 			_binder.addPropertyBinding(comp, propName, 
 					loadExprs.toArray(new String[loadExprs.size()]), 
 					saveExprs.toArray(new String[saveExprs.size()]), 
-					converter, validate, args);
+					converter, validator, args);
 		}
 	}
 
