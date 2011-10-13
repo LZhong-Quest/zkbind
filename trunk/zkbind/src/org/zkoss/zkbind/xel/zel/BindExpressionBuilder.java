@@ -115,6 +115,8 @@ public class BindExpressionBuilder extends ExpressionBuilder {
 	}
 	
 	private void visitNode(Node node) {
+		if(_ctx.getBinding()==null) return; //no need to build tracker, we are not in binding expression
+		
 		final List<String> path = new ArrayList<String>();
 		//find the path from AST value node or AST identifier node
     	if (node instanceof AstValue) {
