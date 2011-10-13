@@ -74,37 +74,16 @@ public class ConfirmViewModel extends GenericBindComposer {
 					} else {
 						setMessage("validation and select back to " + selected);
 						tobeSelected = null;
-						// Don't use notify, we are already in command lifecycle
-						// getBinder().notifyCommand("confirmCancel", null);
-
-						// TODO need to review this api
-						// postCommand("confirmCancel",null);
-
-						// TODO a way to postCommand manually
-						final EventListener listener = new EventListener() {
-							public void onEvent(Event event) throws Exception {
-								// trigger the confirmCancel command
-								getBinder().notifyCommand("confirmCancel", null);
-								self.removeEventListener("onPostCommand", this);
-							}
-						};
-						self.addEventListener("onPostCommand", listener);
-						Events.postEvent("onPostCommand", self, null);
+						// Don't use send, we are already in command lifecycle
+//						getBinder().sendCommand("confirmCancel", null);
+						getBinder().postCommand("confirmCancel", null);
 					}
 					ctx.setFail();
 				}
 			}
 		});
 	}
-	
-	//TODO, we should not store this, remove this after the postCommand api ready
-	Component self;
-	
-	public void doAfterCompose(Component comp) throws Exception {
-		super.doAfterCompose(comp);
-		self = comp;
-	}
-	
+
 	public Form getForm(){
 		return form;
 	}

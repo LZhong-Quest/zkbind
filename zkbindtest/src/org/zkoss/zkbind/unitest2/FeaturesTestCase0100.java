@@ -302,6 +302,32 @@ public class FeaturesTestCase0100 extends TestCaseBase{
 	}
 	
 	
-	
+	@Test
+	public void f0012(){
+		navigate(getTestCaseUrl("/test2/F0015.zul"));
+		
+		Assert.assertEquals("A",findWidget("$l11").getValue());
+		Assert.assertEquals("B",findWidget("$l12").getValue());
+		Assert.assertEquals("C",findWidget("$l13").getValue());
+		Assert.assertEquals("",findWidget("$l21").getValue());
+		Assert.assertEquals("",findWidget("$l22").getValue());
+		Assert.assertEquals("",findWidget("$l23").getValue());
+		
+		findWidget("$btn1").click();
+		Assert.assertEquals("doCommand1",findWidget("$l11").getValue());
+		Assert.assertEquals("B",findWidget("$l12").getValue());
+		Assert.assertEquals("C",findWidget("$l13").getValue());
+		Assert.assertEquals("doCommand1",findWidget("$l21").getValue());
+		Assert.assertEquals("",findWidget("$l22").getValue());
+		Assert.assertEquals("",findWidget("$l23").getValue());
+		
+		findWidget("$btn2").click();
+		Assert.assertEquals("doCommand1",findWidget("$l11").getValue());
+		Assert.assertEquals("doCommand2",findWidget("$l12").getValue());
+		Assert.assertEquals("doCommand3",findWidget("$l13").getValue());
+		Assert.assertEquals("doCommand1",findWidget("$l21").getValue());
+		Assert.assertEquals("doCommand2",findWidget("$l22").getValue());
+		Assert.assertEquals("doCommand3",findWidget("$l23").getValue());
+	}
 	
 }
