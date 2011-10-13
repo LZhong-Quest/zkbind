@@ -57,6 +57,23 @@ public class ValidationContextImpl implements ValidationContext{
 	public Property getProperty() {
 		return _property;
 	}
+	
+
+	public Object getPropertyValue() {
+		return _property==null?null:_property.getValue();
+	}
+
+	public Object getPropertyValue(String name) {
+		if(_property!=null && _property.getProperty().equals(name)){
+			return _property.getValue();
+		}
+		for(Property p:getProperties()){
+			if(p.getProperty().equals(name)){
+				return p.getValue();
+			}	
+		}
+		return null;
+	}
 
 	public boolean isValid() {
 		return _valid;
@@ -82,5 +99,6 @@ public class ValidationContextImpl implements ValidationContext{
 	public String getMessage(Property property){
 		return messages==null?null:messages.get(property);
 	}
+
 
 }

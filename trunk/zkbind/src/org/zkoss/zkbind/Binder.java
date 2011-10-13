@@ -40,29 +40,30 @@ public interface Binder {
 	
 	/**
 	 * Add new form Bindings. 
-	 * @param comp the associated component
-	 * @param _fieldExpr the associated attribute of the component
+	 * @param comp the associated component, must not null
+	 * @param id the form id, must not null
+	 * @param initExpr init expressions ; null to ignore it ; the return value of initExpr must be a {@link Form} instance
 	 * @param loadExprs load expressions
 	 * @param saveExprs save expressions
-	 * @param confirmExprs confirm expressions
-	 * @param validate the provided  validate expression; true to do validation.
+	 * @param validatorExpr the provided validator expression; null to ignore it 
 	 * @param args other key-value pairs. 
 	 */
-	public void addFormBindings(Component comp, String id, 
-			String[] loadExprs, String[] saveExprs, String[] confirmExprs, String validateExprs, Map<String, Object> args);
+	public void addFormBindings(Component comp, String id, String initExpr,
+			String[] loadExprs, String[] saveExprs, String validatorExpr, Map<String, Object> args);
 
 	/**
 	 * Add new property Bindings.
-	 * @param comp the associated component
-	 * @param _fieldExpr the associated attribute of the component
+	 * @param comp the associated component, must not null
+	 * @param attr the associated attribute of the component; ex label, style
+	 * @param initExpr init expressions ; null to ignore it
 	 * @param loadExprs load expressions
 	 * @param saveExprs save expressions
-	 * @param _converter the provided _converter expression; null to ignore it.
-	 * @param validate the provided  validate expression; true to do validation.
+	 * @param converterExpr the provided converter expression; null to ignore it.
+	 * @param validatorExpr the provided validator expression; null to ignore it.
 	 * @param args other key-value pairs. 
 	 */
-	public void addPropertyBinding(Component comp, String attr, 
-			String[] loadExprs, String[] saveExprs, String converterExprs, String validateExprs, Map<String, Object> args);
+	public void addPropertyBinding(Component comp, String attr, String initExpr,
+			String[] loadExprs, String[] saveExprs, String converterExpr, String validatorExpr, Map<String, Object> args);
 
 	/**
 	 * Remove all managed bindings that associated with the specified component.

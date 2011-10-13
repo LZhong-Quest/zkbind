@@ -61,9 +61,13 @@ public class BindExpressionBuilder extends ExpressionBuilder {
     	super.visit(node);
     	visitNode(node);
     }
+	
+	//to tracing load property dependency or form field(both save and load)
+	//path example, [vm,.p1,.firstName] or [fx.firstName]
 	private void addTracking(List<String> series) {
 		final Binding binding = _ctx.getBinding();
-		if (series != null && !series.isEmpty()) {
+		final boolean dotracker = !_ctx.ignoreTracker();
+		if (binding != null && series != null && !series.isEmpty()) {
 			final Iterator<String> it = series.iterator();
 			final String prop = (String) it.next();
 			final Binder binder = binding.getBinder();
@@ -87,15 +91,21 @@ public class BindExpressionBuilder extends ExpressionBuilder {
 						formBean.addLoadFieldName(fieldName);
 					}
 					//initialize Tracker per the series (in special Form way)
-					tracker.addTracking(binding.getComponent(), new String[] {prop, fieldName}, srcprops, binding);
+					if(dotracker){
+						tracker.addTracking(binding.getComponent(), new String[] {prop, fieldName}, srcprops, binding);
+					}
 				} else {
-					tracker.addTracking(binding.getComponent(), new String[] {prop}, srcprops, binding);
+					if(dotracker){
+						tracker.addTracking(binding.getComponent(), new String[] {prop}, srcprops, binding);
+					}
 				}
 			
 			} else {
 				//initialize Tracker per the series
 				String[] props = properties(series);
-				tracker.addTracking(binding.getComponent(), props, srcprops, binding);
+				if(dotracker){
+					tracker.addTracking(binding.getComponent(), props, srcprops, binding);
+				}
 				
 				if (binding instanceof LoadFormBindingImpl) {
 					((LoadFormBindingImpl)binding).setSeriesLength(props.length);
@@ -105,9 +115,6 @@ public class BindExpressionBuilder extends ExpressionBuilder {
 	}
 	
 	private void visitNode(Node node) {
-		final Binding binding = _ctx.getBinding();
-		if(binding==null) return; //no need to build tracker, we are not in binding expression
-		
 		final List<String> path = new ArrayList<String>();
 		//find the path from AST value node or AST identifier node
     	if (node instanceof AstValue) {
@@ -115,7 +122,6 @@ public class BindExpressionBuilder extends ExpressionBuilder {
     			final Node kid = node.jjtGetChild(j);
     			path.add(BindELContext.toNodeString(kid, new StringBuffer()));
     		}
-    		//path example, [vm,.p1,.firstName]
     		addTracking(path);
     	} else if (node instanceof AstIdentifier) {
     		if (!(node.jjtGetParent() instanceof AstValue)) { //one variable series

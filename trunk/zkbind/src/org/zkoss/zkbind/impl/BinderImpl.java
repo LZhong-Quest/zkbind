@@ -45,6 +45,7 @@ import org.zkoss.zkbind.Converter;
 import org.zkoss.zkbind.Form;
 import org.zkoss.zkbind.PhaseListener;
 import org.zkoss.zkbind.Property;
+import org.zkoss.zkbind.SimpleForm;
 import org.zkoss.zkbind.ValidationContext;
 import org.zkoss.zkbind.Validator;
 import org.zkoss.zkbind.converter.FormatedDateConverter;
@@ -104,6 +105,8 @@ public class BinderImpl implements Binder {
 	public static final String NOTIFYS = "$NOTIFYS$"; //changed properties to be notified
 	public static final String VALIDATES = "$VALIDATES$"; //properties to be validated
 	public static final String SRCPATH = "$SRCPATH$"; //source path that trigger @DependsOn tracking
+	
+	public static final String IGNORE_TRACKER = "$IGNORE_TRACKER$"; //ignore adding currently binding to tracker, ex in init 
 	
 	//System Annotation, see lang-addon.xml
 	private static final String SYSBIND = "$SYSBIND$"; //system binding annotation name
@@ -258,26 +261,40 @@ public class BinderImpl implements Binder {
 		return _eval;
 	}
 
-	public void addFormBindings(Component comp, String idScript, 
-		String[] loadExprs, String[] saveExprs, String[] confirmExprs, String validator, Map<String, Object> args) {
+	public void addFormBindings(Component comp, String idScript, String initExpr,
+		String[] loadExprs, String[] saveExprs, String validator, Map<String, Object> args) {
 		final BindEvaluatorX eval = getEvaluatorX();
 		final ExpressionX idExpr = eval.parseExpressionX(null, idScript, String.class);
 		final String id = (String) eval.getValue(null, comp, idExpr);
-		final Form form = new FormImpl(id);
-		//now, we can access fx in el.
+		final Form form = doFormBindingInit(comp,initExpr,args);
+		//after setAttribute, we can access fx in el.
 		comp.setAttribute(id, form);
 		for(String loadExpr : loadExprs) {
-			addLoadFormBinding(comp, form, loadExpr, args);
+			addLoadFormBinding(comp, id, form, loadExpr, args);
 		}
 		for(String saveExpr : saveExprs) {
-			addSaveFormBinding(comp, form, saveExpr, validator, args);
+			addSaveFormBinding(comp, id, form, saveExpr, validator, args);
 		}
 	}
 	
-	private void addLoadFormBinding(Component comp, Form form, String loadExpr, Map<String, Object> args) {
+	private Form doFormBindingInit(Component comp, String initExpr, Map<String, Object> args) {
+		if(initExpr==null) return new SimpleForm();
+		final BindEvaluatorX eval = getEvaluatorX();
+		args = evalArgs(comp, args);
+		final BindContext ctx = new BindContextImpl(this, null, false, null, comp, null, args);
+		ctx.setAttribute(IGNORE_TRACKER, Boolean.TRUE);//ignore tracker when doing el
+		final ExpressionX expr = eval.parseExpressionX(ctx, initExpr, Object.class);
+		final Object obj = eval.getValue(null, comp, expr);
+		if(obj instanceof Form){
+			return (Form)obj;
+		}
+		throw new UiException("the return value of init expression is not a From is :" + obj); 
+	}
+
+	private void addLoadFormBinding(Component comp, String formid, Form form, String loadExpr, Map<String, Object> args) {
 		final LoadFormBindingImpl binding = new LoadFormBindingImpl(this, comp, form, loadExpr, args);
 		final String uuid = comp.getUuid(); 
-		final String attr = form.getId();
+		final String attr = formid;
 		addBinding(comp, attr, binding);
 		
 		final String command = binding.getCommandName();
@@ -294,10 +311,10 @@ public class BinderImpl implements Binder {
 		}
 	}
 
-	private void addSaveFormBinding(Component comp, Form form, String saveExpr, String validator, Map<String, Object> args) {
+	private void addSaveFormBinding(Component comp, String formid, Form form, String saveExpr, String validator, Map<String, Object> args) {
 		//register event Command listener 
 		final SaveFormBindingImpl binding = new SaveFormBindingImpl(this, comp, form, saveExpr, validator, args);
-		final String formid = form.getId();
+//		final String formid = form.getId();
 		final String command = binding.getCommandName();
 		if (command == null) {
 			throw new UiException("Form "+formid+" must be saved by a Command: "+ binding.getPropertyString());
@@ -320,7 +337,8 @@ public class BinderImpl implements Binder {
 			|| !_saveFormBeforeBindings.isEmpty(); //command -> bindings (save form before command)
 	}
 
-	public void addPropertyBinding(Component comp, String attr, String[] loadExprs, String[] saveExprs, String converter, String validator, Map<String, Object> args) {
+	public void addPropertyBinding(Component comp, String attr, String initExpr, 
+			String[] loadExprs, String[] saveExprs, String converter, String validator, Map<String, Object> args) {
 		if (Strings.isBlank(converter)) {
 			converter = getSystemConverter(comp, attr);
 			if (converter != null) {
@@ -333,6 +351,9 @@ public class BinderImpl implements Binder {
 				validator = "'"+validator+"'";
 			}
 		}
+		
+		doPropertyBindingInit(comp,attr,initExpr,converter,args);
+		
 		for(String loadExpr : loadExprs) {
 			addLoadBinding(comp, attr, loadExpr, converter, args);
 		}
@@ -340,6 +361,16 @@ public class BinderImpl implements Binder {
 			addSaveBinding(comp, attr, saveExpr, converter, validator, args);
 		}
 		initRendererIfAny(comp);
+	}
+
+	private void doPropertyBindingInit(Component comp, String attr,
+			String initExpr, String converter, Map<String, Object> args) {
+		if(initExpr==null) return;
+		
+		InitPropertyBindingImpl binding = new InitPropertyBindingImpl(this,comp,attr,initExpr,converter,args);
+		final BindContext ctx = new BindContextImpl(this, binding, false, null, comp, null, args);
+		ctx.setAttribute(BinderImpl.IGNORE_TRACKER, Boolean.TRUE);//ignore tracker when doing el
+		binding.load(ctx);
 	}
 
 	private String getSystemConverter(Component comp, String attr) {

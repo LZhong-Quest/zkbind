@@ -2,7 +2,7 @@
 	<custom-attributes composerName="vm" />
 	<vbox>
 		<listbox model="@bind(vm.cityList)"
-			selectedItem="@bind(save={vm.selected},load={vm.selected,vm.selected after 'confirmCancel'},validate=true)"
+			selectedItem="@bind(save={vm.selected},load={vm.selected,vm.selected after 'confirmCancel'},validator='dirtyValidator')"
 			width="500px">
 			<listhead>
 				<listheader label="City" />
@@ -17,7 +17,7 @@
 		</listbox>
 		Detail
 		<grid id="grid"
-			self="@form(id='fx',load={vm.selected,vm.selected after 'confirmUpdate'},save={vm.selected before 'update',vm.selected before 'confirmUpdate'},validate=true)"
+			self="@form(id='fx', init=vm.form, load={vm.selected,vm.selected after 'confirmUpdate'},save={vm.selected before 'update',vm.selected before 'confirmUpdate'},validator='formValidator')"
 			width="500px">
 			<rows>
 				<row>

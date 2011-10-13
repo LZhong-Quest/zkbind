@@ -68,10 +68,10 @@ public class AnnotateBinderHelper {
 			Map attrs = annot.getAttributes();
 			final List<String> saveExprs = new ArrayList<String>();
 			final List<String> loadExprs = new ArrayList<String>();
-			final List<String> confirmExprs = new ArrayList<String>();
 			String id = null;
 			Object value = null;
-			String validator = null;
+			String initExpr = null;
+			String validatorExpr = null;
 			Map<String, Object> args = null;
 			for (final Iterator it = attrs.entrySet().iterator(); it.hasNext();) {
 				final Map.Entry entry = (Map.Entry) it.next();
@@ -79,14 +79,14 @@ public class AnnotateBinderHelper {
 				final Object tagExpr = entry.getValue();
 				if ("id".equals(tag)) {
 					id = (String) tagExpr;
+				} else if ("init".equals(tag)) {
+					initExpr = (String) tagExpr;
 				} else if ("save".equals(tag)) {
 					addTagExpr(saveExprs, tagExpr);
 				} else if ("load".equals(tag)) {
 					addTagExpr(loadExprs, tagExpr);
-				} else if ("confirm".equals(tag)) {
-					addTagExpr(confirmExprs, tagExpr);
 				} else if ("validator".equals(tag)) {
-					validator = (String) tagExpr;
+					validatorExpr = (String) tagExpr;
 				} else if ("value".equals(tag)) {
 					value = tagExpr;
 				} else { //other unknown tag, keep as arguments
@@ -113,11 +113,10 @@ public class AnnotateBinderHelper {
 			
 			args = args == null ? null : parsedArgs(args);
 			
-			_binder.addFormBindings(comp, id, 
+			_binder.addFormBindings(comp, id, initExpr,
 					loadExprs.toArray(new String[loadExprs.size()]), 
-					saveExprs.toArray(new String[saveExprs.size()]), 
-					confirmExprs.toArray(new String[confirmExprs.size()]), 
-					validator, args);
+					saveExprs.toArray(new String[saveExprs.size()]),  
+					validatorExpr, args);
 		}
 	}
 	
@@ -179,21 +178,24 @@ public class AnnotateBinderHelper {
 			final List<String> saveExprs = new ArrayList<String>();
 			final List<String> loadExprs = new ArrayList<String>();
 			Object value = null;
-			String converter = null;
-			String validator = null;
+			String initExpr = null;
+			String converterExpr = null;
+			String validatorExpr = null;
 			Map<String, Object> args = null;
 			for (final Iterator it = attrs.entrySet().iterator(); it.hasNext();) {
 				final Map.Entry entry = (Map.Entry) it.next();
 				final String tag = (String) entry.getKey();
 				final Object tagExpr = entry.getValue();
-				if ("save".equals(tag)) {
+				if ("init".equals(tag)) {
+					initExpr = (String) tagExpr;
+				} else if ("save".equals(tag)) {
 					addTagExpr(saveExprs, tagExpr);
 				} else if ("load".equals(tag)) {
 					addTagExpr(loadExprs, tagExpr);
 				} else if ("converter".equals(tag)) {
-					converter = (String) tagExpr;
+					converterExpr = (String) tagExpr;
 				} else if ("validator".equals(tag)) {
-					validator = (String) tagExpr;
+					validatorExpr = (String) tagExpr;
 				} else if ("value".equals(tag)) {
 					value = tagExpr;
 				} else { //other unknown tag, keep as arguments
@@ -217,10 +219,10 @@ public class AnnotateBinderHelper {
 			
 			args = args==null?null:parsedArgs(args);
 			
-			_binder.addPropertyBinding(comp, propName, 
+			_binder.addPropertyBinding(comp, propName, initExpr,
 					loadExprs.toArray(new String[loadExprs.size()]), 
 					saveExprs.toArray(new String[saveExprs.size()]), 
-					converter, validator, args);
+					converterExpr, validatorExpr, args);
 		}
 	}
 

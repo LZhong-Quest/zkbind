@@ -67,8 +67,8 @@ public class BindELResolver extends XelELResolver {
 	
 	//update dependency and notify changed
 	private void tieValue(BindELContext ctx, Object base, Object propName, Object value) {
+		if(ctx.ignoreTracker()) return; 
 		final Binding binding = ctx.getBinding();
-		
 		//only there is a binding that needs tie tracking to value
 		if (binding != null) {
         	final int nums = ((Integer) ctx.getContext(Integer.class)).intValue(); //get numOfKids, see #PathResolver

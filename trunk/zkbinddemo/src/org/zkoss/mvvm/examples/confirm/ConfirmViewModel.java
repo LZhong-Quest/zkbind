@@ -13,7 +13,6 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 package org.zkoss.mvvm.examples.confirm;
 
 import java.util.Date;
-import java.util.Set;
 
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
@@ -22,7 +21,9 @@ import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zkbind.Form;
 import org.zkoss.zkbind.GenericBindComposer;
 import org.zkoss.zkbind.NotifyChange;
-import org.zkoss.zkbind.Property;
+import org.zkoss.zkbind.SimpleForm;
+import org.zkoss.zkbind.ValidationContext;
+import org.zkoss.zkbind.Validator;
 import org.zkoss.zul.ListModelList;
 
 /**
@@ -36,6 +37,8 @@ public class ConfirmViewModel extends GenericBindComposer {
 	
 	private DialogBean dialog; 
 	private String message;
+	
+	private Form form;
 
 	public ConfirmViewModel() {
 		//init the fake data
@@ -47,21 +50,63 @@ public class ConfirmViewModel extends GenericBindComposer {
 		
 		//a bean to help me show dialog
 		dialog = new DialogBean();
+		
+		form = new SimpleForm();
+		
+		addValidator("dirtyValidator", new Validator(){
+			public void validate(ValidationContext ctx) {
+				if(selected!=null && form.isDirty()){
+					//form is dirty, we keep the object as a to-be-selected obj;
+					tobeSelected = (City)ctx.getPropertyValue();
+					//show dialog
+					setDialog(true,selected);
+					ctx.setFail();
+				}
+			}});
+		addValidator("formValidator", new Validator() {
+			public void validate(ValidationContext ctx) {
+				Integer population = (Integer) ctx.getPropertyValue("population");
+				if (population==null || population <= 10) {
+					// validation fail
+					if (tobeSelected == null) {
+						// no tobeSelected, it was from update command;
+						setMessage("validation fail");
+					} else {
+						setMessage("validation and select back to " + selected);
+						tobeSelected = null;
+						// Don't use notify, we are already in command lifecycle
+						// getBinder().notifyCommand("confirmCancel", null);
+
+						// TODO need to review this api
+						// postCommand("confirmCancel",null);
+
+						// TODO a way to postCommand manually
+						final EventListener listener = new EventListener() {
+							public void onEvent(Event event) throws Exception {
+								// trigger the confirmCancel command
+								getBinder().notifyCommand("confirmCancel", null);
+								self.removeEventListener("onPostCommand", this);
+							}
+						};
+						self.addEventListener("onPostCommand", listener);
+						Events.postEvent("onPostCommand", self, null);
+					}
+					ctx.setFail();
+				}
+			}
+		});
 	}
 	
 	//TODO, we should not store this, remove this after the postCommand api ready
 	Component self;
-	//TOOD, we should not store grid, to get From, remoe this after the form binding init ready.
-	Component grid;
 	
 	public void doAfterCompose(Component comp) throws Exception {
 		super.doAfterCompose(comp);
 		self = comp;
-		grid = self.getFellow("grid");
 	}
 	
 	public Form getForm(){
-		return (Form)grid.getAttribute("fx");
+		return form;
 	}
 	//
 
@@ -89,7 +134,7 @@ public class ConfirmViewModel extends GenericBindComposer {
 	
 	public void setMessage(String message){
 		this.message = message;
-		//notify by java code, @NotifyChange doesn't work when internally
+		//notify by java code, @NotifyChange doesn't work if called internally
 		notifyChange(this, "message");
 	}
 
@@ -100,63 +145,8 @@ public class ConfirmViewModel extends GenericBindComposer {
 	void setDialog(boolean visible,City selected){
 		dialog.setVisible(visible);
 		dialog.setCity(selected);
-		//notify by java code, @NotifyChange doesn't work when internally
+		//notify by java code, @NotifyChange doesn't work if called internally
 		notifyChange(this, "dialog");
-	}
-
-	
-	public boolean validate(String cmd, Set<Property> properties, org.zkoss.zkbind.BindContext ctx){
-		for(Property p:properties){
-			if(this==p.getBase() && "selected".equals(p.getProperty())){
-				if(selected!=null && checkFormDirty()){
-					//form is dirty, we keep the object as a to-be-selected obj;
-					tobeSelected = (City)p.getValue();
-					//show dialog
-					setDialog(true,selected);
-					return false;
-				}
-				return true;
-			}else if(p.getBase() instanceof City){
-				
-				if("population".equals(p.getProperty())){
-					if(((Integer)p.getValue())<=10){
-						//validation fail
-						if(tobeSelected==null){
-							//no tobeSelected, it was from update command;
-							setMessage("validation fail");
-						}else{
-							setMessage("validation and select back to "+selected);
-							tobeSelected = null;
-							//Don't use notify, we are already in command lifecycle 
-//							getBinder().notifyCommand("confirmCancel", null);
-							
-							//TODO need to review this api
-//							postCommand("confirmCancel",null);
-							
-							//TODO a way to postCommand manually
-							final EventListener listener = new EventListener(){
-								public void onEvent(Event event)
-										throws Exception {
-									//trigger the confirmCancel command
-									getBinder().notifyCommand("confirmCancel", null);
-									self.removeEventListener("onPostCommand", this);
-								}
-							};
-							self.addEventListener("onPostCommand", listener);
-							Events.postEvent("onPostCommand", self, null);
-						}
-						return false;
-					}
-				}
-			}
-		}
-		return true;
-	}
-	
-	
-	private boolean checkFormDirty() {
-		Form f = getForm();
-		return f.isDirty();
 	}
 
 	//commands
