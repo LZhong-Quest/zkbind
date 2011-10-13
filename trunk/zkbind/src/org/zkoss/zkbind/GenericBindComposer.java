@@ -35,7 +35,6 @@ import org.zkoss.zkbind.impl.BinderImpl;
 public class GenericBindComposer implements Composer, ComposerExt {
 	private Object _viewModel;
 	private Binder _binder;
-	private Component _ownerComp;
 	private final Map<String, Converter> _converters;
 	private final Map<String, Validator> _validators;
 	
@@ -127,7 +126,6 @@ public class GenericBindComposer implements Composer, ComposerExt {
 	}
 
 	public void doBeforeComposeChildren(Component comp) throws Exception {
-		this._ownerComp = comp;
 	}
 
 	public boolean doCatch(Throwable ex) throws Exception {
@@ -143,24 +141,4 @@ public class GenericBindComposer implements Composer, ComposerExt {
 		getBinder().notifyChange(bean, property);
 	}
 	
-	
-	
-	//--postCommand--//
-//	private class PostCommandListener implements EventListener{
-//		public void onEvent(Event event)
-//				throws Exception {
-//			Map<String,Object> data = (Map<String,Object>)event.getData();
-//			getBinder().notifyCommand((String)data.get("command"), (Map<String,Object>)data.get("args"));
-//			//don't leave listener on the component
-//			_ownerComp.removeEventListener(ON_BINDER_POST_COMMAND, this);
-//		}
-//	};
-//	
-//	public void postCommand(String command,Map<String, Object> args){
-//		_ownerComp.addEventListener(ON_BINDER_POST_COMMAND, new PostCommandListener());
-//		Map<String,Object> data = new HashMap<String,Object>();
-//		data.put("command", command);
-//		data.put("args", args);
-//		Events.postEvent(ON_BINDER_POST_COMMAND, _ownerComp, data);
-//	}
 }

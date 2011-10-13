@@ -30,12 +30,14 @@ import org.zkoss.lang.Classes;
 import org.zkoss.lang.Strings;
 import org.zkoss.lang.reflect.Fields;
 import org.zkoss.xel.ExpressionX;
+import org.zkoss.zk.ui.AbstractComponent;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.UiException;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.EventQueue;
 import org.zkoss.zk.ui.event.EventQueues;
+import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.metainfo.Annotation;
 import org.zkoss.zk.ui.sys.ComponentCtrl;
 import org.zkoss.zk.ui.util.Template;
@@ -117,6 +119,8 @@ public class BinderImpl implements Binder {
 	private static final String CONVERTER = "$C$"; //system converter for binding
 	private static final String VALIDATOR = "$V$"; //system validator for binding
 	
+	private static final String ON_POST_COMMAND = "onPostCommand";
+	
 	//Command lifecycle result
 	private static final int SUCCESS = 0;
 //	private static final int FAIL_CONFIRM = 1;
@@ -126,6 +130,7 @@ public class BinderImpl implements Binder {
 	private BindEvaluatorX _eval;
 	private PhaseListener _phaseListener;
 	private Tracker _tracker;
+	private final Component _dummyTarget = new AbstractComponent();//a dummy target for post command
 	
 	/* holds all binding in this binder */
 	private final Map<Component, Map<String, List<Binding>>> _bindings; //comp -> (evtnm | _fieldExpr | formid) -> bindings
@@ -170,6 +175,8 @@ public class BinderImpl implements Binder {
 		
 		//initial associated view model
 		setViewModel(vm);
+		
+		_dummyTarget.addEventListener(ON_POST_COMMAND, new PostCommandListener());
 		
 		//subscribe change listener
 		subscribeChangeListener(_quename, _quescope, new EventListener() {
@@ -743,11 +750,10 @@ public class BinderImpl implements Binder {
 		return result;
 	}
 	
-	public void notifyCommand(String command, Map<String, Object> args) {
+	public void sendCommand(String command, Map<String, Object> args) {
 		final Set<Property> notifys = new HashSet<Property>();
-		//args come from user, we don't eval it.
-		//TODO DENNIS, CHECK, however in addXXBinding, args are evaluated, see BindingImpl() 
-		doCommand(_rootComp, command, null, args, notifys/*, false*/);
+		//args come from user, we don't eval it. 
+		doCommand(_rootComp, command, null, args, notifys);
 		fireNotifyChanges(notifys);
 	}
 
@@ -755,6 +761,11 @@ public class BinderImpl implements Binder {
 		for(Property prop : notifys) {
 			notifyChange(prop.getBase(), prop.getProperty());
 		}
+	}
+	
+	public void postCommand(String command, Map<String, Object> args) {
+		final Event evt = new Event(ON_POST_COMMAND,_dummyTarget,new Object[]{command,args});
+		Events.postEvent(evt);
 	}
 	
 	//comp the component that trigger the command
@@ -1365,4 +1376,14 @@ public class BinderImpl implements Binder {
 //		return getViewModel()
 //			.getClass().getMethod("validate", new Class[] {String.class, Set.class, BindContext.class});
 //	}
+	
+	private class PostCommandListener implements EventListener<Event>{
+
+		public void onEvent(Event event) throws Exception {
+			Object[] data = (Object[])event.getData();
+			String command = (String)data[0];
+			Map<String,Object> args = (Map)data[1]; 
+			sendCommand(command, args);
+		}
+	}
 }

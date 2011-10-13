@@ -102,11 +102,18 @@ public interface Binder {
 	
 	
 	/**
-	 * Notify command fired to this binder.
+	 * send command fired to this binder and process the command immediately
 	 * @param command command name
 	 * @param args , arguments when notifing this command, it will be passed as a arguments of execution method of vm
 	 */
-	public void notifyCommand(String command, Map<String, Object> args);
+	public void sendCommand(String command, Map<String, Object> args);
+	
+	/**
+	 * post command this binder, binder will queue the command, and fired later.
+	 * @param command command name
+	 * @param args , arguments when notifing this command, it will be passed as a arguments of execution method of vm
+	 */
+	public void postCommand(String command, Map<String, Object> args);
 	
 	/**
 	 * Returns associated ViewModel of this binder.
