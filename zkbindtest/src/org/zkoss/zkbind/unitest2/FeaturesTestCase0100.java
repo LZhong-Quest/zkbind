@@ -15,6 +15,50 @@ import org.zkoss.zktc.core.widget.WidgetDriver;
 public class FeaturesTestCase0100 extends TestCaseBase{
 
 	@Test
+	public void f0002(){
+		navigate(getTestCaseUrl("/test2/F0002.zul"));
+		//test property init
+		Assert.assertEquals("A",findWidget("$tb1").getValue());
+		Assert.assertEquals("A",findWidget("$l1").getValue());
+		Assert.assertEquals("A",findWidget("$tb2").getValue());
+		Assert.assertEquals("A",findWidget("$l2").getValue());
+		
+		findWidget("$tb1").clear().keys("XX").tab();
+		Assert.assertEquals("XX",findWidget("$tb1").getValue());
+		Assert.assertEquals("XX",findWidget("$l1").getValue());
+		Assert.assertEquals("A",findWidget("$tb2").getValue());
+		Assert.assertEquals("A",findWidget("$l2").getValue());
+		
+		findWidget("$tb2").clear().keys("YY").tab();
+		Assert.assertEquals("XX",findWidget("$tb1").getValue());
+		Assert.assertEquals("XX",findWidget("$l1").getValue());
+		Assert.assertEquals("YY",findWidget("$tb2").getValue());
+		Assert.assertEquals("A",findWidget("$l2").getValue());
+		
+		findWidget("$btn1").click();
+		Assert.assertEquals("YY",findWidget("$tb1").getValue());
+		Assert.assertEquals("YY",findWidget("$l1").getValue());
+		Assert.assertEquals("YY",findWidget("$tb2").getValue());
+		Assert.assertEquals("YY",findWidget("$l2").getValue());
+		
+		//test form init
+		
+		Assert.assertEquals("B",findWidget("$tb3").getValue());
+		Assert.assertEquals("B",findWidget("$l31").getValue());
+		Assert.assertEquals("B",findWidget("$l32").getValue());
+		
+		findWidget("$tb3").clear().keys("ZZ").tab();
+		Assert.assertEquals("ZZ",findWidget("$tb3").getValue());
+		Assert.assertEquals("B",findWidget("$l31").getValue());
+		Assert.assertEquals("B",findWidget("$l32").getValue());
+		
+		findWidget("$btn2").click();
+		Assert.assertEquals("ZZ",findWidget("$tb3").getValue());
+		Assert.assertEquals("ZZ",findWidget("$l31").getValue());
+		Assert.assertEquals("ZZ",findWidget("$l32").getValue());
+	}
+
+	@Test
 	public void f0010(){
 		navigate(getTestCaseUrl("/test2/F0010.zul"));
 		

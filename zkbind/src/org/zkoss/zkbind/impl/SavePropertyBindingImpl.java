@@ -44,11 +44,17 @@ public class SavePropertyBindingImpl extends PropertyBindingImpl implements Save
 		_validator = validator==null?null:parseValidator(eval,validator);
 	}
 	
+	@Override
+	protected boolean ignoreTracker(){
+		return true;
+	}
+	
 	private ExpressionX parseValidator(BindEvaluatorX eval, String validatorExpr) {
+		
 		final BindContext ctx = new BindContextImpl(getBinder(), this, false, null, getComponent(), null, null);
-		//don't provide a bindcontext when pare expression of converter with this binding,
-		//do so, the tracker will not also tracking the converter dependence with this binding.
-		return eval.parseExpressionX(null, validatorExpr, Object.class);
+		//expression will/should not be tracked, (although, from the impl, tracker don't care savebinding)
+		ctx.setAttribute(BinderImpl.IGNORE_TRACKER, Boolean.TRUE);//ignore tracker when doing el, we don't need to trace validator
+		return eval.parseExpressionX(ctx, validatorExpr, Object.class);
 	}
 
 	public Validator getValidator() {
@@ -56,6 +62,7 @@ public class SavePropertyBindingImpl extends PropertyBindingImpl implements Save
 
 		final BindContext ctx = new BindContextImpl(getBinder(), this, false, null, getComponent(), null, null);
 		final BindEvaluatorX eval = getBinder().getEvaluatorX();
+		ctx.setAttribute(BinderImpl.IGNORE_TRACKER, Boolean.TRUE);//ignore tracker when doing el, we don't need to trace validator
 		Object obj = eval.getValue(ctx, getComponent(), _validator);
 		
 		if(obj instanceof Validator){

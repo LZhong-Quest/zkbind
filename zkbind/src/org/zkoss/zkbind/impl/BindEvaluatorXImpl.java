@@ -71,6 +71,9 @@ public class BindEvaluatorXImpl extends SimpleEvaluator implements BindEvaluator
 		xelc.setAttribute(BinderImpl.BINDCTX, ctx);
 		if (ctx != null) {
 			xelc.setAttribute(BinderImpl.BINDING, ctx.getBinding());
+			//Dennis, a special control flag to ignore adding tracker when doing el,
+			//see BindELContext#ignoreTracker
+			xelc.setAttribute(BinderImpl.IGNORE_TRACKER, ctx.getAttribute(BinderImpl.IGNORE_TRACKER));
 		}
 		return xelc;
 	}

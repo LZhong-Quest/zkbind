@@ -41,9 +41,14 @@ public abstract class PropertyBindingImpl extends BindingImpl implements Propert
 		final BindEvaluatorX eval = binder.getEvaluatorX();
 		final Class returnType = Object.class;
 		this._fieldExpr = eval.parseExpressionX(null, fieldScript, returnType);
-		this._accessInfo = AccessInfo.create(this, accessScript, returnType);
+		this._accessInfo = AccessInfo.create(this, accessScript, returnType, ignoreTracker());
 		
 		_converter = converter==null?null:parseConverter(eval,converter);
+	}
+	
+	//should this binding set the ignore tracker attribute when evaluate the expression.
+	protected boolean ignoreTracker(){
+		return false;
 	}
 	
 	private ExpressionX parseConverter(BindEvaluatorX eval, String converterExpr) {

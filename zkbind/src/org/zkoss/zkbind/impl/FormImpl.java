@@ -28,7 +28,7 @@ import org.zkoss.zkbind.Form;
  *
  */
 public class FormImpl implements Form {
-	private final String _id; //form id
+//	private final String _id; //form id
 	private final Set<String> _saveFieldNames; //field name for saving
 	private final Set<String> _loadFieldNames; //field name for loading
 	private final Map<String, Object> _fields; //field series -> value
@@ -36,8 +36,8 @@ public class FormImpl implements Form {
 	private final Set<String> _dirtyFieldNames; //field name that is dirty
 	private static final int INIT_CAPACITY = 32;
 	
-	public FormImpl(String id) {
-		_id = id;
+	public FormImpl(/*String id*/) {
+//		_id = id;
 		_fields = new LinkedHashMap<String, Object>(INIT_CAPACITY);
 		_initFields = new HashMap<String, Object>(INIT_CAPACITY);
 		_saveFieldNames = new LinkedHashSet<String>(INIT_CAPACITY);
@@ -45,9 +45,9 @@ public class FormImpl implements Form {
 		_dirtyFieldNames = new HashSet<String>(INIT_CAPACITY);
 	}
 
-	public String getId() {
-		return _id;
-	}
+//	public String getId() {
+//		return _id;
+//	}
 
 	public void setField(String field, Object value) {
 		_fields.put(field, value);
@@ -94,7 +94,7 @@ public class FormImpl implements Form {
 	
 	public String toString(){
 		return new StringBuilder().append(getClass().getSimpleName()).append("@").append(Integer.toHexString(hashCode()))
-		.append(",id:").append(getId())
+//		.append(",id:").append(getId())
 		.append(",fields:").append(getFieldNames()).toString();
 	}
 	

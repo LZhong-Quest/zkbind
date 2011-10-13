@@ -1,0 +1,9 @@
+<window apply="issues.TrackerOfValidatorComposer">
+	<custom-attributes composerName="vm"/>
+	<hbox>
+		<textbox value="@bind(init = vm.value1)" />
+	</hbox>
+	<hbox>
+		<button label="Dump" onClick="binder.getTracker().dump()" />
+	</hbox>	
+</window>

@@ -20,11 +20,11 @@ import java.util.Set;
  *
  */
 public interface Form {
-	/**
-	 * Returns the id of this Form.
-	 * @return the id of this Form.
-	 */
-	public String getId();
+//	/**
+//	 * Returns the id of this Form.
+//	 * @return the id of this Form.
+//	 */
+//	public String getId();
 	
 	/**
 	 * Returns all field names taht this Form bean is care about for both read and load.

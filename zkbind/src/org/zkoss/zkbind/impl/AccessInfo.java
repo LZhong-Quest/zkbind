@@ -53,7 +53,7 @@ public class AccessInfo {
 
 	//tokenize
 	private static final Pattern ACCESS_PATTERN = Pattern.compile("\\s+|[^\\s\"']+|\"[^\"]*\"|'[^']*'|'[^']*");
-	public static AccessInfo create(Binding binding, String accessScript, Class expectedType) {
+	public static AccessInfo create(Binding binding, String accessScript, Class expectedType, boolean ignoreTracker) {
 		final Binder binder = binding.getBinder();
 		final Matcher matcher = ACCESS_PATTERN.matcher(accessScript);
 		final StringBuffer property = new StringBuffer();
@@ -86,9 +86,12 @@ public class AccessInfo {
 			throw new IllegalArgumentException("command must be a literal text rather than an expression: " + comm.getExpressionString());
 		}
 		//only prompt loading shall track dependency
-		//(dependency only be tracing when has a binding in evaluating, see TrackerImpl)
+		//(dependency only be tracing when has a binding presented and not ignoreTracker, see TrackerImpl)
 		final BindContext ctx = commandName != null ? null : 
 				new BindContextImpl(binder, binding, false, null, null, null, null); 
+		if(ctx!=null && ignoreTracker){
+			ctx.setAttribute(BinderImpl.IGNORE_TRACKER, Boolean.TRUE);
+		}
 		final ExpressionX prop = eval.parseExpressionX(ctx, property.toString().trim(), expectedType);
 		final boolean af = after != null ? after.booleanValue() : false;
 		return new AccessInfo(prop, af, commandName);

@@ -50,6 +50,20 @@ public interface ValidationContext {
 	 * @return the main property.
 	 */
 	Property getProperty();
+	
+	/**
+	 * get the main property value,
+	 * same as getProperty().getValue(); 
+	 * @return the main property value.
+	 */
+	Object getPropertyValue();
+	
+	/**
+	 * get the first property value that matches to name,
+	 *  you should not use this if there are multiple properties with same name in different base 
+	 * @return the first property value that matches the name.
+	 */
+	Object getPropertyValue(String name);
 
 	/**
 	 * @return current bind context
