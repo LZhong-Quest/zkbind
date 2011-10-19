@@ -12,6 +12,11 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 
 package org.zkoss.zkbind.sys;
 
+import java.util.Set;
+
+import org.zkoss.zkbind.BindContext;
+import org.zkoss.zkbind.Property;
+
 
 /**
  * Binding for saving a form.
@@ -19,4 +24,10 @@ package org.zkoss.zkbind.sys;
  *
  */
 public interface SaveFormBinding extends FormBinding, SaveBinding {
+	/**
+	 * Returns {@Property}s to be validated, includes the member field of the form
+	 * @param ctx the binding runtime context
+	 * @return {@Property} to be validated.
+	 */
+	public Set<Property> getValidates(BindContext ctx);
 }

@@ -13,13 +13,12 @@ package org.zkoss.zkbind.impl;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import org.zkoss.zkbind.BindContext;
 import org.zkoss.zkbind.Property;
 import org.zkoss.zkbind.ValidationContext;
 /**
- * 
+ * the default implementation of validation context
  * @author dennis
  *
  */
@@ -28,20 +27,19 @@ public class ValidationContextImpl implements ValidationContext{
 	private boolean _valid = true;//default validation result is true
 	private String _command;
 	private Property _property; //main property
-	private Set<Property> _properties; //related properties
+	private Map<String,Property[]> _properties; //related properties
 	private BindContext _ctx;
 	
 	private Map<Property,String> messages;
 	
-	public ValidationContextImpl(String command, Property property,Set<Property> properties, BindContext ctx,boolean valid){
+	public ValidationContextImpl(String command, Property property,Map<String,Property[]> properties, BindContext ctx,boolean valid){
 		this._command = command;
 		this._property = property;
 		this._properties = properties;
 		this._ctx = ctx;
 		this._valid = valid;
 	}
-	
-	
+
 	public BindContext getBindContext() {
 		return _ctx;
 	}
@@ -50,30 +48,14 @@ public class ValidationContextImpl implements ValidationContext{
 		return _command;
 	}
 
-	public Set<Property> getProperties() {
+	public Map<String,Property[]> getProperties() {
 		return _properties;
 	}
 
 	public Property getProperty() {
 		return _property;
 	}
-	
 
-	public Object getPropertyValue() {
-		return _property==null?null:_property.getValue();
-	}
-
-	public Object getPropertyValue(String name) {
-		if(_property!=null && _property.getProperty().equals(name)){
-			return _property.getValue();
-		}
-		for(Property p:getProperties()){
-			if(p.getProperty().equals(name)){
-				return p.getValue();
-			}	
-		}
-		return null;
-	}
 
 	public boolean isValid() {
 		return _valid;
@@ -83,7 +65,7 @@ public class ValidationContextImpl implements ValidationContext{
 //		this.valid = valid;
 //	}
 	
-	public void setFail(){
+	public void setInvalid(){
 		this._valid = false;
 	}
 

@@ -42,6 +42,7 @@ public class F0011 extends GenericBindComposer {
 	private String message2;
 	private String message3;
 	private String message4;
+	private String message5;
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 	private Validator validator2;
 	public F0011() {
@@ -52,13 +53,13 @@ public class F0011 extends GenericBindComposer {
 				Date d = (Date)p.getValue();
 				if(d==null){
 					setMessage1("date "+p.getProperty()+" is empty");
-					ctx.setFail();
+					ctx.setInvalid();
 					return;
 				}
 				String today = sdf.format(new Date());
 				if(sdf.format(d).compareTo(today)>=0){
 					setMessage1("date "+p.getProperty()+" must small than today");
-					ctx.setFail();
+					ctx.setInvalid();
 					return;
 				}
 				setMessage1("");
@@ -75,13 +76,13 @@ public class F0011 extends GenericBindComposer {
 				String today = sdf.format(new Date());
 				if(sdf.format(d).compareTo(today)<=0){
 					setMessage2("date "+p.getProperty()+" must large than today");
-					ctx.setFail();
+					ctx.setInvalid();
 					return;
 				}
 				setMessage2("");
 			}
 		};
-		addValidator("validator3", new Validator() {
+		addValidator("validator31", new Validator() {
 			public void validate(ValidationContext ctx) {
 				if(!ctx.isValid()){
 					return;
@@ -90,35 +91,30 @@ public class F0011 extends GenericBindComposer {
 				String v1 = (String)p.getValue();
 				if(v1==null || "".equals(v1.trim())){
 					setMessage3(p.getProperty()+" is empty");
-					ctx.setFail();
+					ctx.setInvalid();
 					return;
 				}
 				setMessage3("");
 			}
 		});
-		addValidator("validator4", new Validator() {
+		addValidator("validator32", new Validator() {
 			public void validate(ValidationContext ctx) {
 				if(!ctx.isValid()){
 					return;
 				}
 				Property p = ctx.getProperty();
 				String v2 = (String)p.getValue();
-				String v1 = null;
-				for(Property ps: ctx.getProperties()){
-					if("value1".equals(ps.getProperty())){
-						v1 = (String)ps.getValue();
-					}
-				}
+				String v1 = (String)ctx.getProperties().get("value1")[0].getValue();
 				if(v1!=v2 && (v1!=null && !v1.equals(v2))){
 					setMessage3("value2 must euqlas to value 1");
-					ctx.setFail();
+					ctx.setInvalid();
 					return;
 				}
 				setMessage3("");
 				
 			}
 		});
-		addValidator("validator51", new Validator() {
+		addValidator("validator41", new Validator() {
 			public void validate(ValidationContext ctx) {
 				if(!ctx.isValid()){
 					return;
@@ -127,48 +123,58 @@ public class F0011 extends GenericBindComposer {
 				String val = (String)p.getValue();
 				if(val==null || "".equals(val.trim())){
 					setMessage4(p.getProperty()+" is empty");
-					ctx.setFail();
+					ctx.setInvalid();
+					return;
+				}
+				setMessage4("");
+			}
+		});
+		addValidator("validator4", new Validator() {
+			public void validate(ValidationContext ctx) {;
+				if(!ctx.isValid()){
+					return;
+				}
+				String v3 = (String)ctx.getProperties().get("value3")[0].getValue();;
+				String v4 = (String)ctx.getProperties().get("value4")[0].getValue();;
+				
+				//
+				if(v3==null || "".equals(v3.trim())){
+					setMessage4("value3 is empty");
+					ctx.setInvalid();
+					return;
+				}
+				
+				if(v4==null || "".equals(v4.trim())){
+					setMessage4("value4 is empty");
+					ctx.setInvalid();
+					return;
+				}
+				
+				if(v3!=v4 && (v3!=null && !v3.equals(v4))){
+					setMessage4("value4 must euqlas to value 3");
+					ctx.setInvalid();
 					return;
 				}
 				setMessage4("");
 			}
 		});
 		addValidator("validator5", new Validator() {
-			public void validate(ValidationContext ctx) {;
+			public void validate(ValidationContext ctx) {
 				if(!ctx.isValid()){
 					return;
 				}
-				String v3 = null;
-				String v4 = null;
-				for(Property ps: ctx.getProperties()){
-					if("value3".equals(ps.getProperty())){
-						v3 = (String)ps.getValue();
-					}else if("value4".equals(ps.getProperty())){
-						v4 = (String)ps.getValue();
-					}
-				}
-				
-				//
-				if(v3==null || "".equals(v3.trim())){
-					setMessage4("value3 is empty");
-					ctx.setFail();
+				Property p = ctx.getProperty();
+				String v2 = (String)p.getValue();
+				String v1 = (String)ctx.getProperties().get("value1")[0].getValue();
+				if(v1!=v2 && (v1!=null && !v1.equals(v2))){
+					setMessage5("value2 must euqlas to value 1");
+					ctx.setInvalid();
 					return;
 				}
+				setMessage5("");
 				
-				if(v4==null || "".equals(v4.trim())){
-					setMessage4("value4 is empty");
-					ctx.setFail();
-					return;
-				}
-				
-				if(v3!=v4 && (v3!=null && !v3.equals(v4))){
-					setMessage4("value4 must euqlas to value 3");
-					ctx.setFail();
-					return;
-				}
-				setMessage4("");
 			}
-		});
+		});		
 	}
 	
 	public String getMessage1() {
@@ -208,7 +214,14 @@ public class F0011 extends GenericBindComposer {
 		this.message4 = message4;
 		getBinder().notifyChange(this, "message4");
 	}
-	
+	public String getMessage5() {
+		return message5;
+	}
+
+	public void setMessage5(String message5) {
+		this.message5 = message5;
+		getBinder().notifyChange(this, "message5");
+	}	
 
 	public Validator getValidator2(){
 		return validator2;
@@ -276,6 +289,10 @@ public class F0011 extends GenericBindComposer {
 	
 	public void cmd2(){
 		setMessage4("do Command2");
+	}
+	
+	public void cmd3(){
+		setMessage5("do Command3");
 	}
 	
 }

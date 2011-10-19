@@ -31,17 +31,18 @@ public interface SaveBinding extends Binding {
 	public void save(BindContext ctx);
 	
 	/**
-	 * Returns {@Property}s to be validated.
+	 * Returns {@Property} to be validated.
 	 * @param ctx the binding runtime context
-	 * @return {@Property}s to be validated.
+	 * @return {@Property} to be validated.
 	 */
-	public Set<Property> getValidates(BindContext ctx);
+	public Property getValidate(BindContext ctx);
+//	public Set<Property> getValidates(BindContext ctx);
 	
 	/**
-	 * Returns whether to do validation.
+	 * Returns whether to do validation. which means, if true, than getValidator should not return null
 	 * @return whether to do validation.
 	 */
-	public boolean isValidate();
+	public boolean hasValidator();
 	
 	/**
 	 * return {@Validator} to do validation

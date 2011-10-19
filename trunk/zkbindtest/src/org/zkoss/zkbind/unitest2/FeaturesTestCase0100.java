@@ -211,6 +211,40 @@ public class FeaturesTestCase0100 extends TestCaseBase{
 	}
 	
 	@Test
+	public void f0011_3(){
+		navigate(getTestCaseUrl("/test2/F0011.zul"));
+		
+		
+		//validate property before command
+		
+		Assert.assertEquals("",findWidget("$tb51").getValue());
+		Assert.assertEquals("",findWidget("$tb52").getValue());
+		Assert.assertEquals("",findWidget("$lb51").getValue());
+		Assert.assertEquals("",findWidget("$lb52").getValue());
+		
+		findWidget("$btn3").click();
+		Assert.assertEquals("do Command3",findWidget("$lb52").getValue());
+		
+		findWidget("$tb51").keys("abc").tab();
+		Assert.assertEquals("",findWidget("$lb51").getValue());
+		Assert.assertEquals("do Command3",findWidget("$lb52").getValue());
+		
+		findWidget("$btn3").click();
+		Assert.assertEquals("value2 must euqlas to value 1",findWidget("$lb52").getValue());
+		
+		findWidget("$tb52").clear().keys("def");
+		findWidget("$btn3").click();
+		Assert.assertEquals("",findWidget("$lb51").getValue());
+		Assert.assertEquals("value2 must euqlas to value 1",findWidget("$lb52").getValue());
+		
+		
+		findWidget("$tb52").clear().keys("abc").tab();
+		findWidget("$btn3").click();
+		Assert.assertEquals("abc",findWidget("$lb51").getValue());
+		Assert.assertEquals("do Command3",findWidget("$lb52").getValue());
+	}
+	
+	@Test
 	public void f0011_2(){
 		navigate(getTestCaseUrl("/test2/F0011.zul"));
 		

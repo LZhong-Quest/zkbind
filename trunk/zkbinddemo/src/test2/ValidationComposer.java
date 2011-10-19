@@ -38,7 +38,7 @@ public class ValidationComposer extends GenericBindComposer {
 				if(val!=null && Integer.parseInt(val.toString())>10){
 					setLastMessage1(null);
 				}else{
-					ctx.setFail();
+					ctx.setInvalid();
 					setLastMessage1("value 1 have to large than 10");
 				}
 			}			
@@ -51,7 +51,7 @@ public class ValidationComposer extends GenericBindComposer {
 				if(val!=null && Integer.parseInt(val.toString())>20){
 					setLastMessage2(null);
 				}else{
-					ctx.setFail();
+					ctx.setInvalid();
 					setLastMessage2("value 2 have to large than 20");
 				}
 			}			
@@ -59,30 +59,29 @@ public class ValidationComposer extends GenericBindComposer {
 		addValidator("validator3",new Validator(){
 			public void validate(ValidationContext ctx) {
 				if(!ctx.isValid()) return;
-				Object val1=null;
-				Object val2=null;
-				for(Property p :ctx.getProperties()){
-					String prop = p.getProperty();
-					if("value1".equals(prop)){
-						val1 = p.getValue();
-					}else if("value2".equals(prop)){
-						val2 = p.getValue();
-					}
-				}
+				Object val1 = (String)ctx.getProperties().get("value1")[0].getValue();//ctx.getPropertyValue("value1");
+				Object val2 = (String)ctx.getProperties().get("value2")[0].getValue();//ctx.getPropertyValue("value2");//null;
+				Object form = (String)ctx.getProperties().get(".")[0].getValue();//ctx.getPropertyValue(".");
+				
 				if(val1 == null){
+					ctx.setInvalid();
 					setLastMessage1("value1 must not empty");
 				}else if(Integer.parseInt(val1.toString())>10){
-					setLastMessage1("value1 have to large than 10");
-				}else{
 					setLastMessage1(null);
+				}else{
+					ctx.setInvalid();
+					setLastMessage1("value1 have to large than 10");
+					
 				}
 				
 				if(val2 == null){
+					ctx.setInvalid();
 					setLastMessage2("value2 must not empty");
 				}else if(Integer.parseInt(val2.toString())>20){
-					setLastMessage2("value2 have to large than 20");
-				}else{
 					setLastMessage2(null);
+				}else{
+					ctx.setInvalid();
+					setLastMessage2("value2 have to large than 20");
 				}
 			}			
 		});
@@ -139,4 +138,6 @@ public class ValidationComposer extends GenericBindComposer {
 	public void cmd2(){
 		
 	}
+	
+	
 }

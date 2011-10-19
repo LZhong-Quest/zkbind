@@ -63,7 +63,6 @@ public class SaveFormBindingImpl extends FormBindingImpl implements	SaveFormBind
 		if(obj instanceof Validator){
 			return (Validator)obj;
 		}else if(obj instanceof String){
-			//TODO provide getValidator in default VM, ex GenericBindComposer
 			ExpressionX vmconverter = eval.parseExpressionX(null, 
 					new StringBuilder().append(BinderImpl.VM).append(".getValidator('").append(obj).append("')").toString(),
 					Validator.class);
@@ -92,29 +91,46 @@ public class SaveFormBindingImpl extends FormBindingImpl implements	SaveFormBind
 	}
 
 	//--SaveBinding--//
+	public Property getValidate(BindContext ctx) {
+		final Set<Property> properties = new HashSet<Property>(2);
+		//we should not check this binding need to validate or not here, 
+		//since other validator may want to know the value of porperty of this binding, so just provide it 
+		final Binder binder = getBinder();
+		final BindEvaluatorX eval = binder.getEvaluatorX();
+		final Component comp = ctx.getComponent();
+		final Form form = getFormBean();
+			
+		final ExpressionX expr = getBaseExpression(eval);
+		if (expr != null) {
+			final Object base = eval.getValue(ctx, comp, expr);
+			return new PropertyImpl(base, ".", form);
+		}
+		return null;
+	}
+	
+	//--SaveFormBinding--//
 	public Set<Property> getValidates(BindContext ctx) {
 		final Set<Property> properties = new HashSet<Property>(2);
-		//validate if required
-		if (isValidate()) {
-			final Binder binder = getBinder();
-			final BindEvaluatorX eval = binder.getEvaluatorX();
-			final Component comp = ctx.getComponent();
-			final Form form = getFormBean();
+		//we should not check this binding need to validate or not here, 
+		//since other validator may want to know the value of porperty of this binding, so just provide it 
+		final Binder binder = getBinder();
+		final BindEvaluatorX eval = binder.getEvaluatorX();
+		final Component comp = ctx.getComponent();
+		final Form form = getFormBean();
 	
-			//remember base and form field
-			for (String field : form.getSaveFieldNames()) {
-				final ExpressionX expr = getFieldExpression(eval, field);
-				if (expr != null) {
-					final ValueReference ref = eval.getValueReference(ctx, comp, expr);
-					final Object value = form.getField(field);
-					properties.add(new PropertyImpl(ref.getBase(), (String) ref.getProperty(), value));
-				}
+		//remember base and form field
+		for (String field : form.getSaveFieldNames()) {
+			final ExpressionX expr = getFieldExpression(eval, field);
+			if (expr != null) {
+				final ValueReference ref = eval.getValueReference(ctx, comp, expr);
+				final Object value = form.getField(field);
+				properties.add(new PropertyImpl(ref.getBase(), (String) ref.getProperty(), value));
 			}
 		}
 		return properties;
 	}
 	
-	public boolean isValidate() {
+	public boolean hasValidator() {
 		return _validator == null ? false : true;
 	}
 }
