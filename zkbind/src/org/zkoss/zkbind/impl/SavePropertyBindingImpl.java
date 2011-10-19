@@ -126,22 +126,20 @@ public class SavePropertyBindingImpl extends PropertyBindingImpl implements Save
 	}
 
 	//--SaveBinding--//
-	public Set<Property> getValidates(BindContext ctx) {
+	public Property getValidate(BindContext ctx) {
 		final Set<Property> properties = new HashSet<Property>(2);
-		//validate if required
-		if (isValidate()) {
-			final Object value = getComponentValue(ctx);
-			try {
-				ValueReference ref = getValueReference(ctx);
-				properties.add(new PropertyImpl(ref.getBase(), (String) ref.getProperty(), value));
-			} catch (Exception e) {
-				throw UiException.Aide.wrap(e);
-			}
+		//we should not check this binding need to validate or not, 
+		//maybe other validator want to know the value of this binding, so just provide it
+		final Object value = getComponentValue(ctx);
+		try {
+			ValueReference ref = getValueReference(ctx);
+			return new PropertyImpl(ref.getBase(), (String) ref.getProperty(), value);
+		} catch (Exception e) {
+			throw UiException.Aide.wrap(e);
 		}
-		return properties;
 	}
 	
-	public boolean isValidate() {
+	public boolean hasValidator() {
 		return _validator == null ? false : true;
 	}
 	

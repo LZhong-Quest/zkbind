@@ -11,7 +11,7 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
  */
 package org.zkoss.zkbind;
 
-import java.util.Set;
+import java.util.Map;
 
 /**
  * @author dennis
@@ -26,10 +26,9 @@ public interface ValidationContext {
 	boolean isValid();
 
 	/**
-	 * set validation fail
-	 * @param valid
+	 * set invalid
 	 */
-	void setFail();
+	void setInvalid();
 
 	/**
 	 * get the command that trigger the validation
@@ -38,12 +37,12 @@ public interface ValidationContext {
 	String getCommand();
 
 	/**
-	 * get properties that need to be validated.
+	 * get collected properties that need to be validated.
 	 * you usually use this method to get value of other properties to do complex validation or
-	 * form validation
+	 * a form validation
 	 * @return the properties.
 	 */
-	Set<Property> getProperties();
+	Map<String,Property[]> getProperties();
 
 	/**
 	 * get the main property that need to be validated. 
@@ -51,19 +50,6 @@ public interface ValidationContext {
 	 */
 	Property getProperty();
 	
-	/**
-	 * get the main property value,
-	 * same as getProperty().getValue(); 
-	 * @return the main property value.
-	 */
-	Object getPropertyValue();
-	
-	/**
-	 * get the first property value that matches to name,
-	 *  you should not use this if there are multiple properties with same name in different base 
-	 * @return the first property value that matches the name.
-	 */
-	Object getPropertyValue(String name);
 
 	/**
 	 * @return current bind context

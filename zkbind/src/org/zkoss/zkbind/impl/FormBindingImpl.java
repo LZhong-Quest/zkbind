@@ -88,6 +88,7 @@ public class FormBindingImpl extends BindingImpl implements FormBinding {
 	}
 	
 	protected ExpressionX getBaseExpression(BindEvaluatorX eval) {
+		//TODO, Dennis potential bug if a field name same as form id
 		final String property = getPropertyString();
 		ExpressionX expr = _fieldExprs.get(property);
 		if (expr == null) {

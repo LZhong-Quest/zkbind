@@ -14,10 +14,6 @@ package org.zkoss.mvvm.examples.confirm;
 
 import java.util.Date;
 
-import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.event.Event;
-import org.zkoss.zk.ui.event.EventListener;
-import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zkbind.Form;
 import org.zkoss.zkbind.GenericBindComposer;
 import org.zkoss.zkbind.NotifyChange;
@@ -31,7 +27,7 @@ import org.zkoss.zul.ListModelList;
  * @author dennis
  */
 public class ConfirmViewModel extends GenericBindComposer {
-	private ListModelList cityList;
+	private ListModelList<City> cityList;
 	private City selected;
 	private City tobeSelected = null;
 	
@@ -42,7 +38,7 @@ public class ConfirmViewModel extends GenericBindComposer {
 
 	public ConfirmViewModel() {
 		//init the fake data
-		cityList = new ListModelList();
+		cityList = new ListModelList<City>();
 		cityList.add(new City("New York",30));
 		cityList.add(new City("Taipei",40));
 		cityList.add(new City("Beijing",50));
@@ -57,15 +53,15 @@ public class ConfirmViewModel extends GenericBindComposer {
 			public void validate(ValidationContext ctx) {
 				if(selected!=null && form.isDirty()){
 					//form is dirty, we keep the object as a to-be-selected obj;
-					tobeSelected = (City)ctx.getPropertyValue();
+					tobeSelected = (City)ctx.getProperty().getValue();
 					//show dialog
 					setDialog(true,selected);
-					ctx.setFail();
+					ctx.setInvalid();
 				}
 			}});
 		addValidator("formValidator", new Validator() {
 			public void validate(ValidationContext ctx) {
-				Integer population = (Integer) ctx.getPropertyValue("population");
+				Integer population = (Integer) ctx.getProperties().get("population")[0].getValue();
 				if (population==null || population <= 10) {
 					// validation fail
 					if (tobeSelected == null) {
@@ -78,7 +74,7 @@ public class ConfirmViewModel extends GenericBindComposer {
 //						getBinder().sendCommand("confirmCancel", null);
 						getBinder().postCommand("confirmCancel", null);
 					}
-					ctx.setFail();
+					ctx.setInvalid();
 				}
 			}
 		});
@@ -89,11 +85,11 @@ public class ConfirmViewModel extends GenericBindComposer {
 	}
 	//
 
-	public ListModelList getCityList() {
+	public ListModelList<City> getCityList() {
 		return cityList;
 	}
 
-	public void setCityList(ListModelList cityList) {
+	public void setCityList(ListModelList<City> cityList) {
 		this.cityList = cityList;
 	}
 

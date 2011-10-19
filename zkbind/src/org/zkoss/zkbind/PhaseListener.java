@@ -26,10 +26,11 @@ package org.zkoss.zkbind;
  *
  */
 public interface PhaseListener {
+
 	/**
-	 * confirm phase.
+	 * validate phase.
 	 */
-	public static final int CONFIRM = 1;
+	public static final int VALIDATE = 1;	
 	/**
 	 * save before command phase.
 	 */
@@ -55,22 +56,19 @@ public interface PhaseListener {
 	 */
 	public static final int COMMAND = 7;
 	
-	/**
-	 * validate phase.
-	 */
-	public static final int VALIDATE = 8;
+
 	
 	/**
 	 * Callbacks before each command phase.
 	 * @param phase the phase id
 	 * @param ctx the associated {@link BindContext}
 	 */
-	public void beforePhase(int phase, BindContext ctx);
+	public void prePhase(int phase, BindContext ctx);
 	
 	/**
 	 * Callbacks after each command phase. 
 	 * @param phase the phase id
 	 * @param ctx the associated {@link BindContext}
 	 */
-	public void afterPhase(int phase, BindContext ctx);
+	public void postPhase(int phase, BindContext ctx);
 }
