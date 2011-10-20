@@ -11,6 +11,8 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 */
 package org.zkoss.zkbind.sys;
 
+import java.util.Map;
+
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zkbind.Converter;
 
@@ -51,4 +53,10 @@ public interface PropertyBinding extends Binding {
 	 * 	otherwise it shall bind before execute associated command(false).
 	 */
 	public boolean isAfter();
+	
+	/**
+	 * Returns an argument <tags, object> pairs map for converter. 
+	 * @return an argument <tags, object> pairs map for converter.
+	 */
+	public Map<String,Object> getConverterArgs();
 }

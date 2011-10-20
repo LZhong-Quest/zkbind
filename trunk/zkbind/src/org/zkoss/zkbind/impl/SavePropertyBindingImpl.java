@@ -36,12 +36,18 @@ import org.zkoss.zkbind.xel.zel.BindELContext;
  */
 public class SavePropertyBindingImpl extends PropertyBindingImpl implements SavePropertyBinding {
 	private final ExpressionX _validator;
+	private final Map<String, Object> _validatorArgs;
 	
-	public SavePropertyBindingImpl(Binder binder, Component comp, String attr, String saveScript, String converter, String validator, Map<String, Object> args) {
-		super(binder, comp, "self."+attr, saveScript, converter, args);
+	public SavePropertyBindingImpl(Binder binder, Component comp, String attr, String saveScript, String converter, String validator, 
+			Map<String, Object> args, Map<String, Object> converterArgs, Map<String, Object> validatorArgs) {
+		super(binder, comp, "self."+attr, saveScript, converter, args, converterArgs);
 		final BindEvaluatorX eval = binder.getEvaluatorX();
-		
 		_validator = validator==null?null:parseValidator(eval,validator);
+		_validatorArgs = validatorArgs;
+	}
+	
+	public Map<String, Object> getValidatorArgs() {
+		return _validatorArgs;
 	}
 	
 	@Override
@@ -51,19 +57,20 @@ public class SavePropertyBindingImpl extends PropertyBindingImpl implements Save
 	
 	private ExpressionX parseValidator(BindEvaluatorX eval, String validatorExpr) {
 		
-		final BindContext ctx = new BindContextImpl(getBinder(), this, false, null, getComponent(), null, null);
+//		final BindContext ctx = BindContextUtil.newBindContext(getBinder(), this, false, null, getComponent(), null);
+//		ctx.setAttribute(BinderImpl.IGNORE_TRACKER, Boolean.TRUE);//ignore tracker when doing el, we don't need to trace validator
 		//expression will/should not be tracked, (although, from the impl, tracker don't care savebinding)
-		ctx.setAttribute(BinderImpl.IGNORE_TRACKER, Boolean.TRUE);//ignore tracker when doing el, we don't need to trace validator
-		return eval.parseExpressionX(ctx, validatorExpr, Object.class);
+		return eval.parseExpressionX(/*ctx*/null, validatorExpr, Object.class);
 	}
 
 	public Validator getValidator() {
 		if(_validator==null) return null;
 
-		final BindContext ctx = new BindContextImpl(getBinder(), this, false, null, getComponent(), null, null);
+//		final BindContext ctx = BindContextUtil.newBindContext(getBinder(), this, false, null, getComponent(), null);
+//		ctx.setAttribute(BinderImpl.IGNORE_TRACKER, Boolean.TRUE);//ignore tracker when doing el, we don't need to trace validator
 		final BindEvaluatorX eval = getBinder().getEvaluatorX();
-		ctx.setAttribute(BinderImpl.IGNORE_TRACKER, Boolean.TRUE);//ignore tracker when doing el, we don't need to trace validator
-		Object obj = eval.getValue(ctx, getComponent(), _validator);
+
+		Object obj = eval.getValue(null, getComponent(), _validator);
 		
 		if(obj instanceof Validator){
 			return (Validator)obj;
@@ -127,7 +134,6 @@ public class SavePropertyBindingImpl extends PropertyBindingImpl implements Save
 
 	//--SaveBinding--//
 	public Property getValidate(BindContext ctx) {
-		final Set<Property> properties = new HashSet<Property>(2);
 		//we should not check this binding need to validate or not, 
 		//maybe other validator want to know the value of this binding, so just provide it
 		final Object value = getComponentValue(ctx);

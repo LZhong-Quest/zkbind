@@ -51,6 +51,10 @@ public class ValidationContextImpl implements ValidationContext{
 	public Map<String,Property[]> getProperties() {
 		return _properties;
 	}
+	
+	public Property[] getProperties(String name) {
+		return _properties.get(name);
+	}
 
 	public Property getProperty() {
 		return _property;

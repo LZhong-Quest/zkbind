@@ -88,7 +88,7 @@ public class AccessInfo {
 		//only prompt loading shall track dependency
 		//(dependency only be tracing when has a binding presented and not ignoreTracker, see TrackerImpl)
 		final BindContext ctx = commandName != null ? null : 
-				new BindContextImpl(binder, binding, false, null, null, null, null); 
+			BindContextUtil.newBindContext(binder, binding, false, null, null, null); 
 		if(ctx!=null && ignoreTracker){
 			ctx.setAttribute(BinderImpl.IGNORE_TRACKER, Boolean.TRUE);
 		}

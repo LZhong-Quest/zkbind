@@ -8,9 +8,9 @@
 	</columns>
 	<rows>
 		<row id="row1">
-			<textbox value="@bind(fx.firstName, converter='firstName'))"/>
-			<textbox value="@bind(fx.lastName, converter='lastName'))"/>
-			<label value="@bind(fx, converter='fullName')"/>
+			<textbox value="@bind(fx.firstName) @converter('firstName'))"/>
+			<textbox value="@bind(fx.lastName) @converter('lastName'))"/>
+			<label value="@bind(fx) @converter('fullName')"/>
 		</row>
 	</rows>
 </grid>

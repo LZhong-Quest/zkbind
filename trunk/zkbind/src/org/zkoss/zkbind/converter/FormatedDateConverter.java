@@ -35,7 +35,7 @@ public class FormatedDateConverter implements Converter {
 	 */
 	public Object coerceToUi(Object val, Component comp, BindContext ctx) {
 		//user sets format in annotation of binding or args when calling binder.addPropertyBinding()  
-		final String format = (String) ctx.getAttribute("format");
+		final String format = (String) ctx.getConverterArg("format");
 		if(format==null) throw new NullPointerException("format attribute not found");
 		final Date date = (Date) val;
 		return date == null ? null : new SimpleDateFormat(format).format(date);
@@ -49,7 +49,7 @@ public class FormatedDateConverter implements Converter {
 	 * @return the converted Date
 	 */
 	public Object coerceToBean(Object val, Component comp, BindContext ctx) {
-		final String format = (String) ctx.getAttribute("format");
+		final String format = (String) ctx.getConverterArg("format");
 		if(format==null) throw new NullPointerException("format attribute not found");
 		final String date = (String) val;
 		try {

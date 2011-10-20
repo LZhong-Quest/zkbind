@@ -35,15 +35,21 @@ public abstract class PropertyBindingImpl extends BindingImpl implements Propert
 	protected final ExpressionX _fieldExpr;
 	protected final AccessInfo _accessInfo;
 	private final ExpressionX _converter;
+	private final Map<String, Object> _converterArgs;
 
-	protected PropertyBindingImpl(Binder binder, Component comp, String fieldScript, String accessScript, String converter, Map<String, Object> args) {
+	protected PropertyBindingImpl(Binder binder, Component comp, String fieldScript, String accessScript, String converter, 
+			Map<String, Object> args, Map<String, Object> converterArgs) {
 		super(binder,comp, args);
 		final BindEvaluatorX eval = binder.getEvaluatorX();
 		final Class returnType = Object.class;
 		this._fieldExpr = eval.parseExpressionX(null, fieldScript, returnType);
 		this._accessInfo = AccessInfo.create(this, accessScript, returnType, ignoreTracker());
-		
+		_converterArgs = converterArgs;
 		_converter = converter==null?null:parseConverter(eval,converter);
+	}
+	
+	public Map<String, Object> getConverterArgs() {
+		return _converterArgs;
 	}
 	
 	//should this binding set the ignore tracker attribute when evaluate the expression.
@@ -52,7 +58,7 @@ public abstract class PropertyBindingImpl extends BindingImpl implements Propert
 	}
 	
 	private ExpressionX parseConverter(BindEvaluatorX eval, String converterExpr) {
-		final BindContext ctx = new BindContextImpl(getBinder(), this, false, null, getComponent(), null, null);
+		final BindContext ctx = BindContextUtil.newBindContext(getBinder(), this, false, null, getComponent(), null);
 		//provide a bindcontext when pare expression of converter with this binding,
 		//do so, the tracker will also tracking the converter dependence with this binding.
 		return eval.parseExpressionX(ctx, converterExpr, Object.class);
@@ -61,7 +67,7 @@ public abstract class PropertyBindingImpl extends BindingImpl implements Propert
 	public Converter getConverter() {
 		if(_converter==null) return null;
 
-		final BindContext ctx = new BindContextImpl(getBinder(), this, false, null, getComponent(), null, null);
+		final BindContext ctx = BindContextUtil.newBindContext(getBinder(), this, false, null, getComponent(), null);
 		final BindEvaluatorX eval = getBinder().getEvaluatorX();
 		Object obj = eval.getValue(ctx, getComponent(), _converter);
 		

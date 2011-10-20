@@ -47,9 +47,10 @@ public interface Binder {
 	 * @param saveExprs save expressions
 	 * @param validatorExpr the provided validator expression; null to ignore it 
 	 * @param args other key-value pairs. 
+	 * @param validatorArgs args for validator
 	 */
 	public void addFormBindings(Component comp, String id, String initExpr,
-			String[] loadExprs, String[] saveExprs, String validatorExpr, Map<String, Object> args);
+			String[] loadExprs, String[] saveExprs, String validatorExpr, Map<String, Object> args, Map<String, Object> validatorArgs);
 
 	/**
 	 * Add new property Bindings.
@@ -61,9 +62,11 @@ public interface Binder {
 	 * @param converterExpr the provided converter expression; null to ignore it.
 	 * @param validatorExpr the provided validator expression; null to ignore it.
 	 * @param args other key-value pairs. 
+	 * @param converterArgs args for converter
+	 * @param validatorArgs args for validator
 	 */
 	public void addPropertyBinding(Component comp, String attr, String initExpr,
-			String[] loadExprs, String[] saveExprs, String converterExpr, String validatorExpr, Map<String, Object> args);
+			String[] loadExprs, String[] saveExprs, String converterExpr, String validatorExpr, Map<String, Object> args,Map<String, Object> converterArgs,Map<String, Object> validatorArgs);
 
 	/**
 	 * Remove all managed bindings that associated with the specified component.

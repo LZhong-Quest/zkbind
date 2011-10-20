@@ -2,11 +2,11 @@
 	<custom-attributes composerName="vm"/>
 	format : yyyy/MM/dd
 	<vbox>
-		<textbox id="t1" value="@bind(vm.bday1, converter = 'myconverter1')" />
+		<textbox id="t1" value="@bind(vm.bday1) @converter('myconverter1')" />
 		<label id="l1" value="@bind(vm.age1)"/>
 	</vbox>
 	<vbox self="@form(id='fx', load=vm, save=vm before 'saveForm')">
-		<textbox id="t2" value="@bind(fx.bday1, converter = 'myconverter1')" />
+		<textbox id="t2" value="@bind(fx.bday1) @converter('myconverter1')" />
 		<label id="l2" value="@bind(fx.age1)"/>
 	</vbox>
 	<hbox>

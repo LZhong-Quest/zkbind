@@ -39,6 +39,25 @@ public class MiscTestCase extends TestCaseBase{
 		Assert.assertEquals("X-Arg2Dennis-Arg1",findWidget("$t1").getValue());
 		Assert.assertEquals("Y-myarg2Chen-myarg1",findWidget("$t2").getValue());
 		
+		findWidget("$t3").clear().keys("ABC").tab();
+		Assert.assertEquals("value have to equals V1",findWidget("$l3").getValue());
+		findWidget("$t3").clear().keys("V1").tab();
+		Assert.assertEquals("",findWidget("$l3").getValue());
+		Assert.assertEquals("V1-Arg1",findWidget("$l1").getValue());
+		
+		findWidget("$t4").clear().keys("ABC").tab();
+		Assert.assertEquals("",findWidget("$l4").getValue());
+		findWidget("$btn2").click();
+		Assert.assertEquals("value have to equals V2",findWidget("$l4").getValue());
+		Assert.assertEquals("V1",findWidget("$t3").getValue());
+		
+		findWidget("$t4").clear().keys("V2").tab();
+		findWidget("$btn2").click();
+		Assert.assertEquals("execute cmd2",findWidget("$l4").getValue());
+		Assert.assertEquals("V2-Arg1",findWidget("$l1").getValue());
+		Assert.assertEquals("V2",findWidget("$t3").getValue());
+		
+		
 	}
 	
 	

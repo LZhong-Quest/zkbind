@@ -33,6 +33,7 @@ import org.zkoss.zkbind.DependsOn;
 import org.zkoss.zkbind.NotifyChange;
 import org.zkoss.zkbind.Property;
 import org.zkoss.zkbind.impl.BindContextImpl;
+import org.zkoss.zkbind.impl.BindContextUtil;
 import org.zkoss.zkbind.impl.BinderImpl;
 import org.zkoss.zkbind.impl.LoadFormBindingImpl;
 import org.zkoss.zkbind.impl.LoadPropertyBindingImpl;
@@ -183,12 +184,12 @@ public class BindELContext extends XelELContext {
 		final String path = BindELContext.appendFields(basepath, prop);
 		
 		//parse depends on series
-		BindContext ctxparse = new BindContextImpl(binder, binding, false, null, comp, null, null);
+		BindContext ctxparse = BindContextUtil.newBindContext(binder, binding, false, null, comp, null);
 		ctxparse.setAttribute(BinderImpl.SRCPATH, srcpath);
 		ExpressionX expr = eval.parseExpressionX(ctxparse, path, Object.class); //prepare the tracking and association
 		
 		//bean association
-		BindContext ctx = new BindContextImpl(binder, binding, false, null, comp, null, null);
+		BindContext ctx = BindContextUtil.newBindContext(binder, binding, false, null, comp, null);
 		eval.getValue(ctx, comp, expr); //will call tieValue() and recursive back via BindELResolver
 	}
 }

@@ -40,9 +40,18 @@ public interface ValidationContext {
 	 * get collected properties that need to be validated.
 	 * you usually use this method to get value of other properties to do complex validation or
 	 * a form validation
-	 * @return the properties.
+	 * @return the properties map.
 	 */
 	Map<String,Property[]> getProperties();
+	
+	/**
+	 * get collected properties that need to be validated by a property name.
+	 * you usually use this method to get a value of other properties to do complex validation or
+	 * a form validation
+	 * @param name the property name
+	 * @return the properties array
+	 */
+	Property[] getProperties(String name);
 
 	/**
 	 * get the main property that need to be validated. 

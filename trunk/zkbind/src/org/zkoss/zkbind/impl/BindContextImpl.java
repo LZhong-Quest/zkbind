@@ -28,60 +28,79 @@ import org.zkoss.zkbind.sys.Binding;
  *
  */
 public class BindContextImpl implements BindContext {
-	private final Binder binder;
-	private final Binding binding;
-	private final boolean save;
-	private final String command;
-	private final Component component; //ZK context
-	private final Event event; //ZK event
-	private final Map<Object, Object> attrs;
+	private final Binder _binder;
+	private final Binding _binding;
+	private final boolean _save;
+	private final String _command;
+	private final Component _component; //ZK context
+	private final Event _event; //ZK event
+	private final Map<Object, Object> _attrs;
 	
-	public BindContextImpl(Binder binder, Binding binding, boolean save, String command, Component comp, Event event, Map<String,Object> args) {
-		this.binder = binder;
-		this.binding = binding;
-		this.save = save;
-		this.command = command;
-		this.component = comp;
-		this.event = event;
-		this.attrs = new HashMap<Object, Object>();
-		if (args != null) {
-			attrs.putAll(args);
-		}
+	public static final String COMMAND_ARGS = "$BC_CMDARGS$";
+	public static final String BINDING_ARGS = "$BC_BINDARGS$";
+	public static final String VALIDATOR_ARGS = "$BC_VALIDARGS$";
+	public static final String CONVERTER_ARGS = "$BC_CONVARGS$";
+	
+	public BindContextImpl(Binder binder, Binding binding, boolean save, String command, Component comp, Event event) {
+		this._binder = binder;
+		this._binding = binding;
+		this._save = save;
+		this._command = command;
+		this._component = comp;
+		this._event = event;
+		this._attrs = new HashMap<Object, Object>();
 	}
 	public Binder getBinder() {
-		return this.binder;
+		return this._binder;
 	}
 
 	public Binding getBinding() {
-		return this.binding;
+		return this._binding;
 	}
 
 	public Object getAttribute(Object key) {
-		return this.attrs.get(key);
+		return this._attrs.get(key);
 	}
 
 	public Object setAttribute(Object key, Object value) {
 		return value == null ? 
-				this.attrs.remove(key) : this.attrs.put(key, value);
+				this._attrs.remove(key) : this._attrs.put(key, value);
 	}
 
 	public Map<Object, Object> getAttributes() {
-		return Collections.unmodifiableMap(attrs); 
+		return Collections.unmodifiableMap(_attrs); 
+	}
+	
+	public Object getCommandArg(String key){
+		Map m = (Map)getAttribute(COMMAND_ARGS);
+		return m==null?null:m.get(key);
+	}
+	public Object getBindingArg(String key){
+		Map m = (Map)getAttribute(BINDING_ARGS);
+		return m==null?null:m.get(key);
+	}
+	public Object getConverterArg(String key){
+		Map m = (Map)getAttribute(CONVERTER_ARGS);
+		return m==null?null:m.get(key);
+	}
+	public Object getValidatorArg(String key){
+		Map m = (Map)getAttribute(VALIDATOR_ARGS);
+		return m==null?null:m.get(key);
 	}
 
 	public boolean isSave() {
-		return this.save;
+		return this._save;
 	}
 
 	public String getCommandName() {
-		return this.command;
+		return this._command;
 	}
 
 	public Component getComponent() {
-		return this.component;
+		return this._component;
 	}
 	
 	public Event getTriggerEvent() {
-		return this.event;
+		return this._event;
 	}
 }

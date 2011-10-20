@@ -73,4 +73,32 @@ public interface BindContext {
 	 * @return associated event that trigger the associated command; null if not involved.
 	 */
 	public Event getTriggerEvent();
+	
+	/**
+	 * Returns command arg value of the given key in this Bind Context.
+	 * @param key the key to the value.
+	 * @return value of command arg of the given key in this Bind Context.
+	 */
+	public Object getCommandArg(String key); 
+	
+	/**
+	 * Returns binding arg value of the given key in this Bind Context.
+	 * @param key the key to the value.
+	 * @return value of binding arg of the given key in this Bind Context.
+	 */
+	public Object getBindingArg(String key);
+	
+	/**
+	 * Returns converter arg value of the given key in this Bind Context.
+	 * @param key the key to the value.
+	 * @return value of converter arg of the given key in this Bind Context.
+	 */
+	public Object getConverterArg(String key);
+	
+	/**
+	 * Returns validator arg value of the given key in this Bind Context.
+	 * @param key the key to the value.
+	 * @return value of validator arg of the given key in this Bind Context.
+	 */
+	public Object getValidatorArg(String key);
 }
