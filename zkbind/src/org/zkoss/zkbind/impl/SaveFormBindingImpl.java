@@ -34,11 +34,17 @@ import org.zkoss.zkbind.sys.SaveFormBinding;
  */
 public class SaveFormBindingImpl extends FormBindingImpl implements	SaveFormBinding {
 	private final ExpressionX _validator;
-	public SaveFormBindingImpl(Binder binder, Component comp, Form form, String access, String validator, Map<String,Object> args) {
+	private final Map<String, Object> _validatorArgs;
+	
+	public SaveFormBindingImpl(Binder binder, Component comp, Form form, String access, String validator, Map<String,Object> args, Map<String,Object> validatorArgs) {
 		super(binder, comp, form, access, args);
 		final BindEvaluatorX eval = binder.getEvaluatorX();
-		final BindContext ctx = new BindContextImpl(binder, this, true, null, comp, null, null);
 		_validator = validator==null?null:parseValidator(eval,validator);
+		_validatorArgs = validatorArgs;
+	}
+	
+	public Map<String, Object> getValidatorArgs() {
+		return _validatorArgs;
 	}
 	
 	@Override
@@ -47,18 +53,20 @@ public class SaveFormBindingImpl extends FormBindingImpl implements	SaveFormBind
 	}
 	
 	private ExpressionX parseValidator(BindEvaluatorX eval, String validatorExpr) {
-		final BindContext ctx = new BindContextImpl(getBinder(), this, false, null, getComponent(), null, null);
-		//don't provide a bindcontext when pare expression of converter with this binding,
-		//do so, the tracker will not also tracking the converter dependence with this binding.
+//		final BindContext ctx = BindContextUtil.newBindContext(getBinder(), this, false, null, getComponent(), null);
+//		ctx.setAttribute(BinderImpl.IGNORE_TRACKER, Boolean.TRUE);//ignore tracker when doing el, we don't need to trace validator
+		//don't provide a bindcontext when pare expression of validator with this binding,
+		//do so, the tracker will not also tracking the validator dependence with this binding.
 		return eval.parseExpressionX(null, validatorExpr, Object.class);
 	}
 
 	public Validator getValidator() {
 		if(_validator==null) return null;
 
-		final BindContext ctx = new BindContextImpl(getBinder(), this, false, null, getComponent(), null, null);
+//		final BindContext ctx = BindContextUtil.newBindContext(getBinder(), this, false, null, getComponent(), null);
+//		ctx.setAttribute(BinderImpl.IGNORE_TRACKER, Boolean.TRUE);//ignore tracker when doing el, we don't need to trace validator		
 		final BindEvaluatorX eval = getBinder().getEvaluatorX();
-		Object obj = eval.getValue(ctx, getComponent(), _validator);
+		Object obj = eval.getValue(/*ctx*/null, getComponent(), _validator);
 		
 		if(obj instanceof Validator){
 			return (Validator)obj;

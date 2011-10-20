@@ -1,3 +1,14 @@
+/* ValidationHelper.java
+
+	Purpose:
+		
+	Description:
+		
+	History:
+		2011/10/1 Created by Dennis Chen
+
+Copyright (C) 2011 Potix Corporation. All Rights Reserved.
+*/
 package org.zkoss.zkbind.impl;
 
 import java.util.HashMap;
@@ -54,26 +65,6 @@ import org.zkoss.zkbind.sys.SavePropertyBinding;
 		
 	}
 	
-	//TODO move all evalArgs to a utiltity
-	private Map<String, Object> evalArgs(Component comp, Map<String, Object> args) {
-		if (args == null) {
-			return null;
-		}
-		final BindEvaluatorX eval = _binder.getEvaluatorX();
-		final Map<String, Object> result = new LinkedHashMap<String, Object>(args.size()); 
-		for(final Iterator<Entry<String, Object>> it = args.entrySet().iterator(); it.hasNext();) {
-			final Entry<String, Object> entry = it.next(); 
-			final String key = entry.getKey();
-			final Object value = entry.getValue();
-			//evaluate the arg if it was a ExpressionX
-			final Object evalValue = value == null ? null : 
-				(value instanceof ExpressionX) ? eval.getValue(null, comp, (ExpressionX)value) : value;
-			result.put(key, evalValue);
-		}
-		return result;
-	}
-	
-	
 	//doCommand -> doValidate ->
 	public void collectSaveBefore(Component comp, String command, Event evt, Set<Property> validates){
 		collectSavePropertyBefore(comp, command, evt, validates);
@@ -99,8 +90,6 @@ import org.zkoss.zkbind.sys.SavePropertyBinding;
 			}
 		}
 	}
-	
-	
 	
 	
 	//doValidate -> 
@@ -230,51 +219,35 @@ import org.zkoss.zkbind.sys.SavePropertyBinding;
 	
 	//collect properties from a save-binding
 	private void collectSavePropertyBinding(Component comp, SavePropertyBinding binding, String command, Event evt, Set<Property> validates) {
-//		Set<Property> cp = _collectedPropertyCache.get(binding);
-//		if(cp!=null) {
-//			validates.addAll(cp);
-//			return;
-//		}
-		
-		final Map<String, Object> args = evalArgs(comp, binding.getArgs());
-		final BindContext ctx = new BindContextImpl(_binder, binding, true, command, binding.getComponent(), evt, args);
+		final BindContext ctx = BindContextUtil.newBindContext(_binder, binding, true, command, binding.getComponent(), evt);
 		
 		Set<Property> cp = new HashSet<Property>();
 		Property p = binding.getValidate(ctx);
 		_mainPropertyCache.put(binding, p);
 		cp.add(p);//main property
-		validates.addAll(cp); //collect properties to be validated
-//		_collectedPropertyCache.put(binding, cp);
+		validates.add(p); //collect properties to be validated
 	}
 	
-	//correct properties form a save-form-binding
+	//collect properties form a save-form-binding
 	private void collectSaveFormBinding(Component comp, SaveFormBinding binding, String command, Event evt, Set<Property> validates) {
-//		Set<Property> cp = _collectedPropertyCache.get(binding);
-//		if(cp!=null) {
-//			validates.addAll(cp);
-//			return;
-//		}
-		
-		final Map<String, Object> args = evalArgs(comp, binding.getArgs());
-		final BindContext ctx = new BindContextImpl(_binder, binding, true, command, binding.getComponent(), evt, args);
+		final BindContext ctx = BindContextUtil.newBindContext(_binder, binding, true, command, binding.getComponent(), evt);
 		
 		Set<Property> cp = new HashSet<Property>();
 		Property p = binding.getValidate(ctx);
 		_mainPropertyCache.put(binding, p);
 		
 		cp.add(p);// the main property
-		cp.addAll(binding.getValidates(ctx));// the field property in form
+		cp.addAll(binding.getValidates(ctx));// the field properties in form
 		validates.addAll(cp); //collect properties to be validated
-		
-//		_collectedPropertyCache.put(binding, cp);
 	}
 	
 	
 	//validate a save-binding
 	private boolean validateSavePropertyBinding(Component comp,SavePropertyBinding binding,String command, Map<String,Property[]> validates, boolean valid) {
 		if(!binding.hasValidator()) return true;
-		final Map<String, Object> args = evalArgs(comp, binding.getArgs());
-		final BindContext ctx = new BindContextImpl(_binder, binding, true, command, binding.getComponent(), null, args);
+		final BindContext ctx = BindContextUtil.newBindContext(_binder, binding, true, command, binding.getComponent(), null);
+		BindContextUtil.setValidatorArgs(binding.getBinder(), binding.getComponent(), ctx, binding);
+		
 		Validator validator = binding.getValidator();
 		if(validator == null){
 			throw new UiException("cannot find validator for binding "+binding);
@@ -288,8 +261,8 @@ import org.zkoss.zkbind.sys.SavePropertyBinding;
 	//validate a save-form-binding
 	private boolean validateSaveFormBinding(Component comp, SaveFormBinding binding, String command, Map<String,Property[]> validates, boolean valid) {
 		if(!binding.hasValidator()) return true;
-		final Map<String, Object> args = evalArgs(comp, binding.getArgs());
-		final BindContext ctx = new BindContextImpl(_binder, binding, true, command, binding.getComponent(), null, args);
+		final BindContext ctx = BindContextUtil.newBindContext(_binder, binding, true, command, binding.getComponent(), null);
+		BindContextUtil.setValidatorArgs(binding.getBinder(), binding.getComponent(), ctx, binding);
 		//TODO , form need to do extra action(ex, nested property-validation)for validation state.
 		Validator validator = binding.getValidator();
 		if(validator == null){

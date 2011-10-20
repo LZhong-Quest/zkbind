@@ -12,6 +12,7 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 
 package org.zkoss.zkbind.sys;
 
+import java.util.Map;
 import java.util.Set;
 
 import org.zkoss.zkbind.BindContext;
@@ -49,4 +50,10 @@ public interface SaveBinding extends Binding {
 	 * @return the validator if existed
 	 */
 	public Validator getValidator();
+	
+	/**
+	 * Returns an argument <tags, object> pairs map for validator. 
+	 * @return an argument <tags, object> pairs map for validator.
+	 */
+	public Map<String, Object> getValidatorArgs();	
 }

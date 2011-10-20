@@ -24,9 +24,16 @@ public class UriConverter implements Converter {
 
 	public Object coerceToUi(Object val, Component component, BindContext ctx) {
 		final String uri = (String) val;
-		final String prefix = (String) ctx.getAttribute("prefix");
-		final String postfix = (String) ctx.getAttribute("postfix");
-		return prefix + uri + postfix;
+		final String prefix = (String) ctx.getConverterArg("prefix");
+		final String postfix = (String) ctx.getConverterArg("postfix");
+		final StringBuilder sb = new StringBuilder();
+//		return prefix + uri + postfix;
+		if(prefix!=null) 
+			sb.append(prefix);
+		sb.append(uri);
+		if(postfix!=null) 
+			sb.append(postfix);
+		return sb.toString();
 	}
 
 	public Object coerceToBean(Object val, Component component, BindContext ctx) {

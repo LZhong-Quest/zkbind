@@ -30,7 +30,7 @@ public class ObjectBooleanConverter implements Converter {
 	 * @return the converted Boolean object
 	 */
 	public Object coerceToBean(Object val, Component comp, BindContext ctx) {
-		final Object trueObj = ctx.getAttribute("true");
+		final Object trueObj = ctx.getConverterArg("true");
 		return Boolean.valueOf(Objects.equals(val, trueObj));
 	}
 	
@@ -42,8 +42,8 @@ public class ObjectBooleanConverter implements Converter {
 	 * @return the converted "true" object if true; or "false" object if false.
 	 */
 	public Object coerceToUi(Object val, Component comp, BindContext ctx) {
-		final Object trueObj = ctx.getAttribute("true");
-		final Object falseObj = ctx.getAttribute("false");
+		final Object trueObj = ctx.getConverterArg("true");
+		final Object falseObj = ctx.getConverterArg("false");
 		final Boolean b = (Boolean) val;
 		return b.booleanValue() ? trueObj : falseObj;
 	}

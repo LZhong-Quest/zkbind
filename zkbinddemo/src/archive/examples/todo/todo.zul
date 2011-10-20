@@ -10,7 +10,7 @@
 			<listitem>
 				<listcell label="@bind(task.name)" />
 				<listcell label="@bind(task.priority)" />
-				<listcell label="@bind(task.date, converter='formatedDate', format='yyyy/MM/dd')" />
+				<listcell label="@bind(task.date) @converter('formatedDate', format='yyyy/MM/dd')" />
 			</listitem>
 		</template>
 	</listbox>

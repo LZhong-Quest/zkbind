@@ -59,6 +59,7 @@ import org.zkoss.zkbind.sys.CommandBinding;
 import org.zkoss.zkbind.sys.LoadBinding;
 import org.zkoss.zkbind.sys.LoadFormBinding;
 import org.zkoss.zkbind.sys.LoadPropertyBinding;
+import org.zkoss.zkbind.sys.PropertyBinding;
 import org.zkoss.zkbind.sys.SaveFormBinding;
 import org.zkoss.zkbind.sys.SavePropertyBinding;
 import org.zkoss.zkbind.sys.tracker.Tracker;
@@ -196,8 +197,11 @@ public class BinderImpl implements Binder {
 		final Tracker tracker = getTracker();
 		final Set<LoadBinding> bindings = tracker.getLoadBindings(base, prop);
 		for(LoadBinding binding : bindings) {
-			final Map<String, Object> args = evalArgs(binding.getComponent(), binding.getArgs());
-			final BindContext ctx = new BindContextImpl(this, binding, false, null, binding.getComponent(), null, args);
+			final BindContext ctx = BindContextUtil.newBindContext(this, binding, false, null, binding.getComponent(), null);
+			if(binding instanceof PropertyBinding){
+				BindContextUtil.setConverterArgs(this, binding.getComponent(), ctx, (PropertyBinding)binding);
+			}
+			
 			log.debug("loadOnPropertyChange:binding.load(),binding=[%s],context=[%s]",binding,ctx);
 			binding.load(ctx);
 		}
@@ -269,27 +273,27 @@ public class BinderImpl implements Binder {
 	}
 
 	public void addFormBindings(Component comp, String idScript, String initExpr,
-		String[] loadExprs, String[] saveExprs, String validator, Map<String, Object> args) {
+		String[] loadExprs, String[] saveExprs, String validator, Map<String, Object> args, Map<String, Object> validatorArgs) {
 		final BindEvaluatorX eval = getEvaluatorX();
 		final ExpressionX idExpr = eval.parseExpressionX(null, idScript, String.class);
 		final String id = (String) eval.getValue(null, comp, idExpr);
-		final Form form = doFormBindingInit(comp,initExpr,args);
+		final Form form = doInitFormBinding(comp,initExpr,args);
 		//after setAttribute, we can access fx in el.
 		comp.setAttribute(id, form);
 		for(String loadExpr : loadExprs) {
 			addLoadFormBinding(comp, id, form, loadExpr, args);
 		}
 		for(String saveExpr : saveExprs) {
-			addSaveFormBinding(comp, id, form, saveExpr, validator, args);
+			addSaveFormBinding(comp, id, form, saveExpr, validator, args, validatorArgs);
 		}
 	}
 	
-	private Form doFormBindingInit(Component comp, String initExpr, Map<String, Object> args) {
+	private Form doInitFormBinding(Component comp, String initExpr, Map<String, Object> args) {
 		if(initExpr==null) return new SimpleForm();
 		final BindEvaluatorX eval = getEvaluatorX();
-		args = evalArgs(comp, args);
-		final BindContext ctx = new BindContextImpl(this, null, false, null, comp, null, args);
+		final BindContext ctx = BindContextUtil.newBindContext(this, null, false, null, comp, null);
 		ctx.setAttribute(IGNORE_TRACKER, Boolean.TRUE);//ignore tracker when doing el
+		
 		final ExpressionX expr = eval.parseExpressionX(ctx, initExpr, Object.class);
 		final Object obj = eval.getValue(null, comp, expr);
 		if(obj instanceof Form){
@@ -318,9 +322,9 @@ public class BinderImpl implements Binder {
 		}
 	}
 
-	private void addSaveFormBinding(Component comp, String formid, Form form, String saveExpr, String validator, Map<String, Object> args) {
+	private void addSaveFormBinding(Component comp, String formid, Form form, String saveExpr, String validator, Map<String, Object> args, Map<String, Object> validatorArgs) {
 		//register event Command listener 
-		final SaveFormBindingImpl binding = new SaveFormBindingImpl(this, comp, form, saveExpr, validator, args);
+		final SaveFormBindingImpl binding = new SaveFormBindingImpl(this, comp, form, saveExpr, validator, args, validatorArgs);
 //		final String formid = form.getId();
 		final String command = binding.getCommandName();
 		if (command == null) {
@@ -345,7 +349,8 @@ public class BinderImpl implements Binder {
 	}
 
 	public void addPropertyBinding(Component comp, String attr, String initExpr, 
-			String[] loadExprs, String[] saveExprs, String converter, String validator, Map<String, Object> args) {
+			String[] loadExprs, String[] saveExprs, String converter, String validator, 
+			Map<String, Object> args, Map<String, Object> converterArgs, Map<String, Object> validatorArgs) {
 		if (Strings.isBlank(converter)) {
 			converter = getSystemConverter(comp, attr);
 			if (converter != null) {
@@ -359,24 +364,30 @@ public class BinderImpl implements Binder {
 			}
 		}
 		
-		doPropertyBindingInit(comp,attr,initExpr,converter,args);
+		doInitPropertyBinding(comp,attr,initExpr,converter,args,converterArgs);
 		
 		for(String loadExpr : loadExprs) {
-			addLoadBinding(comp, attr, loadExpr, converter, args);
+			addLoadBinding(comp, attr, loadExpr, converter, args, converterArgs);
 		}
 		for(String saveExpr : saveExprs) {
-			addSaveBinding(comp, attr, saveExpr, converter, validator, args);
+			addSaveBinding(comp, attr, saveExpr, converter, validator, args,converterArgs, validatorArgs);
 		}
 		initRendererIfAny(comp);
 	}
 
-	private void doPropertyBindingInit(Component comp, String attr,
-			String initExpr, String converter, Map<String, Object> args) {
+	private void doInitPropertyBinding(Component comp, String attr,
+			String initExpr, String converter, Map<String, Object> args,Map<String, Object> converterArgs) {
 		if(initExpr==null) return;
 		
-		InitPropertyBindingImpl binding = new InitPropertyBindingImpl(this,comp,attr,initExpr,converter,args);
-		final BindContext ctx = new BindContextImpl(this, binding, false, null, comp, null, args);
+		InitPropertyBindingImpl binding = new InitPropertyBindingImpl(this,comp,attr,initExpr,converter,args,converterArgs);
+		final BindContext ctx = BindContextUtil.newBindContext(this, binding, false, null, comp, null);
 		ctx.setAttribute(BinderImpl.IGNORE_TRACKER, Boolean.TRUE);//ignore tracker when doing el
+		
+		//needs converter args
+		if(binding instanceof PropertyBinding){
+			BindContextUtil.setConverterArgs(this, binding.getComponent(), ctx, (PropertyBinding)binding);
+		}
+		
 		binding.load(ctx);
 	}
 
@@ -445,7 +456,8 @@ public class BinderImpl implements Binder {
 		}
 	}
 	
-	private void addLoadBinding(Component comp, String attr, String loadExpr, String converter, Map<String, Object> args) {
+	private void addLoadBinding(Component comp, String attr, String loadExpr, String converter, 
+			Map<String, Object> args, Map<String, Object> converterArgs) {
 		//check attribute _accessInfo natural characteristics to register Command event listener 
 		final ComponentCtrl compCtrl = (ComponentCtrl) comp;
 		final Annotation ann = compCtrl.getAnnotation(attr, BinderImpl.SYSBIND);
@@ -462,7 +474,7 @@ public class BinderImpl implements Binder {
 			evtnm = (String) attrs.get(BinderImpl.LOADEVENT); //check trigger event for loading
 		}
 		
-		LoadPropertyBindingImpl binding = new LoadPropertyBindingImpl(this, comp, attr, loadExpr, converter, args);
+		LoadPropertyBindingImpl binding = new LoadPropertyBindingImpl(this, comp, attr, loadExpr, converter, args, converterArgs);
 		final String uuid = comp.getUuid();
 		addBinding(comp, attr, binding);
 		
@@ -490,7 +502,8 @@ public class BinderImpl implements Binder {
 		}
 	}
 	
-	private void addSaveBinding(Component comp, String attr, String saveExpr, String converter, String validator, Map<String, Object> args) {
+	private void addSaveBinding(Component comp, String attr, String saveExpr, String converter, String validator, 
+			Map<String, Object> args, Map<String, Object> converterArgs, Map<String, Object> validatorArgs) {
 		//check attribute _accessInfo natural characteristics to register Command event listener 
 		final ComponentCtrl compCtrl = (ComponentCtrl) comp;
 		final Annotation ann = compCtrl.getAnnotation(attr, BinderImpl.SYSBIND);
@@ -510,7 +523,7 @@ public class BinderImpl implements Binder {
 			return;
 		}
 
-		final SavePropertyBindingImpl binding = new SavePropertyBindingImpl(this, comp, attr, saveExpr, converter, validator, args);
+		final SavePropertyBindingImpl binding = new SavePropertyBindingImpl(this, comp, attr, saveExpr, converter, validator, args, converterArgs, validatorArgs);
 		final String uuid = comp.getUuid();
 		addBinding(comp, attr, binding);
 		
@@ -694,7 +707,7 @@ public class BinderImpl implements Binder {
 			if (_commandBinding != null) {
 				final BindEvaluatorX eval = getEvaluatorX();
 				command = (String) eval.getValue(null, comp, ((CommandBindingImpl)_commandBinding).getCommand());
-				final Map<String, Object> args = evalArgs(comp, _commandBinding.getArgs());
+				final Map<String, Object> args = BindEvaluatorXUtil.evalArgs(eval, comp, _commandBinding.getArgs());
 				result = BinderImpl.this.doCommand(comp, command, event, args, notifys/*, false*/);
 			}
 			//check confirm
@@ -727,29 +740,6 @@ public class BinderImpl implements Binder {
 		}
 	}
 	
-//	//TODO
-//	private void doFailConfirm() {
-//		log.debug("doFailConfirm");
-//	}
-
-	private Map<String, Object> evalArgs(Component comp, Map<String, Object> args) {
-		if (args == null) {
-			return null;
-		}
-		final BindEvaluatorX eval = getEvaluatorX();
-		final Map<String, Object> result = new LinkedHashMap<String, Object>(args.size()); 
-		for(final Iterator<Entry<String, Object>> it = args.entrySet().iterator(); it.hasNext();) {
-			final Entry<String, Object> entry = it.next(); 
-			final String key = entry.getKey();
-			final Object value = entry.getValue();
-			//evaluate the arg if it was a ExpressionX
-			final Object evalValue = value == null ? null : 
-				(value instanceof ExpressionX) ? eval.getValue(null, comp, (ExpressionX)value) : value;
-			result.put(key, evalValue);
-		}
-		return result;
-	}
-	
 	public void sendCommand(String command, Map<String, Object> args) {
 		final Set<Property> notifys = new HashSet<Property>();
 		//args come from user, we don't eval it. 
@@ -776,23 +766,17 @@ public class BinderImpl implements Binder {
 	//notifies container for properties that is to be notifyChange
 	//skipConfirm whether skip checking confirm 
 	//return properties to be notified change
-	private int doCommand(Component comp, String command, Event evt, Map<String, Object> args, Set<Property> notifys/*, boolean skipConfirm*/) {
+	private int doCommand(Component comp, String command, Event evt, Map<String, Object> commandArgs, Set<Property> notifys/*, boolean skipConfirm*/) {
 		final String evtnm = evt == null ? null : evt.getName();
 		log.debug("Start doCommand comp=[%s],command=[%s],evtnm=[%s]",comp,command,evtnm);
-		BindContext ctx = new BindContextImpl(this, null, false, command, comp, evt, args);
+		BindContext ctx = BindContextUtil.newBindContext(this, null, false, command, comp, evt);
+		BindContextUtil.setCommandArgs(this, comp, ctx, commandArgs);
 		try {
 			doBeforePhase(PhaseListener.COMMAND, ctx); //begin of Command
 			boolean success = true;
-//			//confirm
-//			if (!skipConfirm) {
-//				success = doConfirm(comp, command, args, ctx);
-//			}
-//			if (!success) {
-//				return FAIL_CONFIRM;
-//			}
 			
 			//validate
-			success = doValidate(comp, command, evt, args, ctx);
+			success = doValidate(comp, command, evt, ctx);
 			if (!success) {
 				return FAIL_VALIDATE;
 			}
@@ -804,7 +788,7 @@ public class BinderImpl implements Binder {
 			doLoadBefore(comp, command);
 			
 			//execute command
-			doExecute(comp, command, args, ctx, notifys);
+			doExecute(comp, command, commandArgs, ctx, notifys);
 			
 			//save after command bindings
 			doSaveAfter(comp, command, evt, notifys);
@@ -898,7 +882,7 @@ public class BinderImpl implements Binder {
 //	}
 	
 	//doCommand -> doValidate
-	private boolean doValidate(Component comp, String command, Event evt, Map<String, Object> args, BindContext ctx) {
+	private boolean doValidate(Component comp, String command, Event evt, BindContext ctx) {
 		final Set<Property> validates = new HashSet<Property>();
 		try {
 			log.debug("doValidate comp=[%s],command=[%s],evt=[%s],context=[%s]",comp,command,evt,ctx);
@@ -960,8 +944,10 @@ public class BinderImpl implements Binder {
 	private boolean doValidateSaveEvent(Component comp, SavePropertyBinding binding, Event evt) {
 		//for a single binding, if it doesn't need to do validation, then we don't need to anything.
 		if (binding.hasValidator()) {
-			final Map<String, Object> args = evalArgs(comp, binding.getArgs());
-			final BindContext ctx = new BindContextImpl(this, binding, true, null, binding.getComponent(), evt, args);
+			final BindContext ctx = BindContextUtil.newBindContext(this, binding, true, null, binding.getComponent(), evt);
+			BindContextUtil.setConverterArgs(this, binding.getComponent(), ctx, binding);
+			BindContextUtil.setValidatorArgs(this, binding.getComponent(), ctx, binding);
+			
 			try {
 				doBeforePhase(PhaseListener.VALIDATE, ctx);
 				final Validator validator = binding.getValidator();
@@ -1011,7 +997,7 @@ public class BinderImpl implements Binder {
 		return collected;
 	}
 	
-	private void doExecute(Component comp, String command, Map<String, Object> args, BindContext ctx, Set<Property> notifys) {
+	private void doExecute(Component comp, String command, Map<String, Object> commandArgs, BindContext ctx, Set<Property> notifys) {
 		try {
 			log.debug("before doExecute comp=[%s],command=[%s],notifys=[%s]",comp,command,notifys);
 			doBeforePhase(PhaseListener.EXECUTE, ctx);
@@ -1032,7 +1018,7 @@ public class BinderImpl implements Binder {
 				try {
 					method = Classes.getMethodInPublic(base.getClass(), command, new Class[] {Map.class});
 					//check if method has a Map argument, then will call it with args
-					param = new Object[] {args == null ? Collections.emptyMap() : args};
+					param = new Object[] {commandArgs == null ? Collections.emptyMap() : commandArgs};
 				} catch (NoSuchMethodException e1) { //try one with BindContext argument
 					try {
 						method = Classes.getMethodInPublic(base.getClass(), command, new Class[] {BindContext.class});
@@ -1160,9 +1146,9 @@ public class BinderImpl implements Binder {
 	
 	//generic operation to save a property binding
 	private void doSavePropertyBinding(Component comp, SavePropertyBinding binding, String command, Event evt, int phase, Set<Property> notifys) {
-		final Map<String, Object> args = evalArgs(comp, binding.getArgs());
-		final BindContext ctx = new BindContextImpl(this, binding, true, command, binding.getComponent(), evt, args);
-		
+		final BindContext ctx = BindContextUtil.newBindContext(this, binding, true, command, binding.getComponent(), evt);
+		BindContextUtil.setConverterArgs(this, binding.getComponent(), ctx, binding);
+		BindContextUtil.setValidatorArgs(this, binding.getComponent(), ctx, binding);
 		try {
 			log.debug("doSavePropertyBinding:binding.save() comp=[%s],binding=[%s],command=[%s],evt=[%s],notifys=[%s]",comp,binding,command,evt,notifys);
 			doBeforePhase(phase, ctx);
@@ -1179,9 +1165,8 @@ public class BinderImpl implements Binder {
 	
 	//generic operation to load a property binding
 	private void doLoadPropertyBinding(Component comp, LoadPropertyBinding binding, String command, int phase) {
-		final Map<String, Object> args = evalArgs(comp, binding.getArgs());
-		final BindContext ctx = new BindContextImpl(this, binding, false, command, binding.getComponent(), null, args);
-		
+		final BindContext ctx = BindContextUtil.newBindContext(this, binding, false, command, binding.getComponent(), null);
+		BindContextUtil.setConverterArgs(this, binding.getComponent(), ctx, binding);
 		try { 
 			log.debug("doLoadPropertyBinding:binding.load(),component=[%s],binding=[%s],context=[%s],command=[%s]",comp,binding,ctx,command);
 			doBeforePhase(phase, ctx);
@@ -1193,8 +1178,9 @@ public class BinderImpl implements Binder {
 	
 	//generic operation to save a property binding
 	private void doSaveFormBinding(Component comp, SaveFormBinding binding, String command, Event evt, int phase, Set<Property> notifys) {
-		final Map<String, Object> args = evalArgs(comp, binding.getArgs());
-		final BindContext ctx = new BindContextImpl(this, binding, true, command, binding.getComponent(), evt, args);
+		final BindContext ctx = BindContextUtil.newBindContext(this, binding, true, command, binding.getComponent(), evt);
+		BindContextUtil.setValidatorArgs(this, binding.getComponent(), ctx, binding);
+		//TODO converter args when we support converter in form
 		
 		try {
 			log.debug("doSaveFormBinding:binding.save() comp=[%s],binding=[%s],command=[%s],evt=[%s],notifys=[%s]",comp,binding,command,evt,notifys);
@@ -1212,9 +1198,8 @@ public class BinderImpl implements Binder {
 	
 	//generic operation to load a property binding
 	private void doLoadFormBinding(Component comp, LoadFormBinding binding, String command, int phase) {
-		final Map<String, Object> args = evalArgs(comp, binding.getArgs());
-		final BindContext ctx = new BindContextImpl(this, binding, false, command, binding.getComponent(), null, args);
-		
+		final BindContext ctx = BindContextUtil.newBindContext(this, binding, false, command, binding.getComponent(), null);
+		//TODO converter args when we support converter in form
 		try {
 			log.debug("doLoadFormBinding:binding.load(),component=[%s],binding=[%s],context=[%s],command=[%s]",comp,binding,ctx,command);
 			doBeforePhase(phase, ctx);
@@ -1332,8 +1317,8 @@ public class BinderImpl implements Binder {
 				final List<LoadFormBinding> formBindings = _loadFormPromptBindings.get(dualId);
 				if (formBindings != null) {
 					for (LoadFormBinding binding : formBindings) {
-						final Map<String, Object> args = evalArgs(binding.getComponent(), binding.getArgs());
-						final BindContext ctx = new BindContextImpl(this, binding, false, null, comp, null, args);
+						final BindContext ctx = BindContextUtil.newBindContext(this, binding, false, null, comp, null);
+						//TODO converter args when we support converter in form
 						log.debug("loadComponentProperties:form-binding.load(),component=[%s],binding=[%s],context=[%s]",comp,binding,ctx);
 						binding.load(ctx);
 					}
@@ -1344,8 +1329,8 @@ public class BinderImpl implements Binder {
 				final List<LoadPropertyBinding> propBindings = _loadPromptBindings.get(dualId);
 				if (propBindings != null) {
 					for (LoadPropertyBinding binding : propBindings) {
-						final Map<String, Object> args = evalArgs(comp, binding.getArgs());
-						final BindContext ctx = new BindContextImpl(this, binding, false, null, comp, null, args);
+						final BindContext ctx = BindContextUtil.newBindContext(this, binding, false, null, comp, null);
+						BindContextUtil.setConverterArgs(this, binding.getComponent(), ctx, binding);
 						log.debug("loadComponentProperties:binding.load(),component=[%s],binding=[%s],context=[%s]",comp,binding,ctx);
 						binding.load(ctx);
 					}
@@ -1397,13 +1382,7 @@ public class BinderImpl implements Binder {
 		return uuid+"#"+attr;
 	}
 
-	//validate method for command triggered binding save
-	//return true if validate successful; false otherwise.
-	//boolean validate(String commandName, Set<Property> property, BindContext ctx);
-//	protected Method getValidateMethod() throws NoSuchMethodException {
-//		return getViewModel()
-//			.getClass().getMethod("validate", new Class[] {String.class, Set.class, BindContext.class});
-//	}
+
 	
 	private class PostCommandListener implements EventListener<Event>{
 
