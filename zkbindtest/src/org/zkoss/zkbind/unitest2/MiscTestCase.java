@@ -13,8 +13,7 @@ public class MiscTestCase extends TestCaseBase{
 
 	@Test
 	public void testArgs(){
-		WidgetDriver driver = getDriver();
-		driver.navigate(getTestCaseUrl("/test2/args.zul"));
+		navigate(getTestCaseUrl("/test2/args.zul"));
 		
 		Assert.assertEquals("A-Arg1",findWidget("$l1").getValue());
 		Assert.assertEquals("B-myarg1",findWidget("$l2").getValue());
@@ -59,6 +58,56 @@ public class MiscTestCase extends TestCaseBase{
 		
 		
 	}
-	
+	@Test
+	public void testVMInit(){
+		navigate(getTestCaseUrl("/test2/vm-init.zul"));
+		
+		Assert.assertEquals("AA",findWidget("$vm1_l1").getValue());
+		Assert.assertEquals("V1-AA",findWidget("$vm1_t1").getValue());
+		Assert.assertEquals("V1-AA",findWidget("$vm1_l2").getValue());
+		Assert.assertEquals("V2",findWidget("$vm1_l3").getValue());
+		
+		findWidget("$vm1_t1").clear().keys("OO").tab();
+		Assert.assertEquals("OO-AA",findWidget("$vm1_t1").getValue());
+		Assert.assertEquals("OO-AA",findWidget("$vm1_l2").getValue());
+		Assert.assertEquals("V2",findWidget("$vm1_l3").getValue());
+		
+		findWidget("$vm1_btn").click();
+		Assert.assertEquals("OO-AA",findWidget("$vm1_t1").getValue());
+		Assert.assertEquals("OO-AA",findWidget("$vm1_l2").getValue());
+		Assert.assertEquals("do command1 AA",findWidget("$vm1_l3").getValue());
+		
+		//vm2
+		Assert.assertEquals("BB",findWidget("$vm2_l1").getValue());
+		Assert.assertEquals("V1-BB",findWidget("$vm2_t1").getValue());
+		Assert.assertEquals("V1-BB",findWidget("$vm2_l2").getValue());
+		Assert.assertEquals("V2",findWidget("$vm2_l3").getValue());
+		
+		findWidget("$vm2_t1").clear().keys("OO").tab();
+		Assert.assertEquals("OO-BB",findWidget("$vm2_t1").getValue());
+		Assert.assertEquals("OO-BB",findWidget("$vm2_l2").getValue());
+		Assert.assertEquals("V2",findWidget("$vm2_l3").getValue());
+		
+		findWidget("$vm2_btn").click();
+		Assert.assertEquals("OO-BB",findWidget("$vm2_t1").getValue());
+		Assert.assertEquals("OO-BB",findWidget("$vm2_l2").getValue());
+		Assert.assertEquals("do command1 BB",findWidget("$vm2_l3").getValue());
+		
+		//vm3
+		Assert.assertEquals("CC",findWidget("$vm3_l1").getValue());
+		Assert.assertEquals("V1-CC",findWidget("$vm3_t1").getValue());
+		Assert.assertEquals("V1-CC",findWidget("$vm3_l2").getValue());
+		Assert.assertEquals("V2",findWidget("$vm3_l3").getValue());
+		
+		findWidget("$vm3_t1").clear().keys("OO").tab();
+		Assert.assertEquals("OO-CC",findWidget("$vm3_t1").getValue());
+		Assert.assertEquals("OO-CC",findWidget("$vm3_l2").getValue());
+		Assert.assertEquals("V2",findWidget("$vm3_l3").getValue());
+		
+		findWidget("$vm3_btn").click();
+		Assert.assertEquals("OO-CC",findWidget("$vm3_t1").getValue());
+		Assert.assertEquals("OO-CC",findWidget("$vm3_l2").getValue());
+		Assert.assertEquals("do command1 CC",findWidget("$vm3_l3").getValue());
+	}
 	
 }

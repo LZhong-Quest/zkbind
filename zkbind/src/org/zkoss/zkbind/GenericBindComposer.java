@@ -96,6 +96,11 @@ public class GenericBindComposer implements Composer, ComposerExt {
 		//init the binder
 		final String qname = getAnnotationOrAttribute(comp,"queueName");
 		final String qscope = getAnnotationOrAttribute(comp,"queueScope");
+		
+		final String vmname = getAnnotationOrAttribute(comp,"viewModelName");
+		if(vmname!=null){
+			_viewModel = new ComponentViewModelProxy(comp,vmname);
+		}
 		_binder = new AnnotateBinderImpl(comp, _viewModel, qname, qscope);
 		
 		//assign binder name
@@ -140,5 +145,23 @@ public class GenericBindComposer implements Composer, ComposerExt {
 	public void notifyChange(Object bean, String property) {
 		getBinder().notifyChange(bean, property);
 	}
+	
+	private static class ComponentViewModelProxy implements
+			AnnotateBinderImpl.ViewModelProxy {
+
+		private final Component comp;
+		private final String attr;
+
+		ComponentViewModelProxy(Component comp, String attr) {
+			this.comp = comp;
+			this.attr = attr;
+		}
+
+		public Object get() {
+			return comp.getAttribute(attr, true);
+		}
+
+	}
+	
 	
 }

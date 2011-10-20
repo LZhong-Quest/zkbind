@@ -75,8 +75,9 @@ public abstract class PropertyBindingImpl extends BindingImpl implements Propert
 			return (Converter)obj;
 		}else if(obj instanceof String){
 			ExpressionX vmconverter = eval.parseExpressionX(null, 
-					new StringBuilder().append(BinderImpl.VM).append(".getConverter('").append(obj).append("')").toString(),
+					new StringBuilder().append(BinderImpl.BINDER).append(".viewModel.getConverter('").append(obj).append("')").toString(),
 					Converter.class);
+			
 			obj = eval.getValue(null, getComponent(), vmconverter);
 			if(obj==null){ // try to get it from binder's system level converter
 				obj = getBinder().getConverter((String)obj);
