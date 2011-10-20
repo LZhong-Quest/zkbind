@@ -1,0 +1,43 @@
+<?init class="test2.ViewModelInit"?>
+<?import class="org.zkoss.zkbind.GenericBindComposer"?>
+<window>
+	<vbox apply="GenericBindComposer">
+		<custom-attributes viewModelName="myvm1" />
+		<label id="vm1_l1" value="@bind(myvm1.name)" />
+		<hbox>
+			<textbox id="vm1_t1" value="@bind(myvm1.value1) @converter(myvm1.converter1)"/>
+			<label id="vm1_l2" value="@bind(myvm1.value1) @converter('converter1')"/>
+		</hbox>
+		<hbox>
+			<label id="vm1_l3" value="@bind(myvm1.value2)"/>
+			<button id="vm1_btn" label="cmd1" onClick="@bind('cmd1')"/>	
+		</hbox>
+	</vbox>
+	<vbox apply="GenericBindComposer">
+		<custom-attributes viewModelName="myvm2" />
+		<label id="vm2_l1" value="@bind(myvm2.name)" />
+		<hbox>
+			<textbox id="vm2_t1" value="@bind(myvm2.value1) @converter(myvm2.converter1)"/>
+			<label id="vm2_l2" value="@bind(myvm2.value1) @converter('converter1')"/>
+		</hbox>
+		<hbox>
+			<label id="vm2_l3" value="@bind(myvm2.value2)"/>
+			<button id="vm2_btn" label="cmd1" onClick="@bind('cmd1')"/>	
+		</hbox>
+		
+		---Nested---
+		<vbox apply="GenericBindComposer">
+			<custom-attributes viewModelName="myvm3" />
+			<label id="vm3_l1" value="@bind(myvm3.name)" />
+			<hbox>
+				<textbox id="vm3_t1" value="@bind(myvm3.value1) @converter(myvm3.converter1)"/>
+				<label id="vm3_l2" value="@bind(myvm3.value1) @converter('converter1')"/>
+			</hbox>
+			<hbox>
+				<label id="vm3_l3" value="@bind(myvm3.value2)"/>
+				<button id="vm3_btn" label="cmd1" onClick="@bind('cmd1')"/>	
+			</hbox>
+		</vbox>			
+		---End Nested---
+	</vbox>	
+</window>

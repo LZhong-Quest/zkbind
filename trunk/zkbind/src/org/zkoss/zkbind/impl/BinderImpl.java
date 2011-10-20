@@ -212,7 +212,11 @@ public class BinderImpl implements Binder {
 	}
 	
 	public Object getViewModel() {
-		return _rootComp.getAttribute(BinderImpl.VM);
+		Object vm = _rootComp.getAttribute(BinderImpl.VM);
+		if(vm instanceof ViewModelProxy){//if come from proxy, 
+			vm = ((ViewModelProxy)vm).get();
+		}
+		return vm;
 	}
 	
 	//Note: assume system converter is state-less
@@ -1382,15 +1386,20 @@ public class BinderImpl implements Binder {
 		return uuid+"#"+attr;
 	}
 
-
-	
 	private class PostCommandListener implements EventListener<Event>{
-
 		public void onEvent(Event event) throws Exception {
 			Object[] data = (Object[])event.getData();
 			String command = (String)data[0];
 			Map<String,Object> args = (Map)data[1]; 
 			sendCommand(command, args);
 		}
+	}
+	
+	/**
+	 * a proxy to get view model, internal use only
+	 * @author dennis
+	 */
+	public interface ViewModelProxy {
+		public Object get();
 	}
 }

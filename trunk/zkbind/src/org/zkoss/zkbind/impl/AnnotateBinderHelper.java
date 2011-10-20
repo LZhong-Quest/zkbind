@@ -37,10 +37,10 @@ import org.zkoss.zkbind.sys.BindEvaluatorX;
 public class AnnotateBinderHelper {
 	final private Binder _binder;
 	
-	final private String _defaultBindAnnoName = "bind";
-	final private String _defaultFormAnnoName = "form";
-	final private String _defaultValidatorAnnoName = "validator";
-	final private String _defaultConverterAnnoName = "converter";
+	final static private String BIND_ANNO_NAME = "bind";
+	final static private String FORM_ANNO_NAME = "form";
+	final static private String VALIDATOR_ANNO_NAME = "validator";
+	final static private String CONVERTER_ANNO_NAME = "converter";
 	
 	public AnnotateBinderHelper(Binder binder) {
 		_binder = binder;
@@ -66,7 +66,7 @@ public class AnnotateBinderHelper {
 	
 	private void initFormBindings(Component comp) {
 		final ComponentCtrl compCtrl = (ComponentCtrl) comp;
-		final Annotation formAnno = compCtrl.getAnnotation(_defaultFormAnnoName);
+		final Annotation formAnno = compCtrl.getAnnotation(FORM_ANNO_NAME);
 		if (formAnno != null) {
 			final List<String> saveExprs = new ArrayList<String>();
 			final List<String> loadExprs = new ArrayList<String>();
@@ -113,7 +113,7 @@ public class AnnotateBinderHelper {
 			args = args == null ? null : parsedArgs(args);
 			
 			//parse validator
-			final Annotation validtorAnno = compCtrl.getAnnotation(_defaultValidatorAnnoName);
+			final Annotation validtorAnno = compCtrl.getAnnotation(VALIDATOR_ANNO_NAME);
 			if(validtorAnno!=null){
 				validatorInfo = parseValidator(compCtrl,validtorAnno);
 			}
@@ -129,7 +129,7 @@ public class AnnotateBinderHelper {
 	
 	private void initComponentPropertiesBindings(Component comp) {
 		final ComponentCtrl compCtrl = (ComponentCtrl) comp;
-		final List props = compCtrl.getAnnotatedPropertiesBy(_defaultBindAnnoName);
+		final List props = compCtrl.getAnnotatedPropertiesBy(BIND_ANNO_NAME);
 		for (final Iterator it = props.iterator(); it.hasNext(); ) {
 			final String propName = (String) it.next();
 			if (isEventProperty(propName)) {
@@ -147,7 +147,7 @@ public class AnnotateBinderHelper {
 	
 	private void initCommandBindings(Component comp, String propName) {
 		final ComponentCtrl compCtrl = (ComponentCtrl) comp;
-		final Annotation ann = compCtrl.getAnnotation(propName, _defaultBindAnnoName);
+		final Annotation ann = compCtrl.getAnnotation(propName, BIND_ANNO_NAME);
 		if (ann != null) {
 			final Map attrs = ann.getAttributes(); //(tag, tagExpr)
 			Map<String, Object> args = null;
@@ -179,7 +179,7 @@ public class AnnotateBinderHelper {
 	
 	private void initPropertyBindings(Component comp, String propName) {
 		final ComponentCtrl compCtrl = (ComponentCtrl) comp;
-		final Annotation ann = compCtrl.getAnnotation(propName, _defaultBindAnnoName);
+		final Annotation ann = compCtrl.getAnnotation(propName, BIND_ANNO_NAME);
 		if (ann != null) {
 			final List<String> saveExprs = new ArrayList<String>();
 			final List<String> loadExprs = new ArrayList<String>();
@@ -222,12 +222,12 @@ public class AnnotateBinderHelper {
 			args = args==null?null:parsedArgs(args);
 			
 			//parse validator
-			final Annotation validtorAnno = compCtrl.getAnnotation(propName, _defaultValidatorAnnoName);
+			final Annotation validtorAnno = compCtrl.getAnnotation(propName, VALIDATOR_ANNO_NAME);
 			if(validtorAnno!=null){
 				validatorInfo = parseValidator(compCtrl,validtorAnno);
 			}
 			//parse converter
-			final Annotation converterAnno = compCtrl.getAnnotation(propName, _defaultConverterAnnoName);
+			final Annotation converterAnno = compCtrl.getAnnotation(propName, CONVERTER_ANNO_NAME);
 			if(converterAnno!=null){
 				converterInfo = parseConverter(compCtrl,converterAnno);
 			}
