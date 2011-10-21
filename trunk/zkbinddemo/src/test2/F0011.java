@@ -48,6 +48,7 @@ public class F0011 extends GenericBindComposer {
 	public F0011() {
 		bday1 = new Date();
 		addValidator("validator1", new Validator() {
+			@NotifyChange("message1")
 			public void validate(ValidationContext ctx) {
 				Property p = ctx.getProperty();
 				Date d = (Date)p.getValue();
@@ -66,6 +67,7 @@ public class F0011 extends GenericBindComposer {
 			}
 		});
 		validator2 = new Validator() {
+			@NotifyChange("message2")
 			public void validate(ValidationContext ctx) {
 				Property p = ctx.getProperty();
 				Date d = (Date)p.getValue();
@@ -83,6 +85,7 @@ public class F0011 extends GenericBindComposer {
 			}
 		};
 		addValidator("validator31", new Validator() {
+			@NotifyChange("message3")
 			public void validate(ValidationContext ctx) {
 				if(!ctx.isValid()){
 					return;
@@ -98,6 +101,7 @@ public class F0011 extends GenericBindComposer {
 			}
 		});
 		addValidator("validator32", new Validator() {
+			@NotifyChange("message3")
 			public void validate(ValidationContext ctx) {
 				if(!ctx.isValid()){
 					return;
@@ -159,6 +163,7 @@ public class F0011 extends GenericBindComposer {
 			}
 		});
 		addValidator("validator5", new Validator() {
+			@NotifyChange("message5")
 			public void validate(ValidationContext ctx) {
 				if(!ctx.isValid()){
 					return;
@@ -183,10 +188,7 @@ public class F0011 extends GenericBindComposer {
 
 	void setMessage1(String message1) {
 		this.message1 = message1;
-		getBinder().notifyChange(this, "message1");
 	}
-	
-	
 
 	public String getMessage2() {
 		return message2;
@@ -212,6 +214,7 @@ public class F0011 extends GenericBindComposer {
 
 	public void setMessage4(String message4) {
 		this.message4 = message4;
+		//TODO remove this if we have a way to notify change of a validator on a form
 		getBinder().notifyChange(this, "message4");
 	}
 	public String getMessage5() {
@@ -220,7 +223,6 @@ public class F0011 extends GenericBindComposer {
 
 	public void setMessage5(String message5) {
 		this.message5 = message5;
-		getBinder().notifyChange(this, "message5");
 	}	
 
 	public Validator getValidator2(){

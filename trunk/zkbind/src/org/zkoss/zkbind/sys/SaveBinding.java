@@ -17,6 +17,7 @@ import java.util.Set;
 
 import org.zkoss.zkbind.BindContext;
 import org.zkoss.zkbind.Property;
+import org.zkoss.zkbind.ValidationContext;
 import org.zkoss.zkbind.Validator;
 
 /**
@@ -30,6 +31,13 @@ public interface SaveBinding extends Binding {
 	 * @param ctx the binding runtime context
 	 */
 	public void save(BindContext ctx);
+	
+	
+	/**
+	 * do the validation by validator
+	 * @param vctx
+	 */
+	public void validate(ValidationContext vctx);
 	
 	/**
 	 * Returns {@Property} to be validated.

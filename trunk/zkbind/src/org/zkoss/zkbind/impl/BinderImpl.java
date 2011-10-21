@@ -780,7 +780,7 @@ public class BinderImpl implements Binder {
 			boolean success = true;
 			
 			//validate
-			success = doValidate(comp, command, evt, ctx);
+			success = doValidate(comp, command, evt, ctx, notifys);
 			if (!success) {
 				return FAIL_VALIDATE;
 			}
@@ -840,7 +840,7 @@ public class BinderImpl implements Binder {
 		if (bindings != null) {
 			//TODO, DENNIS, ISSUE, What is the Spec of validation of prompt save?, check comment of onEvent also
 			for (SavePropertyBinding binding : bindings) {
-				final boolean success = doValidateSaveEvent(comp, binding, evt);
+				final boolean success = doValidateSaveEvent(comp, binding, evt,notifys);
 				if (!success) { //failed validation
 					return false;
 				}
@@ -886,7 +886,7 @@ public class BinderImpl implements Binder {
 //	}
 	
 	//doCommand -> doValidate
-	private boolean doValidate(Component comp, String command, Event evt, BindContext ctx) {
+	private boolean doValidate(Component comp, String command, Event evt, BindContext ctx, Set<Property> notifys) {
 		final Set<Property> validates = new HashSet<Property>();
 		try {
 			log.debug("doValidate comp=[%s],command=[%s],evt=[%s],context=[%s]",comp,command,evt,ctx);
@@ -929,11 +929,11 @@ public class BinderImpl implements Binder {
 				log.debug("doValidate validates=[%s]",validates);
 				boolean valid = true;
 				Map<String,Property[]> properties = toCollectedProperties(validates);
-				valid &= vHelper.validateSaveBefore(comp, command, properties,valid);
-				valid &= vHelper.validateSaveAfter(comp, command, properties,valid);
+				valid &= vHelper.validateSaveBefore(comp, command, properties,valid,notifys);
+				valid &= vHelper.validateSaveAfter(comp, command, properties,valid,notifys);
 				if (evt != null) {
 					//also collect the validate on the prompt save-bind that is related to evt 
-					valid &= vHelper.validateSaveEvent(comp, command, evt, properties,valid);
+					valid &= vHelper.validateSaveEvent(comp, command, evt, properties,valid,notifys);
 				}
 				return valid;
 			}
@@ -945,7 +945,7 @@ public class BinderImpl implements Binder {
 	}
 	
 	//validate a prompt save property binding
-	private boolean doValidateSaveEvent(Component comp, SavePropertyBinding binding, Event evt) {
+	private boolean doValidateSaveEvent(Component comp, SavePropertyBinding binding, Event evt, Set<Property> notifys) {
 		//for a single binding, if it doesn't need to do validation, then we don't need to anything.
 		if (binding.hasValidator()) {
 			final BindContext ctx = BindContextUtil.newBindContext(this, binding, true, null, binding.getComponent(), evt);
@@ -954,19 +954,22 @@ public class BinderImpl implements Binder {
 			
 			try {
 				doBeforePhase(PhaseListener.VALIDATE, ctx);
-				final Validator validator = binding.getValidator();
-				if(validator==null){
-					throw new NullPointerException("validator not found");
-				}
 				final Property p = binding.getValidate(ctx); 
 				log.debug("doValidateSaveEvent comp=[%s],binding=[%s],evt=[%s],validate=[%s]",comp,binding,evt,p);
 				if(p==null){
 					throw new UiException("no main property for save-binding "+binding);
 				}
 				ValidationContext vctx = new ValidationContextImpl(null, p, toCollectedProperties(p), ctx, true);
-				validator.validate(vctx);
+				binding.validate(vctx);
 				boolean valid = vctx.isValid();
 				log.debug("doValidateSaveEvent result=[%s]",valid);
+				
+				
+				final Set<Property> xnotifys = (Set<Property>) ctx.getAttribute(BinderImpl.NOTIFYS);
+				if (xnotifys != null) {
+					notifys.addAll(xnotifys);
+				}
+				
 				return valid;
 			} catch (Exception e) {
 				throw UiException.Aide.wrap(e);

@@ -25,6 +25,7 @@ import org.zkoss.zkbind.BindContext;
 import org.zkoss.zkbind.Binder;
 import org.zkoss.zkbind.Converter;
 import org.zkoss.zkbind.Property;
+import org.zkoss.zkbind.ValidationContext;
 import org.zkoss.zkbind.Validator;
 import org.zkoss.zkbind.sys.BindEvaluatorX;
 import org.zkoss.zkbind.sys.SavePropertyBinding;
@@ -152,9 +153,33 @@ public class SavePropertyBindingImpl extends PropertyBindingImpl implements Save
 		return _validator == null ? false : true;
 	}
 	
+	public void validate(ValidationContext vctx) {
+		Validator validator = getValidator();
+		if(validator == null){
+			throw new NullPointerException("cannot find validator for "+this);
+		}
+		validator.validate(vctx);
+		//collect notify change
+		collectNotifyChange(validator,vctx);
+	}
+	
+	private void collectNotifyChange(Validator validator, ValidationContext vctx) {
+		ValueReference ref = getValueReference(vctx.getBindContext());
+		BindELContext.addNotifys(getValidatorMethod(validator.getClass()), ref.getBase(), null, null, vctx.getBindContext());
+	}
+
 	private Method getConverterMethod(Class<? extends Converter> cls) {
 		try {
 			return cls.getMethod("coerceToBean", new Class[] {Object.class, Component.class, BindContext.class});
+		} catch (NoSuchMethodException e) {
+			//ignore
+		}
+		return null; //shall never come here
+	}
+	
+	private Method getValidatorMethod(Class<? extends Validator> cls) {
+		try {
+			return cls.getMethod("validate", new Class[] {ValidationContext.class});
 		} catch (NoSuchMethodException e) {
 			//ignore
 		}
