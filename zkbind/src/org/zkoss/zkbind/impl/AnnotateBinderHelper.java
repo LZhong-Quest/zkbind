@@ -320,7 +320,7 @@ public class AnnotateBinderHelper {
 
 	
 	private void addArg(BindEvaluatorX eval, Map<String,Object> result, String key, String valueScript) {
-		final ExpressionX parsedValue = valueScript == null ? null : eval.parseExpressionX(null, valueScript, String.class);
+		final ExpressionX parsedValue = valueScript == null ? null : eval.parseExpressionX(null, valueScript, Object.class);
 		result.put(key, parsedValue);
 	}
 	
