@@ -35,12 +35,16 @@ public class ViewModelInit implements Initiator {
 		page.setAttribute("myvm3", new SubViewModel("CC"));
 	}
 	
-	public class SubViewModel {
+	static public class SubViewModel {
 		String name;
 		String value1;
 		String value2;
 //		String message;
 
+		public SubViewModel(){
+			this("XX");
+		}
+		
 		public SubViewModel(String name) {
 			this.name = name;
 			this.value1 = "V1";

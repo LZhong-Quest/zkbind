@@ -1,5 +1,5 @@
 <window apply="test2.Test2ZKBindPropertyComposer"
-	self="@composerName(vm)">
+	composerName="@bind('vm')">
 	<grid width="500px">
 		<columns>
 			<column label="" width="40px" />

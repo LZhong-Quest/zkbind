@@ -108,6 +108,22 @@ public class MiscTestCase extends TestCaseBase{
 		Assert.assertEquals("OO-CC",findWidget("$vm3_t1").getValue());
 		Assert.assertEquals("OO-CC",findWidget("$vm3_l2").getValue());
 		Assert.assertEquals("do command1 CC",findWidget("$vm3_l3").getValue());
+		
+		//vm4
+		Assert.assertEquals("XX",findWidget("$vm4_l1").getValue());
+		Assert.assertEquals("V1-XX",findWidget("$vm4_t1").getValue());
+		Assert.assertEquals("V1-XX",findWidget("$vm4_l2").getValue());
+		Assert.assertEquals("V2",findWidget("$vm4_l3").getValue());
+		
+		findWidget("$vm4_t1").clear().keys("OO").tab();
+		Assert.assertEquals("OO-XX",findWidget("$vm4_t1").getValue());
+		Assert.assertEquals("OO-XX",findWidget("$vm4_l2").getValue());
+		Assert.assertEquals("V2",findWidget("$vm4_l3").getValue());
+		
+		findWidget("$vm4_btn").click();
+		Assert.assertEquals("OO-XX",findWidget("$vm4_t1").getValue());
+		Assert.assertEquals("OO-XX",findWidget("$vm4_l2").getValue());
+		Assert.assertEquals("do command1 XX",findWidget("$vm4_l3").getValue());
 	}
 	
 }

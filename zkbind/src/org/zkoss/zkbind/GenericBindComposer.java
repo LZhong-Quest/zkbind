@@ -12,10 +12,14 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 package org.zkoss.zkbind;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
+import org.zkoss.lang.Strings;
+import org.zkoss.xel.ExpressionX;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Page;
+import org.zkoss.zk.ui.UiException;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
@@ -25,7 +29,9 @@ import org.zkoss.zk.ui.sys.ComponentCtrl;
 import org.zkoss.zk.ui.util.Composer;
 import org.zkoss.zk.ui.util.ComposerExt;
 import org.zkoss.zkbind.impl.AnnotateBinderImpl;
+import org.zkoss.zkbind.impl.BindEvaluatorXImpl;
 import org.zkoss.zkbind.impl.BinderImpl;
+import org.zkoss.zkbind.sys.BindEvaluatorX;
 
 /**
  * Base composer to apply ZK Bind.
@@ -38,7 +44,13 @@ public class GenericBindComposer implements Composer, ComposerExt {
 	private final Map<String, Converter> _converters;
 	private final Map<String, Validator> _validators;
 	
-//	private static final String ON_BINDER_POST_COMMAND = "onBinderPostCommand";
+	private static final String BIND_ANNO = "bind";
+	private static final String COMPOSER_NAME_ATTR = "composerName";
+	private static final String QUEUE_NAME_ATTR = "queueName";
+	private static final String QUEUE_SCOPE_ATTR = "queueScope";
+	private static final String BINDER_NAME_ATTR = "binderName";
+	
+	
 	
 	public GenericBindComposer() {
 		setViewModel(this);
@@ -88,23 +100,25 @@ public class GenericBindComposer implements Composer, ComposerExt {
 
 	//--Composer--//
 	public void doAfterCompose(Component comp) throws Exception {
-		//TODO, Dennis, need to confirm with henrichen about annotation or attribute
+		BindEvaluatorX evalx = new BindEvaluatorXImpl(null, org.zkoss.zkbind.xel.BindXelFactory.class);
+		
 		//name this composer
-		final String cname = getAnnotationOrAttribute(comp,"composerName");
+		String cname = (String)comp.getAttribute(COMPOSER_NAME_ATTR);
+		if(cname==null){
+			cname = getAnnotatedBindString(evalx, comp,COMPOSER_NAME_ATTR);
+		}
+		
 		comp.setAttribute(cname != null ? cname : comp.getId()+"$composer", this);
 		
 		//init the binder
-		final String qname = getAnnotationOrAttribute(comp,"queueName");
-		final String qscope = getAnnotationOrAttribute(comp,"queueScope");
+		final String qname = getAnnotatedBindString(evalx, comp,QUEUE_NAME_ATTR);
+		final String qscope = getAnnotatedBindString(evalx, comp,QUEUE_SCOPE_ATTR);
 		
-		final String vmname = getAnnotationOrAttribute(comp,"viewModelName");
-		if(vmname!=null){
-			_viewModel = new ComponentViewModelProxy(comp,vmname);
-		}
+		_viewModel = initViewModel(evalx, comp,"viewModel");
+
 		_binder = new AnnotateBinderImpl(comp, _viewModel, qname, qscope);
-		
 		//assign binder name
-		final String bname = getAnnotationOrAttribute(comp,"binderName");
+		final String bname = getAnnotatedBindString(evalx, comp,BINDER_NAME_ATTR);
 		comp.setAttribute(BinderImpl.BINDER, _binder);
 		comp.setAttribute(bname != null ? bname : "binder", _binder);
 		
@@ -112,16 +126,65 @@ public class GenericBindComposer implements Composer, ComposerExt {
 		((BinderImpl)_binder).loadComponent(comp); //load all bindings
 	}
 	
-	private static String getAnnotationOrAttribute(Component comp,String attr){
+	private Object initViewModel(BindEvaluatorX evalx, Component comp,
+			String attr) {
 		final ComponentCtrl compCtrl = (ComponentCtrl) comp;
-		final Annotation cnameann = compCtrl.getAnnotation(attr);
-		final String value;
-		if(cnameann!=null){
-			value = cnameann.getAttribute("value");
+		final Annotation anno = compCtrl.getAnnotation(attr,BIND_ANNO);
+		if(anno!=null){
+			String vmname = null;
+			Object vm = null;
+			for (final Iterator it = anno.getAttributes().entrySet().iterator(); it.hasNext();) {
+				final Map.Entry entry = (Map.Entry) it.next();
+				final String tag = (String) entry.getKey();
+				final Object tagExpr = entry.getValue();
+				if(vmname!=null){
+					throw new UiException("alreay has a view model["+vmname+","+vm+"] for this component "+comp);
+				}
+				vmname = tag;
+				vm = eval(evalx,comp,(String)tagExpr,Object.class);
+				try {
+					if(vm instanceof String){
+						vm = comp.getPage().resolveClass((String)vm);
+					}
+					if(vm instanceof Class){
+						vm = ((Class)vm).newInstance();
+					}
+				} catch (Exception e) {
+					throw new UiException(e.getMessage(),e);
+				}
+				if(vm !=null && vm.getClass().isPrimitive()){
+					throw new UiException("view model '"+vmname+"' is a primitive type "+vm);
+				}
+			}
+			
+			if(vm == null){
+				throw new UiException("view model '"+vmname+"' is null");
+			}
+			comp.setAttribute(vmname, vm);
+			return vm;
 		}else{
-			value = (String) comp.getAttribute(attr);
+			return _viewModel;
+		}
+	}
+
+	private static String getAnnotatedBindString(BindEvaluatorX evalx,Component comp,String attr){
+		final ComponentCtrl compCtrl = (ComponentCtrl) comp;
+		final Annotation anno = compCtrl.getAnnotation(attr,BIND_ANNO);
+		String value = null;
+		if(anno!=null){
+			value = anno.getAttribute("value");
+			if(!Strings.isBlank(value)){
+				return eval(evalx,comp,value,String.class);
+			}
+			throw new NullPointerException("bind value of "+attr+" return null");
 		}
 		return value;
+	}
+	
+	private static <T> T eval(BindEvaluatorX evalx, Component comp, String expression, Class<T> expectedType){
+		ExpressionX expr = evalx.parseExpressionX(null, expression, expectedType);
+		Object obj = evalx.getValue(null, comp, expr);
+		return (T)obj;
 	}
 	
 	//--ComposerExt//
@@ -145,23 +208,4 @@ public class GenericBindComposer implements Composer, ComposerExt {
 	public void notifyChange(Object bean, String property) {
 		getBinder().notifyChange(bean, property);
 	}
-	
-	private static class ComponentViewModelProxy implements
-			AnnotateBinderImpl.ViewModelProxy {
-
-		private final Component comp;
-		private final String attr;
-
-		ComponentViewModelProxy(Component comp, String attr) {
-			this.comp = comp;
-			this.attr = attr;
-		}
-
-		public Object get() {
-			return comp.getAttribute(attr, true);
-		}
-
-	}
-	
-	
 }

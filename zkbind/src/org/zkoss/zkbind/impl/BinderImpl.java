@@ -212,11 +212,7 @@ public class BinderImpl implements Binder {
 	}
 	
 	public Object getViewModel() {
-		Object vm = _rootComp.getAttribute(BinderImpl.VM);
-		if(vm instanceof ViewModelProxy){//if come from proxy, 
-			vm = ((ViewModelProxy)vm).get();
-		}
-		return vm;
+		return _rootComp.getAttribute(BinderImpl.VM);
 	}
 	
 	//Note: assume system converter is state-less
@@ -1396,13 +1392,5 @@ public class BinderImpl implements Binder {
 			Map<String,Object> args = (Map)data[1]; 
 			sendCommand(command, args);
 		}
-	}
-	
-	/**
-	 * a proxy to get view model, internal use only
-	 * @author dennis
-	 */
-	public interface ViewModelProxy {
-		public Object get();
 	}
 }
