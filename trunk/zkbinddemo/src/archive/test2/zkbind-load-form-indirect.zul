@@ -1,4 +1,4 @@
-<window apply="test2.Test2ZKBindLoadIndirectComposer" self="@composerName(vm) @binderName(binder)">
+<window apply="test2.Test2ZKBindLoadIndirectComposer" composerName="@bind('vm')" binderName="@bind('binder')">
 	<!-- <custom-attributes composerName="vm"/>-->
 <grid width="500px" >
 	<columns>

@@ -77,7 +77,7 @@ public class SaveFormBindingImpl extends FormBindingImpl implements	SaveFormBind
 			return (Validator)obj;
 		}else if(obj instanceof String){
 			ExpressionX vmconverter = eval.parseExpressionX(null, 
-					new StringBuilder().append(BinderImpl.BINDER).append(".viewModel.getValidator('").append(obj).append("')").toString(),
+					new StringBuilder().append(BinderImpl.VM).append(".getValidator('").append(obj).append("')").toString(),
 					Validator.class);
 			obj = eval.getValue(null, getComponent(), vmconverter);
 			if(obj==null){ // try to get it from binder's system level validator

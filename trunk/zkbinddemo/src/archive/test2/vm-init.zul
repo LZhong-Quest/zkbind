@@ -1,43 +1,53 @@
 <?init class="test2.ViewModelInit"?>
 <?import class="org.zkoss.zkbind.GenericBindComposer"?>
+<?import class="test2.ViewModelInit$SubViewModel"?>
 <window>
-	<vbox apply="GenericBindComposer">
-		<custom-attributes viewModelName="myvm1" />
-		<label id="vm1_l1" value="@bind(myvm1.name)" />
+	<vbox apply="GenericBindComposer" viewModel="@bind(vm1=myvm1)" 
+		composerName="@bind('vm')" queueName="@bind('myqueue1')" queueScope="@bind('desktop')" binderName="@bind('binder')">
+		<label id="vm1_l1" value="@bind(vm1.name)" />
 		<hbox>
-			<textbox id="vm1_t1" value="@bind(myvm1.value1) @converter(myvm1.converter1)"/>
-			<label id="vm1_l2" value="@bind(myvm1.value1) @converter('converter1')"/>
+			<textbox id="vm1_t1" value="@bind(vm1.value1) @converter(vm1.converter1)"/>
+			<label id="vm1_l2" value="@bind(vm1.value1) @converter('converter1')"/>
 		</hbox>
 		<hbox>
-			<label id="vm1_l3" value="@bind(myvm1.value2)"/>
+			<label id="vm1_l3" value="@bind(vm1.value2)"/>
 			<button id="vm1_btn" label="cmd1" onClick="@bind('cmd1')"/>	
 		</hbox>
 	</vbox>
-	<vbox apply="GenericBindComposer">
-		<custom-attributes viewModelName="myvm2" />
-		<label id="vm2_l1" value="@bind(myvm2.name)" />
+	<vbox apply="GenericBindComposer" viewModel="@bind(vm2=myvm2)" >
+		<label id="vm2_l1" value="@bind(vm2.name)" />
 		<hbox>
-			<textbox id="vm2_t1" value="@bind(myvm2.value1) @converter(myvm2.converter1)"/>
-			<label id="vm2_l2" value="@bind(myvm2.value1) @converter('converter1')"/>
+			<textbox id="vm2_t1" value="@bind(vm2.value1) @converter(vm2.converter1)"/>
+			<label id="vm2_l2" value="@bind(vm2.value1) @converter('converter1')"/>
 		</hbox>
 		<hbox>
-			<label id="vm2_l3" value="@bind(myvm2.value2)"/>
+			<label id="vm2_l3" value="@bind(vm2.value2)"/>
 			<button id="vm2_btn" label="cmd1" onClick="@bind('cmd1')"/>	
 		</hbox>
 		
 		---Nested---
-		<vbox apply="GenericBindComposer">
-			<custom-attributes viewModelName="myvm3" />
-			<label id="vm3_l1" value="@bind(myvm3.name)" />
+		<vbox apply="GenericBindComposer" viewModel="@bind(vm3=myvm3)" >
+			<label id="vm3_l1" value="@bind(vm3.name)" />
 			<hbox>
-				<textbox id="vm3_t1" value="@bind(myvm3.value1) @converter(myvm3.converter1)"/>
-				<label id="vm3_l2" value="@bind(myvm3.value1) @converter('converter1')"/>
+				<textbox id="vm3_t1" value="@bind(vm3.value1) @converter(vm3.converter1)"/>
+				<label id="vm3_l2" value="@bind(vm3.value1) @converter('converter1')"/>
 			</hbox>
 			<hbox>
-				<label id="vm3_l3" value="@bind(myvm3.value2)"/>
+				<label id="vm3_l3" value="@bind(vm3.value2)"/>
 				<button id="vm3_btn" label="cmd1" onClick="@bind('cmd1')"/>	
 			</hbox>
 		</vbox>			
 		---End Nested---
-	</vbox>	
+	</vbox>
+	<vbox apply="GenericBindComposer" viewModel="@bind(vm4='ViewModelInit$SubViewModel')" >
+		<label id="vm4_l1" value="@bind(vm4.name)" />
+		<hbox>
+			<textbox id="vm4_t1" value="@bind(vm4.value1) @converter(vm4.converter1)"/>
+			<label id="vm4_l2" value="@bind(vm4.value1) @converter('converter1')"/>
+		</hbox>
+		<hbox>
+			<label id="vm4_l3" value="@bind(vm4.value2)"/>
+			<button id="vm4_btn" label="cmd1" onClick="@bind('cmd1')"/>	
+		</hbox>
+	</vbox>		
 </window>
