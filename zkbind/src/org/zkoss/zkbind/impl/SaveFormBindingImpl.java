@@ -12,6 +12,7 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 
 package org.zkoss.zkbind.impl;
 
+import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -23,9 +24,11 @@ import org.zkoss.zkbind.BindContext;
 import org.zkoss.zkbind.Binder;
 import org.zkoss.zkbind.Form;
 import org.zkoss.zkbind.Property;
+import org.zkoss.zkbind.ValidationContext;
 import org.zkoss.zkbind.Validator;
 import org.zkoss.zkbind.sys.BindEvaluatorX;
 import org.zkoss.zkbind.sys.SaveFormBinding;
+import org.zkoss.zkbind.xel.zel.BindELContext;
 
 /**
  * Implementation of {@link SaveFormBinding}.
@@ -35,6 +38,8 @@ import org.zkoss.zkbind.sys.SaveFormBinding;
 public class SaveFormBindingImpl extends FormBindingImpl implements	SaveFormBinding {
 	private final ExpressionX _validator;
 	private final Map<String, Object> _validatorArgs;
+	
+	private static final String $VALUEREF$ = "$VALUEREF$";
 	
 	public SaveFormBindingImpl(Binder binder, Component comp, Form form, String access, String validator, Map<String,Object> args, Map<String,Object> validatorArgs) {
 		super(binder, comp, form, access, args);
@@ -143,5 +148,54 @@ public class SaveFormBindingImpl extends FormBindingImpl implements	SaveFormBind
 	
 	public boolean hasValidator() {
 		return _validator == null ? false : true;
+	}
+
+	public void validate(ValidationContext vctx) {
+		Validator validator = getValidator();
+		if(validator == null){
+			throw new NullPointerException("cannot find validator for "+this);
+		}
+		validator.validate(vctx);
+		//TODO , form need to do extra action(ex, nested property-validation)for validation state.
+		
+		//collect notify change
+		collectNotifyChange(validator,vctx);
+	}
+	
+	private void collectNotifyChange(Validator validator, ValidationContext vctx) {
+		//collect notify change
+		ValueReference ref = getValueReference(vctx.getBindContext());
+		//for special case that a form bind to vm directly, ex @form(save=vm after 'cmd1'), ref will be null
+		if(ref!=null){
+			BindELContext.addNotifys(getValidatorMethod(validator.getClass()), ref.getBase(), null, null, vctx.getBindContext());
+		}else{
+			final BindEvaluatorX eval = getBinder().getEvaluatorX();
+			final ExpressionX expr = getBaseExpression(eval);
+			if (expr != null) {
+				final Object base = eval.getValue(vctx.getBindContext(), getComponent(), expr);
+				BindELContext.addNotifys(getValidatorMethod(validator.getClass()), base, null, null, vctx.getBindContext());
+			}			
+		}
+	}
+	
+	//get and cache value reference of this binding
+	private ValueReference getValueReference(BindContext ctx){
+		ValueReference ref = (ValueReference) getAttribute(ctx, $VALUEREF$);
+		if (ref == null) {
+			final Component comp = ctx.getComponent();
+			final BindEvaluatorX eval = getBinder().getEvaluatorX();
+			ref = eval.getValueReference(ctx, comp, _accessInfo.getProperty());
+			setAttribute(ctx, $VALUEREF$, ref);
+		}
+		return ref;
+	}
+	
+	private Method getValidatorMethod(Class<? extends Validator> cls) {
+		try {
+			return cls.getMethod("validate", new Class[] {ValidationContext.class});
+		} catch (NoSuchMethodException e) {
+			//ignore
+		}
+		return null; //shall never come here
 	}
 }

@@ -31,6 +31,7 @@ public class ValidationComposer extends GenericBindComposer {
 	
 	public ValidationComposer() {
 		addValidator("validator1",new Validator(){
+			@NotifyChange("lastMessage1")
 			public void validate(ValidationContext ctx) {
 				if(!ctx.isValid()) return;
 				Property p = ctx.getProperty();
@@ -44,6 +45,7 @@ public class ValidationComposer extends GenericBindComposer {
 			}			
 		});
 		addValidator("validator2",new Validator(){
+			@NotifyChange("lastMessage2")
 			public void validate(ValidationContext ctx) {
 				if(!ctx.isValid()) return;
 				Property p = ctx.getProperty();
@@ -57,11 +59,12 @@ public class ValidationComposer extends GenericBindComposer {
 			}			
 		});
 		addValidator("validator3",new Validator(){
+			@NotifyChange({"lastMessage1","lastMessage2"})
 			public void validate(ValidationContext ctx) {
 				if(!ctx.isValid()) return;
-				Object val1 = (String)ctx.getProperties().get("value1")[0].getValue();//ctx.getPropertyValue("value1");
-				Object val2 = (String)ctx.getProperties().get("value2")[0].getValue();//ctx.getPropertyValue("value2");//null;
-				Object form = (String)ctx.getProperties().get(".")[0].getValue();//ctx.getPropertyValue(".");
+				Object val1 = ctx.getProperties().get("value1")[0].getValue();//ctx.getPropertyValue("value1");
+				Object val2 = ctx.getProperties().get("value2")[0].getValue();//ctx.getPropertyValue("value2");//null;
+				Object form = ctx.getProperties().get(".")[0].getValue();//ctx.getPropertyValue(".");
 				
 				if(val1 == null){
 					ctx.setInvalid();
@@ -107,8 +110,6 @@ public class ValidationComposer extends GenericBindComposer {
 		this.value2 = value2;
 	}
 
-
-
 	private String lastMessage1;
 	private String lastMessage2;
 	
@@ -116,10 +117,8 @@ public class ValidationComposer extends GenericBindComposer {
 		return lastMessage1;
 	}
 
-	@NotifyChange
 	public void setLastMessage1(String lastMessage1) {
 		this.lastMessage1 = lastMessage1;
-		notifyChange(this, "lastMessage1");
 	}
 
 	public String getLastMessage2() {
@@ -128,7 +127,6 @@ public class ValidationComposer extends GenericBindComposer {
 
 	public void setLastMessage2(String lastMessage2) {
 		this.lastMessage2 = lastMessage2;
-		notifyChange(this, "lastMessage2");
 	}
 
 	public void cmd1(){

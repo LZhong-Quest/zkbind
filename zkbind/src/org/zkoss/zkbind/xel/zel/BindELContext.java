@@ -78,6 +78,7 @@ public class BindELContext extends XelELContext {
 	
 	//check method annotation and collect NotifyChange annotation
 	public static Set<Property> getNotifys(Method m, Object base, String prop, Object value) {
+		//TODO, Dennis, do we really need to pass value here?
 		final Set<Property> notifys = new LinkedHashSet<Property>();
 		final NotifyChange annt = m == null ? 
 			null : m.getAnnotation(NotifyChange.class);

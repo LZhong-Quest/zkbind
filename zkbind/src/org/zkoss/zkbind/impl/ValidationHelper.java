@@ -135,63 +135,63 @@ import org.zkoss.zkbind.sys.SavePropertyBinding;
 
 	//validations
 
-	public boolean validateSaveBefore(Component comp,String command, Map<String,Property[]> validates,boolean valid) {
+	public boolean validateSaveBefore(Component comp,String command, Map<String,Property[]> validates,boolean valid,Set<Property> notifys) {
 		boolean r = valid;
-		r &= validateSavePropertyBefore(comp, command, validates,r);
-		r &= validateSaveFormBefore(comp, command, validates,r);
+		r &= validateSavePropertyBefore(comp, command, validates,r,notifys);
+		r &= validateSaveFormBefore(comp, command, validates,r,notifys);
 		return r;
 	}
 	
 	//doCommand -> doValidate -> validateSaveBefore ->
-	private boolean validateSavePropertyBefore(Component comp,String command, Map<String,Property[]> validates,boolean valid) {
+	private boolean validateSavePropertyBefore(Component comp,String command, Map<String,Property[]> validates,boolean valid, Set<Property> notifys) {
 		final List<SavePropertyBinding> bindings = _infoProvider.getSaveBeforeBindings().get(command);//_saveBeforeBindings.get(command);
 		boolean r = valid;
 		if (bindings != null) {
 			for (SavePropertyBinding binding : bindings) {
-				r &= validateSavePropertyBinding(comp, binding, command, validates, r);
+				r &= validateSavePropertyBinding(comp, binding, command, validates, r, notifys);
 			}
 		}
 		return r;
 	}
 	
 	//doCommand -> doValidate -> validateSaveBefore ->
-	private boolean validateSaveFormBefore(Component comp,String command, Map<String,Property[]> validates,boolean valid) {
+	private boolean validateSaveFormBefore(Component comp,String command, Map<String,Property[]> validates,boolean valid,Set<Property> notifys) {
 		final List<SaveFormBinding> bindings = _infoProvider.getSaveFormBeforeBindings().get(command);//_saveFormBeforeBindings.get(command);
 		boolean r = valid;
 		if (bindings != null) {
 			for (SaveFormBinding binding : bindings) {
-				r &= validateSaveFormBinding(comp, binding, command, validates, r);
+				r &= validateSaveFormBinding(comp, binding, command, validates, r, notifys);
 			}
 		}
 		return r;
 	}	
 	
-	public boolean validateSaveAfter(Component comp,String command, Map<String,Property[]> validates, boolean valid) {
+	public boolean validateSaveAfter(Component comp,String command, Map<String,Property[]> validates, boolean valid, Set<Property> notifys) {
 		boolean r = valid;
-		r &= validateSavePropertyAfter(comp, command, validates,r);
-		r &= validateSaveFormAfter(comp, command, validates,r);
+		r &= validateSavePropertyAfter(comp, command, validates,r,notifys);
+		r &= validateSaveFormAfter(comp, command, validates,r,notifys);
 		return r;
 	}
 	
 	//doCommand -> doValidate -> validateSaveBefore ->
-	private boolean validateSavePropertyAfter(Component comp,String command, Map<String,Property[]> validates, boolean valid) {
+	private boolean validateSavePropertyAfter(Component comp,String command, Map<String,Property[]> validates, boolean valid, Set<Property> notifys) {
 		final List<SavePropertyBinding> bindings = _infoProvider.getSaveAfterBindings().get(command);//_saveBeforeBindings.get(command);
 		boolean r = true;
 		if (bindings != null) {
 			for (SavePropertyBinding binding : bindings) {
-				r &= validateSavePropertyBinding(comp, binding, command, validates,valid);
+				r &= validateSavePropertyBinding(comp, binding, command, validates, valid, notifys);
 			}
 		}
 		return r;
 	}
 	
 	//doCommand -> doValidate -> validateSaveBefore ->
-	private boolean validateSaveFormAfter(Component comp,String command, Map<String,Property[]> validates, boolean valid) {
+	private boolean validateSaveFormAfter(Component comp,String command, Map<String,Property[]> validates, boolean valid, Set<Property> notifys) {
 		final List<SaveFormBinding> bindings = _infoProvider.getSaveFormAfterBindings().get(command);//_saveFormBeforeBindings.get(command);
 		boolean r = valid;
 		if (bindings != null) {
 			for (SaveFormBinding binding : bindings) {
-				r &= validateSaveFormBinding(comp, binding, command, validates, r);
+				r &= validateSaveFormBinding(comp, binding, command, validates, r, notifys);
 			}
 		}
 		return r;
@@ -200,14 +200,14 @@ import org.zkoss.zkbind.sys.SavePropertyBinding;
 	
 	
 	
-	public boolean validateSaveEvent(Component comp, String command, Event evt, Map<String,Property[]> validates, boolean valid) {
+	public boolean validateSaveEvent(Component comp, String command, Event evt, Map<String,Property[]> validates, boolean valid, Set<Property> notifys) {
 		final String evtnm = evt == null ? null : evt.getName(); 
 		final String evtId = _infoProvider.dualId(comp.getUuid(), evtnm);;//dualId(comp.getUuid(), evtnm);
 		final List<SavePropertyBinding> bindings = _infoProvider.getSaveEventBindings().get(evtId);//_saveEventBindings.get(evtId);
 		boolean r = valid;
 		if (bindings != null) {
 			for (SavePropertyBinding binding : bindings) {
-				r &= validateSavePropertyBinding(comp, binding, command, validates, r);
+				r &= validateSavePropertyBinding(comp, binding, command, validates, r, notifys);
 			}
 		}
 		return r;
@@ -243,34 +243,34 @@ import org.zkoss.zkbind.sys.SavePropertyBinding;
 	
 	
 	//validate a save-binding
-	private boolean validateSavePropertyBinding(Component comp,SavePropertyBinding binding,String command, Map<String,Property[]> validates, boolean valid) {
+	private boolean validateSavePropertyBinding(Component comp,SavePropertyBinding binding,String command, Map<String,Property[]> validates, boolean valid, Set<Property> notifys) {
 		if(!binding.hasValidator()) return true;
 		final BindContext ctx = BindContextUtil.newBindContext(_binder, binding, true, command, binding.getComponent(), null);
 		BindContextUtil.setValidatorArgs(binding.getBinder(), binding.getComponent(), ctx, binding);
-		
-		Validator validator = binding.getValidator();
-		if(validator == null){
-			throw new UiException("cannot find validator for binding "+binding);
-		}
+
 		Property p = _mainPropertyCache.get(binding);
 		ValidationContextImpl vContext = new ValidationContextImpl(command,p,validates,ctx,valid);
-		validator.validate(vContext);
+		binding.validate(vContext);
+		final Set<Property> xnotifys = (Set<Property>) ctx.getAttribute(BinderImpl.NOTIFYS);
+		if (xnotifys != null) {
+			notifys.addAll(xnotifys);
+		}
 		return vContext.isValid();
 	}
 	
 	//validate a save-form-binding
-	private boolean validateSaveFormBinding(Component comp, SaveFormBinding binding, String command, Map<String,Property[]> validates, boolean valid) {
+	private boolean validateSaveFormBinding(Component comp, SaveFormBinding binding, String command, Map<String,Property[]> validates, boolean valid, Set<Property> notifys) {
 		if(!binding.hasValidator()) return true;
 		final BindContext ctx = BindContextUtil.newBindContext(_binder, binding, true, command, binding.getComponent(), null);
 		BindContextUtil.setValidatorArgs(binding.getBinder(), binding.getComponent(), ctx, binding);
-		//TODO , form need to do extra action(ex, nested property-validation)for validation state.
-		Validator validator = binding.getValidator();
-		if(validator == null){
-			throw new UiException("cannot find validator for binding "+binding);
-		}
+
 		Property p = _mainPropertyCache.get(binding); 
 		ValidationContextImpl vContext = new ValidationContextImpl(command,p,validates,ctx,valid);
-		validator.validate(vContext);
+		binding.validate(vContext);
+		final Set<Property> xnotifys = (Set<Property>) ctx.getAttribute(BinderImpl.NOTIFYS);
+		if (xnotifys != null) {
+			notifys.addAll(xnotifys);
+		}
 		return vContext.isValid();
 		
 	}
