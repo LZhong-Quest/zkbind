@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.zkoss.zkbind.NotifyChange;
-import org.zkoss.zkbind.BindComposer;
+import org.zkoss.bind.BindComposer;
+import org.zkoss.bind.NotifyChange;
 import org.zkoss.zkplus.databind.BindingListModelList;
 import org.zkoss.zul.ListModel;
 import org.zkoss.zul.ListModelList;

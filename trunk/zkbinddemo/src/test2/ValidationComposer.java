@@ -14,12 +14,12 @@ package test2;
 
 import java.util.Set;
 
-import org.zkoss.zkbind.BindContext;
-import org.zkoss.zkbind.BindComposer;
-import org.zkoss.zkbind.NotifyChange;
-import org.zkoss.zkbind.Property;
-import org.zkoss.zkbind.ValidationContext;
-import org.zkoss.zkbind.Validator;
+import org.zkoss.bind.BindComposer;
+import org.zkoss.bind.BindContext;
+import org.zkoss.bind.NotifyChange;
+import org.zkoss.bind.Property;
+import org.zkoss.bind.ValidationContext;
+import org.zkoss.bind.Validator;
 
 /**
  * @author dennis

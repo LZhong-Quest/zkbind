@@ -1,5 +1,5 @@
 <?init class="test2.ViewModelInit"?>
-<?import class="org.zkoss.zkbind.BindComposer"?>
+<?import class="org.zkoss.bind.BindComposer"?>
 <?import class="test2.ViewModelInit$SubViewModel"?>
 <window>
 	<vbox apply="BindComposer" viewModel="@bind(vm1=myvm1)" 

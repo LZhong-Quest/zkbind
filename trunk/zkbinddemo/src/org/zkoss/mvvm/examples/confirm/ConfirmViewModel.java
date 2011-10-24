@@ -14,12 +14,12 @@ package org.zkoss.mvvm.examples.confirm;
 
 import java.util.Date;
 
-import org.zkoss.zkbind.Form;
-import org.zkoss.zkbind.BindComposer;
-import org.zkoss.zkbind.NotifyChange;
-import org.zkoss.zkbind.SimpleForm;
-import org.zkoss.zkbind.ValidationContext;
-import org.zkoss.zkbind.Validator;
+import org.zkoss.bind.BindComposer;
+import org.zkoss.bind.Form;
+import org.zkoss.bind.NotifyChange;
+import org.zkoss.bind.SimpleForm;
+import org.zkoss.bind.ValidationContext;
+import org.zkoss.bind.Validator;
 import org.zkoss.zul.ListModelList;
 
 /**

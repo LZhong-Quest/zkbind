@@ -2,9 +2,9 @@ package org.zkoss.mvvm.examples.wheather;
 
 import java.util.List;
 
-import org.zkoss.zkbind.DependsOn;
-import org.zkoss.zkbind.BindComposer;
-import org.zkoss.zkbind.NotifyChange;
+import org.zkoss.bind.BindComposer;
+import org.zkoss.bind.DependsOn;
+import org.zkoss.bind.NotifyChange;
 import org.zkoss.zul.ListModelList;
 
 /*

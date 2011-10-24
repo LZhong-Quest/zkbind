@@ -14,12 +14,12 @@ package test2;
 
 import java.util.Map;
 
+import org.zkoss.bind.BindContext;
+import org.zkoss.bind.Converter;
+import org.zkoss.bind.NotifyChange;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Page;
 import org.zkoss.zk.ui.util.Initiator;
-import org.zkoss.zkbind.BindContext;
-import org.zkoss.zkbind.Converter;
-import org.zkoss.zkbind.NotifyChange;
 
 /**
  * currently, no way to display error message if I decouple the vm with bind-composer.

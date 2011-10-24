@@ -4,8 +4,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Random;
 
-import org.zkoss.zkbind.DependsOn;
-import org.zkoss.zkbind.NotifyChange;
+import org.zkoss.bind.DependsOn;
+import org.zkoss.bind.NotifyChange;
 
 /*
 Originate from zktodo2 of ZK.forge  by Simon Massey.

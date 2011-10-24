@@ -12,8 +12,8 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 
 package org.zkoss.mvvm.examples.region;
 
-import org.zkoss.zkbind.BindComposer;
-import org.zkoss.zkbind.NotifyChange;
+import org.zkoss.bind.BindComposer;
+import org.zkoss.bind.NotifyChange;
 import org.zkoss.zul.TreeModel;
 import org.zkoss.zul.TreeNode;
 

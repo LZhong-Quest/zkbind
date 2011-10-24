@@ -12,10 +12,10 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 
 package org.zkoss.mvvm.examples.disabled;
 
+import org.zkoss.bind.BindComposer;
+import org.zkoss.bind.BindContext;
+import org.zkoss.bind.NotifyChange;
 import org.zkoss.zk.ui.event.InputEvent;
-import org.zkoss.zkbind.BindContext;
-import org.zkoss.zkbind.BindComposer;
-import org.zkoss.zkbind.NotifyChange;
 
 /**
  * 1. whenever the textbox is empty, the button is disabled;
