@@ -14,7 +14,7 @@ package org.zkoss.mvvm.examples.fullname;
 
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zkbind.DependsOn;
-import org.zkoss.zkbind.GenericBindComposer;
+import org.zkoss.zkbind.BindComposer;
 import org.zkoss.zkbind.NotifyChange;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Textbox;

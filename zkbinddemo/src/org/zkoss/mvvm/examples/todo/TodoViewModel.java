@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-import org.zkoss.zkbind.GenericBindComposer;
+import org.zkoss.zkbind.BindComposer;
 import org.zkoss.zkbind.NotifyChange;
 import org.zkoss.zul.ListModel;
 import org.zkoss.zul.ListModelList;
@@ -27,7 +27,7 @@ import org.zkoss.zul.ListModelList;
  * @author henrichen
  *
  */
-public class TodoViewModel extends GenericBindComposer {
+public class TodoViewModel extends BindComposer {
 	private TaskDAO taskdao = new TaskDAO(); 
 	private Task selected;
 	private Task newTask;

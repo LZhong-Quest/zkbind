@@ -18,14 +18,14 @@ import java.util.Map;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zkbind.BindContext;
 import org.zkoss.zkbind.Converter;
-import org.zkoss.zkbind.GenericBindComposer;
+import org.zkoss.zkbind.BindComposer;
 import org.zkoss.zkbind.NotifyChange;
 
 /**
  * @author Dennis Chen
  * 
  */
-public class F0010 extends GenericBindComposer {
+public class F0010 extends BindComposer {
 	private String value1;
 	private String value2;
 	private String value0;

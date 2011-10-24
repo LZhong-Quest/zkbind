@@ -14,7 +14,7 @@ package org.zkoss.mvvm.examples.disabled;
 
 import org.zkoss.zk.ui.event.InputEvent;
 import org.zkoss.zkbind.BindContext;
-import org.zkoss.zkbind.GenericBindComposer;
+import org.zkoss.zkbind.BindComposer;
 import org.zkoss.zkbind.NotifyChange;
 
 /**
@@ -24,7 +24,7 @@ import org.zkoss.zkbind.NotifyChange;
  * @author henrichen
  *
  */
-public class DisabledButtonViewModel extends GenericBindComposer {
+public class DisabledButtonViewModel extends BindComposer {
 	private String symbol;
 	private String lastSymbol;
 

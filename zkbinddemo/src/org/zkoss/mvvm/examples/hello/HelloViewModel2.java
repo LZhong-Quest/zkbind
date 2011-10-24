@@ -13,7 +13,7 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 package org.zkoss.mvvm.examples.hello;
 
 import org.zkoss.zkbind.BindContext;
-import org.zkoss.zkbind.GenericBindComposer;
+import org.zkoss.zkbind.BindComposer;
 import org.zkoss.zkbind.NotifyChange;
 
 /**
@@ -21,7 +21,7 @@ import org.zkoss.zkbind.NotifyChange;
  * @author henrichen
  *
  */
-public class HelloViewModel2 extends GenericBindComposer {
+public class HelloViewModel2 extends BindComposer {
 	private String message;
 	
 	public String getMessage() {

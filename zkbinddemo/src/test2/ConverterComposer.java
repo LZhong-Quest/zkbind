@@ -22,14 +22,14 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zkbind.BindContext;
 import org.zkoss.zkbind.Converter;
 import org.zkoss.zkbind.DependsOn;
-import org.zkoss.zkbind.GenericBindComposer;
+import org.zkoss.zkbind.BindComposer;
 import org.zkoss.zkbind.NotifyChange;
 
 /**
  * @author Dennis Chen
  * 
  */
-public class ConverterComposer extends GenericBindComposer {
+public class ConverterComposer extends BindComposer {
 	private Date bday1;
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 	public ConverterComposer() {

@@ -12,7 +12,7 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 
 package org.zkoss.mvvm.examples.region;
 
-import org.zkoss.zkbind.GenericBindComposer;
+import org.zkoss.zkbind.BindComposer;
 import org.zkoss.zkbind.NotifyChange;
 import org.zkoss.zul.TreeModel;
 import org.zkoss.zul.TreeNode;
@@ -22,7 +22,7 @@ import org.zkoss.zul.TreeNode;
  * @author henrichen
  *
  */
-public class TreeModelViewModel extends GenericBindComposer {
+public class TreeModelViewModel extends BindComposer {
 	private static Country country = new Country();
 	private TreeNode _selected;
 	

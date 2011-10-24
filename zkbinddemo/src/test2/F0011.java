@@ -24,14 +24,14 @@ import org.zkoss.zkbind.Property;
 import org.zkoss.zkbind.ValidationContext;
 import org.zkoss.zkbind.Validator;
 import org.zkoss.zkbind.DependsOn;
-import org.zkoss.zkbind.GenericBindComposer;
+import org.zkoss.zkbind.BindComposer;
 import org.zkoss.zkbind.NotifyChange;
 
 /**
  * @author Dennis Chen
  * 
  */
-public class F0011 extends GenericBindComposer {
+public class F0011 extends BindComposer {
 	private Date bday1;
 	private Date bday2;
 	private String value1;

@@ -17,7 +17,7 @@ import java.util.Map;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zkbind.BindContext;
 import org.zkoss.zkbind.Converter;
-import org.zkoss.zkbind.GenericBindComposer;
+import org.zkoss.zkbind.BindComposer;
 import org.zkoss.zkbind.NotifyChange;
 import org.zkoss.zkbind.ValidationContext;
 import org.zkoss.zkbind.Validator;
@@ -26,7 +26,7 @@ import org.zkoss.zkbind.Validator;
  * @author Dennis Chen
  * 
  */
-public class ArgsComposer extends GenericBindComposer {
+public class ArgsComposer extends BindComposer {
 	private String value1;
 	private String value2;
 	

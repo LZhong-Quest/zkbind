@@ -14,14 +14,14 @@ package issues;
 
 import java.util.Set;
 
-import org.zkoss.zkbind.GenericBindComposer;
+import org.zkoss.zkbind.BindComposer;
 import org.zkoss.zkbind.NotifyChange;
 import org.zkoss.zkbind.Property;
 
 /**
  * Demo how to use validation to do the confirmation.
  */
-public class FormException001ViewModel extends GenericBindComposer {
+public class FormException001ViewModel extends BindComposer {
 	private City selected;
 
 	public FormException001ViewModel() {

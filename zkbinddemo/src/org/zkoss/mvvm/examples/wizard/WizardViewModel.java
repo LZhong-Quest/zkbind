@@ -13,7 +13,7 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 package org.zkoss.mvvm.examples.wizard;
 
 import org.zkoss.zkbind.DependsOn;
-import org.zkoss.zkbind.GenericBindComposer;
+import org.zkoss.zkbind.BindComposer;
 import org.zkoss.zkbind.NotifyChange;
 
 /**
@@ -21,7 +21,7 @@ import org.zkoss.zkbind.NotifyChange;
  * @author henrichen
  *
  */
-public class WizardViewModel extends GenericBindComposer {
+public class WizardViewModel extends BindComposer {
 	private int step = 0; //assume step0 ~ step3, total 4 steps
 	private int lastStep = 3;
 	private String finishMessage;
