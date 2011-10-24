@@ -6,19 +6,11 @@
 	<groupId>org.zkoss.zk</groupId>
 	<artifactId>zkbindtest</artifactId>
 	<version>2.0.0</version>
-	<properties>
-		<zk.version>5.5.0-SNAPSHOT</zk.version>
-	</properties>
 	<packaging>jar</packaging>
 	<name>ZK Bind Test</name>
 	<url>http://www.zkoss.org/zkbind</url>
 	<description>ZK Bind Test</description>
 	<dependencies>
-		<dependency>
-			<groupId>org.zkoss.zk</groupId>
-			<artifactId>zbind</artifactId>
-			<version>2.0.0</version>
-		</dependency>
 			<dependency>
 				<groupId>org.zkoss.zktc</groupId>
 				<artifactId>zktc-core</artifactId>
