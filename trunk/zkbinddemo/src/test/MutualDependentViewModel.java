@@ -13,7 +13,7 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 package test;
 
 import org.zkoss.zkbind.DependsOn;
-import org.zkoss.zkbind.GenericBindComposer;
+import org.zkoss.zkbind.BindComposer;
 import org.zkoss.zkbind.NotifyChange;
 
 /**
@@ -21,7 +21,7 @@ import org.zkoss.zkbind.NotifyChange;
  * @author henrichen
  *
  */
-public class MutualDependentViewModel extends GenericBindComposer {
+public class MutualDependentViewModel extends BindComposer {
 	private String value;
 	
 	@DependsOn("b")

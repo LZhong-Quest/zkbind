@@ -3,14 +3,14 @@ package org.zkoss.mvvm.examples.wheather;
 import java.util.List;
 
 import org.zkoss.zkbind.DependsOn;
-import org.zkoss.zkbind.GenericBindComposer;
+import org.zkoss.zkbind.BindComposer;
 import org.zkoss.zkbind.NotifyChange;
 import org.zkoss.zul.ListModelList;
 
 /*
 originate from zktodo2 of ZK.forge by Simon Massey.
  */
-public class WeathStationViewModel extends GenericBindComposer {
+public class WeathStationViewModel extends BindComposer {
 	
 	public WeathStationViewModel(){
 		for( int i = 0; i < 10; i++ ) {

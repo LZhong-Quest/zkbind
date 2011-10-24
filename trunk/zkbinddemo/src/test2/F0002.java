@@ -19,7 +19,7 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zkbind.BindContext;
 import org.zkoss.zkbind.Converter;
 import org.zkoss.zkbind.Form;
-import org.zkoss.zkbind.GenericBindComposer;
+import org.zkoss.zkbind.BindComposer;
 import org.zkoss.zkbind.NotifyChange;
 import org.zkoss.zkbind.SimpleForm;
 
@@ -27,7 +27,7 @@ import org.zkoss.zkbind.SimpleForm;
  * @author Dennis Chen
  * 
  */
-public class F0002 extends GenericBindComposer {
+public class F0002 extends BindComposer {
 	private String value1;
 	private String value2;
 	private Form form1;

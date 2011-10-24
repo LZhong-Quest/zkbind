@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.zkoss.zkbind.NotifyChange;
-import org.zkoss.zkbind.GenericBindComposer;
+import org.zkoss.zkbind.BindComposer;
 import org.zkoss.zkplus.databind.BindingListModelList;
 import org.zkoss.zul.ListModel;
 import org.zkoss.zul.ListModelList;
@@ -27,7 +27,7 @@ import test.Person.Address;
  * @author henrichen
  *
  */
-public class ZKBindLoad1Composer extends GenericBindComposer {
+public class ZKBindLoad1Composer extends BindComposer {
 	private Person _selected;
 	private List<Person> _persons;
 	

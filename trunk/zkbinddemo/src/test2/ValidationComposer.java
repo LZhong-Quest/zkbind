@@ -15,7 +15,7 @@ package test2;
 import java.util.Set;
 
 import org.zkoss.zkbind.BindContext;
-import org.zkoss.zkbind.GenericBindComposer;
+import org.zkoss.zkbind.BindComposer;
 import org.zkoss.zkbind.NotifyChange;
 import org.zkoss.zkbind.Property;
 import org.zkoss.zkbind.ValidationContext;
@@ -25,7 +25,7 @@ import org.zkoss.zkbind.Validator;
  * @author dennis
  * 
  */
-public class ValidationComposer extends GenericBindComposer {
+public class ValidationComposer extends BindComposer {
 	private int value1;
 	private String value2;
 	

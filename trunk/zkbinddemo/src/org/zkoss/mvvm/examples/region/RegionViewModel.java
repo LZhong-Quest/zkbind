@@ -14,7 +14,7 @@ package org.zkoss.mvvm.examples.region;
 
 import org.zkoss.lang.Objects;
 import org.zkoss.zkbind.DependsOn;
-import org.zkoss.zkbind.GenericBindComposer;
+import org.zkoss.zkbind.BindComposer;
 import org.zkoss.zkbind.NotifyChange;
 
 /**
@@ -22,7 +22,7 @@ import org.zkoss.zkbind.NotifyChange;
  * @author henrichen
  *
  */
-public class RegionViewModel extends GenericBindComposer {
+public class RegionViewModel extends BindComposer {
 	private static Country country = new Country();
 	private Region region;
 	private State state;

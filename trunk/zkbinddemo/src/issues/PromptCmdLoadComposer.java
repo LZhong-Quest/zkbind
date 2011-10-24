@@ -1,9 +1,9 @@
 package issues;
 
-import org.zkoss.zkbind.GenericBindComposer;
+import org.zkoss.zkbind.BindComposer;
 import org.zkoss.zkbind.NotifyChange;
 
-public class PromptCmdLoadComposer  extends GenericBindComposer {
+public class PromptCmdLoadComposer  extends BindComposer {
 	private String value1;
 
 	public PromptCmdLoadComposer() {

@@ -15,7 +15,7 @@ package org.zkoss.mvvm.examples.confirm;
 import java.util.Date;
 
 import org.zkoss.zkbind.Form;
-import org.zkoss.zkbind.GenericBindComposer;
+import org.zkoss.zkbind.BindComposer;
 import org.zkoss.zkbind.NotifyChange;
 import org.zkoss.zkbind.SimpleForm;
 import org.zkoss.zkbind.ValidationContext;
@@ -26,7 +26,7 @@ import org.zkoss.zul.ListModelList;
  * Demo how to use validation to do the confirmation.
  * @author dennis
  */
-public class ConfirmViewModel extends GenericBindComposer {
+public class ConfirmViewModel extends BindComposer {
 	private ListModelList<City> cityList;
 	private City selected;
 	private City tobeSelected = null;

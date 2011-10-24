@@ -20,13 +20,13 @@ import org.zkoss.zkbind.Converter;
 import org.zkoss.zkbind.DependsOn;
 import org.zkoss.zkbind.Form;
 import org.zkoss.zkbind.NotifyChange;
-import org.zkoss.zkbind.GenericBindComposer;
+import org.zkoss.zkbind.BindComposer;
 
 /**
  * @author henrichen
  *
  */
-public class ZKBindSave1Composer extends GenericBindComposer {
+public class ZKBindSave1Composer extends BindComposer {
 	private Person _p1;
 	public ZKBindSave1Composer() {
 		_p1 = new Person("Henri", "Chen");

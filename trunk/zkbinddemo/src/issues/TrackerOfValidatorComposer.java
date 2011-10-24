@@ -15,7 +15,7 @@ package issues;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zkbind.BindContext;
 import org.zkoss.zkbind.Converter;
-import org.zkoss.zkbind.GenericBindComposer;
+import org.zkoss.zkbind.BindComposer;
 import org.zkoss.zkbind.NotifyChange;
 import org.zkoss.zkbind.ValidationContext;
 import org.zkoss.zkbind.Validator;
@@ -24,7 +24,7 @@ import org.zkoss.zkbind.Validator;
  * @author Dennis Chen
  * 
  */
-public class TrackerOfValidatorComposer extends GenericBindComposer {
+public class TrackerOfValidatorComposer extends BindComposer {
 	private String value1;
 
 

@@ -29,7 +29,7 @@ import org.zkoss.zkbind.Converter;
 import org.zkoss.zkbind.DependsOn;
 import org.zkoss.zkbind.Form;
 import org.zkoss.zkbind.NotifyChange;
-import org.zkoss.zkbind.GenericBindComposer;
+import org.zkoss.zkbind.BindComposer;
 import org.zkoss.zul.Messagebox;
 
 /**
@@ -37,7 +37,7 @@ import org.zkoss.zul.Messagebox;
  * @author henrichen
  *
  */
-public class PersonViewModel1 extends GenericBindComposer {
+public class PersonViewModel1 extends BindComposer {
 	private List<Person> persons;
 	private Person curPerson; //current person
 	private Person newPerson; //new added person

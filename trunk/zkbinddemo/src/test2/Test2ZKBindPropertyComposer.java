@@ -12,14 +12,14 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 
 package test2;
 
-import org.zkoss.zkbind.GenericBindComposer;
+import org.zkoss.zkbind.BindComposer;
 import org.zkoss.zkbind.NotifyChange;
 
 /**
  * @author Dennis Chen
  * 
  */
-public class Test2ZKBindPropertyComposer extends GenericBindComposer {
+public class Test2ZKBindPropertyComposer extends BindComposer {
 	private String value1;
 	private String value2;
 	private String value3;

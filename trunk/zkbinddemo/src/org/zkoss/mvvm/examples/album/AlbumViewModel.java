@@ -13,7 +13,7 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 package org.zkoss.mvvm.examples.album;
 
 import org.zkoss.zkbind.DependsOn;
-import org.zkoss.zkbind.GenericBindComposer;
+import org.zkoss.zkbind.BindComposer;
 import org.zkoss.zkbind.NotifyChange;
 import org.zkoss.zul.ListModel;
 import org.zkoss.zul.ListModelList;
@@ -24,7 +24,7 @@ import org.zkoss.zul.ListModelList;
  * 
  * @author henrichen
  */
-public class AlbumViewModel extends GenericBindComposer {
+public class AlbumViewModel extends BindComposer {
 	private ListModelList albumList;
 	private AlbumProxy selectedAlbum;
 	

@@ -15,7 +15,7 @@ http://martinfowler.com/eaaDev/uiArchs.html
 	<window title="Model-View-Binder (MVB) aka MVVM with Databindings, Statebindings &amp; CommandBindings" 
 		apply="org.zkoss.mvvm.examples.wheather.WeathStationViewModel" width="640px" border="normal">
 		<custom-attributes composerName="testBean"/>
-		<hbox spacing="10px" align="top">
+		<hbox spacing="10px" align="top" hflex="1">
 			<div width="200px">
 				<listbox id="list" multiple="true" rows="12"
 					model="@bind(load=testBean.stations)" selectedItem="@bind(testBean.station)">
