@@ -12,16 +12,16 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 -->
 
 <config>
-	<config-name>zkbind</config-name><!-- used to resolve dependency -->
+	<config-name>zbind</config-name><!-- used to resolve dependency -->
 	<depends>zk</depends>
 
 	<version>
-		<version-class>org.zkoss.zkbind.Version</version-class>
+		<version-class>org.zkoss.bind.Version</version-class>
 		<version-uid>2.0.0</version-uid>
 	</version>
 
 	<listener>
-		<listener-class>org.zkoss.zkbind.tracker.impl.BindUiLifeCycle</listener-class>
+		<listener-class>org.zkoss.bind.tracker.impl.BindUiLifeCycle</listener-class>
 	</listener>
 <!-- 
 	<library-property>
