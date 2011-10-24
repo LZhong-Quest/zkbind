@@ -14,9 +14,9 @@ package issues;
 
 import java.util.Set;
 
-import org.zkoss.zkbind.BindComposer;
-import org.zkoss.zkbind.NotifyChange;
-import org.zkoss.zkbind.Property;
+import org.zkoss.bind.BindComposer;
+import org.zkoss.bind.NotifyChange;
+import org.zkoss.bind.Property;
 
 /**
  * Demo how to use validation to do the confirmation.
@@ -33,7 +33,7 @@ public class FormException001ViewModel extends BindComposer {
 	}
 
 	
-	public boolean validate(String cmd, Set<Property> properties, org.zkoss.zkbind.BindContext ctx){
+	public boolean validate(String cmd, Set<Property> properties, org.zkoss.bind.BindContext ctx){
 		return true;
 	}
 

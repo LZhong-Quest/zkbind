@@ -1,8 +1,8 @@
 package issues;
 
-import org.zkoss.zkbind.Property;
-import org.zkoss.zkbind.ValidationContext;
-import org.zkoss.zkbind.Validator;
+import org.zkoss.bind.Property;
+import org.zkoss.bind.ValidationContext;
+import org.zkoss.bind.Validator;
 
 public class PropertyValidator implements Validator{
 

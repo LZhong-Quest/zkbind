@@ -22,7 +22,7 @@
 		<timeplotz.version>1.1_50</timeplotz.version>
 		<zuljsp.version>1.5</zuljsp.version>
 		<hsqldb.version>2.2.4</hsqldb.version>
-		<zkbind.version>2.0.0</zkbind.version>
+		<zbind.version>2.0.0</zbind.version>
 	</properties>
 	<version>6.0.0-SNAPSHOT</version>
 	<packaging>war</packaging>
@@ -212,8 +212,8 @@
 		</dependency>
 		<dependency>
 			<groupId>org.zkoss.zk</groupId>
-			<artifactId>zkbind</artifactId>
-			<version>${zkbind.version}</version>
+			<artifactId>zbind</artifactId>
+			<version>${zbind.version}</version>
 		</dependency>
 <!-- 		
 		<dependency>

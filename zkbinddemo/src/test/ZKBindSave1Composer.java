@@ -14,13 +14,13 @@ package test;
 
 import java.util.Map;
 
+import org.zkoss.bind.BindComposer;
+import org.zkoss.bind.BindContext;
+import org.zkoss.bind.Converter;
+import org.zkoss.bind.DependsOn;
+import org.zkoss.bind.Form;
+import org.zkoss.bind.NotifyChange;
 import org.zkoss.zk.ui.Component;
-import org.zkoss.zkbind.BindContext;
-import org.zkoss.zkbind.Converter;
-import org.zkoss.zkbind.DependsOn;
-import org.zkoss.zkbind.Form;
-import org.zkoss.zkbind.NotifyChange;
-import org.zkoss.zkbind.BindComposer;
 
 /**
  * @author henrichen
