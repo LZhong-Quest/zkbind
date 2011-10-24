@@ -1,4 +1,4 @@
-package org.zkoss.zkbind.unitest2;
+package org.zkoss.bind.unitest2;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
