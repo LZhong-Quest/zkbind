@@ -16,7 +16,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.zkoss.zk</groupId>
-			<artifactId>zkbind</artifactId>
+			<artifactId>zbind</artifactId>
 			<version>2.0.0</version>
 		</dependency>
 			<dependency>

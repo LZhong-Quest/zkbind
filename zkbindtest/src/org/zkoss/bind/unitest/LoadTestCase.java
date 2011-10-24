@@ -1,4 +1,4 @@
-package org.zkoss.zkbind.unitest;
+package org.zkoss.bind.unitest;
 
 import java.util.List;
 

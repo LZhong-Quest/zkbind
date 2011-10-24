@@ -1,14 +1,11 @@
-package org.zkoss.zkbind.unitest;
+package org.zkoss.bind.unitest2;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 @RunWith(Suite.class)
-@SuiteClasses( { LoadTestCase.class})
+@SuiteClasses( { LoadTestCase.class, FormTestCase.class,MiscTestCase.class,AllFeaturesTests.class})
 public class AllTests {
 
 }
