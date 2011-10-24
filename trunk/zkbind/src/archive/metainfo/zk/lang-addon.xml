@@ -2,7 +2,7 @@
 
 <!-- lang-addon.xml
 	Purpose:
-		A extention with default org.zkoss.zkbind.Binder annotation.
+		A extention with default org.zkoss.bind.Binder annotation.
 	Description:
 		
 	Note:
@@ -23,7 +23,7 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 -->
 <language-addon>
 	<!-- The name of this addon. It must be unique -->
-	<addon-name>zkbind</addon-name>
+	<addon-name>zbind</addon-name>
 	<!-- Specifies what other addon this depends
 	<depends></depends>
 	-->
@@ -32,23 +32,23 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 	<language-name>xul/html</language-name>
 
 	<version>
-		<version-class>org.zkoss.zkbind.Version</version-class>
+		<version-class>org.zkoss.bind.Version</version-class>
 		<version-uid>2.0.0</version-uid>
 		<zk-version>5.5.0</zk-version><!-- or later -->
 	</version>
 
 	<zscript language="Java">
-	import org.zkoss.zkbind.*;
+	import org.zkoss.bind.*;
 	</zscript>
 	<zscript language="JavaScript">
-	importPackage(Packages.org.zkoss.zkbind);
+	importPackage(Packages.org.zkoss.bind);
 	</zscript>
 	<zscript language="Groovy" each-time="true">
-	import org.zkoss.zkbind.*
+	import org.zkoss.bind.*
 	</zscript>
 	<zscript language="Ruby">
 	module Java
-		include_package 'org.zkoss.zkbind'
+		include_package 'org.zkoss.bind'
 	end
 	</zscript>
 
@@ -143,7 +143,7 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 			<annotation-name>$SYSBIND$</annotation-name>
 			<attribute>
 				<attribute-name>$R$</attribute-name>
-				<attribute-value>itemRenderer=org.zkoss.zkbind.impl.BindComboitemRenderer</attribute-value>
+				<attribute-value>itemRenderer=org.zkoss.bind.impl.BindComboitemRenderer</attribute-value>
 			</attribute>
 		</annotation>
 		
@@ -170,7 +170,7 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 			</attribute>
 			<attribute>
 				<attribute-name>$C$</attribute-name>
-				<attribute-value>org.zkoss.zkbind.converter.sys.SelectedComboitemConverter</attribute-value>
+				<attribute-value>org.zkoss.bind.converter.sys.SelectedComboitemConverter</attribute-value>
 			</attribute>
 		</annotation>
 		<annotation>
@@ -265,7 +265,7 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 			<annotation-name>$SYSBIND$</annotation-name>
 			<attribute>
 				<attribute-name>$R$</attribute-name>
-				<attribute-value>rowRenderer=org.zkoss.zkbind.impl.BindRowRenderer</attribute-value>
+				<attribute-value>rowRenderer=org.zkoss.bind.impl.BindRowRenderer</attribute-value>
 			</attribute>
 		</annotation>
 	</component>
@@ -320,7 +320,7 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 			<annotation-name>$SYSBIND$</annotation-name>
 			<attribute>
 				<attribute-name>$R$</attribute-name>
-				<attribute-value>itemRenderer=org.zkoss.zkbind.impl.BindListitemRenderer</attribute-value>
+				<attribute-value>itemRenderer=org.zkoss.bind.impl.BindListitemRenderer</attribute-value>
 			</attribute>
 		</annotation>
 		
@@ -341,7 +341,7 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 			</attribute>
 			<attribute>
 				<attribute-name>$C$</attribute-name>
-				<attribute-value>org.zkoss.zkbind.converter.sys.SelectedListitemConverter</attribute-value>
+				<attribute-value>org.zkoss.bind.converter.sys.SelectedListitemConverter</attribute-value>
 			</attribute>
 		</annotation>
 		<annotation>
@@ -668,7 +668,7 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 			<annotation-name>$SYSBIND$</annotation-name>
 			<attribute>
 				<attribute-name>$R$</attribute-name>
-				<attribute-value>itemRenderer=org.zkoss.zkbind.impl.BindTreeitemRenderer</attribute-value>
+				<attribute-value>itemRenderer=org.zkoss.bind.impl.BindTreeitemRenderer</attribute-value>
 			</attribute>
 		</annotation>
 		
@@ -689,7 +689,7 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 			</attribute>
 			<attribute>
 				<attribute-name>$C$</attribute-name>
-				<attribute-value>org.zkoss.zkbind.converter.sys.SelectedTreeitemConverter</attribute-value>
+				<attribute-value>org.zkoss.bind.converter.sys.SelectedTreeitemConverter</attribute-value>
 			</attribute>
 		</annotation>
 	</component>
