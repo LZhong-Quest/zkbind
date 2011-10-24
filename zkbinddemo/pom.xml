@@ -5,6 +5,7 @@
 	<artifactId>zkbinddemo</artifactId>
 	<properties>
 		<zkel.version>2.2.1</zkel.version>
+		<zk.version>6.0.0-SNAPSHOT</zk.version>
 		<commons-lang.version>2.4</commons-lang.version>
 		<bsh.version>2.0b4</bsh.version>
 		<commons-fileupload.version>1.2.1</commons-fileupload.version>
@@ -22,7 +23,6 @@
 		<timeplotz.version>1.1_50</timeplotz.version>
 		<zuljsp.version>1.5</zuljsp.version>
 		<hsqldb.version>2.2.4</hsqldb.version>
-		<zbind.version>2.0.0</zbind.version>
 	</properties>
 	<version>6.0.0-SNAPSHOT</version>
 	<packaging>war</packaging>
@@ -34,7 +34,7 @@
 		</license>
 	</licenses>
 	<scm>
-		<url>http://svn.sourceforge.net/viewvc/zk1/releases/${project.version}/zksandbox</url>
+		<url>http://svn.sourceforge.net/viewvc/zk1/releases/${zk.version}/zksandbox</url>
 	</scm>
 	<repositories>
 		<repository>
@@ -153,14 +153,7 @@
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>
 			<version>${commons-fileupload.version}</version>
-		</dependency>
-<!-- 		
-		<dependency>
-			<groupId>org.zkoss.theme</groupId>
-			<artifactId>breeze</artifactId>
-			<version>${project.version}</version>
-		</dependency>
- -->		
+		</dependency>	
 		<dependency>
 		    <groupId>org.hsqldb</groupId>
 		    <artifactId>hsqldb</artifactId>
@@ -170,51 +163,51 @@
 		<dependency>
 			<groupId>org.zkoss.theme</groupId>
 			<artifactId>sapphire</artifactId>
-			<version>${project.version}</version>
+			<version>${zk.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.zkoss.theme</groupId>
 			<artifactId>silvertail</artifactId>
-			<version>${project.version}</version>
+			<version>${zk.version}</version>
 		</dependency>
 		 -->
 		<dependency>
 			<groupId>org.zkoss.common</groupId>
 			<artifactId>zweb</artifactId>
-			<version>${project.version}</version>
+			<version>${zk.version}</version>
 		</dependency>
 		<!-- 
 		<dependency>
 			<groupId>org.zkoss.zk</groupId>
 			<artifactId>zhtml</artifactId>
-			<version>${project.version}</version>
+			<version>${zk.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.zkoss.zk</groupId>
 			<artifactId>zml</artifactId>
-			<version>${project.version}</version>
+			<version>${zk.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.zkoss.zk</groupId>
 			<artifactId>zkex</artifactId>
-			<version>${project.version}</version>
+			<version>${zk.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.zkoss.zk</groupId>
 			<artifactId>zkmax</artifactId>
-			<version>${project.version}</version>
+			<version>${zk.version}</version>
 		</dependency>
 		 -->
 		<dependency>
 			<groupId>org.zkoss.zk</groupId>
 			<artifactId>zkplus</artifactId>
-			<version>${project.version}</version>
+			<version>${zk.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.zkoss.zk</groupId>
 			<artifactId>zbind</artifactId>
-			<version>${zbind.version}</version>
-		</dependency>
+			<version>${zk.version}</version>
+		</dependency>		
 <!-- 		
 		<dependency>
 			<groupId>org.zkoss.zkforge</groupId>
