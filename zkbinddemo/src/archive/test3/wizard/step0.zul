@@ -1,0 +1,12 @@
+<zk>
+	<window title="Step 0" apply="test3.composer.WizardPageViewModel">
+		<custom-attributes composerName="vm2" />
+		<listbox model="@bind(vm2.fruitList)" selectedItem="@bind(vm2.selectedFruit)">
+			<listitem>
+				<template name="model" var="f">
+					<listcell label="@bind(f)"></listcell>
+				</template>
+			</listitem>
+		</listbox>
+	</window>
+</zk>

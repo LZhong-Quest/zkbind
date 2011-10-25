@@ -1,0 +1,8 @@
+<zk>
+<window title="Step 1" apply="org.zkoss.bind.BindComposer" viewModel="@bind(vm='test3.composer.WizardPageViewModel')">
+<custom-attributes composerName="vm3" />
+<label value="@bind(vm3.composerName)"/>
+<separator/>
+you select: <label value="@bind(vm3.selectedFruit)"></label>
+</window>
+</zk>
