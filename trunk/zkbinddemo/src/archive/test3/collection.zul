@@ -1,0 +1,27 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<vbox apply="org.zkoss.bind.BindComposer" viewModel="@bind(vm='test3.composer.CollectionComposer')">
+		select different lists
+		<radiogroup>
+			<radio label="Single Select" checked="@bind(vm.single)"/>
+			<radio label="Multiple Select" checked="@bind(vm.single) @converter(vm.notConverter)"/>
+		</radiogroup>
+		<combobox id="singleBox" visible="@bind(load=vm.single)" model="@bind(vm.listNameList)">
+			<template name="model" var="n">
+			<comboitem label="@bind(n)"></comboitem>
+			</template>
+		</combobox>
+		<listbox visible="@bind(load=vm.single) @converter(vm.notConverter)" model="@bind(vm.listNameList)" checkmark="true" multiple="true">
+			<listitem>
+				<template name="model" var="n">
+				<listcell>
+					<checkbox label="@bind(n)" ></checkbox>
+				</listcell>
+				</template>
+			</listitem>
+		</listbox>
+		<listbox>
+
+		</listbox>
+	</vbox>
+</zk>
