@@ -2,7 +2,7 @@
 <zk>
 	<window title="new page title" border="normal"
 		apply="org.zkoss.bind.BindComposer" viewModel="@bind(vm='test3.composer.ValidatorComposer')">
-		t1.
+		va1.
 		<label multiline="true">
 		enter a negative number, click submit.
 		>= 18, Adult
@@ -13,8 +13,11 @@
 				<button label="submit" onClick="@bind('submit')" />
 		<label value="@bind(vm.age) @converter(vm.maturityIndicator)"/>
 		
+		
 		<separator bar="true"/>
-		t2, t4
+		
+		
+		va2, va4
 		<label multiline="true"> 
 		1. negative, not save 
 		2. enter 1, add 10
@@ -28,8 +31,12 @@
 		last age:<label value="@bind(load=vm.age before 'add')" />
 		<separator />
 		current age: <label value="@bind(load=vm.age after 'add')" />
+		
+		
 		<separator bar="true"/>
-		t3
+		
+		
+		va3
 		<label multiline="true"> 
 		1. negative, not save 
 		2. enter 1, add 10
@@ -41,20 +48,39 @@
 		<label value="@bind(vm.age) @converter(vm.maturityIndicator)"/>			
 		<separator />
 		current age: <label value="@bind(load=vm.age after 'add')" />
+		
+		
 		<separator bar="true"/>		
 		
-		t5.
+		
 		<label multiline="true">
-		command, before, converter argument
+		va5.
+		command, before, converter output with argument
 		</label>
 		Age :
 		<intbox
 			value="@bind(init=vm.negativeOne ,save=vm.age before 'submit5') @validator(vm.nonNegative)" />
 		limit: <intbox id="limitBox" value="10"/> 
-		<button label="submit" onClick="@bind('submit5')" />
+		<button label="submit5" onClick="@bind('submit5')" />
 		<label value="@bind(vm.age) @converter(vm.ageLimitIndicator, limit=limitBox.value)" />
+		
+		
 		<separator bar="true" />
-		validator + init:
+		
+		
+		<label multiline="true">
+		v6.command, before, converter input with argument
+		</label>
+		<intbox
+			value="@bind(init=vm.negativeOne ,save=vm.adult, vm.age before 'checkAdult') @converter(vm.adultConverter) @validator(vm.nonNegative)" />
+		<button label="checkAdult" onClick="@bind('checkAdult')" />
+		<checkbox checked="@bind(load=vm.adult)" label="Is Adult"/>			
+		
+		
+		<separator bar="true" />
+		
+		
+		va7. validator + init:
 		<separator/>
 		<intbox
 			value="@bind(init=vm.negativeOne ,save=vm.age) @validator(vm.nonNegative)">
@@ -62,16 +88,22 @@
 		<separator />
 		you enter:<label value="@bind(load=vm.age)" />
 		
+		
 		<separator bar="true"/>
-		validator + arguments: max length is 3<separator/>
+		
+		
+		va8. validator + arguments: max length is 3<separator/>
 		<textbox
 			value="@bind(save=vm.keyword) @validator(vm.maxLengthValidator, length=3)">
 		</textbox>
 		<separator />
 		you enter:<label value="@bind(load=vm.keyword)" />
 		
+		
 		<separator bar="true"/>
-		validator + arguments from binding: <separator/>
+		
+		
+		va9. validator + arguments from another binding: <separator/>
 		max length is: <intbox value="@bind(vm.maxLength)"/>
 		<separator />
 		intput: <textbox
@@ -79,5 +111,19 @@
 		</textbox>
 		<separator />
 		you enter:<label value="@bind(load=vm.keyword)" />
+		
+		
+		<separator bar="true"/>
+		
+		
+		<groupbox  apply="org.zkoss.bind.BindComposer" viewModel="@bind(vm2='test3.composer.ValidatorComposer')">
+		<caption label="va10. multiple field validation"/>
+		end day should be later than start date
+		<datebox id="start" value="@bind(save=vm2.startDate before 'ok')"/>
+		<datebox id="end" value="@bind(save=vm2.endDate before 'ok') @validator(vm2.durationValidator, start='startDate', end='endDate'))"/>
+		<button label="OK" onClick="@bind('ok')"/><separator/>
+		start:<label value="@bind(vm2.startDate)"/>
+		end:<label value="@bind(vm2.endDate)"/>
+		</groupbox>
 	</window>
 </zk>
