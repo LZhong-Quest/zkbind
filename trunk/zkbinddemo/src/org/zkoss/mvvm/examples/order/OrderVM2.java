@@ -33,30 +33,30 @@ public class OrderVM2 extends OrderVM{
 			public void validate(ValidationContext ctx) {
 				Date creation = (Date)ctx.getProperty().getValue();
 				if(creation==null){
-					ctx.setInvalid();
-					itemMessages.put("creationDate", "must not null");
+					ctx.setInvalid();// mark invalid
+					validationMessages.put("creationDate", "must not null");
 				}else{
-					itemMessages.remove("creationDate");
+					validationMessages.remove("creationDate");
 				}
-				//notify the 'price' message in messages was changed.
-				ctx.getBindContext().getBinder().notifyChange(itemMessages, "creationDate");
+				//notify messages was changed.
+				ctx.getBindContext().getBinder().notifyChange(validationMessages, "creationDate");
 			}
 		};
 	}
 	public Validator getShippingDateValidator(){
 		return new Validator(){
 			public void validate(ValidationContext ctx) {
-				Date shipping = (Date)ctx.getProperty().getValue();
-				Date creation = (Date)ctx.getProperties("creationDate")[0].getValue();
-				//is shipping date large than creation more than 3 days.
+				Date shipping = (Date)ctx.getProperty().getValue();//the main property
+				Date creation = (Date)ctx.getProperties("creationDate")[0].getValue();//the collected
+				//do mixed validation, shipping date have to large than creation more than 3 days.
 				if(!CaldnearUtil.isDayAfter(creation,shipping,3)){
 					ctx.setInvalid();
-					itemMessages.put("shippingDate", "must large than creation date at least 3 days");
+					validationMessages.put("shippingDate", "must large than creation date at least 3 days");
 				}else{
-					itemMessages.remove("shippingDate");
+					validationMessages.remove("shippingDate");
 				}
 				//notify the 'price' message in messages was changed.
-				ctx.getBindContext().getBinder().notifyChange(itemMessages, "shippingDate");
+				ctx.getBindContext().getBinder().notifyChange(validationMessages, "shippingDate");
 			}
 
 		};

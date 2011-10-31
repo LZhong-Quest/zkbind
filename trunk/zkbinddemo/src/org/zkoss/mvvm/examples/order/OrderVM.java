@@ -11,8 +11,6 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
  */
 package org.zkoss.mvvm.examples.order;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,11 +25,15 @@ import org.zkoss.zul.ListModelList;
  */
 public class OrderVM {
 
+	//the order list
 	ListModelList<Order> orders;
+	
+	//the selected order
 	Order selected;
 
 	public ListModelList<Order> getOrders() {
 		if (orders == null) {
+			//init the list
 			orders = new ListModelList<Order>(getService().list());
 		}
 		return orders;
@@ -41,45 +43,48 @@ public class OrderVM {
 		return selected;
 	}
 
-	@NotifyChange({"selected","itemMessages"})
+	@NotifyChange({"selected","validationMessages"})
 	public void setSelected(Order selected) {
 		this.selected = selected;
-		itemMessages.clear();
+		validationMessages.clear();//clear when another order selected
 	}
+
+	//action command
+	
+	@NotifyChange({"selected","orders","validationMessages"})
+	public void newOrder(){
+		Order order = new Order();
+		getOrders().add(order);
+		selected = order;//select the new one
+		validationMessages.clear();//clear message
+	}
+	
+	@NotifyChange({"selected","validationMessages"})
+	public void saveOrder(){
+		getService().save(selected);
+		validationMessages.clear();//clear message
+	}
+	
+	
+	@NotifyChange({"selected","orders","validationMessages"})
+	public void deleteOrder(){
+		getService().delete(selected);//delete selected
+		getOrders().remove(selected);
+		selected = null; //clean the selected
+		validationMessages.clear();//clear message
+	}
+	
+	//validation message
+	Map<String, String> validationMessages = new HashMap<String,String>();
+	
+	public Map<String,String> getValidationMessages(){
+		return validationMessages;
+	}
+	
 
 	public OrderService getService() {
 		return FakeOrderService.getInstance();
 	}
-	
-	@NotifyChange({"selected","orders","itemMessages"})
-	public void newOrder(){
-		Order order = new Order();
-		getOrders().add(order);
-		selected = order;
-		itemMessages.clear();
-	}
-	
-	@NotifyChange({"selected","itemMessages"})
-	public void saveOrder(){
-		getService().save(selected);
-		itemMessages.clear();
-	}
-	
-	
-	@NotifyChange({"selected","orders","itemMessages"})
-	public void deleteOrder(){
-		getService().delete(selected);
-		getOrders().remove(selected);
-		selected = null;
-		itemMessages.clear();
-	}
-	
-	Map<String, String> itemMessages = new HashMap<String,String>();
-	
-	public Map<String,String> getItemMessages(){
-		return itemMessages;
-	}
-	
 	
 	//validators for prompt
 	public Validator getPriceValidator(){
@@ -87,13 +92,13 @@ public class OrderVM {
 			public void validate(ValidationContext ctx) {
 				Double price = (Double)ctx.getProperty().getValue();
 				if(price==null || price<=0){
-					ctx.setInvalid();
-					itemMessages.put("price", "must large than 0");
+					ctx.setInvalid(); // mark invalid
+					validationMessages.put("price", "must large than 0");
 				}else{
-					itemMessages.remove("price");
+					validationMessages.remove("price");
 				}
-				//notify the 'price' message in messages was changed.
-				ctx.getBindContext().getBinder().notifyChange(itemMessages, "price");
+				//notify messages was changed.
+				ctx.getBindContext().getBinder().notifyChange(validationMessages, "price");
 			}
 		};
 	}
@@ -103,13 +108,13 @@ public class OrderVM {
 			public void validate(ValidationContext ctx) {
 				Integer quantity = (Integer)ctx.getProperty().getValue();
 				if(quantity==null || quantity<=0){
-					ctx.setInvalid();
-					itemMessages.put("quantity", "must large than 0");
+					ctx.setInvalid();// mark invalid
+					validationMessages.put("quantity", "must large than 0");
 				}else{
-					itemMessages.remove("quantity");
+					validationMessages.remove("quantity");
 				}
-				//notify the 'price' message in messages was changed.
-				ctx.getBindContext().getBinder().notifyChange(itemMessages, "quantity");
+				//notify messages was changed.
+				ctx.getBindContext().getBinder().notifyChange(validationMessages, "quantity");
 			}
 		};
 	}
