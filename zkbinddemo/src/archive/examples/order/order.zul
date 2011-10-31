@@ -42,13 +42,13 @@
 					<row>Quantity
 						<hlayout> 
 							<intbox value="@bind(vm.selected.quantity) @validator(vm.quantityValidator)"/>
-							<label value="@bind(vm.itemMessages['quantity'])" sclass="red" />
+							<label value="@bind(vm.validationMessages['quantity'])" sclass="red" />
 						</hlayout>	
 					</row>					
 					<row>Price 
 						<hlayout>
 							<doublebox value="@bind(vm.selected.price) @validator(vm.priceValidator)" format="###,##0.00" />
-							<label value="@bind(vm.itemMessages['price'])" sclass="red" />
+							<label value="@bind(vm.validationMessages['price'])" sclass="red" />
 						</hlayout>
 					</row>
 					<row>Total Price <label value="@bind(vm.selected.totalPrice) @converter('formatedNumber', format='###,##0.00')" /></row>

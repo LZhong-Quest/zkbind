@@ -20,30 +20,31 @@ import org.zkoss.bind.NotifyChange;
  */
 public class OrderVM3 extends OrderVM2{
 
+	//message for confirming the deletion.
 	String deleteMessage;
-	
 	
 	public String getDeleteMessage(){
 		return deleteMessage;
 	}
 	
-	
-	@NotifyChange({"selected","orders","itemMessages","deleteMessage"})
+	@NotifyChange({"selected","orders","validationMessages","deleteMessage"})
 	public void deleteOrder(){
 		getService().delete(selected);
 		getOrders().remove(selected);
 		selected = null;
-		itemMessages.clear();
+		validationMessages.clear();
 		deleteMessage = null;
 	}
 	
 	@NotifyChange("deleteMessage")
 	public void confirmDelete(){
+		//set the message to show to user
 		deleteMessage = "Do you want to delete "+selected.getId()+" ?";
 	}
 	
 	@NotifyChange("deleteMessage")
 	public void cancelDelete(){
+		//clear the message
 		deleteMessage = null;
 	}
 	
