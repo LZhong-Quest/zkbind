@@ -1,4 +1,4 @@
-package test3.composer;
+package test3.composer.collection;
 
 import static java.lang.System.out;
 
@@ -16,7 +16,7 @@ import test3.validator.MaxLengthValidator;
 import test3.validator.NonNegativeValidator;
 
 
-public class CollectionComposer1{
+public class C1{
 	private boolean isSingle = true;
 	private List<String> selectedList;
 	private String selectedOne = ListPool.getListNameList().get(0);
