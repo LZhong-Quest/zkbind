@@ -14,9 +14,9 @@ public class AdultConverter implements Converter{
 		
 		Integer age = (Integer)val;
 		if (age >= 18){
-			return true;
+			return new Boolean(true);
 		}
-		return false;
+		return new Boolean(false);
 	}
 
 }
