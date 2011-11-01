@@ -8,15 +8,15 @@ public class ListPool {
 	static public String [] fruits ={"Apple", "Orange", "Strawberry","Bananna", "Watermalon"};
 	static public String [] carMarks ={"TOYOTA", "Nissan", "Luxgen","Honda", "Ford","Mitsubishi","Lexus","Audi","Benz"};
 
-	static public ListModelList getListNameList(){
+	static public ListModelList<String> getListNameList(){
 		return new ListModelList<String>(listName);
 	}
 	
-	static public ListModelList getFruitList(){
+	static public ListModelList<String> getFruitList(){
 		return new ListModelList<String>(fruits);
 	}
 
-	static public ListModelList getCarMarkList(){
+	static public ListModelList<String> getCarMarkList(){
 		return new ListModelList<String>(carMarks);
 	}
 }
