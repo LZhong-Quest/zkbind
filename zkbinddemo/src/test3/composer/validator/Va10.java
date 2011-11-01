@@ -12,13 +12,8 @@ import org.zkoss.bind.Validator;
 import test3.converter.*;
 import test3.validator.*;
 
-/**
- * old view model, combine va01-va10 test cases into one.
- * @deprecated
- * @author Hawk
- *
- */
-public class ValidatorComposer{
+
+public class Va10{
 
 	private Integer age = 0;
 	private Integer negativeOne = -1;
