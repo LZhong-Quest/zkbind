@@ -8,7 +8,7 @@
 		
 		1. input a negative number, click submit.
 		2. input a number >= 18, label=Adult
-		3. input a number  >=0, <18 
+		3. input a number  >=0, less than 8 
 		</label>
 		Age :<intbox id="ageBox"
 			value="@bind(init=vm.negativeOne ,save=vm.age before 'submit') @validator(vm.nonNegative)"/>
