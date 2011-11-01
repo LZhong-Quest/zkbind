@@ -1,5 +1,6 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 <zk>
+<!-- combine va01-va10 test cases into one. -->
 	<window title="new page title" border="normal"
 		apply="org.zkoss.bind.BindComposer" viewModel="@bind(vm='test3.composer.ValidatorComposer')">
 		va1.
