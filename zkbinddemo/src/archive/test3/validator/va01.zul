@@ -1,0 +1,19 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="new page title" border="normal"
+		apply="org.zkoss.bind.BindComposer" viewModel="@bind(vm='test3.composer.validator.Va01')">
+		va1.
+		<label multiline="true">
+		Validator + Command. save before submit.
+		
+		1. input a negative number, click submit.
+		2. input a number >= 18, label=Adult
+		3. input a number  >=0, <18 
+		</label>
+		Age :<intbox id="ageBox"
+			value="@bind(init=vm.negativeOne ,save=vm.age before 'submit') @validator(vm.nonNegative)"/>
+				<button label="submit" onClick="@bind('submit')" />
+		<label id="adultLabel" value="@bind(vm.age) @converter(vm.maturityIndicator)"/>
+		
+	</window>
+</zk>
