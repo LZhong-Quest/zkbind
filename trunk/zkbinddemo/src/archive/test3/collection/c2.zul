@@ -3,7 +3,7 @@
 	<vbox apply="org.zkoss.bind.BindComposer" viewModel="@bind(vm='test3.composer.collection.C2')">
 		<label multiline="true">
 		c2.
-		delete row entry with button
+		1. delete row entry with button one by one.
 		</label>
 	
 		<listbox model="@bind(vm.fruitList)">
