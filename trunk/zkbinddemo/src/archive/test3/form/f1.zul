@@ -1,0 +1,49 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<vbox apply="org.zkoss.bind.BindComposer"
+		viewModel="@bind(vm='test3.composer.form.F1')" width="400px">
+	<label multiline="true">
+	f1.
+	form, command+argument, validator+argument,notifychange
+	1. click register, message doesn't change.
+	2. input account "john", password "1", retype password "2"
+	3. register, message no change.
+	4. input password "1", register, message show account.
+	5. input birthday 1978/1/1, register, message show "..are adult." 
+	</label>
+	<grid self="@form(id='fx', load=vm.user, save=vm.user before 'register') @validator(vm.f1Validator)">
+		<rows>
+			<row>
+				<label value="Account" />
+				<textbox
+					value="@bind(fx.account)" />
+			</row>
+			<row>
+				<label value="Password" />
+				<textbox type="password"
+					value="@bind(fx.password) " />
+			</row>
+			<row>
+				<label value="Retype Password " />
+				<textbox type="password"
+					value="@bind(fx.password2) " />
+			</row>
+			<row>
+				Birthday
+				<datebox value="@bind(save=fx.adult) @converter(vm.birthdayAdultConverter)"/>
+			</row>
+			<row>
+			</row>			
+			<row>
+				<label value="" />
+				<button id="computeButton" label="Register"
+					onClick="@bind('register')" />
+			</row>
+
+		</rows>
+
+	</grid>
+	<label value="@bind(vm.message)"/>
+
+	</vbox>
+</zk>
