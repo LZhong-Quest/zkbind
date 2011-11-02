@@ -1,0 +1,55 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<vbox apply="org.zkoss.bind.BindComposer"
+		viewModel="@bind(vm='test3.composer.form.F2')" width="400px">
+	<label multiline="true">
+	f1.
+	form, command+argument, validator+argument,notifychange
+	</label>
+	<grid self="@form(id='fx', load=vm.order, save=vm.order before 'compute') @validator(vm.f2Validator, max=10)">
+		<columns>
+			<column label="Name" />
+			<column label="Price" />
+			<column label="Quantity (less than 10)" width="140px" />
+			<column label="Subtotal" />
+		</columns>
+		<rows>
+			<row>
+				<label value="Item A" />
+				<label value="10" />
+				<intbox
+					value="@bind(fx.quantityA)" />
+				<label value="@bind(vm.order.subtotalA)" />
+			</row>
+			<row>
+				<label value="Item B" />
+				<label value="20" />
+				<intbox
+					value="@bind(fx.quantityB) " />
+				<label value="@bind(vm.order.subtotalB)" />
+			</row>
+			<row>
+				<label value="" />
+				<label value="Off %" />
+				<combobox id="offBox" width="80px">
+					<comboitem label="90" value="90" />
+					<comboitem label="80" value="80" />
+					<comboitem label="70" value="70" />
+					<comboitem label="60" value="60" />
+					<comboitem label="50" value="50" />
+				</combobox>
+				<button id="computeButton" label="Compute"
+					onClick="@bind('compute', off=offBox.selectedItem.value)" />
+			</row>
+			<row>
+				<label value="Total" />
+				<label value="" />
+				<label value="" />
+				<label value="@bind(load=vm.order.total after 'compute')" />
+			</row>
+		</rows>
+
+	</grid>
+
+	</vbox>
+</zk>
