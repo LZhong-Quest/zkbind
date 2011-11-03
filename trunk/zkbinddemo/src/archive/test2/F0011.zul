@@ -9,12 +9,12 @@
 	</div>
 	
 	<hbox>Row 1
-		<datebox id="db1" value="@bind(vm.bday1) @validator('validator1')" />
+		<datebox id="db1" value="@bind(vm.bday1) @validator('validator1')" format="yyyy/MM/dd"/>
 		<label id="lb11" value="@bind(vm.bday1) @converter('formatedDate', format='yyyy/MM/dd')"/>
 		<label id="lb12" value="@bind(vm.message1)"/>
 	</hbox>
 	<hbox>Row 2
-		<datebox id="db2" value="@bind(vm.bday2) @validator(vm.validator2)" />
+		<datebox id="db2" value="@bind(vm.bday2) @validator(vm.validator2)" format="yyyy/MM/dd" />
 		<label id="lb21" value="@bind(vm.bday2) @converter('formatedDate', format='yyyy/MM/dd')"/>
 		<label id="lb22" value="@bind(vm.message2)"/>
 	</hbox>
