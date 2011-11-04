@@ -191,7 +191,10 @@ Copyright (C) 2006 Potix Corporation. All Rights Reserved.
 		<value>true</value>
 	</library-property>
 	-->
-
+	<listener>
+        <description>For Zul Testing Language</description>
+        <listener-class>test.DesktopInit</listener-class>
+	</listener>
 	<!-- [ZK EE]
 		Turn on if you want to block the requests sent from inaccessible
 		widgets (such as invisible or disabled).
