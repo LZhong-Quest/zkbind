@@ -5,8 +5,8 @@
 		<label multiline="true">
 		v6.command, before, converter input with argument
 		1. input -1, not save
-		2. input 1, adult no checked
-		3. input 22, adult is checked
+		2. input 22, adult is checked
+		3. input 1, adult no checked
 		</label>
 		<intbox id="ageBox"
 			value="@bind(init=vm.negativeOne ,save=vm.adult before 'checkAdult') @converter(vm.adultConverter) @validator(vm.booleanValidator)" />
