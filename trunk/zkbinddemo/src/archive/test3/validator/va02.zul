@@ -6,8 +6,7 @@
 		va2
 		<label multiline="true"> 
 		1. input negative, click, not save 
-		2. enter 1, click, add 10
-		3. label show 1 and 11
+		2. enter 1, click, add 10, label show 1 and 11
 		4. input 18, adult
 		</label>
 		
@@ -19,7 +18,5 @@
 		age before added:<label id="beforeAge" value="@bind(load=vm.age before 'add10')" />
 		<separator />
 		current age: <label id="ageLabel" value="@bind(load=vm.age after 'add10')" />
-		
-		
 	</window>
 </zk>
