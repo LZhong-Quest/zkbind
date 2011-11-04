@@ -1,9 +1,9 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<window title="new page title" border="normal"
+	<window title="va11" border="normal"
 		apply="org.zkoss.bind.BindComposer"
 		viewModel="@bind(vm='test3.composer.validator.Va11')">
-		va1.
+		va11.
 		<label multiline="true">
 			Validator + Command. save before submit.
 
