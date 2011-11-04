@@ -12,7 +12,7 @@
 		</label>
 		Age :<intbox id="ageBox"
 			value="@bind(init=vm.negativeOne ,save=vm.age before 'submit') @validator(vm.nonNegative)"/>
-				<button label="submit" onClick="@bind('submit')" />
+				<button id="submitButton" label="submit" onClick="@bind('submit')" />
 		<label id="adultLabel" value="@bind(vm.age) @converter(vm.maturityIndicator)"/>
 		
 	</window>

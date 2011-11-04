@@ -13,7 +13,7 @@
 		
 		Age :<intbox id="ageBox"
 			value="@bind(init=vm.negativeOne ,save=vm.age before 'add10') @validator(vm.nonNegative)"/>
-		<button label="Add 10" onClick="@bind('add10')" />
+		<button id="addButton" label="Add 10" onClick="@bind('add10')" />
 		<label id="adultLabel" value="@bind(vm.age) @converter(vm.maturityIndicator)"/>			
 		<separator />
 		age before added:<label id="beforeAge" value="@bind(load=vm.age before 'add10')" />

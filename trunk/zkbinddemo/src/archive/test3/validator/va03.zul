@@ -12,7 +12,7 @@
 		
 		age can NOT less 10 :<intbox id="ageBox"
 			value="@bind(init=vm.age ,save=vm.age before 'minus') @validator(vm.lowerBoundValidator, min=10)"/>
-		<button label="Minus 10" onClick="@bind('minus' , decrement=10)" />
+		<button id="minusButton" label="Minus 10" onClick="@bind('minus' , decrement=10)" />
 		<label id="adultLabel" value="@bind(vm.age) @converter(vm.maturityIndicator)"/>			
 		<separator />
 		10 years ago : <label id="ageLabel" value="@bind(load=vm.age after 'minus')" />

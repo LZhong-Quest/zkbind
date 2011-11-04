@@ -10,7 +10,7 @@
 		</label>
 		<intbox id="ageBox"
 			value="@bind(init=vm.negativeOne ,save=vm.adult before 'checkAdult') @converter(vm.adultConverter) @validator(vm.booleanValidator)" />
-		<button id="adultLabel" label="checkAdult" onClick="@bind('checkAdult')" />
+		<button id="checkButton" id="adultLabel" label="checkAdult" onClick="@bind('checkAdult')" />
 		<checkbox id="adultBox" checked="@bind(load=vm.adult)" label="Is Adult"/>			
 		
 	</window>

@@ -15,7 +15,7 @@
 		Age :
 		<intbox id="ageBox"
 			value="@bind(init=vm.negativeOne ,save=vm.age before 'classify') @validator(vm.nonNegative)" />
-		<button label="classify" onClick="@bind('classify')" />
+		<button id="submitButton" label="classify" onClick="@bind('classify')" />
 		<separator/>
 		CLASSIFY: 
 		<label id="less13" value="Less than 13"
