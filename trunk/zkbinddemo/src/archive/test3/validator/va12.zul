@@ -49,7 +49,7 @@
 					<label value="Total"/>
 					<label value=""/>
 					<label value=""/>
-					<intbox id="totalBox" value="@bind(load= vm.total after 'compute')"/>
+					<label id="total" value="@bind(load= vm.total after 'compute')"/>
 				</row>
 			</rows>
 			
