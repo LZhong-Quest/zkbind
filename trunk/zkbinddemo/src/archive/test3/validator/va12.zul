@@ -25,13 +25,13 @@
 					<label value="Item A"/>
 					<label value="10"/>
 					<intbox id="quantityABox" value="@bind(vm.quantityA) @validator(vm.upperBoundValidator, max=10)"/>
-					<label value="@bind(vm.subtotalA)"/>
+					<label id="subtotalA" value="@bind(vm.subtotalA)"/>
 				</row>
 				<row>
 					<label value="Item B"/>
 					<label value="20"/>
 					<intbox id="quantityABox" value="@bind(vm.quantityB) @validator(vm.upperBoundValidator, max=10)"/>
-					<label value="@bind(vm.subtotalB)"/>
+					<label id="subtotalB" value="@bind(vm.subtotalB)"/>
 				</row>
 				<row>
 					<label value=""/>
