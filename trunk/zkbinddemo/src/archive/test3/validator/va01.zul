@@ -6,8 +6,8 @@
 		<label multiline="true">
 		Validator + Command. save before submit.
 		
-		1. input a negative number, click submit.
-		2. input a number >= 18, label=Adult
+		1. input a number >= 18, label=Adult
+		2. input a negative number, click submit.
 		3. input a number  >=0, less than 8 
 		</label>
 		Age :<intbox id="ageBox"
