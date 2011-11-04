@@ -17,7 +17,7 @@
 			<comboitem label="@bind(n)" value="@bind(n)"></comboitem>
 			</template>
 		</combobox>
-		<listbox visible="@bind(load=vm.single) compute" model="@bind(vm.listNameList)" checkmark="true" multiple="true">
+		<listbox id="contentListbox" visible="@bind(load=vm.single) compute" model="@bind(vm.listNameList)" checkmark="true" multiple="true">
 			<listitem>
 				<template name="model" var="n">
 				<listcell>
