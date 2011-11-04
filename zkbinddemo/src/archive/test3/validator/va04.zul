@@ -13,7 +13,7 @@
 		
 		Age can not over 30:<intbox id="ageBox"
 			value="@bind(init=vm.positiveOne ,save=vm.age before 'add') @validator(vm.upperBoundValidator, max=30)"/>
-		<button label="Add 10" onClick="@bind('add', increment=10)" />
+		<button id="addButton" label="Add 10" onClick="@bind('add', increment=10)" />
 		<label id="adultLabel" value="@bind(vm.age) @converter(vm.maturityIndicator)"/>			
 		<separator />
 		original age:<label id="originalAge" value="@bind(load=vm.age before 'add')" />

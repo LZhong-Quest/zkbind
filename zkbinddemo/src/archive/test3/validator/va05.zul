@@ -14,7 +14,7 @@
 		<intbox id="ageBox"
 			value="@bind(init=vm.negativeOne ,save=vm.age before 'submit') @validator(vm.nonNegative)" />
 		limit: <intbox id="limitBox" value="10"/> 
-		<button label="submit" onClick="@bind('submit')" />
+		<button id="submitButton" label="submit" onClick="@bind('submit')" />
 		<label id="messageLabel" value="@bind(vm.age) @converter(vm.ageLimitIndicator, limit=limitBox.value)" />
 		
 	</window>
