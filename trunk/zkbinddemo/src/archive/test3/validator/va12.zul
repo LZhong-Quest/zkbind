@@ -30,7 +30,7 @@
 				<row>
 					<label value="Item B"/>
 					<label value="20"/>
-					<intbox id="quantityABox" value="@bind(vm.quantityB) @validator(vm.upperBoundValidator, max=10)"/>
+					<intbox id="quantityBBox" value="@bind(vm.quantityB) @validator(vm.upperBoundValidator, max=10)"/>
 					<label id="subtotalB" value="@bind(vm.subtotalB)"/>
 				</row>
 				<row>
