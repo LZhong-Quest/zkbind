@@ -1,4 +1,4 @@
-package test3.composer.collection;
+package org.zkoss.zktest.zbind.viewmodel.collection;
 
 import static java.lang.System.out;
 
@@ -9,7 +9,6 @@ import java.util.Map;
 import org.zkoss.bind.NotifyChange;
 import org.zkoss.zul.ListModelList;
 
-import test3.data.ListPool;
 
 
 public class C2{
@@ -27,7 +26,6 @@ public class C2{
 	}
 
 	
-	//FIXME can NOT remove last 2 items
 	// -----------command -----------------
 	@NotifyChange("fruitList")
 	public void delete(Map<String, Object> args){

@@ -1,22 +1,15 @@
-package test3.composer.validator;
+package org.zkoss.zktest.zbind.viewmodel.validator;
 
-import static java.lang.System.out;
-
-import java.util.Date;
-import java.util.Map;
-
-import org.zkoss.bind.Converter;
 import org.zkoss.bind.NotifyChange;
+import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
 
-import test3.converter.*;
-import test3.validator.*;
 
-
-public class Va02{
+public class Va07{
 
 	private Integer age = 0;
 	private Integer negativeOne = -1;
+	
 	
 	public Integer getAge() {
 		return age;
@@ -36,20 +29,24 @@ public class Va02{
 	}
 	
 
-
 	// ------ validator ------------
+	
+	public class NonNegativeValidator implements Validator {
+
+		public void validate(ValidationContext ctx) {
+			
+			if (ctx.getProperty().getValue() instanceof Integer){
+				Integer value = (Integer)ctx.getProperty().getValue();
+				if (value < 0){
+					ctx.setInvalid();
+				}
+			}else{
+				ctx.setInvalid();
+			}
+		}
+
+	}	
 	public Validator getNonNegative(){
 		return new NonNegativeValidator();
 	}
-	//--------- converter ------------
-	public Converter getMaturityIndicator(){
-		return new MaturityIndicator();
-	}
-	
-	// -----------command -----------------
-
-	public void add10(){
-		age += 10;
-	}
-	
 }

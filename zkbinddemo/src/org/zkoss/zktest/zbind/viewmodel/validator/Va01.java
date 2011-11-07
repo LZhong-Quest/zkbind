@@ -1,16 +1,13 @@
-package test3.composer.validator;
+package org.zkoss.zktest.zbind.viewmodel.validator;
 
 import static java.lang.System.out;
 
-import java.util.Date;
-import java.util.Map;
-
+import org.zkoss.bind.BindContext;
 import org.zkoss.bind.Converter;
 import org.zkoss.bind.NotifyChange;
+import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
-
-import test3.converter.*;
-import test3.validator.*;
+import org.zkoss.zk.ui.Component;
 
 
 public class Va01{
@@ -37,11 +34,42 @@ public class Va01{
 	
 
 	// ------ validator ------------
+
+	public class NonNegativeValidator implements Validator {
+
+		public void validate(ValidationContext ctx) {
+			
+			if (ctx.getProperty().getValue() instanceof Integer){
+				Integer value = (Integer)ctx.getProperty().getValue();
+				if (value < 0){
+					ctx.setInvalid();
+				}
+			}else{
+				ctx.setInvalid();
+			}
+		}
+
+	}
 	public Validator getNonNegative(){
 		return new NonNegativeValidator();
 	}
 	
 	//--------- converter ------------
+	
+	public class MaturityIndicator implements Converter {
+
+		public Object coerceToUi(Object val, Component component, BindContext ctx) {
+
+			Integer age = (Integer)val;
+			if (age >= 18){
+				return "Adult";
+			}
+			return "Under Age";
+		}
+		public Object coerceToBean(Object val, Component component, BindContext ctx) {
+			return null;
+		}
+	}	
 	public Converter getMaturityIndicator(){
 		return new MaturityIndicator();
 	}

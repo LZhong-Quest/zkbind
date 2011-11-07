@@ -1,19 +1,17 @@
-package test3.composer.collection;
+package org.zkoss.zktest.zbind.viewmodel.collection;
 
 import static java.lang.System.out;
 
 import java.util.List;
 
-import org.zkoss.bind.BindComposer;
+import org.zkoss.bind.BindContext;
 import org.zkoss.bind.Converter;
 import org.zkoss.bind.DependsOn;
 import org.zkoss.bind.NotifyChange;
+import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
+import org.zkoss.zk.ui.Component;
 
-import test3.converter.NotConverter;
-import test3.data.ListPool;
-import test3.validator.MaxLengthValidator;
-import test3.validator.NonNegativeValidator;
 
 
 public class C1{
@@ -64,14 +62,61 @@ public class C1{
 		return ListPool.getListNameList();
 	}
 	// ------ validator ------------
+	
+	public class NonNegativeValidator implements Validator {
+
+		public void validate(ValidationContext ctx) {
+			
+			if (ctx.getProperty().getValue() instanceof Integer){
+				Integer value = (Integer)ctx.getProperty().getValue();
+				if (value < 0){
+					ctx.setInvalid();
+				}
+			}else{
+				ctx.setInvalid();
+			}
+		}
+
+	}	
 	public Validator getNonNegative(){
 		return new NonNegativeValidator();
 	}
+	
+	public class MaxLengthValidator implements Validator {
+
+		public void validate(ValidationContext ctx) {
+			Number maxLength = (Number)ctx.getBindContext().getValidatorArg("length");
+//			String maxLength = (String)ctx.getBindContext().getValidatorArg("length");
+			if (ctx.getProperty().getValue() instanceof String){
+				String value = (String)ctx.getProperty().getValue();
+				if (value.length() > maxLength.longValue()){
+					ctx.setInvalid();
+				}
+			}else{
+				ctx.setInvalid();
+			}
+		}
+	}	
 	public Validator getMaxLengthValidator(){
 		return new MaxLengthValidator();
 	}
 	
 	//--------- converter ------------
+	/*
+	 * reverse the boolean value
+	 */
+	public class NotConverter implements Converter{
+
+		public Object coerceToUi(Object val, Component component, BindContext ctx) {
+			return !(Boolean)val;
+		}
+
+		public Object coerceToBean(Object val, Component component, BindContext ctx) {
+			
+			return !(Boolean)val;
+		}
+
+	}	
 	public Converter getNotConverter(){
 		return new NotConverter();
 	}

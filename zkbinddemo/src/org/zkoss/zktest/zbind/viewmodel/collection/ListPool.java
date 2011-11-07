@@ -1,4 +1,4 @@
-package test3.data;
+package org.zkoss.zktest.zbind.viewmodel.collection;
 
 import org.zkoss.zul.ListModelList;
 
