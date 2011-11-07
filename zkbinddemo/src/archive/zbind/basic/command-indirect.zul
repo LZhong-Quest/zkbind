@@ -1,0 +1,12 @@
+<window apply="org.zkoss.zktest.zbind.basic.CommandIndirectComposer">
+	<custom-attributes composerName="vm"/>
+	<vbox>
+	<label value="@bind(vm.value1)"/>
+	<checkbox label="another command" checked="@bind(vm.checked)" />
+	</vbox>
+	
+	<hbox>
+		<button label="Cmd" onClick="@bind(vm.checked?'command1':'command2')" />
+		<button label="Dump" onClick="binder.getTracker().dump()" />
+	</hbox>	
+</window>
