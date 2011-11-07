@@ -10,7 +10,7 @@
 			<template name="model" var="f">
 				<listitem>
 					<listcell label="@bind(f)"></listcell>
-					<listcell><button id="@bind(f)" label="Delete" onClick="@bind('delete', index=self.parent.parent.index)" /></listcell>
+					<listcell><button  label="Delete" onClick="@bind('delete', index=self.parent.parent.index)" /></listcell>
 				</listitem>
 			</template>
 

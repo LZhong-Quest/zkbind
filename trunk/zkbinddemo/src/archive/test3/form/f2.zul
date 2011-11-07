@@ -23,16 +23,16 @@
 			<row>
 				<label value="Item A" />
 				<label value="10" />
-				<intbox
+				<intbox id="quantityABox"
 					value="@bind(fx.quantityA)" />
-				<label value="@bind(vm.order.subtotalA)" />
+				<label id="subtotalA" value="@bind(vm.order.subtotalA)" />
 			</row>
 			<row>
 				<label value="Item B" />
 				<label value="20" />
-				<intbox
+				<intbox id="quantityBBox"
 					value="@bind(fx.quantityB) " />
-				<label value="@bind(vm.order.subtotalB)" />
+				<label id="subtotalB" value="@bind(vm.order.subtotalB)" />
 			</row>
 			<row>
 				<label value="" />
@@ -51,7 +51,7 @@
 				<label value="Total" />
 				<label value="" />
 				<label value="" />
-				<label value="@bind(load=vm.order.total after 'compute')" />
+				<label id="total" value="@bind(load=vm.order.total after 'compute')" />
 			</row>
 		</rows>
 

@@ -15,35 +15,35 @@
 		<rows>
 			<row>
 				<label value="Account" />
-				<textbox
+				<textbox id="accountBox"
 					value="@bind(fx.account)" />
 			</row>
 			<row>
 				<label value="Password" />
-				<textbox type="password"
+				<textbox id="passwordBox" type="password"
 					value="@bind(fx.password) " />
 			</row>
 			<row>
 				<label value="Retype Password " />
-				<textbox type="password"
+				<textbox id="passwordBox2" type="password"
 					value="@bind(fx.password2) " />
 			</row>
 			<row>
 				Birthday
-				<datebox value="@bind(save=fx.adult) @converter(vm.birthdayAdultConverter)"/>
+				<datebox id="birthdayBox" value="@bind(save=fx.adult) @converter(vm.birthdayAdultConverter)"/>
 			</row>
 			<row>
 			</row>			
 			<row>
 				<label value="" />
-				<button id="computeButton" label="Register"
+				<button id="registerButton" label="Register"
 					onClick="@bind('register')" />
 			</row>
 
 		</rows>
 
 	</grid>
-	<label value="@bind(vm.message)"/>
+	<label id="message" value="@bind(vm.message)"/>
 
 	</vbox>
 </zk>
