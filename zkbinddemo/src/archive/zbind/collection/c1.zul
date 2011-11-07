@@ -1,6 +1,6 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<vbox apply="org.zkoss.bind.BindComposer" viewModel="@bind(vm='test3.composer.collection.C1')">
+	<vbox apply="org.zkoss.bind.BindComposer" viewModel="@bind(vm='org.zkoss.zktest.zbind.viewmodel.collection.C1')">
 		<label multiline="true">
 		c1.
 		1. select combobox
