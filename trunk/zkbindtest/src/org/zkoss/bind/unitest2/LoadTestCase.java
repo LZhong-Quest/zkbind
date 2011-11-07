@@ -1,20 +1,16 @@
 package org.zkoss.bind.unitest2;
 
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.zkoss.zktc.core.junit.TestCaseBase;
 import org.zkoss.zktc.core.widget.SelectWidget;
-import org.zkoss.zktc.core.widget.Widget;
-import org.zkoss.zktc.core.widget.WidgetDriver;
 
 public class LoadTestCase extends TestCaseBase{
 
 	
 	@Test
 	public void testLoad(){
-		navigate(getTestCaseUrl("/test2/zkbind-load.zul"));
+		navigate(getTestCaseUrl("/zbind/basic/load.zul"));
 		
 		Assert.assertEquals("First1",findWidget("$l1").getAttribute("value"));
 		Assert.assertEquals("Last1",findWidget("$l2").getAttribute("value"));
@@ -140,7 +136,7 @@ public class LoadTestCase extends TestCaseBase{
 	
 	@Test
 	public void testIndirect1(){
-		navigate(getTestCaseUrl("/test2/zkbind-load-indirect.zul"));
+		navigate(getTestCaseUrl("/zbind/basic/load-indirect.zul"));
 		
 		Assert.assertEquals("First1",findWidget("$l1").getAttribute("value"));
 		Assert.assertEquals("Last1",findWidget("$l2").getAttribute("value"));
@@ -193,7 +189,7 @@ public class LoadTestCase extends TestCaseBase{
 	
 	@Test
 	public void testIndirect2(){
-		navigate(getTestCaseUrl("/test2/zkbind-load-indirect.zul"));
+		navigate(getTestCaseUrl("/zbind/basic/load-indirect.zul"));
 		
 		Assert.assertEquals("First1",findWidget("$l1").getAttribute("value"));
 		Assert.assertEquals("Last1",findWidget("$l2").getAttribute("value"));
@@ -246,7 +242,7 @@ public class LoadTestCase extends TestCaseBase{
 	
 	@Test
 	public void testProperty(){
-		navigate(getTestCaseUrl("/test2/zkbind-property.zul"));
+		navigate(getTestCaseUrl("/zbind/basic/property.zul"));
 		
 		Assert.assertEquals("A",findWidget("$t1").getAttribute("value"));
 		Assert.assertEquals("A",findWidget("$l1").getAttribute("value"));
@@ -309,7 +305,7 @@ public class LoadTestCase extends TestCaseBase{
 	
 	@Test
 	public void testConverter(){
-		navigate(getTestCaseUrl("/test2/zkbind-converter.zul"));
+		navigate(getTestCaseUrl("/zbind/basic/converter.zul"));
 		
 		Assert.assertEquals("1975/02/13",findWidget("$t1").getAttribute("value"));
 		Assert.assertEquals("36",findWidget("$l1").getAttribute("value"));
@@ -354,7 +350,7 @@ public class LoadTestCase extends TestCaseBase{
 	
 	@Test
 	public void testValidation(){
-		navigate(getTestCaseUrl("/test2/zkbind-validation.zul"));
+		navigate(getTestCaseUrl("/zbind/basic/validation.zul"));
 		
 		Assert.assertEquals("0",findWidget("$l11").getValue());
 		Assert.assertEquals("",findWidget("$l12").getValue());

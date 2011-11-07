@@ -13,7 +13,7 @@ public class MiscTestCase extends TestCaseBase{
 
 	@Test
 	public void testArgs(){
-		navigate(getTestCaseUrl("/test2/args.zul"));
+		navigate(getTestCaseUrl("/zbind/basic/args.zul"));
 		
 		Assert.assertEquals("A-Arg1",findWidget("$l1").getValue());
 		Assert.assertEquals("B-myarg1",findWidget("$l2").getValue());
@@ -60,7 +60,7 @@ public class MiscTestCase extends TestCaseBase{
 	}
 	@Test
 	public void testVMInit(){
-		navigate(getTestCaseUrl("/test2/vm-init.zul"));
+		navigate(getTestCaseUrl("/zbind/basic/vm-init.zul"));
 		
 		Assert.assertEquals("AA",findWidget("$vm1_l1").getValue());
 		Assert.assertEquals("V1-AA",findWidget("$vm1_t1").getValue());
