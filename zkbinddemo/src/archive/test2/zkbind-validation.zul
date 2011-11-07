@@ -1,38 +1,24 @@
 <window apply="test2.ValidationComposer">
 	<custom-attributes composerName="vm"/>
 	<vbox>
-		<hbox>Value1:<label value="@bind(vm.value1)"></label></hbox>
-		<hbox>Value2:<label value="@bind(vm.value1)"></label></hbox>
+		<hbox>Value1:<label id="l11" value="@bind(vm.value1)"></label></hbox>
+		<hbox>Value2:<label id="l12" value="@bind(vm.value2)"></label></hbox>
 	</vbox>	
 	<hbox>
 		Prompt:
-		Value1:<textbox id="t11" value="@bind(vm.value1) @validator('validator1')" errorMessage="@bind(vm.lastMessage1)" />
-		Value2:<textbox id="t12" value="@bind(vm.value2) @validator('validator2')" errorMessage="@bind(vm.lastMessage2)"/>
+		Value1:<textbox id="t21" value="@bind(vm.value1) @validator('validator1')" errorMessage="@bind(vm.lastMessage1)" />
+		Value2:<textbox id="t22" value="@bind(vm.value2) @validator('validator2')" errorMessage="@bind(vm.lastMessage2)"/>
 	</hbox>	
 	<hbox>
 		Command:
-		Value1:<textbox id="t21" value="@bind(vm.value1, save=vm.value1 before 'cmd1') @validator('validator1')" />
-		Value2:<textbox id="t22" value="@bind(vm.value2, save=vm.value2 before 'cmd1') @validator('validator2')" />
+		Value1:<textbox id="t31" value="@bind(vm.value1, save=vm.value1 before 'cmd1') @validator('validator1')" />
+		Value2:<textbox id="t32" value="@bind(vm.value2, save=vm.value2 before 'cmd1') @validator('validator2')" />
 	</hbox>
 	<hbox>
-		<button label="cmd1" onClick="@bind('cmd1')"/>
+		<button id="btn1" label="cmd1" onClick="@bind('cmd1')"/>
 	</hbox>	
-	<!--
-	there is a nested validation value issue
-	t3->fx.value1, validation fail, fx.value will be initial-value or last-validated value
-	fx.value1->vm, validation passed, form the ui, you see a wrong value(ex,2), however vm will have last validated value(ex 13)
-	-->	
-	<hbox self="@form(id='fx',load=vm, save=vm before 'cmd2') @validator('validator3')">
-		Form
-		Value1:<textbox id="t31" value="@bind(fx.value1) @validator('validator1')" />
-		Value2:<textbox id="t32" value="@bind(fx.value2) @validator('validator2')" />
-	</hbox>
 	<vbox>
-		<label value="@bind(vm.lastMessage1)"></label>
-		<label value="@bind(vm.lastMessage2)"></label>
+		<label id="msg1" value="@bind(vm.lastMessage1)"></label>
+		<label id="msg2" value="@bind(vm.lastMessage2)"></label>
 	</vbox>
-
-	<hbox>
-		<button label="cmd2" onClick="@bind('cmd2')"/>
-	</hbox>
 </window>

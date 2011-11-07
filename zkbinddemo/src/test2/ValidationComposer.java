@@ -31,7 +31,6 @@ public class ValidationComposer extends BindComposer {
 	
 	public ValidationComposer() {
 		addValidator("validator1",new Validator(){
-			@NotifyChange("lastMessage1")
 			public void validate(ValidationContext ctx) {
 				if(!ctx.isValid()) return;
 				Property p = ctx.getProperty();
@@ -42,10 +41,10 @@ public class ValidationComposer extends BindComposer {
 					ctx.setInvalid();
 					setLastMessage1("value 1 have to large than 10");
 				}
+				ctx.getBindContext().getBinder().notifyChange(ValidationComposer.this, "lastMessage1");
 			}			
 		});
 		addValidator("validator2",new Validator(){
-			@NotifyChange("lastMessage2")
 			public void validate(ValidationContext ctx) {
 				if(!ctx.isValid()) return;
 				Property p = ctx.getProperty();
@@ -56,6 +55,7 @@ public class ValidationComposer extends BindComposer {
 					ctx.setInvalid();
 					setLastMessage2("value 2 have to large than 20");
 				}
+				ctx.getBindContext().getBinder().notifyChange(ValidationComposer.this, "lastMessage2");
 			}			
 		});
 		addValidator("validator3",new Validator(){
@@ -66,25 +66,9 @@ public class ValidationComposer extends BindComposer {
 				Object val2 = ctx.getProperties().get("value2")[0].getValue();//ctx.getPropertyValue("value2");//null;
 				Object form = ctx.getProperties().get(".")[0].getValue();//ctx.getPropertyValue(".");
 				
-				if(val1 == null){
+				if(Integer.parseInt(val1.toString())>=Integer.parseInt(val2.toString())){
 					ctx.setInvalid();
-					setLastMessage1("value1 must not empty");
-				}else if(Integer.parseInt(val1.toString())>10){
-					setLastMessage1(null);
-				}else{
-					ctx.setInvalid();
-					setLastMessage1("value1 have to large than 10");
-					
-				}
-				
-				if(val2 == null){
-					ctx.setInvalid();
-					setLastMessage2("value2 must not empty");
-				}else if(Integer.parseInt(val2.toString())>20){
-					setLastMessage2(null);
-				}else{
-					ctx.setInvalid();
-					setLastMessage2("value2 have to large than 20");
+					setLastMessage2("value 2 have to large than value 1");
 				}
 			}			
 		});
