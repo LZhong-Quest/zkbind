@@ -13,9 +13,9 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 package test3.composer;
 
 import org.zkoss.bind.BindComposer;
+import org.zkoss.zktest.zbind.viewmodel.collection.ListPool;
 import org.zkoss.zul.ListModelList;
 
-import test3.data.ListPool;
 
 
 /**

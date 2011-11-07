@@ -1,14 +1,14 @@
-package test3.composer.form;
+package org.zkoss.zktest.zbind.viewmodel.form;
 
+import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
 
+import org.zkoss.bind.BindContext;
 import org.zkoss.bind.Converter;
 import org.zkoss.bind.NotifyChange;
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
-
-import test3.converter.BirthdayAdultConverter;
+import org.zkoss.zk.ui.Component;
 
 public class F1 {
 
@@ -77,6 +77,28 @@ public class F1 {
 	public Validator getF1Validator(){
 		return new F1Validator();
 	}
+	
+	public class BirthdayAdultConverter implements Converter{
+
+		public Object coerceToUi(Object val, Component component, BindContext ctx) {
+			return val;
+		}
+
+		public Object coerceToBean(Object val, Component component, BindContext ctx) {
+			
+			Calendar adultDay = Calendar.getInstance();
+			adultDay.setTime((Date)val);
+			adultDay.add(Calendar.YEAR, 18);
+			Calendar now = Calendar.getInstance();
+			
+			if (now.after(adultDay)){
+				return true;
+			}
+			return false;
+		}
+
+	}
+	
 	public Converter getBirthdayAdultConverter(){
 		return new BirthdayAdultConverter();
 	}

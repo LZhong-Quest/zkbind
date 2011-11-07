@@ -1,17 +1,11 @@
-package test3.composer.validator;
-
-import static java.lang.System.out;
+package org.zkoss.zktest.zbind.viewmodel.validator;
 
 import java.util.Map;
 
-import org.zkoss.bind.Converter;
 import org.zkoss.bind.DependsOn;
 import org.zkoss.bind.NotifyChange;
+import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
-
-import test3.converter.MaturityIndicator;
-import test3.validator.NonNegativeValidator;
-import test3.validator.UpperBoundValidator;
 
 
 public class Va12{
@@ -73,6 +67,21 @@ public class Va12{
 	}
 
 	// ------ validator ------------
+
+	public class UpperBoundValidator implements Validator {
+
+		public void validate(ValidationContext ctx) {
+			Number upperBound = (Number)ctx.getBindContext().getValidatorArg("max");
+			if (ctx.getProperty().getValue() instanceof Number){
+				Number value = (Number)ctx.getProperty().getValue();
+				if (value.longValue() > upperBound.longValue()){
+					ctx.setInvalid();
+				}
+			}else{
+				ctx.setInvalid();
+			}
+		}
+	}
 	public Validator getUpperBoundValidator(){
 		return new UpperBoundValidator();
 	}

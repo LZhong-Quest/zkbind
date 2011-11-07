@@ -1,7 +1,8 @@
-package test3.composer.form;
+package org.zkoss.zktest.zbind.viewmodel.form;
 
 import java.util.Iterator;
 import java.util.Map;
+
 import org.zkoss.bind.NotifyChange;
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
