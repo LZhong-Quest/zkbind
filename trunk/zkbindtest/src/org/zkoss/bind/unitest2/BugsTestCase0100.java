@@ -15,6 +15,76 @@ import org.zkoss.zktc.core.widget.Widget;
 public class BugsTestCase0100 extends TestCaseBase{
 
 	@Test
+	public void b0004(){
+		navigate(getTestCaseUrl("/test2/B0004.zul"));
+		
+		Assert.assertEquals("0",findWidget("$l11").getValue());
+		Assert.assertEquals("",findWidget("$l12").getValue());
+		Assert.assertEquals("",findWidget("$msg1").getValue());
+		Assert.assertEquals("",findWidget("$msg2").getValue());
+		Assert.assertEquals("",findWidget("$msg3").getValue());
+		
+		findWidget("$btn1").click();
+		Assert.assertEquals("0",findWidget("$l11").getValue());
+		Assert.assertEquals("",findWidget("$l12").getValue());
+		Assert.assertEquals("value 1 have to large than 10",findWidget("$msg1").getValue());
+		Assert.assertEquals("",findWidget("$msg2").getValue());
+		Assert.assertEquals("",findWidget("$msg3").getValue());
+		
+		
+		findWidget("$t21").clear().keys("32").tab();
+		Assert.assertEquals("0",findWidget("$l11").getValue());
+		Assert.assertEquals("",findWidget("$l12").getValue());
+		Assert.assertEquals("",findWidget("$msg1").getValue());
+		Assert.assertEquals("",findWidget("$msg2").getValue());
+		Assert.assertEquals("",findWidget("$msg3").getValue());
+		
+		findWidget("$btn1").click();
+		Assert.assertEquals("0",findWidget("$l11").getValue());
+		Assert.assertEquals("",findWidget("$l12").getValue());
+		Assert.assertEquals("",findWidget("$msg1").getValue());
+		Assert.assertEquals("value 2 is not valid For input string: \"\"",findWidget("$msg2").getValue());
+		Assert.assertEquals("",findWidget("$msg3").getValue());
+		
+		
+		findWidget("$t22").clear().keys("13").tab();
+		Assert.assertEquals("0",findWidget("$l11").getValue());
+		Assert.assertEquals("",findWidget("$l12").getValue());
+		Assert.assertEquals("",findWidget("$msg1").getValue());
+		Assert.assertEquals("value 2 have to large than 20",findWidget("$msg2").getValue());
+		Assert.assertEquals("",findWidget("$msg3").getValue());
+		
+		findWidget("$t22").clear().keys("22").tab();
+		Assert.assertEquals("0",findWidget("$l11").getValue());
+		Assert.assertEquals("",findWidget("$l12").getValue());
+		Assert.assertEquals("",findWidget("$msg1").getValue());
+		Assert.assertEquals("",findWidget("$msg2").getValue());
+		Assert.assertEquals("",findWidget("$msg3").getValue());
+		
+		findWidget("$btn1").click();
+		Assert.assertEquals("0",findWidget("$l11").getValue());
+		Assert.assertEquals("",findWidget("$l12").getValue());
+		Assert.assertEquals("",findWidget("$msg1").getValue());
+		Assert.assertEquals("value 2 have to large than value 1",findWidget("$msg2").getValue());
+		Assert.assertEquals("",findWidget("$msg3").getValue());
+		
+		findWidget("$t22").clear().keys("42").tab();
+		Assert.assertEquals("0",findWidget("$l11").getValue());
+		Assert.assertEquals("",findWidget("$l12").getValue());
+		Assert.assertEquals("",findWidget("$msg1").getValue());
+		Assert.assertEquals("",findWidget("$msg2").getValue());
+		Assert.assertEquals("",findWidget("$msg3").getValue());
+		
+		
+		findWidget("$btn1").click();
+		Assert.assertEquals("32",findWidget("$l11").getValue());
+		Assert.assertEquals("42",findWidget("$l12").getValue());
+		Assert.assertEquals("",findWidget("$msg1").getValue());
+		Assert.assertEquals("",findWidget("$msg2").getValue());
+		Assert.assertEquals("execute command 1",findWidget("$msg3").getValue());
+	}
+	
+	@Test
 	public void b0020(){
 		navigate(getTestCaseUrl("/test2/B0020.zul"));
 		//test property init
