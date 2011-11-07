@@ -16,7 +16,7 @@ public class FeaturesTestCase0100 extends TestCaseBase{
 
 	@Test
 	public void f0002(){
-		navigate(getTestCaseUrl("/test2/F0002.zul"));
+		navigate(getTestCaseUrl("/zbind/issue/F0002.zul"));
 		//test property init
 		Assert.assertEquals("A",findWidget("$tb1").getValue());
 		Assert.assertEquals("A",findWidget("$l1").getValue());
@@ -60,7 +60,7 @@ public class FeaturesTestCase0100 extends TestCaseBase{
 
 	@Test
 	public void f0010(){
-		navigate(getTestCaseUrl("/test2/F0010.zul"));
+		navigate(getTestCaseUrl("/zbind/issue/F0010.zul"));
 		
 		Assert.assertEquals("A-toUI-c0",findWidget("$l0").getValue());
 		Assert.assertEquals("B-toUI-c1",findWidget("$l1").getValue());
@@ -139,7 +139,7 @@ public class FeaturesTestCase0100 extends TestCaseBase{
 	
 	@Test
 	public void f0011(){
-		navigate(getTestCaseUrl("/test2/F0011.zul"));
+		navigate(getTestCaseUrl("/zbind/issue/F0011.zul"));
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 		Date now = new Date();
 		String today = sdf.format(now);
@@ -181,7 +181,7 @@ public class FeaturesTestCase0100 extends TestCaseBase{
 	
 	@Test
 	public void f0011_1(){
-		navigate(getTestCaseUrl("/test2/F0011.zul"));
+		navigate(getTestCaseUrl("/zbind/issue/F0011.zul"));
 		
 		
 		//validate property before command
@@ -212,7 +212,7 @@ public class FeaturesTestCase0100 extends TestCaseBase{
 	
 	@Test
 	public void f0011_3(){
-		navigate(getTestCaseUrl("/test2/F0011.zul"));
+		navigate(getTestCaseUrl("/zbind/issue/F0011.zul"));
 		
 		
 		//validate property before command
@@ -246,7 +246,7 @@ public class FeaturesTestCase0100 extends TestCaseBase{
 	
 	@Test
 	public void f0011_2(){
-		navigate(getTestCaseUrl("/test2/F0011.zul"));
+		navigate(getTestCaseUrl("/zbind/issue/F0011.zul"));
 		
 		
 		//validate property before command
@@ -292,7 +292,7 @@ public class FeaturesTestCase0100 extends TestCaseBase{
 	
 	@Test
 	public void f0013(){
-		navigate(getTestCaseUrl("/test2/F0013.zul"));
+		navigate(getTestCaseUrl("/zbind/issue/F0013.zul"));
 		
 		Assert.assertEquals("A",findWidget("$l1").getValue());
 		Assert.assertEquals("B",findWidget("$l2").getValue());
@@ -338,7 +338,7 @@ public class FeaturesTestCase0100 extends TestCaseBase{
 	
 	@Test
 	public void f0012(){
-		navigate(getTestCaseUrl("/test2/F0015.zul"));
+		navigate(getTestCaseUrl("/zbind/issue/F0015.zul"));
 		
 		Assert.assertEquals("A",findWidget("$l11").getValue());
 		Assert.assertEquals("B",findWidget("$l12").getValue());
