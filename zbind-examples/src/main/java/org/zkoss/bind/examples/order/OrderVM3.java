@@ -27,12 +27,10 @@ public class OrderVM3 extends OrderVM2{
 		return deleteMessage;
 	}
 	
+	@Override
 	@NotifyChange({"selected","orders","validationMessages","deleteMessage"})
 	public void deleteOrder(){
-		getService().delete(selected);
-		getOrders().remove(selected);
-		selected = null;
-		validationMessages.clear();
+		super.deleteOrder();
 		deleteMessage = null;
 	}
 	

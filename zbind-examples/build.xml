@@ -19,7 +19,11 @@
 	<path id="classpath">
 		<fileset dir="${basedir}/lib" includes="*.jar" />
 	</path>
-
+	<target name="build.time" unless="build.time">
+		<tstamp>
+			<format property="build.time" pattern="yyyyMMdd" />
+		</tstamp>
+	</target>
 	<target name="clean" description="removes all generated files">
 		<delete dir="${classes_folder}" />
 		<delete dir="${war_folder}" />
@@ -39,7 +43,7 @@
 		</javac>
 	</target>
 
-	<target name="build" depends="compile">
+	<target name="build" depends="build.time,compile">
 		<copy todir="${war_folder}">
 			<fileset dir="${content_folder}">
 				<include name="**/*.*" />
@@ -65,5 +69,10 @@
 				<include name="**/*.*" />
 			</fileset>
 		</war>
+		<zip destfile="zbind-examples-${build.time}.zip">
+			<fileset dir="${basedir}">
+				<include name="${warname}" />
+			</fileset>
+		</zip>
 	</target>
 </project>

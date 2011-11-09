@@ -12,7 +12,7 @@
 			</n:a>
 		</n:li>
 	</n:ul>
-	<n:h3>Smalltalk2</n:h3>
+	<n:h3>Design CRUD page by MVVM pattern</n:h3>
 	<n:ul>
 		<n:li>
 			<n:a href="order/order.zul">

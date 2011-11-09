@@ -10,7 +10,7 @@
 		<hbox>
 			Filter : 
 			<combobox value="@bind(vm.filter)" onSelect="@bind('doSearch')" onChange="@bind('doSearch')">
-				<comboitem label="All" value="*"/>
+				<comboitem label="*" value="*"/>
 				<comboitem label="A" value="A"/>
 				<comboitem label="B" value="B"/>
 				<comboitem label="C" value="C"/>
