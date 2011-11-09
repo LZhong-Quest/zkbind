@@ -1,3 +1,3 @@
-1.for developer, you should use maven to get the related jar file
-2.for releaser, you have to copy zk 6 jar file to this folder, 
-  you have also copy junit 4 jar file to here to pass compile (we have a junit testcase in the source code)
+1.for development, you should use maven to get the related jar files
+2.for release, you have to copy zk 6 jar file to this folder, 
+  you have to also copy junit 4 jar file to here to pass compile (we have a junit testcase for demo in the source code)

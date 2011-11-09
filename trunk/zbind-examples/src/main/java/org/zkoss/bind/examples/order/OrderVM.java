@@ -74,7 +74,7 @@ public class OrderVM {
 		validationMessages.clear();//clear message
 	}
 	
-	//validation message
+	//validation messages
 	Map<String, String> validationMessages = new HashMap<String,String>();
 	
 	public Map<String,String> getValidationMessages(){

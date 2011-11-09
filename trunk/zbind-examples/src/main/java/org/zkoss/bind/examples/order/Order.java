@@ -29,7 +29,6 @@ public class Order {
 	Date shippingDate;
 	double price;
 	int quantity;
-	double totalPrice;
 
 	public Order() {
 	}	
