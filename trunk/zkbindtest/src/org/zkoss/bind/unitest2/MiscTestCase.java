@@ -126,4 +126,31 @@ public class MiscTestCase extends TestCaseBase{
 		Assert.assertEquals("do command1 XX",findWidget("$vm4_l3").getValue());
 	}
 	
+	@Test
+	public void testCommandIndirect(){
+		navigate(getTestCaseUrl("/zbind/basic/command-indirect.zul"));
+		
+		Assert.assertEquals("no-command",findWidget("$l1").getValue());
+		
+		findWidget("$btn1").click();
+		Assert.assertEquals("by command1",findWidget("$l1").getValue());
+		findWidget("$btn1").click();
+		Assert.assertEquals("by command1",findWidget("$l1").getValue());
+		
+		findWidget("$cb1").click();
+		
+		findWidget("$btn1").click();
+		Assert.assertEquals("by command2",findWidget("$l1").getValue());
+		findWidget("$btn1").click();
+		Assert.assertEquals("by command2",findWidget("$l1").getValue());
+		
+		findWidget("$cb1").click();
+		
+		findWidget("$btn1").click();
+		Assert.assertEquals("by command1",findWidget("$l1").getValue());
+		findWidget("$btn1").click();
+		Assert.assertEquals("by command1",findWidget("$l1").getValue());
+		
+	}
+	
 }
