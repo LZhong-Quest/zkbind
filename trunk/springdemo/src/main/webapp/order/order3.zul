@@ -1,3 +1,4 @@
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
 <zk>
 <style>
 .z-label.red{
@@ -5,7 +6,7 @@
 }
 </style>
 <window title="Order Management" border="normal" width="600px"
-	apply="org.zkoss.bind.BindComposer" viewModel="@bind(vm='org.zkoss.bind.examples.order.OrderVM3')" >
+	apply="org.zkoss.bind.BindComposer" viewModel="@bind(vm=orderVm)" >
 	<vbox hflex="true">
 		<listbox model="@bind(vm.orders)" selectedItem="@bind(vm.selected)" hflex="true" height="200px">
 			<listhead>
