@@ -37,6 +37,8 @@ public class OrderVM {
 	//the order list
 	ListModelList<Order> orders;
 	
+	@Autowired
+	OrderService orderService;
 	//the selected order
 	Order selected;
 	
@@ -57,7 +59,7 @@ public class OrderVM {
 	public ListModelList<Order> getOrders() {
 		if (orders == null) {
 			//init the list
-			orders = new ListModelList<Order>(getService().list());
+			orders = new ListModelList<Order>(orderService.list());
 		}
 		return orders;
 	}
@@ -84,14 +86,14 @@ public class OrderVM {
 	
 	@NotifyChange({"selected","validationMessages"})
 	public void saveOrder(){
-		getService().save(selected);
+		orderService.save(selected);
 		validationMessages.clear();//clear message
 	}
 	
 	
 //	@NotifyChange({"selected","orders","validationMessages"})
 //	public void deleteOrder(){
-//		getService().delete(selected);//delete selected
+//		orderService.delete(selected);//delete selected
 //		getOrders().remove(selected);
 //		selected = null; //clean the selected
 //		validationMessages.clear();//clear message
@@ -99,7 +101,7 @@ public class OrderVM {
 
 	@NotifyChange({"selected","orders","validationMessages","deleteMessage"})
 	public void deleteOrder(){
-		getService().delete(selected);//delete selected
+		orderService.delete(selected);//delete selected
 		getOrders().remove(selected);
 		selected = null; //clean the selected
 		validationMessages.clear();//clear message
@@ -112,10 +114,6 @@ public class OrderVM {
 	}
 	
 
-	public OrderService getService() {
-		return FakeOrderService.getInstance();
-	}
-	
 	//validators for command
 	public Validator getPriceValidator(){
 		return priceValidator;
