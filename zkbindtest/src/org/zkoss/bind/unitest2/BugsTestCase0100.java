@@ -8,7 +8,7 @@ import org.junit.Test;
 import org.zkoss.zktc.core.junit.TestCaseBase;
 import org.zkoss.zktc.core.widget.Widget;
 /**
- * test case for bugs from number 1-100
+ * test case for bugs from number 1-499
  * @author dennis
  *
  */

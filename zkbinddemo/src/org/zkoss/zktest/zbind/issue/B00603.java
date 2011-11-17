@@ -27,8 +27,8 @@ public class B00603 {
 
 		public Item(String name) {
 			this.name = name;
-			options.add(new Option(name+" 1","ABC"));
-			options.add(new Option(name+" 2","DEF"));
+			options.add(new Option(name+" A",name +" AA"));
+			options.add(new Option(name+" B",name +" BB"));
 		}
 
 		public String getName() {
