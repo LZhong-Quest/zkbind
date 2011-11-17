@@ -11,8 +11,6 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
  */
 package org.zkoss.bind.examples.spring.order;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +19,11 @@ import org.springframework.stereotype.Component;
 import org.zkoss.bind.NotifyChange;
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
+import org.zkoss.bind.examples.spring.validator.CreationDateValidator;
 import org.zkoss.bind.examples.spring.validator.MessagePool;
+import org.zkoss.bind.examples.spring.validator.PriceValidator;
 import org.zkoss.bind.examples.spring.validator.QuantityValidator;
+import org.zkoss.bind.examples.spring.validator.ShippingDateValidator;
 import org.zkoss.zul.ListModelList;
 
 /**
@@ -43,8 +44,15 @@ public class OrderVM {
 	@Autowired
 	MessagePool validationMessages;
 	
+	//validator
 	@Autowired
 	QuantityValidator quantityValidator;
+	@Autowired
+	ShippingDateValidator shippingDateValidator;
+	@Autowired
+	CreationDateValidator creationDateValidator;
+	@Autowired
+	PriceValidator priceValidator;
 
 	public ListModelList<Order> getOrders() {
 		if (orders == null) {
@@ -99,7 +107,7 @@ public class OrderVM {
 	}
 
 	
-	public Map<String,String> getValidationMessages(){
+	public MessagePool getValidationMessages(){
 		return validationMessages;
 	}
 	
@@ -108,97 +116,22 @@ public class OrderVM {
 		return FakeOrderService.getInstance();
 	}
 	
-	//validators for prompt
+	//validators for command
 	public Validator getPriceValidator(){
-		return new Validator(){
-			public void validate(ValidationContext ctx) {
-				Double price = (Double)ctx.getProperty().getValue();
-				if(price==null || price<=0){
-					ctx.setInvalid(); // mark invalid
-					validationMessages.put("price", "must large than 0");
-				}else{
-					validationMessages.remove("price");
-				}
-				//notify messages was changed.
-				ctx.getBindContext().getBinder().notifyChange(validationMessages, "price");
-			}
-		};
+		return priceValidator;
 	}
-	
-//	public Validator getQuantityValidator(){
-//		return new Validator(){
-//			public void validate(ValidationContext ctx) {
-//				Integer quantity = (Integer)ctx.getProperty().getValue();
-//				if(quantity==null || quantity<=0){
-//					ctx.setInvalid();// mark invalid
-//					validationMessages.put("quantity", "must large than 0");
-//				}else{
-//					validationMessages.remove("quantity");
-//				}
-//				//notify messages was changed.
-//				ctx.getBindContext().getBinder().notifyChange(validationMessages, "quantity");
-//			}
-//		};
-//	}
+
 	public Validator getQuantityValidator(){
 		return quantityValidator;
 	}
-
-	//validators for command
 	public Validator getCreationDateValidator(){
-		return new Validator(){
-			public void validate(ValidationContext ctx) {
-				Date creation = (Date)ctx.getProperty().getValue();
-				if(creation==null){
-					ctx.setInvalid();// mark invalid
-					validationMessages.put("creationDate", "must not null");
-				}else{
-					validationMessages.remove("creationDate");
-				}
-				//notify messages was changed.
-				ctx.getBindContext().getBinder().notifyChange(validationMessages, "creationDate");
-			}
-		};
+		return creationDateValidator;
 	}
 	public Validator getShippingDateValidator(){
-		return new Validator(){
-			public void validate(ValidationContext ctx) {
-				Date shipping = (Date)ctx.getProperty().getValue();//the main property
-				Date creation = (Date)ctx.getProperties("creationDate")[0].getValue();//the collected
-				//do mixed validation, shipping date have to large than creation more than 3 days.
-				if(!CaldnearUtil.isDayAfter(creation,shipping,3)){
-					ctx.setInvalid();
-					validationMessages.put("shippingDate", "must large than creation date at least 3 days");
-				}else{
-					validationMessages.remove("shippingDate");
-				}
-				//notify the 'price' message in messages was changed.
-				ctx.getBindContext().getBinder().notifyChange(validationMessages, "shippingDate");
-			}
-
-		};
+		return shippingDateValidator;
 	}
 	
-	static class CaldnearUtil{
-		static public boolean isDayAfter(Date date, Date laterDay , int day) {
-			if(date==null) return false;
-			if(laterDay==null) return false;
-			
-			Calendar cal = Calendar.getInstance();
-			Calendar lc = Calendar.getInstance();
-			
-			cal.setTime(date);
-			lc.setTime(laterDay);
-			
-			int cy = cal.get(Calendar.YEAR);
-			int ly = lc.get(Calendar.YEAR);
-			
-			int cd = cal.get(Calendar.DAY_OF_YEAR);
-			int ld = lc.get(Calendar.DAY_OF_YEAR);
-			
-			return (ly*365+ld)-(cy*365+cd) >= day; 
-		}
-	}
+	
 	
 	//message for confirming the deletion.
 	String deleteMessage;
