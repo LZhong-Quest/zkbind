@@ -17,19 +17,21 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+import org.springframework.stereotype.Service;
 import org.zkoss.lang.Strings;
 
 /**
- * @author dennis
+ * @author Hawk
  * 
  */
-public class FakeOrderService implements OrderService {
+@Service
+public class OrderServiceImpl implements OrderService {
 
 	List<Order> allItems = new ArrayList<Order>();
 
 	Random r = new Random(System.currentTimeMillis());
 	
-	private FakeOrderService() {
+	private OrderServiceImpl() {
 		Date now = new Date();
 		allItems.add(new Order(nextOid(), "part AF2 order", nextPrice(), nextQuantity(), now));
 		allItems.add(new Order(nextOid(), "part BB2 order", nextPrice(), nextQuantity(), now));
@@ -42,7 +44,7 @@ public class FakeOrderService implements OrderService {
 	
 	static synchronized OrderService getInstance(){
 		if(instance==null){
-			instance = new FakeOrderService();
+			instance = new OrderServiceImpl();
 		}
 		return instance;
 	}
