@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component("messagePool")
-@Scope("session")
+@Scope("desktop")
 public class MessagePool extends HashMap<String, String> {
 
 	/**
