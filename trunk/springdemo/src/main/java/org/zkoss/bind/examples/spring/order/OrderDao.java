@@ -18,9 +18,6 @@ public class OrderDao{
 		
 		em.persist(order);
 	}
-	public Order find(Integer id){
-		return em.find(Order.class, id);
-	}
 	public List findAll(){
 		return em.createQuery("select O from Order O").getResultList();
 	}
@@ -33,6 +30,6 @@ public class OrderDao{
 
 	@Transactional
 	public void remove(Order order) {
-		em.remove(find(order.getId()));
+		em.remove(em.merge(order));
 	}
 }
