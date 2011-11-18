@@ -3,15 +3,18 @@ package org.zkoss.bind.examples.spring.validator;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
-import org.zkoss.spring.SpringUtil;
 
 @Component("shippingDateValidator")
+@Scope("prototype")
 public class ShippingDateValidator implements Validator{
+	@Autowired
+	MessagePool validationMessages;
 	public void validate(ValidationContext ctx) {
-		MessagePool validationMessages = (MessagePool)SpringUtil.getBean("messagePool");
 		Date shipping = (Date)ctx.getProperty().getValue();//the main property
 		Date creation = (Date)ctx.getProperties("creationDate")[0].getValue();//the collected
 		//do mixed validation, shipping date have to large than creation more than 3 days.

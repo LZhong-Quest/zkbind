@@ -1,14 +1,17 @@
 package org.zkoss.bind.examples.spring.validator;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
-import org.zkoss.spring.SpringUtil;
 
 @Component("priceValidator")
+@Scope("prototype")
 public class PriceValidator implements Validator{
+	@Autowired
+	MessagePool validationMessages;
 	public void validate(ValidationContext ctx) {
-		MessagePool validationMessages = (MessagePool)SpringUtil.getBean("messagePool");
 		Double price = (Double)ctx.getProperty().getValue();
 		if(price==null || price<=0){
 			ctx.setInvalid(); // mark invalid

@@ -1,14 +1,18 @@
 package org.zkoss.bind.examples.spring.validator;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
 import org.zkoss.spring.SpringUtil;
 
 @Component("quantityValidator")
+@Scope("prototype")
 public class QuantityValidator implements Validator{
+	@Autowired
+	MessagePool validationMessages;
 	public void validate(ValidationContext ctx) {
-		MessagePool validationMessages = (MessagePool)SpringUtil.getBean("messagePool");
 		Integer quantity = (Integer)ctx.getProperty().getValue();
 		if(quantity==null || quantity<=0){
 			ctx.setInvalid();// mark invalid
