@@ -11,47 +11,41 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
  */
 package org.zkoss.bind.examples.spring.order;
 
-import java.util.Calendar;
 import java.util.Date;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 import org.zkoss.bind.DependsOn;
 import org.zkoss.bind.NotifyChange;
 
 /**
- * @author dennis
- * 
+ * Order is a keyword in SQL syntax, it can't be a table name.
+ * @author Hawk
  */
+@Entity
+@Table(name="ORDERS")
 public class Order {
 
-	String id;
+	@Id @GeneratedValue(strategy=GenerationType.AUTO)
+	Integer id;
 	String description;
 	Date creationDate;
 	Date shippingDate;
 	double price;
 	int quantity;
-
-	public Order() {
-	}	
 	
-	Order(String id, String description, double price, int quantity, Date creationDate) {
-		super();
-		this.id = id;
-		this.description = description;
-		this.price = price;
-		this.quantity = quantity;
-		this.creationDate = creationDate;
-		// default shipping date is 3 day after.
-		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.DATE, 3);
-		shippingDate = cal.getTime();
-	}
 
-	public String getId() {
+
+	public Integer getId() {
 		return id;
 	}
 
 	@NotifyChange
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

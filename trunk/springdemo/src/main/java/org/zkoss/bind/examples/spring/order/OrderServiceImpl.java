@@ -17,6 +17,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.zkoss.lang.Strings;
 
@@ -27,56 +28,22 @@ import org.zkoss.lang.Strings;
 @Service
 public class OrderServiceImpl implements OrderService {
 
-	List<Order> allItems = new ArrayList<Order>();
-
-	Random r = new Random(System.currentTimeMillis());
-	
-	private OrderServiceImpl() {
-		Date now = new Date();
-		allItems.add(new Order(nextOid(), "part AF2 order", nextPrice(), nextQuantity(), now));
-		allItems.add(new Order(nextOid(), "part BB2 order", nextPrice(), nextQuantity(), now));
-		allItems.add(new Order(nextOid(), "part CX1 order", nextPrice(), nextQuantity(), now));
-		allItems.add(new Order(nextOid(), "part DS34 order", nextPrice(), nextQuantity(), now));
-		allItems.add(new Order(nextOid(), "part ZK99 order", nextPrice(), nextQuantity(), now));
-	}
-	
-	static OrderService instance;
-	
-	static synchronized OrderService getInstance(){
-		if(instance==null){
-			instance = new OrderServiceImpl();
-		}
-		return instance;
-	}
-	
-	
-	
-	long oid = 0;
-	
-	String nextOid(){
-		return new DecimalFormat("00000").format(++oid);
-	}
-
-	double nextPrice() {
-		return r.nextDouble()*300;
-	}
-	
-	int nextQuantity() {
-		return r.nextInt(9)+1;
-	}
+	@Autowired
+	OrderDao orderDao;
 
 	public List<Order> list() {
-		return new ArrayList<Order>(allItems);
+		return orderDao.findAll();
 	}
 
 	public void delete(Order order) {
-		allItems.remove(order);
+			orderDao.remove(order);
 	}
 
 	public void save(Order order) {
-		if(Strings.isBlank(order.getId())){
-			order.setId(nextOid());
-			allItems.add(order);
+		if (order.getId()==null){
+			orderDao.newOrder(order);
+		}else{
+			orderDao.save(order);
 		}
 	}
 
