@@ -1,0 +1,37 @@
+<window apply="org.zkoss.zktest.zbind.basic.CollectionIndexComboboxComposer">
+	<custom-attributes composerName="vm"/>
+	<label value="@bind(vm.message1)"/>
+	
+	<grid id="grid" width="700px" model="@bind(vm.items)">
+		<columns>
+			<column label="index"/>
+			<column label="name"/>
+			<column label="options" width="200px"/>
+			<column label="action" width="300px"/>
+		</columns>
+		
+		<template name="model" var="item" status="s">
+			<row>
+				<label value="@bind(s.index)"/>
+				<label value="@bind(item.name)"/>
+				<combobox hflex="1" model="@bind(item.options)">
+					<template name="model" var="option" status="ss">
+						<comboitem label="@bind(ss) @converter(vm.statusConverter,name=option,si=s.index,ssi=ss.index)" description="@bind(option)"/>	
+					</template>
+				</combobox>
+				<hbox>
+					<button label="Index" onClick="@bind('showIndex', index=s.index)"/>
+					<button label="Delete" onClick="@bind('delete', item=item)"/>
+					<button label="Add After" onClick="@bind('addAfter', item=item)"/>
+					<button label="Add Before" onClick="@bind('addBefore', item=item)"/>
+				</hbox>
+			</row>
+		</template>
+	</grid>
+
+	<hbox>
+		<button label="reload" onClick="@bind('reload')" />
+		<button label="detach" onClick="grid.detach()" />
+		<button label="Dump" onClick="binder.getTracker().dump()" />
+	</hbox>	
+</window>
