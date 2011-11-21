@@ -18,9 +18,9 @@ import org.zkoss.bind.NotifyChange;
 import org.zkoss.bind.Validator;
 import org.zkoss.bind.examples.spring.order.domain.Order;
 import org.zkoss.bind.examples.spring.order.service.OrderService;
+import org.zkoss.bind.examples.spring.util.MessagePool;
 import org.zkoss.bind.examples.spring.validator.NotNullValidator;
-import org.zkoss.bind.examples.spring.validator.MessagePool;
-import org.zkoss.bind.examples.spring.validator.PriceValidator;
+import org.zkoss.bind.examples.spring.validator.PositiveNumberValidator;
 import org.zkoss.bind.examples.spring.validator.QuantityValidator;
 import org.zkoss.bind.examples.spring.validator.ShippingDateValidator;
 import org.zkoss.zul.ListModelList;
@@ -45,16 +45,6 @@ public class OrderVM {
 	@Autowired
 	MessagePool validationMessages;
 	
-	//validator
-	@Autowired
-	QuantityValidator quantityValidator;
-	@Autowired
-	ShippingDateValidator shippingDateValidator;
-	@Autowired
-	NotNullValidator creationDateValidator;
-	@Autowired
-	PriceValidator priceValidator;
-
 	public ListModelList<Order> getOrders() {
 		if (orders == null) {
 			//init the list
@@ -111,25 +101,7 @@ public class OrderVM {
 	public MessagePool getValidationMessages(){
 		return validationMessages;
 	}
-	
 
-	//validators for command
-	public Validator getPriceValidator(){
-		return priceValidator;
-	}
-
-	public Validator getQuantityValidator(){
-		return quantityValidator;
-	}
-	public Validator getCreationDateValidator(){
-		return creationDateValidator;
-	}
-	public Validator getShippingDateValidator(){
-		return shippingDateValidator;
-	}
-	
-	
-	
 	//message for confirming the deletion.
 	String deleteMessage;
 	
