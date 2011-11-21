@@ -5,7 +5,7 @@
 	version="1.0">
 	<persistence-unit name="order">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-		<class>org.zkoss.bind.examples.spring.order.Order</class>
+		<class>org.zkoss.bind.examples.spring.order.domain.Order</class>
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect" />
 			<property name="hibernate.hbm2ddl.auto" value="create-drop" />
