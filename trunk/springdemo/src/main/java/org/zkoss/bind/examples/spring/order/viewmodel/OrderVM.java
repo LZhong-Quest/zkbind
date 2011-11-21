@@ -9,14 +9,16 @@
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
  */
-package org.zkoss.bind.examples.spring.order;
+package org.zkoss.bind.examples.spring.order.viewmodel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.zkoss.bind.NotifyChange;
 import org.zkoss.bind.Validator;
-import org.zkoss.bind.examples.spring.validator.CreationDateValidator;
+import org.zkoss.bind.examples.spring.order.domain.Order;
+import org.zkoss.bind.examples.spring.order.service.OrderService;
+import org.zkoss.bind.examples.spring.validator.NotNullValidator;
 import org.zkoss.bind.examples.spring.validator.MessagePool;
 import org.zkoss.bind.examples.spring.validator.PriceValidator;
 import org.zkoss.bind.examples.spring.validator.QuantityValidator;
@@ -49,7 +51,7 @@ public class OrderVM {
 	@Autowired
 	ShippingDateValidator shippingDateValidator;
 	@Autowired
-	CreationDateValidator creationDateValidator;
+	NotNullValidator creationDateValidator;
 	@Autowired
 	PriceValidator priceValidator;
 

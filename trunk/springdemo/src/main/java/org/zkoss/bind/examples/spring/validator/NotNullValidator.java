@@ -8,9 +8,9 @@ import org.springframework.stereotype.Component;
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
 
-@Component("creationDateValidator")
+@Component("notNullValidator")
 @Scope("prototype")
-public class CreationDateValidator implements Validator{
+public class NotNullValidator implements Validator{
 	@Autowired
 	MessagePool validationMessages;
 	public void validate(ValidationContext ctx) {
