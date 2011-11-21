@@ -1,7 +1,7 @@
 <window apply="org.zkoss.zktest.zbind.basic.CollectionIndexListboxComposer">
 	<custom-attributes composerName="vm"/>
-	<label value="@bind(vm.message1)"/>
-	<listbox id="listbox" width="700px" model="@bind(vm.items)" rows="5">
+	<label id="msg" value="@bind(vm.message1)"/>
+	<listbox id="outerbox" width="700px" model="@bind(vm.items)" rows="5">
 		<listhead>
 			<listheader label="index"/>
 			<listheader label="name"/>
@@ -11,9 +11,7 @@
 		
 		<template name="model" var="item" status="s">
 			<listitem>
-				<listcell>
-					<label value="@bind(s.index)"/>
-				</listcell>
+				<listcell label="@bind(s.index)"/>
 				<listcell label="@bind(item.name)"/>
 				<listcell>
 					<listbox hflex="1" model="@bind(item.options)">
