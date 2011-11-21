@@ -1,8 +1,8 @@
 <window apply="org.zkoss.zktest.zbind.basic.CollectionIndexComboboxComposer">
 	<custom-attributes composerName="vm"/>
-	<label value="@bind(vm.message1)"/>
+	<label id="msg" value="@bind(vm.message1)"/>
 	
-	<grid id="grid" width="700px" model="@bind(vm.items)">
+	<grid id="outergrid" width="700px" model="@bind(vm.items)">
 		<columns>
 			<column label="index"/>
 			<column label="name"/>

@@ -1,7 +1,7 @@
 <window apply="org.zkoss.zktest.zbind.basic.CollectionIndexGridComposer">
 	<custom-attributes composerName="vm"/>
-	<label value="@bind(vm.message1)"/>
-	<grid id="grid" width="700px" model="@bind(vm.items)">
+	<label id="msg" value="@bind(vm.message1)"/>
+	<grid id="outergrid" width="700px" model="@bind(vm.items)">
 		<columns>
 			<column label="index"/>
 			<column label="name"/>

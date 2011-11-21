@@ -83,8 +83,8 @@ public class CollectionIndexListboxComposer extends BindComposer {
 
 		public Item(String name) {
 			this.name = name;
+			options.add(name+" 0");
 			options.add(name+" 1");
-			options.add(name+" 2");
 		}
 
 		public String getName() {
