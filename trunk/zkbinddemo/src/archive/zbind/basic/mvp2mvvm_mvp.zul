@@ -1,0 +1,12 @@
+<zk>
+
+	<window title="Test" apply="org.zkoss.zktest.zbind.basic.MVP2MVVMComposer" border="normal">
+
+		<button id="mButtonB1" label="Edit outside 1" />
+		<button id="mButtonB2" label="Edit outside 2" />
+
+		<vbox id="mVbox" />
+
+	</window>
+
+</zk>
