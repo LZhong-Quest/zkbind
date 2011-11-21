@@ -9,7 +9,7 @@
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
  */
-package org.zkoss.bind.examples.spring.order;
+package org.zkoss.bind.examples.spring.order.service;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -19,6 +19,8 @@ import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.zkoss.bind.examples.spring.order.dao.OrderDao;
+import org.zkoss.bind.examples.spring.order.domain.Order;
 import org.zkoss.lang.Strings;
 
 /**

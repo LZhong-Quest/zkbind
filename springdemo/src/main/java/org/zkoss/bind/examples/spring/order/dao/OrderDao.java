@@ -1,4 +1,4 @@
-package org.zkoss.bind.examples.spring.order;
+package org.zkoss.bind.examples.spring.order.dao;
 
 import java.util.List;
 
@@ -7,6 +7,7 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.zkoss.bind.examples.spring.order.domain.Order;
 
 @Repository("orderDao")
 public class OrderDao{
