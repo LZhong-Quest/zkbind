@@ -11,10 +11,20 @@
 	<url>http://www.zkoss.org/zkbind</url>
 	<description>ZK Bind Test</description>
 	<dependencies>
-			<dependency>
-				<groupId>org.zkoss.zktc</groupId>
-				<artifactId>zktc-core</artifactId>
-				<version>0.9-SNAPSHOT</version>
-			</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>2.11.0</version>
+		</dependency>	
+		<dependency>
+			<groupId>org.zkoss.zktc</groupId>
+			<artifactId>zktc-core</artifactId>
+			<version>0.9-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.4</version>
+		</dependency>		
 	</dependencies>
 </project> 
