@@ -12,7 +12,7 @@ import org.zkoss.zktc.core.widget.Widget;
  * @author dennis
  *
  */
-public class BugsTestCase0100 extends TestCaseBase{
+public class BugsTestCase0001 extends TestCaseBase{
 
 	@Test
 	public void b0004(){

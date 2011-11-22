@@ -5,17 +5,17 @@
 		2.select tab, the the label and listbox selection should change
 		<vbox>
 			<label id="msg" value="@bind(vm.selectedTab)"/>
-			<listbox mold="select" selectedItem="@bind(vm.selectedTab)">
-				<listitem label="Tab A" value="tabA"/>
-				<listitem label="Tab B" value="tabB"/>
-				<listitem label="Tab C" value="tabC"/>
+			<listbox id="listbox" selectedItem="@bind(vm.selectedTab)">
+				<listitem id="itema" label="Tab A" value="tabA"/>
+				<listitem id="itemb" label="Tab B" value="tabB"/>
+				<listitem id="itemc" label="Tab C" value="tabC"/>
 			</listbox>		
 			==================================
-			<tabbox selectedTab="@bind(vm.selectedTab)">
+			<tabbox id="tabbox" selectedTab="@bind(vm.selectedTab)">
 				<tabs>
-					<tab label="tabA"/>
-					<tab label="tabB"/>
-					<tab label="tabC"/>
+					<tab id="taba" label="tabA"/>
+					<tab id="tabb" label="tabB"/>
+					<tab id="tabc" label="tabC"/>
 				</tabs>
 				<tabpanels>
 					<tabpanel>Panel A</tabpanel>

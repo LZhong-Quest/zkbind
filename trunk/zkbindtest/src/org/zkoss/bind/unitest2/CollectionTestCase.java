@@ -518,23 +518,4 @@ public class CollectionTestCase  extends TestCaseBase{
 //			Assert.assertEquals("item index "+i, msg.getValue());
 //		}
 //	}
-
-//	private void dumpWidget(Widget widget) {
-//		dumpWidget(widget,0);
-//	}
-//	private void dumpWidget(Widget widget,int indent) {
-//		List<Widget> children = widget.getChildren();
-//		StringBuilder sb = new StringBuilder();
-//		for(int i=0;i<indent-1;i++){
-//			sb.append(" ");
-//		}
-//		sb.append("+");
-//		sb.append(widget.getClassName());
-//		sb.append("[").append(widget.getUuid()).append("]");
-//		System.out.println(sb.toString());
-//		for(Widget w:children){
-//			dumpWidget(w,indent+1);
-//		}
-//		
-//	}
 }
