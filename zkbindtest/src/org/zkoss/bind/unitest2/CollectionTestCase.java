@@ -484,4 +484,57 @@ public class CollectionTestCase  extends TestCaseBase{
 		}
 		
 	}
+	
+//	@Test
+//	public void indexTree1(){
+//		navigate(getTestCaseUrl("/zbind/basic/collection-index-tree.zul"));
+//		
+//		Widget tree = findWidget("$tree");
+//		dumpWidget(tree);
+//		Widget children = tree.findWidget("@treechildren");//retrun tree row?
+//		
+//		System.out.println("children -0 "+children.getClassName());
+//		
+//		List<Widget> rows = children.getChildren();
+//		String[] itemLabel = new String[]{"A","B","C"};
+//		Assert.assertEquals(itemLabel.length, rows.size());
+//		
+//		for(int i=0;i<itemLabel.length;i++){
+//			Widget treerow = rows.get(i);
+//			System.out.println("treerow -0 "+treerow.getClassName()+":"+treerow.getUuid());
+//			List<Widget> cells = treerow.getChildren();//treerow.findWidgets("@treecell");// selector didn't get children correctly
+//			Widget cell = cells.get(0);
+//			System.out.println("cell -0 "+cell.getClassName()+":"+cell.getLabel());
+//			Assert.assertEquals(""+i, cell.getLabel());
+//			cell = cell.getNextSibling();
+//			System.out.println("cell -1 "+cell.getClassName()+":"+cell.getLabel());
+//			Assert.assertEquals(itemLabel[i]+i, cell.getLabel());
+//			
+//			cell = cell.getNextSibling();
+//			Widget btn = cell.findWidget("@button");//index button
+//			Widget msg = findWidget("$msg");
+//			btn.click();
+//			
+//			Assert.assertEquals("item index "+i, msg.getValue());
+//		}
+//	}
+
+//	private void dumpWidget(Widget widget) {
+//		dumpWidget(widget,0);
+//	}
+//	private void dumpWidget(Widget widget,int indent) {
+//		List<Widget> children = widget.getChildren();
+//		StringBuilder sb = new StringBuilder();
+//		for(int i=0;i<indent-1;i++){
+//			sb.append(" ");
+//		}
+//		sb.append("+");
+//		sb.append(widget.getClassName());
+//		sb.append("[").append(widget.getUuid()).append("]");
+//		System.out.println(sb.toString());
+//		for(Widget w:children){
+//			dumpWidget(w,indent+1);
+//		}
+//		
+//	}
 }

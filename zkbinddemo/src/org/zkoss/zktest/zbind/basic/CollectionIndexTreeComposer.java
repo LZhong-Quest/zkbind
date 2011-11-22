@@ -35,8 +35,10 @@ public class CollectionIndexTreeComposer extends BindComposer {
 		MyTreeNode root = new MyTreeNode("Root",
 				new MyTreeNode[] {});
 
+		String[] labs = new String[]{"A","B","C"};
+		
 		for (int i = 0; i < 3; i++) {
-			MyTreeNode ni = new MyTreeNode("A" + i,
+			MyTreeNode ni = new MyTreeNode(labs[i] + i,
 					new MyTreeNode[] {});
 			for (int j = 0; j < 3; j++) {
 				MyTreeNode nj = new MyTreeNode(ni.getData()

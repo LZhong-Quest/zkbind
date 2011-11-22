@@ -1,0 +1,49 @@
+<zk>
+	<window apply="org.zkoss.bind.BindComposer"
+		viewModel="@bind(vm='org.zkoss.zktest.zbind.comp.TabSelectedVM')" border="none"> 
+		Single way
+		<vbox>
+			<listbox mold="select" selectedItem="@bind(vm.selectedTab1)">
+				<listitem label="Tab A" value="tabA"/>
+				<listitem label="Tab B" value="tabB"/>
+				<listitem label="Tab C" value="tabC"/>
+			</listbox>		
+			==================================
+			<tabbox>
+				<tabs>
+					<tab label="A" selected="@bind(vm.selectedTab1 eq 'tabA' ? true:false)" />
+					<tab label="B" selected="@bind(vm.selectedTab1 eq 'tabB' ? true:false)" />
+					<tab label="C" selected="@bind(vm.selectedTab1 eq 'tabC' ? true:false)" />
+				</tabs>
+				<tabpanels>
+					<tabpanel>Panel A</tabpanel>
+					<tabpanel>Panel B</tabpanel>
+					<tabpanel>Panel C</tabpanel>
+				</tabpanels>
+			</tabbox>
+
+		</vbox>
+		Two way (have to bind to tab's label)
+		<vbox>
+			<listbox mold="select" selectedItem="@bind(vm.selectedTab2)">
+				<listitem label="Tab A" value="tabA"/>
+				<listitem label="Tab B" value="tabB"/>
+				<listitem label="Tab C" value="tabC"/>
+			</listbox>		
+			==================================
+			<tabbox selectedTab="@bind(vm.selectedTab2)">
+				<tabs>
+					<tab label="tabA"/>
+					<tab label="tabB"/>
+					<tab label="tabC"/>
+				</tabs>
+				<tabpanels>
+					<tabpanel>Panel A</tabpanel>
+					<tabpanel>Panel B</tabpanel>
+					<tabpanel>Panel C</tabpanel>
+				</tabpanels>
+			</tabbox>
+		</vbox>
+		<button label="Dump" onClick="binder.getTracker().dump()"/>
+	</window>
+</zk>

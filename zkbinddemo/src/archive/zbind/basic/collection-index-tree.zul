@@ -1,7 +1,7 @@
 <window apply="org.zkoss.zktest.zbind.basic.CollectionIndexTreeComposer">
 	<custom-attributes composerName="vm"/>
-	<label id="lb1" value="@bind(vm.message1)"/>
-	<tree model="@bind(vm.model)" width="500px">
+	<label id="msg" value="@bind(vm.message1)"/>
+	<tree id="tree" model="@bind(vm.model)" width="500px">
 		<treecols>
 			<treecol label="index"/>
 			<treecol label="name"/>
