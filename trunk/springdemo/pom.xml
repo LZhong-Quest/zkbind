@@ -8,7 +8,7 @@
 		<zk.version>6.0.0-RC</zk.version>
 		<spring.version>3.0.5.RELEASE</spring.version>
 		<hibernate.version>3.3.1.ga</hibernate.version>
-		<zkspring.version>3.0</zkspring.version>
+		<zkspring.version>3.1-SNAPSHOT</zkspring.version>
 	</properties>
 	<repositories>
 		<repository>
@@ -152,6 +152,8 @@
 			<groupId>org.zkoss.zk</groupId>
 			<artifactId>zkspring-core</artifactId>
 			<version>${zkspring.version}</version>
+			<scope>system</scope>
+			<systemPath>D:\temp\spring-freshly\zkspring-core.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>org.zkoss.zk</groupId>
@@ -268,16 +270,9 @@
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.7</version>
-			<type>jar</type>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.zkoss.zk</groupId>
 			<artifactId>zbind</artifactId>
-			<version>6.0.0-SNAPSHOT</version>
+			<version>${zk.version}</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
