@@ -1,0 +1,19 @@
+<zk>
+	<window apply="org.zkoss.bind.BindComposer"
+		viewModel="@bind(vm='org.zkoss.zktest.zbind.comp.RadiogroupSelectedVM')" border="none"> 
+		<vbox>
+			<listbox mold="select" selectedItem="@bind(vm.selected)">
+				<listitem label="Item A" value="itemA"/>
+				<listitem label="Item B" value="itemB"/>
+				<listitem label="Item C" value="itemC"/>
+			</listbox>		
+			==================================
+			<radiogroup selectedItem="@bind(vm.selected)">
+				<radio label="Item A" value="itemA"/>
+				<radio label="Item B" value="itemB"/>
+				<radio label="Item C" value="itemC"/>
+			</radiogroup>
+		</vbox>
+		<button label="Dump" onClick="binder.getTracker().dump()"/>
+	</window>
+</zk>
