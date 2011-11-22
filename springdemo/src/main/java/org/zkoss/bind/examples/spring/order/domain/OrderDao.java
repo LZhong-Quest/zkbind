@@ -1,4 +1,4 @@
-package org.zkoss.bind.examples.spring.order.dao;
+package org.zkoss.bind.examples.spring.order.domain;
 
 import java.util.List;
 
@@ -7,7 +7,6 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import org.zkoss.bind.examples.spring.order.domain.Order;
 
 @Repository("orderDao")
 public class OrderDao{
@@ -25,9 +24,16 @@ public class OrderDao{
 	
 	@Transactional
 	public void save(Order order) {
-		
+		System.out.println(">>>>>entityManager:"+em);
 		em.merge(order);
 	}
+	
+//	@Transactional
+//	public void save2(Order order) {
+//		System.out.println(">>>>>entityManager:"+em);
+//		em.merge(order);
+//		throw new RuntimeException();
+//	}
 
 	@Transactional
 	public void remove(Order order) {

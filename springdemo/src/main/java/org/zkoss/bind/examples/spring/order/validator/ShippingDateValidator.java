@@ -1,4 +1,4 @@
-package org.zkoss.bind.examples.spring.validator;
+package org.zkoss.bind.examples.spring.order.validator;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -8,12 +8,13 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
+import org.zkoss.bind.examples.spring.order.util.Messages;
 
 @Component("shippingDateValidator")
 @Scope("prototype")
 public class ShippingDateValidator implements Validator{
 	@Autowired
-	MessagePool validationMessages;
+	Messages validationMessages;
 	public void validate(ValidationContext ctx) {
 		Date shipping = (Date)ctx.getProperty().getValue();//the main property
 		Date creation = (Date)ctx.getProperties("creationDate")[0].getValue();//the collected

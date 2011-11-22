@@ -9,11 +9,10 @@
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
  */
-package org.zkoss.bind.examples.spring.order.service;
+package org.zkoss.bind.examples.spring.order.domain;
 
 import java.util.List;
 
-import org.zkoss.bind.examples.spring.order.domain.Order;
 
 /**
  * @author dennis
