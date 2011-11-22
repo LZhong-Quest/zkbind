@@ -45,14 +45,14 @@
 						<hlayout> 
 							<intbox value="@bind(vm.selected.quantity, save=vm.selected.quantity before 'saveOrder') 
 							@validator(quantityValidator)"/>
-							<label value="@bind(vm.validationMessages['quantity'])" sclass="red" />
+							<label value="@bind(messagePool['quantity'])" sclass="red" />
 						</hlayout>	
 					</row>					
 					<row>Price 
 						<hlayout>
 							<doublebox value="@bind(vm.selected.price, save=vm.selected.price before 'saveOrder') 
 							@validator(positiveNumberValidator)" format="###,##0.00" />
-							<label value="@bind(vm.validationMessages['price'])" sclass="red" />
+							<label value="@bind(messagePool['price'])" sclass="red" />
 						</hlayout>
 					</row>
 					<row>Total Price <label value="@bind(vm.selected.totalPrice) @converter(numberFormatConverter, format='###,##0.00')" /></row>
@@ -60,25 +60,25 @@
 						<hlayout> 
 							<datebox value="@bind(vm.selected.creationDate, save=vm.selected.creationDate before 'saveOrder')
 							@validator(notNullValidator)"/>
-							<label value="@bind(vm.validationMessages['creationDate'])" sclass="red" />
+							<label value="@bind(messagePool['creationDate'])" sclass="red" />
 						</hlayout>	
 					</row>
 					<row>Shipping Date 
 						<hlayout> 
 							<datebox value="@bind(vm.selected.shippingDate, save=vm.selected.shippingDate before 'saveOrder')
 							@validator(shippingDateValidator)"/>
-							<label value="@bind(vm.validationMessages['shippingDate'])" sclass="red" />
+							<label value="@bind(messagePool['shippingDate'])" sclass="red" />
 						</hlayout>
 					</row>	
 				</rows>
 			</grid>
 		</groupbox>
 	</vbox>
-	<window title="Confirm" mode="modal" border="normal" width="300px" visible="@bind(not empty vm.deleteMessage)">
+	<window title="Confirm" mode="modal" border="normal" width="300px" visible="@bind(not empty vm.messagePool['delete'])">
 		<vbox hflex="true">
 			<hlayout height="50px">
 				<image src="~./zul/img/msgbox/question-btn.png"/>
-				<label value="@bind(vm.deleteMessage)"/>
+				<label value="@bind(vm.messagePool['delete'])"/>
 			</hlayout>
 			<hbox pack="center" hflex="true">
 				<button label="Delete" onClick="@bind('deleteOrder')"/>
@@ -87,4 +87,5 @@
 		</vbox>
 	</window>
 </window>
+
 </zk>
