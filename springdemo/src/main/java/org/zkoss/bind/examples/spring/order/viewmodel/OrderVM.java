@@ -38,7 +38,7 @@ public class OrderVM {
 	
 	//validation messages
 	@Autowired
-	Messages messagePool;
+	Messages messages;
 	
 	public ListModelList<Order> getOrders() {
 		if (orders == null) {
@@ -55,17 +55,16 @@ public class OrderVM {
 	@NotifyChange({"selected"})
 	public void setSelected(Order selected) {
 		this.selected = selected;
-		messagePool.clear();//clear when another order selected
+		messages.clear();//clear when another order selected
 	}
 
 	//action command
-	
 	@NotifyChange({"selected","orders"})
 	public void newOrder(){
 		Order order = new Order();
 		getOrders().add(order);
 		selected = order;//select the new one
-		messagePool.clear();//clear message
+		messages.clear();//clear message
 	}
 	
 	@NotifyChange({"selected"})
@@ -73,56 +72,32 @@ public class OrderVM {
 		System.out.println(">>>>vm>>>> "+this);
 		System.out.println(">>>>service>>>> "+orderService);
 		orderService.save(selected);
-		messagePool.clear();//clear message
+		messages.clear();//clear message
 	}
 	
-	
-//	@NotifyChange({"selected","orders","validationMessages"})
-//	public void deleteOrder(){
-//		orderService.delete(selected);//delete selected
-//		getOrders().remove(selected);
-//		selected = null; //clean the selected
-//		validationMessages.clear();//clear message
-//	}
-
-	@NotifyChange({"selected","orders","deleteMessage"})
+	@NotifyChange({"selected","orders"})
 	public void deleteOrder(){
 		orderService.delete(selected);//delete selected
 		getOrders().remove(selected);
 		selected = null; //clean the selected
-		messagePool.clear();//clear message
-//		deleteMessage = null;
+		messages.clear();//clear message
 	}
 
 
-	//message for confirming the deletion.
-//	String deleteMessage;
-//	
-//	public String getDeleteMessage(){
-//		return deleteMessage;
-//	}
-//	
-
-//	@NotifyChange
-//	public void setMessagePool(MessagePool mp){
-//		messagePool = mp;
-//	}
 	public Messages getMessagePool(){
-		return messagePool;
+		return messages;
 	}
 	@NotifyChange("messagePool")
 	public void confirmDelete(){
 		//set the message to show to user
-//		deleteMessage = "Do you want to delete "+selected.getId()+" ?";
-		messagePool.put("delete", "Do you want to delete "+selected.getId()+" ?");
+		messages.put("delete", "Do you want to delete "+selected.getId()+" ?");
 	}
 	
 	
 	@NotifyChange("messagePool")
 	public void cancelDelete(){
 		//clear the message
-		messagePool.remove("delete");
-//		deleteMessage = null;
+		messages.remove("delete");
 	}
 		
 }

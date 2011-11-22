@@ -28,13 +28,6 @@ public class OrderDao{
 		em.merge(order);
 	}
 	
-//	@Transactional
-//	public void save2(Order order) {
-//		System.out.println(">>>>>entityManager:"+em);
-//		em.merge(order);
-//		throw new RuntimeException();
-//	}
-
 	@Transactional
 	public void remove(Order order) {
 		em.remove(em.merge(order));

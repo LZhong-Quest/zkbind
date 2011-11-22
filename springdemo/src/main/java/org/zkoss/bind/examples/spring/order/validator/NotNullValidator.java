@@ -18,7 +18,7 @@ public class NotNullValidator implements Validator{
 		Date creation = (Date)ctx.getProperty().getValue();
 		if(creation==null){
 			ctx.setInvalid();// mark invalid
-			validationMessages.put("creationDate", ">>>> must not null ");
+			validationMessages.put("creationDate", "must not null ");
 		}else{
 			validationMessages.remove("creationDate");
 		}
