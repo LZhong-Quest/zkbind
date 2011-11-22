@@ -137,4 +137,33 @@ public class BugsTestCase0500 extends TestCaseBase{
 		Assert.assertEquals("Z", findWidget("$tb3").getValue());
 		Assert.assertEquals("Z", findWidget("$lb3").getValue());
 	}
+	
+	@Test
+	public void b00619(){
+		navigate(getTestCaseUrl("/zbind/issue/B00619.zul"));
+		Assert.assertEquals(1L,findWidget("$listbox").getAttribute("selectedIndex"));
+		Assert.assertEquals(1L,findWidget("$tabbox").getAttribute("selectedIndex"));
+		assertFalseOrNull((Boolean)findWidget("$taba").getAttribute("selected"));
+		Assert.assertTrue((Boolean)findWidget("$tabb").getAttribute("selected"));
+		assertFalseOrNull((Boolean)findWidget("$tabc").getAttribute("selected"));
+		
+		
+		findWidget("$itema").click();
+		Assert.assertEquals(0L,findWidget("$listbox").getAttribute("selectedIndex"));
+		Assert.assertEquals(0L,findWidget("$tabbox").getAttribute("selectedIndex"));
+		Assert.assertTrue((Boolean)findWidget("$taba").getAttribute("selected"));
+		assertFalseOrNull((Boolean)findWidget("$tabb").getAttribute("selected"));
+		assertFalseOrNull((Boolean)findWidget("$tabc").getAttribute("selected"));
+		
+		
+		findWidget("$tabc").click();
+		Assert.assertEquals(2L,findWidget("$listbox").getAttribute("selectedIndex"));
+		Assert.assertEquals(2L,findWidget("$tabbox").getAttribute("selectedIndex"));
+		assertFalseOrNull((Boolean)findWidget("$taba").getAttribute("selected"));
+		assertFalseOrNull((Boolean)findWidget("$tabb").getAttribute("selected"));
+		Assert.assertTrue((Boolean)findWidget("$tabc").getAttribute("selected"));
+
+	}
+	
+	
 }

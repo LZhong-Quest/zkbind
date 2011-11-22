@@ -4,8 +4,8 @@ import org.zkoss.bind.NotifyChange;
 
 public class TabboxSelectedVM {
 
-	String selectedTab1 = "tabB";
-	String selectedTab2 = "tabC";
+	String selectedTab1 = "tabC";
+	String selectedTab2 = "tabB";
 	public String getSelectedTab1() {
 		return selectedTab1;
 	}
