@@ -15,14 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.zkoss.bind.NotifyChange;
-import org.zkoss.bind.Validator;
 import org.zkoss.bind.examples.spring.order.domain.Order;
-import org.zkoss.bind.examples.spring.order.service.OrderService;
-import org.zkoss.bind.examples.spring.util.MessagePool;
-import org.zkoss.bind.examples.spring.validator.NotNullValidator;
-import org.zkoss.bind.examples.spring.validator.PositiveNumberValidator;
-import org.zkoss.bind.examples.spring.validator.QuantityValidator;
-import org.zkoss.bind.examples.spring.validator.ShippingDateValidator;
+import org.zkoss.bind.examples.spring.order.domain.OrderService;
+import org.zkoss.bind.examples.spring.order.util.Messages;
 import org.zkoss.zul.ListModelList;
 
 /**
@@ -43,7 +38,7 @@ public class OrderVM {
 	
 	//validation messages
 	@Autowired
-	MessagePool validationMessages;
+	Messages messagePool;
 	
 	public ListModelList<Order> getOrders() {
 		if (orders == null) {
@@ -57,26 +52,28 @@ public class OrderVM {
 		return selected;
 	}
 
-	@NotifyChange({"selected","validationMessages"})
+	@NotifyChange({"selected"})
 	public void setSelected(Order selected) {
 		this.selected = selected;
-		validationMessages.clear();//clear when another order selected
+		messagePool.clear();//clear when another order selected
 	}
 
 	//action command
 	
-	@NotifyChange({"selected","orders","validationMessages"})
+	@NotifyChange({"selected","orders"})
 	public void newOrder(){
 		Order order = new Order();
 		getOrders().add(order);
 		selected = order;//select the new one
-		validationMessages.clear();//clear message
+		messagePool.clear();//clear message
 	}
 	
-	@NotifyChange({"selected","validationMessages"})
+	@NotifyChange({"selected"})
 	public void saveOrder(){
+		System.out.println(">>>>vm>>>> "+this);
+		System.out.println(">>>>service>>>> "+orderService);
 		orderService.save(selected);
-		validationMessages.clear();//clear message
+		messagePool.clear();//clear message
 	}
 	
 	
@@ -88,40 +85,44 @@ public class OrderVM {
 //		validationMessages.clear();//clear message
 //	}
 
-	@NotifyChange({"selected","orders","validationMessages","deleteMessage"})
+	@NotifyChange({"selected","orders","deleteMessage"})
 	public void deleteOrder(){
 		orderService.delete(selected);//delete selected
 		getOrders().remove(selected);
 		selected = null; //clean the selected
-		validationMessages.clear();//clear message
-		deleteMessage = null;
+		messagePool.clear();//clear message
+//		deleteMessage = null;
 	}
 
-	
-	public MessagePool getValidationMessages(){
-		return validationMessages;
-	}
 
 	//message for confirming the deletion.
-	String deleteMessage;
-	
-	public String getDeleteMessage(){
-		return deleteMessage;
-	}
-	
+//	String deleteMessage;
+//	
+//	public String getDeleteMessage(){
+//		return deleteMessage;
+//	}
+//	
 
-	
-	@NotifyChange("deleteMessage")
+//	@NotifyChange
+//	public void setMessagePool(MessagePool mp){
+//		messagePool = mp;
+//	}
+	public Messages getMessagePool(){
+		return messagePool;
+	}
+	@NotifyChange("messagePool")
 	public void confirmDelete(){
 		//set the message to show to user
-		deleteMessage = "Do you want to delete "+selected.getId()+" ?";
+//		deleteMessage = "Do you want to delete "+selected.getId()+" ?";
+		messagePool.put("delete", "Do you want to delete "+selected.getId()+" ?");
 	}
 	
 	
-	@NotifyChange("deleteMessage")
+	@NotifyChange("messagePool")
 	public void cancelDelete(){
 		//clear the message
-		deleteMessage = null;
+		messagePool.remove("delete");
+//		deleteMessage = null;
 	}
 		
 }
