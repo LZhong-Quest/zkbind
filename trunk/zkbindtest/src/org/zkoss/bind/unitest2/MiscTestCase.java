@@ -153,4 +153,17 @@ public class MiscTestCase extends TestCaseBase{
 		
 	}
 	
+	@Test
+	public void testMVP2MVVM(){
+		navigate(getTestCaseUrl("/zbind/basic/mvp2mvvm_mvp.zul"));
+		
+		Assert.assertEquals(true,findWidget("$textA").getAttribute("disabled"));
+		findWidget("$outerToggle1").click();
+		Assert.assertEquals(false,findWidget("$textA").getAttribute("disabled"));
+		findWidget("$outerToggle2").click();
+		Assert.assertEquals(true,findWidget("$textA").getAttribute("disabled"));
+		findWidget("$innerToggle").click();
+		Assert.assertEquals(false,findWidget("$textA").getAttribute("disabled"));
+	}
+	
 }
