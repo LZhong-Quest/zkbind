@@ -1,6 +1,6 @@
 <zk>
 	<window apply="org.zkoss.bind.BindComposer"
-		viewModel="@bind(vm='org.zkoss.zktest.zbind.comp.TabSelectedVM')" border="none"> 
+		viewModel="@bind(vm='org.zkoss.zktest.zbind.comp.TabboxSelectedVM')" border="none"> 
 		Single way
 		<vbox>
 			<listbox mold="select" selectedItem="@bind(vm.selectedTab1)">

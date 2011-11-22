@@ -2,7 +2,7 @@ package org.zkoss.zktest.zbind.comp;
 
 import org.zkoss.bind.NotifyChange;
 
-public class TabSelectedVM {
+public class TabboxSelectedVM {
 
 	String selectedTab1 = "tabB";
 	String selectedTab2 = "tabC";
