@@ -10,10 +10,10 @@
 	<vbox hflex="true">
 		<hbox>
 			Filter : 
-			<textbox id="filterBox" instant="true"/> 
-			<button label="Search" disabled="filterBox.value==''"/>
+			<textbox id="filterBox" value="*" instant="true"/> 
+			<button id="searchButton" label="Search"/>
 		</hbox>
-		<listbox model="@{searchWin$composer.items}" selectedItem="@{searchWin$composer.selected}" hflex="true" height="300px">
+		<listbox model="@{searchWin$composer.items, load-after='searchButton.onClick'}" selectedItem="@{searchWin$composer.selected, load-after='searchButton.onClick'}" hflex="true" height="300px">
 			<listhead>
 				<listheader label="Name"/>
 				<listheader label="Price" align="center" width="80px" />
@@ -38,7 +38,7 @@
 				<rows>
 					<row>Description <label value="@{searchWin$composer.selected.description}"/></row>
 					<row>Price <label value="@{searchWin$composer.selected.price}"/></row>
-					<row>Quantity <label value="@{searchWin$composer.selected.quantity}" /></row>
+					<row>Quantity <label id="quantityLabel" value="@{searchWin$composer.selected.quantity}" /></row>
 					<row>Total Price <label value="@{searchWin$composer.selected.totalPrice}"/></row>
 				</rows>
 			</grid>
