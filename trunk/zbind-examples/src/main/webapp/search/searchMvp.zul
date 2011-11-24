@@ -19,12 +19,11 @@
 				<listheader label="Price" align="center" width="80px" />
 				<listheader label="Quantity" align="center" width="80px" />
 			</listhead>
-			<template name="model" var="item">
+			<template name="model">
 				<listitem >
 					<listcell label="${each.name}"/>				
 					<listcell label="${each.price} "/>
-					<listcell label="${each.quantity}" if="${each.quantity lt 3}" sclass="red"/>
-					<listcell label="${each.quantity}" if="${each.quantity ge 3}" />	
+					<listcell label="${each.quantity}" sclass="${each.quantity lt 3 ?'red':''}"/>
 				</listitem>
 			</template>
 		</listbox>
