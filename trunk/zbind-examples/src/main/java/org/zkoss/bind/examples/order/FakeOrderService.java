@@ -40,7 +40,7 @@ public class FakeOrderService implements OrderService {
 	
 	static OrderService instance;
 	
-	static synchronized OrderService getInstance(){
+	static synchronized public OrderService getInstance(){
 		if(instance==null){
 			instance = new FakeOrderService();
 		}
