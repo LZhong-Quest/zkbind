@@ -11,10 +11,6 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 */
 package org.zkoss.bind.examples.search.mvp;
 
-import java.text.DecimalFormat;
-
-import org.zkoss.bind.BindContext;
-import org.zkoss.bind.Converter;
 import org.zkoss.bind.examples.search.FakeSearchService;
 import org.zkoss.bind.examples.search.Item;
 import org.zkoss.bind.examples.search.SearchService;
@@ -32,6 +28,7 @@ import org.zkoss.zul.Textbox;
  * An implementation in MVP pattern
  * @author Hawk
  */
+@SuppressWarnings("serial")
 public class SearchComposer extends GenericAnnotatedComposer<Component>{
 
 	//the search result
@@ -87,28 +84,6 @@ public class SearchComposer extends GenericAnnotatedComposer<Component>{
 		}
 	}
 	
-	
-	Converter totalPriceConverter = null;
-	
-	public Converter getTotalPriceConverter(){
-		if(totalPriceConverter!=null){
-			return totalPriceConverter;
-		}
-		return totalPriceConverter = new Converter(){
-			public Object coerceToBean(Object val, Component component,
-					BindContext ctx) {
-				return null;//never called in this example
-			}
-
-			public Object coerceToUi(Object val, Component component,
-					BindContext ctx) {
-				if(val==null) return null;
-				String str = new DecimalFormat("$ ###,###,###,##0.00").format((Double)val);
-				return str;
-			}
-			
-		};
-	}
 	
 	@Listen("onChange = #filterBox")
 	public void changeButtonStatus(){
