@@ -1,0 +1,48 @@
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit"?>
+<zk>
+<style>
+.z-listcell.red .z-listcell-cnt, .z-label.red{
+	color:red;
+}
+</style>
+<window id="searchWin" title="Search Storage Item" border="normal" width="600px"
+	apply="org.zkoss.bind.examples.search.composer.SearchComposer" >
+	<vbox hflex="true">
+		<hbox>
+			Filter : 
+			<textbox id="filterBox" instant="true"/> 
+			<button label="Search" disabled="filterBox.value==''"/>
+		</hbox>
+		<listbox model="@{searchWin$composer.items}" selectedItem="@{searchWin$composer.selected}" hflex="true" height="300px">
+			<listhead>
+				<listheader label="Name"/>
+				<listheader label="Price" align="center" width="80px" />
+				<listheader label="Quantity" align="center" width="80px" />
+			</listhead>
+			<template name="model" var="item">
+				<listitem >
+					<listcell label="${each.name}"/>				
+					<listcell label="${each.price} "/>
+					<listcell label="${each.quantity}" if="${each.quantity lt 3}" sclass="red"/>
+					<listcell label="${each.quantity}" if="${each.quantity ge 3}" />	
+				</listitem>
+			</template>
+		</listbox>
+		<groupbox visible="true" hflex="true" mold="3d">
+			<caption label="@{searchWin$composer.selected.name}"/>
+			<grid hflex="true" >
+				<columns>
+					<column width="120px"/>
+					<column/>
+				</columns>
+				<rows>
+					<row>Description <label value="@{searchWin$composer.selected.description}"/></row>
+					<row>Price <label value="@{searchWin$composer.selected.price}"/></row>
+					<row>Quantity <label value="@{searchWin$composer.selected.quantity}" /></row>
+					<row>Total Price <label value="@{searchWin$composer.selected.totalPrice}"/></row>
+				</rows>
+			</grid>
+		</groupbox>
+	</vbox>
+</window>
+</zk>
