@@ -11,6 +11,12 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 */
 package org.zkoss.bind.examples.search.mvp;
 
+import java.text.DecimalFormat;
+
+import org.zkoss.bind.BindContext;
+import org.zkoss.bind.Binder;
+import org.zkoss.bind.Converter;
+import org.zkoss.bind.NotifyChange;
 import org.zkoss.bind.examples.search.FakeSearchService;
 import org.zkoss.bind.examples.search.Item;
 import org.zkoss.bind.examples.search.SearchService;
@@ -18,37 +24,56 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.GenericAnnotatedComposer;
 import org.zkoss.zk.ui.select.Listen;
 import org.zkoss.zk.ui.select.Wire;
-import org.zkoss.zul.Button;
-import org.zkoss.zul.Groupbox;
-import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModel;
 import org.zkoss.zul.ListModelList;
-import org.zkoss.zul.Textbox;
+import org.zkoss.zul.Window;
 /**
- * An implementation in MVP pattern
+ * An implementation in MVP pattern with zbind
  * @author Hawk
  */
 @SuppressWarnings("serial")
 public class SearchComposer extends GenericAnnotatedComposer<Component>{
 
+	//the search condition
+	private String filter = "*";
+	
 	//the search result
-	ListModelList<Item> items;
-	
+	private ListModelList<Item> items;
+
+	private Converter totalPriceConverter;
 	//the selected item
-	Item selected;
+	private Item selected;
+	private Binder binder;
 	//UI component
-	@Wire
-	Textbox filterBox;
-	@Wire("button")
-	Button searchButton;
-	@Wire("#quantityLabel")
-	Label quantityLabel;
-	@Wire("#detailBox")
-	Groupbox detailBox;
+	@Wire("window")
+	private Window window;
+
 	
+	@Override
+	public void doAfterCompose(Component comp) throws Exception {
+		super.doAfterCompose(comp);
+		comp.setAttribute("presenter", this);
+		
+	}
+	@Override
+	public void doFinally() throws Exception {
+		super.doFinally();
+
+		binder = (Binder)window.getAttribute("binder");
+
+	}
 	
 	protected SearchService getSearchService(){
 		return new FakeSearchService();
+	}
+	
+	public String getFilter() {
+		return filter;
+	}
+	
+	@NotifyChange
+	public void setFilter(String filter) {
+		this.filter = filter;
 	}
 		
 	public ListModel<Item> getItems() {
@@ -58,11 +83,16 @@ public class SearchComposer extends GenericAnnotatedComposer<Component>{
 		return items;
 	}
 
+	
 	@Listen("onClick = button")
 	public void doSearch(){
 		items = new ListModelList<Item>();
-		items.addAll(getSearchService().search(filterBox.getValue()));
+		items.addAll(getSearchService().search(filter));
 		setSelected(null);
+		if (binder != null){
+			binder.notifyChange(this, "items");
+			binder.notifyChange(this, "selected");
+		}
 	}
 	
 
@@ -70,27 +100,29 @@ public class SearchComposer extends GenericAnnotatedComposer<Component>{
 		return selected;
 	}
 
+	@NotifyChange
 	public void setSelected(Item selected) {
 		this.selected = selected;
-		if (selected == null){
-			detailBox.setVisible(false);
-		}else{
-			detailBox.setVisible(true);
-			if (selected.getQuantity() <3 ){
-				quantityLabel.setSclass("red");
-			}else{
-				quantityLabel.setSclass("");
-			}
-		}
 	}
 	
-	
-	@Listen("onChange = #filterBox")
-	public void changeButtonStatus(){
-		if (filterBox.getValue().length()==0){
-			searchButton.setDisabled(true);
-		}else{
-			searchButton.setDisabled(false);
+
+	public Converter getTotalPriceConverter(){
+		if(totalPriceConverter!=null){
+			return totalPriceConverter;
 		}
+		return totalPriceConverter = new Converter(){
+			public Object coerceToBean(Object val, Component component,
+					BindContext ctx) {
+				return null;//never called in this example
+			}
+
+			public Object coerceToUi(Object val, Component component,
+					BindContext ctx) {
+				if(val==null) return null;
+				String str = new DecimalFormat("$ ###,###,###,##0.00").format((Double)val);
+				return str;
+			}
+			
+		};
 	}
 }
