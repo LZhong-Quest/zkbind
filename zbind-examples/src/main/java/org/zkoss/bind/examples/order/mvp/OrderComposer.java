@@ -23,6 +23,7 @@ import org.zkoss.bind.examples.order.FakeOrderService;
 import org.zkoss.bind.examples.order.Order;
 import org.zkoss.bind.examples.order.OrderService;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.select.GenericAnnotatedComposer;
 import org.zkoss.zk.ui.select.Listen;
 import org.zkoss.zk.ui.select.Wire;
@@ -34,6 +35,7 @@ import org.zkoss.zul.Window;
 
 
 /**
+ * An implementation in MVP pattern with zbind expression.
  * @author Hawk
  * 
  */
@@ -52,6 +54,7 @@ public class OrderComposer extends GenericAnnotatedComposer<Component>{
 	Groupbox editBox;
 	@Wire("#confirmDialog")
 	Window confirmDialog;
+	@Wire("#messageLabel")
 	Label messageLabel;
 
 	public ListModelList<Order> getOrders() {
@@ -66,7 +69,6 @@ public class OrderComposer extends GenericAnnotatedComposer<Component>{
 		return selected;
 	}
 
-	@NotifyChange({"selected","validationMessages"})
 	public void setSelected(Order selected) {
 		this.selected = selected;
 		if (selected == null){
@@ -83,7 +85,6 @@ public class OrderComposer extends GenericAnnotatedComposer<Component>{
 
 	//action command
 	
-//	@NotifyChange({"selected","orders","validationMessages"})
 	@Listen("onClick = button[label='New']")
 	public void newOrder(){
 		Order order = new Order();
@@ -92,7 +93,6 @@ public class OrderComposer extends GenericAnnotatedComposer<Component>{
 		validationMessages.clear();//clear message
 	}
 	
-//	@NotifyChange({"selected","validationMessages"})
 	@Listen("onClick = button[label='Save']")
 	public void saveOrder(){
 		getService().save(selected);
@@ -100,14 +100,12 @@ public class OrderComposer extends GenericAnnotatedComposer<Component>{
 	}
 	
 	
-//	@NotifyChange({"selected","orders","validationMessages"})
 	@Listen("onClick = #confirmDeleteButton")
 	public void deleteOrder(){
 		getService().delete(selected);//delete selected
 		getOrders().remove(selected);
 		selected = null; //clean the selected
-		validationMessages.clear();//clear message
-		deleteMessage = null;
+		confirmDialog.setVisible(false);
 	}
 	
 	//validation messages
@@ -211,11 +209,11 @@ public class OrderComposer extends GenericAnnotatedComposer<Component>{
 	}
 	
 	//message for confirming the deletion.
-	String deleteMessage;
+//	String deleteMessage;
 	
-	public String getDeleteMessage(){
-		return deleteMessage;
-	}
+//	public String getDeleteMessage(){
+//		return deleteMessage;
+//	}
 	
 //	@Override
 //	@NotifyChange({"selected","orders","validationMessages","deleteMessage"})
@@ -223,17 +221,20 @@ public class OrderComposer extends GenericAnnotatedComposer<Component>{
 //		
 //	}
 	
-	@NotifyChange("deleteMessage")
+	@Listen("onClick = #deleteButton")
 	public void confirmDelete(){
-		//set the message to show to user
-		deleteMessage = "Do you want to delete "+selected.getId()+" ?";
+		if (getSelected().getId()==null){
+			deleteOrder();
+		}else{
+			//set the message to show to user
+			messageLabel.setValue("Do you want to delete "+selected.getId()+" ?");
+			confirmDialog.setVisible(true);
+		}
 	}
 	
-//	@NotifyChange("deleteMessage")
 	@Listen("onClick = [label='Cancel']")
 	public void cancelDelete(){
-		//clear the message
-		deleteMessage = null;
+		confirmDialog.setVisible(false);
 	}
 	
 }
