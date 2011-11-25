@@ -16,14 +16,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.zkoss.bind.NotifyChange;
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
 import org.zkoss.bind.examples.order.FakeOrderService;
 import org.zkoss.bind.examples.order.Order;
 import org.zkoss.bind.examples.order.OrderService;
 import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.select.GenericAnnotatedComposer;
 import org.zkoss.zk.ui.select.Listen;
 import org.zkoss.zk.ui.select.Wire;
@@ -39,6 +37,7 @@ import org.zkoss.zul.Window;
  * @author Hawk
  * 
  */
+@SuppressWarnings("serial")
 public class OrderComposer extends GenericAnnotatedComposer<Component>{
 	//the order list
 	ListModelList<Order> orders;
