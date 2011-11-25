@@ -24,7 +24,13 @@ import org.zkoss.bind.examples.order.Order;
 import org.zkoss.bind.examples.order.OrderService;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.GenericAnnotatedComposer;
+import org.zkoss.zk.ui.select.Listen;
+import org.zkoss.zk.ui.select.Wire;
+import org.zkoss.zul.Button;
+import org.zkoss.zul.Groupbox;
+import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
+import org.zkoss.zul.Window;
 
 
 /**
@@ -37,6 +43,16 @@ public class OrderComposer extends GenericAnnotatedComposer<Component>{
 	
 	//the selected order
 	Order selected;
+	//UI components
+	@Wire("#saveButton")
+	Button saveButton;
+	@Wire("#deleteButton")
+	Button deleteButton;
+	@Wire("#editBox")
+	Groupbox editBox;
+	@Wire("#confirmDialog")
+	Window confirmDialog;
+	Label messageLabel;
 
 	public ListModelList<Order> getOrders() {
 		if (orders == null) {
@@ -53,12 +69,22 @@ public class OrderComposer extends GenericAnnotatedComposer<Component>{
 	@NotifyChange({"selected","validationMessages"})
 	public void setSelected(Order selected) {
 		this.selected = selected;
+		if (selected == null){
+			saveButton.setDisabled(true);
+			deleteButton.setDisabled(true);
+			editBox.setVisible(false);
+		}else{
+			saveButton.setDisabled(false);
+			deleteButton.setDisabled(false);
+			editBox.setVisible(true);
+		}
 		validationMessages.clear();//clear when another order selected
 	}
 
 	//action command
 	
-	@NotifyChange({"selected","orders","validationMessages"})
+//	@NotifyChange({"selected","orders","validationMessages"})
+	@Listen("onClick = button[label='New']")
 	public void newOrder(){
 		Order order = new Order();
 		getOrders().add(order);
@@ -66,14 +92,16 @@ public class OrderComposer extends GenericAnnotatedComposer<Component>{
 		validationMessages.clear();//clear message
 	}
 	
-	@NotifyChange({"selected","validationMessages"})
+//	@NotifyChange({"selected","validationMessages"})
+	@Listen("onClick = button[label='Save']")
 	public void saveOrder(){
 		getService().save(selected);
 		validationMessages.clear();//clear message
 	}
 	
 	
-	@NotifyChange({"selected","orders","validationMessages"})
+//	@NotifyChange({"selected","orders","validationMessages"})
+	@Listen("onClick = #confirmDeleteButton")
 	public void deleteOrder(){
 		getService().delete(selected);//delete selected
 		getOrders().remove(selected);
@@ -201,7 +229,8 @@ public class OrderComposer extends GenericAnnotatedComposer<Component>{
 		deleteMessage = "Do you want to delete "+selected.getId()+" ?";
 	}
 	
-	@NotifyChange("deleteMessage")
+//	@NotifyChange("deleteMessage")
+	@Listen("onClick = [label='Cancel']")
 	public void cancelDelete(){
 		//clear the message
 		deleteMessage = null;
