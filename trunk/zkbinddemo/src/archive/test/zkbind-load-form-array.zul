@@ -1,6 +1,6 @@
 <window apply="test.ZKBindLoad1Composer">
 	<custom-attributes composerName="vm"/>
-<grid width="1000px" self="@form(id='fx', load=vm.p1)">
+<grid width="1000px" form="@id('fx') @load(vm.p1)">
 	<columns>
 		<column label="First Name"></column>
 		<column label="Last Name"></column>

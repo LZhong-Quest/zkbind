@@ -14,6 +14,6 @@
 		</row>
 	</rows>
 </grid>
-<button label="remove p1" onClick="@bind('removeP1')"/>
+<button label="remove p1" onClick="@command('removeP1')"/>
 <button label="Dump" onClick="binder.getTracker().dump()"/>
 </window>
