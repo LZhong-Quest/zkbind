@@ -16,7 +16,7 @@ public class BugsTestCase0500 extends TestCaseBase{
 	
 	@Test
 	public void b00603(){
-		navigate(getTestCaseUrl("/zbind/issue/B00603.zul"));
+		navigate(getTestCaseUrl("/bind/issue/B00603.zul"));
 		Widget outerbox = findWidget("$outsidebox");
 		List<Widget> outeritems = outerbox.getChildren();//include header
 		outeritems.remove(0);//don't care header
@@ -46,7 +46,7 @@ public class BugsTestCase0500 extends TestCaseBase{
 	
 	@Test
 	public void b00604(){
-		navigate(getTestCaseUrl("/zbind/issue/B00604.zul"));
+		navigate(getTestCaseUrl("/bind/issue/B00604.zul"));
 		Widget inc1 = findWidget("$inc1");
 		Widget inc2 = findWidget("$inc2");
 		Widget listbox1 = inc1.findWidget("@listbox");
@@ -78,7 +78,7 @@ public class BugsTestCase0500 extends TestCaseBase{
 	
 	@Test
 	public void b00605(){
-		navigate(getTestCaseUrl("/zbind/issue/B00605.zul"));
+		navigate(getTestCaseUrl("/bind/issue/B00605.zul"));
 		
 		Assert.assertEquals("A", findWidget("$tb1").getValue());
 		Assert.assertEquals("A", findWidget("$lb1").getValue());
@@ -140,7 +140,7 @@ public class BugsTestCase0500 extends TestCaseBase{
 	
 	@Test
 	public void b00619(){
-		navigate(getTestCaseUrl("/zbind/issue/B00619.zul"));
+		navigate(getTestCaseUrl("/bind/issue/B00619.zul"));
 		Assert.assertEquals(1L,findWidget("$listbox").getAttribute("selectedIndex"));
 		Assert.assertEquals(1L,findWidget("$tabbox").getAttribute("selectedIndex"));
 		assertFalseOrNull((Boolean)findWidget("$taba").getAttribute("selected"));

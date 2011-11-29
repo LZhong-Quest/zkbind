@@ -16,7 +16,7 @@ public class BugsTestCase0001 extends TestCaseBase{
 
 	@Test
 	public void b0004(){
-		navigate(getTestCaseUrl("/zbind/issue/B0004.zul"));
+		navigate(getTestCaseUrl("/bind/issue/B0004.zul"));
 		
 		Assert.assertEquals("0",findWidget("$l11").getValue());
 		Assert.assertEquals("",findWidget("$l12").getValue());
@@ -86,7 +86,7 @@ public class BugsTestCase0001 extends TestCaseBase{
 	
 	@Test
 	public void b0020(){
-		navigate(getTestCaseUrl("/zbind/issue/B0020.zul"));
+		navigate(getTestCaseUrl("/bind/issue/B0020.zul"));
 		//test property init
 		Assert.assertEquals(5,findWidgets("@button").size());
 		Widget b = findWidget("@button");

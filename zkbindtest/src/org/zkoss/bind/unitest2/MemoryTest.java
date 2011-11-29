@@ -13,7 +13,7 @@ public class MemoryTest  extends TestCaseBase{
 	
 	@Test
 	public void testList(){
-		navigate(getTestCaseUrl("/zbind/cases/order/order.zul"));
+		navigate(getTestCaseUrl("/bind/cases/order/order.zul"));
 		Widget main = findWidget("$main");
 		Assert.assertNotNull(main);
 		for(int i=0;i<loop;i++){

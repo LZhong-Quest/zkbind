@@ -10,7 +10,7 @@ import org.zkoss.zktc.core.widget.Widget;
 public class CollectionTestCase  extends TestCaseBase{
 	@Test
 	public void indexListbox1(){
-		navigate(getTestCaseUrl("/zbind/basic/collection-index-listbox.zul"));
+		navigate(getTestCaseUrl("/bind/basic/collection-index-listbox.zul"));
 		
 		Widget outerbox = findWidget("$outerbox");
 		List<Widget> outeritems = outerbox.getChildren();//include header
@@ -55,7 +55,7 @@ public class CollectionTestCase  extends TestCaseBase{
 	
 	@Test
 	public void indexListbox2(){
-		navigate(getTestCaseUrl("/zbind/basic/collection-index-listbox.zul"));
+		navigate(getTestCaseUrl("/bind/basic/collection-index-listbox.zul"));
 		
 		Widget outerbox = findWidget("$outerbox");
 		List<Widget> outeritems = outerbox.getChildren();//include header
@@ -194,7 +194,7 @@ public class CollectionTestCase  extends TestCaseBase{
 	
 	@Test
 	public void indexGrid1(){
-		navigate(getTestCaseUrl("/zbind/basic/collection-index-grid.zul"));
+		navigate(getTestCaseUrl("/bind/basic/collection-index-grid.zul"));
 		
 		Widget outerbox = findWidget("$outergrid");
 		List<Widget> outerrows = outerbox.findWidget("@rows").getChildren();
@@ -238,7 +238,7 @@ public class CollectionTestCase  extends TestCaseBase{
 	
 	@Test
 	public void indexGrid2(){
-		navigate(getTestCaseUrl("/zbind/basic/collection-index-grid.zul"));
+		navigate(getTestCaseUrl("/bind/basic/collection-index-grid.zul"));
 		
 		Widget outerbox = findWidget("$outergrid");
 		List<Widget> outerrows = outerbox.findWidget("@rows").getChildren();
@@ -373,7 +373,7 @@ public class CollectionTestCase  extends TestCaseBase{
 	
 	@Test
 	public void indexCombobox1(){
-		navigate(getTestCaseUrl("/zbind/basic/collection-index-combobox.zul"));
+		navigate(getTestCaseUrl("/bind/basic/collection-index-combobox.zul"));
 		
 		Widget outerbox = findWidget("$outergrid");
 		List<Widget> outerrows = outerbox.findWidget("@rows").getChildren();
@@ -400,7 +400,7 @@ public class CollectionTestCase  extends TestCaseBase{
 	
 	@Test
 	public void indexCombobox2(){
-		navigate(getTestCaseUrl("/zbind/basic/collection-index-combobox.zul"));
+		navigate(getTestCaseUrl("/bind/basic/collection-index-combobox.zul"));
 		
 		Widget outerbox = findWidget("$outergrid");
 		List<Widget> outerrows = outerbox.findWidget("@rows").getChildren();
@@ -487,7 +487,7 @@ public class CollectionTestCase  extends TestCaseBase{
 	
 //	@Test
 //	public void indexTree1(){
-//		navigate(getTestCaseUrl("/zbind/basic/collection-index-tree.zul"));
+//		navigate(getTestCaseUrl("/bind/basic/collection-index-tree.zul"));
 //		
 //		Widget tree = findWidget("$tree");
 //		dumpWidget(tree);

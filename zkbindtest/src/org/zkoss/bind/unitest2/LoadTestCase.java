@@ -10,7 +10,7 @@ public class LoadTestCase extends TestCaseBase{
 	
 	@Test
 	public void testLoad(){
-		navigate(getTestCaseUrl("/zbind/basic/load.zul"));
+		navigate(getTestCaseUrl("/bind/basic/load.zul"));
 		
 		Assert.assertEquals("First1",findWidget("$l1").getAttribute("value"));
 		Assert.assertEquals("Last1",findWidget("$l2").getAttribute("value"));
@@ -136,7 +136,7 @@ public class LoadTestCase extends TestCaseBase{
 	
 	@Test
 	public void testIndirect1(){
-		navigate(getTestCaseUrl("/zbind/basic/load-indirect.zul"));
+		navigate(getTestCaseUrl("/bind/basic/load-indirect.zul"));
 		
 		Assert.assertEquals("First1",findWidget("$l1").getAttribute("value"));
 		Assert.assertEquals("Last1",findWidget("$l2").getAttribute("value"));
@@ -189,7 +189,7 @@ public class LoadTestCase extends TestCaseBase{
 	
 	@Test
 	public void testIndirect2(){
-		navigate(getTestCaseUrl("/zbind/basic/load-indirect.zul"));
+		navigate(getTestCaseUrl("/bind/basic/load-indirect.zul"));
 		
 		Assert.assertEquals("First1",findWidget("$l1").getAttribute("value"));
 		Assert.assertEquals("Last1",findWidget("$l2").getAttribute("value"));
@@ -242,7 +242,7 @@ public class LoadTestCase extends TestCaseBase{
 	
 	@Test
 	public void testProperty(){
-		navigate(getTestCaseUrl("/zbind/basic/property.zul"));
+		navigate(getTestCaseUrl("/bind/basic/property.zul"));
 		
 		Assert.assertEquals("A",findWidget("$t1").getAttribute("value"));
 		Assert.assertEquals("A",findWidget("$l1").getAttribute("value"));
@@ -305,7 +305,7 @@ public class LoadTestCase extends TestCaseBase{
 	
 	@Test
 	public void testConverter(){
-		navigate(getTestCaseUrl("/zbind/basic/converter.zul"));
+		navigate(getTestCaseUrl("/bind/basic/converter.zul"));
 		
 		Assert.assertEquals("1975/02/13",findWidget("$t1").getAttribute("value"));
 		Assert.assertEquals("36",findWidget("$l1").getAttribute("value"));
@@ -349,8 +349,8 @@ public class LoadTestCase extends TestCaseBase{
 	}
 	
 	@Test
-	public void testValidation(){
-		navigate(getTestCaseUrl("/zbind/basic/validation.zul"));
+	public void testValidation1(){
+		navigate(getTestCaseUrl("/bind/basic/validation.zul"));
 		
 		Assert.assertEquals("0",findWidget("$l11").getValue());
 		Assert.assertEquals("",findWidget("$l12").getValue());
@@ -401,6 +401,94 @@ public class LoadTestCase extends TestCaseBase{
 		Assert.assertEquals("33",findWidget("$t32").getValue());
 		Assert.assertEquals("",findWidget("$msg1").getValue());
 		Assert.assertEquals("",findWidget("$msg2").getValue());
+	}
+	
+	@Test
+	public void testValidation2() {
+		navigate(getTestCaseUrl("/bind/basic/validation.zul"));
+
+		Assert.assertEquals("0", findWidget("$l11").getValue());
+		Assert.assertEquals("", findWidget("$l12").getValue());
+		Assert.assertEquals("0", findWidget("$t21").getValue());
+		Assert.assertEquals("", findWidget("$t22").getValue());
+		Assert.assertEquals("0", findWidget("$t31").getValue());
+		Assert.assertEquals("", findWidget("$t32").getValue());
+		Assert.assertEquals("", findWidget("$msg1").getValue());
+		Assert.assertEquals("", findWidget("$msg2").getValue());
+
+		findWidget("$t31").clear().keys("1").tab();
+		Assert.assertEquals("0", findWidget("$l11").getValue());
+		Assert.assertEquals("", findWidget("$l12").getValue());
+		Assert.assertEquals("0", findWidget("$t21").getValue());
+		Assert.assertEquals("", findWidget("$t22").getValue());
+		Assert.assertEquals("1", findWidget("$t31").getValue());
+		Assert.assertEquals("", findWidget("$t32").getValue());
+		Assert.assertEquals("", findWidget("$msg1").getValue());
+		Assert.assertEquals("", findWidget("$msg2").getValue());
+
+		findWidget("$t32").clear().keys("3").tab();
+		Assert.assertEquals("0", findWidget("$l11").getValue());
+		Assert.assertEquals("", findWidget("$l12").getValue());
+		Assert.assertEquals("0", findWidget("$t21").getValue());
+		Assert.assertEquals("", findWidget("$t22").getValue());
+		Assert.assertEquals("1", findWidget("$t31").getValue());
+		Assert.assertEquals("3", findWidget("$t32").getValue());
+		Assert.assertEquals("", findWidget("$msg1").getValue());
+		Assert.assertEquals("", findWidget("$msg2").getValue());
+
+		findWidget("$btn1").click();
+		Assert.assertEquals("0", findWidget("$l11").getValue());
+		Assert.assertEquals("", findWidget("$l12").getValue());
+		Assert.assertEquals("0", findWidget("$t21").getValue());
+		Assert.assertEquals("", findWidget("$t22").getValue());
+		Assert.assertEquals("1", findWidget("$t31").getValue());
+		Assert.assertEquals("3", findWidget("$t32").getValue());
+		Assert.assertEquals("value 1 have to large than 10",
+				findWidget("$msg1").getValue());
+		Assert.assertEquals("", findWidget("$msg2").getValue());
+
+		findWidget("$t31").clear().keys("15").tab();
+		Assert.assertEquals("0", findWidget("$l11").getValue());
+		Assert.assertEquals("", findWidget("$l12").getValue());
+		Assert.assertEquals("0", findWidget("$t21").getValue());
+		Assert.assertEquals("", findWidget("$t22").getValue());
+		Assert.assertEquals("15", findWidget("$t31").getValue());
+		Assert.assertEquals("3", findWidget("$t32").getValue());
+		Assert.assertEquals("value 1 have to large than 10",
+				findWidget("$msg1").getValue());
+		Assert.assertEquals("", findWidget("$msg2").getValue());
+
+		findWidget("$btn1").click();
+		Assert.assertEquals("0", findWidget("$l11").getValue());
+		Assert.assertEquals("", findWidget("$l12").getValue());
+		Assert.assertEquals("0", findWidget("$t21").getValue());
+		Assert.assertEquals("", findWidget("$t22").getValue());
+		Assert.assertEquals("15", findWidget("$t31").getValue());
+		Assert.assertEquals("3", findWidget("$t32").getValue());
+		Assert.assertEquals("", findWidget("$msg1").getValue());
+		Assert.assertEquals("value 2 have to large than 20",
+				findWidget("$msg2").getValue());
+
+		findWidget("$t32").clear().keys("35").tab();
+		Assert.assertEquals("0", findWidget("$l11").getValue());
+		Assert.assertEquals("", findWidget("$l12").getValue());
+		Assert.assertEquals("0", findWidget("$t21").getValue());
+		Assert.assertEquals("", findWidget("$t22").getValue());
+		Assert.assertEquals("15", findWidget("$t31").getValue());
+		Assert.assertEquals("35", findWidget("$t32").getValue());
+		Assert.assertEquals("", findWidget("$msg1").getValue());
+		Assert.assertEquals("value 2 have to large than 20",
+				findWidget("$msg2").getValue());
+
+		findWidget("$btn1").click();
+		Assert.assertEquals("15", findWidget("$l11").getValue());
+		Assert.assertEquals("35", findWidget("$l12").getValue());
+		Assert.assertEquals("15", findWidget("$t21").getValue());
+		Assert.assertEquals("35", findWidget("$t22").getValue());
+		Assert.assertEquals("15", findWidget("$t31").getValue());
+		Assert.assertEquals("35", findWidget("$t32").getValue());
+		Assert.assertEquals("", findWidget("$msg1").getValue());
+		Assert.assertEquals("", findWidget("$msg2").getValue());
 	}
 	
 }

@@ -11,7 +11,7 @@ public class ComponentTestCase  extends TestCaseBase{
 	
 	@Test
 	public void tabboxSelected1(){
-		navigate(getTestCaseUrl("/zbind/comp/tabbox-selected.zul"));
+		navigate(getTestCaseUrl("/bind/comp/tabbox-selected.zul"));
 		
 		Assert.assertEquals(2L,findWidget("$listbox1").getAttribute("selectedIndex"));
 		Assert.assertEquals(2L,findWidget("$tabbox1").getAttribute("selectedIndex"));
@@ -39,7 +39,7 @@ public class ComponentTestCase  extends TestCaseBase{
 	
 	@Test
 	public void tabboxSelected2(){
-		navigate(getTestCaseUrl("/zbind/comp/tabbox-selected.zul"));
+		navigate(getTestCaseUrl("/bind/comp/tabbox-selected.zul"));
 		
 		Assert.assertEquals(1L,findWidget("$listbox2").getAttribute("selectedIndex"));
 		Assert.assertEquals(1L,findWidget("$tabbox2").getAttribute("selectedIndex"));
@@ -67,7 +67,7 @@ public class ComponentTestCase  extends TestCaseBase{
 	
 	@Test
 	public void radiogroupSelected(){
-		navigate(getTestCaseUrl("/zbind/comp/radiogroup-selected.zul"));
+		navigate(getTestCaseUrl("/bind/comp/radiogroup-selected.zul"));
 		Widget rgroup = null;
 		Assert.assertEquals(1L,findWidget("$listbox").getAttribute("selectedIndex"));
 		rgroup = findWidget("$radiogroup");
