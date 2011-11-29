@@ -1,0 +1,46 @@
+<zk>
+<style>
+.z-listcell.red .z-listcell-cnt, .z-label.red{
+	color:red;
+}
+</style>
+<window id="searchWin" title="Search Storage Item" border="normal" width="600px"
+	apply="org.zkoss.bind.examples.search.mvp.SearchComposer,org.zkoss.bind.BindComposer" >
+	<vbox hflex="true">
+		<hbox>
+			Filter : 
+			<textbox id="filterBox" value="@bind(presenter.filter)" instant="true"/> 
+			<button id="searchButton" label="Search" disabled="@bind(empty presenter.filter)"/>
+		</hbox>
+		<listbox model="@bind(presenter.items)" selectedItem="@bind(presenter.selected)" hflex="true" height="300px">
+			<listhead>
+				<listheader label="Name"/>
+				<listheader label="Price" align="center" width="80px" />
+				<listheader label="Quantity" align="center" width="80px" />
+			</listhead>
+			<template name="model" var="item">
+				<listitem>
+					<listcell label="@bind(item.name)"/>				
+					<listcell label="@bind(item.price)@converter('formatedNumber', format='###,##0.00')"/>
+					<listcell label="@bind(item.quantity)" sclass="@bind(item.quantity lt 3 ?'red':'')"/>
+				</listitem>
+			</template>
+		</listbox>
+		<groupbox id="detailBox" visible="@bind(not empty presenter.selected)" hflex="true" mold="3d">
+			<caption label="@bind(presenter.selected.name)"/>
+			<grid hflex="true" >
+				<columns>
+					<column width="120px"/>
+					<column/>
+				</columns>
+				<rows>
+					<row>Description <label value="@bind(presenter.selected.description)"/></row>
+					<row>Price <label value="@bind(presenter.selected.price) @converter('formatedNumber', format='###,##0.00')"/></row>
+					<row>Quantity <label id="quantityLabel" value="@bind(presenter.selected.quantity)" sclass="@bind(presenter.selected.quantity lt 3 ?'red':'')"/></row>
+					<row>Total Price <label value="@bind(presenter.selected.totalPrice) @converter(presenter.totalPriceConverter)"/></row>
+				</rows>
+			</grid>
+		</groupbox>
+	</vbox>
+</window>
+</zk>
