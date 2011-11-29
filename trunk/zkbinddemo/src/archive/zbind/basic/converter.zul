@@ -5,12 +5,12 @@
 		<textbox id="t1" value="@bind(vm.bday1) @converter('myconverter1')" />
 		<label id="l1" value="@bind(vm.age1)"/>
 	</vbox>
-	<vbox self="@form(id='fx', load=vm, save=vm before 'saveForm')">
+	<vbox form="@id('fx') @load(vm) @save(vm, before='saveForm')">
 		<textbox id="t2" value="@bind(fx.bday1) @converter('myconverter1')" />
 		<label id="l2" value="@bind(fx.age1)"/>
 	</vbox>
 	<hbox>
-		<button id="saveForm" label="saveForm" onClick="@bind('saveForm')" />
+		<button id="saveForm" label="saveForm" onClick="@command('saveForm')" />
 	</hbox>
 	<hbox>
 		<button label="Dump" onClick="binder.getTracker().dump()" />

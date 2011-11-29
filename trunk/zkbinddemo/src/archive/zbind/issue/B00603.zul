@@ -1,4 +1,4 @@
-<window apply="org.zkoss.bind.BindComposer" viewModel="@bind(vm='org.zkoss.zktest.zbind.issue.B00603')">
+<window apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('org.zkoss.zktest.zbind.issue.B00603')">
 	the nested listbox(option) should render correctly
 	<listbox id="outsidebox" width="500px" model="@bind(vm.items)" rows="3" sclass="outside">
 		<custom-attributes mark="outside"/>

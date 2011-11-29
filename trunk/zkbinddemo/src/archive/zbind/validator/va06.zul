@@ -1,7 +1,7 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 <zk>
 	<window title="new page title" border="normal"
-		apply="org.zkoss.bind.BindComposer" viewModel="@bind(vm='org.zkoss.zktest.zbind.viewmodel.validator.Va06')">
+		apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('org.zkoss.zktest.zbind.viewmodel.validator.Va06')">
 		<label multiline="true">
 		v6.command, before, converter input with argument
 		1. input -1, not save
@@ -9,8 +9,8 @@
 		3. input 1, adult no checked
 		</label>
 		<intbox id="ageBox"
-			value="@bind(init=vm.negativeOne ,save=vm.adult before 'checkAdult') @converter(vm.adultConverter) @validator(vm.booleanValidator)" />
-		<button id="checkButton" label="checkAdult" onClick="@bind('checkAdult')" />
+			value="@init(vm.negativeOne) @save(vm.adult, before='checkAdult') @converter(vm.adultConverter) @validator(vm.booleanValidator)" />
+		<button id="checkButton" label="checkAdult" onClick="@command('checkAdult')" />
 		<checkbox id="adultBox" checked="@bind(load=vm.adult)" label="Is Adult"/>			
 		
 	</window>

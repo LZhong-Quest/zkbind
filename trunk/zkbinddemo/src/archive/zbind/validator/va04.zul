@@ -1,7 +1,7 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 <zk>
 	<window title="new page title" border="normal"
-		apply="org.zkoss.bind.BindComposer" viewModel="@bind(vm='org.zkoss.zktest.zbind.viewmodel.validator.Va04')">
+		apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('org.zkoss.zktest.zbind.viewmodel.validator.Va04')">
 		
 		va4
 		<label multiline="true">
@@ -12,13 +12,13 @@
 		</label>
 		
 		Age can not over 30:<intbox id="ageBox"
-			value="@bind(init=vm.positiveOne ,save=vm.age before 'add') @validator(vm.upperBoundValidator, max=30)"/>
-		<button id="addButton" label="Add 10" onClick="@bind('add', increment=10)" />
+			value="@init(vm.positiveOne) @save(vm.age, before='add') @validator(vm.upperBoundValidator, max=30)"/>
+		<button id="addButton" label="Add 10" onClick="@command('add', increment=10)" />
 		<label id="adultLabel" value="@bind(vm.age) @converter(vm.maturityIndicator)"/>			
 		<separator />
-		original age:<label id="originalAge" value="@bind(load=vm.age before 'add')" />
+		original age:<label id="originalAge" value="@load(vm.age, before='add')" />
 		<separator />
-		10 years after: <label id="afterAge" value="@bind(load=vm.age after 'add')" />
+		10 years after: <label id="afterAge" value="@load(vm.age, after='add')" />
 
 	</window>
 </zk>

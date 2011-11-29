@@ -6,7 +6,7 @@
 	</vbox>
 	
 	<hbox>
-		<button id="btn1" label="Cmd" onClick="@bind(vm.checked?'command1':'command2')" />
+		<button id="btn1" label="Cmd" onClick="@command(vm.checked?'command1':'command2')" />
 		<button label="Dump" onClick="binder.getTracker().dump()" />
 	</hbox>	
 </window>

@@ -1,6 +1,6 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<vbox apply="org.zkoss.bind.BindComposer" viewModel="@bind(vm='org.zkoss.zktest.zbind.viewmodel.collection.C2')">
+	<vbox apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('org.zkoss.zktest.zbind.viewmodel.collection.C2')">
 		<label multiline="true">
 		c2.
 		1. delete row entry with button one by one.
@@ -10,13 +10,13 @@
 			<template name="model" var="f">
 				<listitem>
 					<listcell label="@bind(f)"></listcell>
-					<listcell><button  label="Delete" onClick="@bind('delete', index=self.parent.parent.index)" /></listcell>
+					<listcell><button  label="Delete" onClick="@command('delete', index=self.parent.parent.index)" /></listcell>
 				</listitem>
 			</template>
 
 		</listbox>
 		<!-- 
-		<button label="Delete" onClick="@bind('delete', index=0)"/>
+		<button label="Delete" onClick="@command('delete', index=0)"/>
 		 -->
 	
 	</vbox>

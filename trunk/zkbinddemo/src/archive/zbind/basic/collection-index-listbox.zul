@@ -30,17 +30,17 @@
 					</listbox>				
 				</listcell>
 				<listcell >
-					<button label="Index" onClick="@bind('showIndex', index=s.index)"/>
-					<button label="Delete" onClick="@bind('delete', item=item)"/>
-					<button label="Add After" onClick="@bind('addAfter', item=item)"/>
-					<button label="Add Before" onClick="@bind('addBefore', item=item)"/>
+					<button label="Index" onClick="@command('showIndex', index=s.index)"/>
+					<button label="Delete" onClick="@command('delete', item=item)"/>
+					<button label="Add After" onClick="@command('addAfter', item=item)"/>
+					<button label="Add Before" onClick="@command('addBefore', item=item)"/>
 				</listcell>
 			</listitem>
 		</template>
 	</listbox>
 
 	<hbox>
-		<button label="reload" onClick="@bind('reload')" />
+		<button label="reload" onClick="@command('reload')" />
 		<button label="detach" onClick="listbox.detach()" />
 		<button label="Dump" onClick="binder.getTracker().dump()" />
 	</hbox>	

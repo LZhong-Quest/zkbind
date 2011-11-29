@@ -1,4 +1,4 @@
-<window title="inner2" border="normal" apply="org.zkoss.bind.BindComposer" viewModel="@bind(vm='org.zkoss.zktest.zbind.issue.B00605')"> 
+<window title="inner2" border="normal" apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('org.zkoss.zktest.zbind.issue.B00605')"> 
 	<vbox>
 		<hbox>
 			<textbox id="tb3" value="@bind(vm.value)"/>

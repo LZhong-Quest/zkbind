@@ -1,7 +1,7 @@
 <zk>
 	<window id="mWinA" apply="org.zkoss.bind.BindComposer"
-		viewModel="@bind(vm='org.zkoss.zktest.zbind.basic.MVP2MVVMViewModel')" border="none">
-		<button id="innerToggle" label="toggle inside" onClick="@bind('toggleWriteProtected')" />
+		viewModel="@id('vm') @init('org.zkoss.zktest.zbind.basic.MVP2MVVMViewModel')" border="none">
+		<button id="innerToggle" label="toggle inside" onClick="@command('toggleWriteProtected')" />
 
 		<textbox id="textA" value="@bind(vm.textA)"
 			disabled="@bind(vm.writeProtected)">

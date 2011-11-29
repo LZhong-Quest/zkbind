@@ -6,7 +6,7 @@
 </style>
 <div>
 <window id="main" title="Order Management" border="normal" width="600px"
-	apply="org.zkoss.bind.BindComposer" viewModel="@bind(vm='org.zkoss.zktest.zbind.cases.order.OrderVM')" >
+	apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('org.zkoss.zktest.zbind.cases.order.OrderVM')" >
 	<vbox hflex="true">
 		<listbox id="orderList" model="@bind(vm.orders)" selectedItem="@bind(vm.selected)" hflex="true" height="200px">
 			<listhead>
@@ -27,10 +27,10 @@
 			</template>
 		</listbox>
 		<toolbar>
-			<button id="newBtn" label="New" onClick="@bind('newOrder')" />
-			<button id="saveBtn" label="Save" onClick="@bind('saveOrder')" disabled="@bind(empty vm.selected)" />
+			<button id="newBtn" label="New" onClick="@command('newOrder')" />
+			<button id="saveBtn" label="Save" onClick="@command('saveOrder')" disabled="@bind(empty vm.selected)" />
 			<!-- show confirm dialog when selected is persisted -->
-			<button id="deleteBtn1" label="Delete" onClick="@bind(empty vm.selected.id?'deleteOrder':'confirmDelete')" disabled="@bind(empty vm.selected)" />
+			<button id="deleteBtn1" label="Delete" onClick="@command(empty vm.selected.id?'deleteOrder':'confirmDelete')" disabled="@bind(empty vm.selected)" />
 		</toolbar>
 		<groupbox id="editor" visible="@bind(not empty vm.selected)" hflex="true" mold="3d">
 			<grid hflex="true" >
@@ -40,17 +40,17 @@
 				</columns>
 				<rows>
 					<row>Id <label id="id" value="@bind(vm.selected.id)"/></row>
-					<row>Description <textbox id="desc" value="@bind(vm.selected.description, save=vm.selected.description before 'saveOrder')"/></row>
+					<row>Description <textbox id="desc" value="@load(vm.selected.description) @save(vm.selected.description, before='saveOrder')"/></row>
 					<row>Quantity
 						<hlayout> 
-							<intbox id="quantity" value="@bind(vm.selected.quantity, save=vm.selected.quantity before 'saveOrder') 
+							<intbox id="quantity" value="@load(vm.selected.quantity) @save(vm.selected.quantity, before='saveOrder') 
 							@validator(vm.quantityValidator)"/>
 							<label value="@bind(vm.validationMessages['quantity'])" sclass="red" />
 						</hlayout>	
 					</row>					
 					<row>Price 
 						<hlayout>
-							<doublebox id="price" value="@bind(vm.selected.price, save=vm.selected.price before 'saveOrder') 
+							<doublebox id="price" value="@load(vm.selected.price) @save(vm.selected.price, before='saveOrder') 
 							@validator(vm.priceValidator)" format="###,##0.00" />
 							<label value="@bind(vm.validationMessages['price'])" sclass="red" />
 						</hlayout>
@@ -58,14 +58,14 @@
 					<row>Total Price <label value="@bind(vm.selected.totalPrice) @converter('formatedNumber', format='###,##0.00')" /></row>
 					<row>Creation Date 
 						<hlayout> 
-							<datebox id="creationDate" value="@bind(vm.selected.creationDate, save=vm.selected.creationDate before 'saveOrder')
+							<datebox id="creationDate" value="@load(vm.selected.creationDate) @save(vm.selected.creationDate, before='saveOrder')
 							@validator(vm.creationDateValidator)" format="yyyy/MM/dd"/>
 							<label value="@bind(vm.validationMessages['creationDate'])" sclass="red" />
 						</hlayout>	
 					</row>
 					<row>Shipping Date 
 						<hlayout> 
-							<datebox id="shippingDate" value="@bind(vm.selected.shippingDate, save=vm.selected.shippingDate before 'saveOrder')
+							<datebox id="shippingDate" value="@load(vm.selected.shippingDate), @save(vm.selected.shippingDate, before='saveOrder')
 							@validator(vm.shippingDateValidator)" format="yyyy/MM/dd"/>
 							<label value="@bind(vm.validationMessages['shippingDate'])" sclass="red" />
 						</hlayout>
@@ -81,8 +81,8 @@
 				<label value="@bind(vm.deleteMessage)"/>
 			</hlayout>
 			<hbox pack="center" hflex="true">
-				<button id="deleteBtn2" label="Delete" onClick="@bind('deleteOrder')"/>
-				<button id="cancelBtn" label="Cancel" onClick="@bind('cancelDelete')"/>
+				<button id="deleteBtn2" label="Delete" onClick="@command('deleteOrder')"/>
+				<button id="cancelBtn" label="Cancel" onClick="@command('cancelDelete')"/>
 			</hbox>
 		</vbox>
 	</window>

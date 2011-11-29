@@ -1,7 +1,7 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 <zk>
 	<window title="new page title" border="normal"
-		apply="org.zkoss.bind.BindComposer" viewModel="@bind(vm='org.zkoss.zktest.zbind.viewmodel.validator.Va05')">
+		apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('org.zkoss.zktest.zbind.viewmodel.validator.Va05')">
 		<label multiline="true">
 		va5.
 		command, before, converter output with argument
@@ -12,9 +12,9 @@
 		</label>
 		Age :
 		<intbox id="ageBox"
-			value="@bind(init=vm.negativeOne ,save=vm.age before 'submit') @validator(vm.nonNegative)" />
+			value="@init(vm.negativeOne) @save(vm.age, before='submit') @validator(vm.nonNegative)" />
 		limit: <intbox id="limitBox" value="10"/> 
-		<button id="submitButton" label="submit" onClick="@bind('submit')" />
+		<button id="submitButton" label="submit" onClick="@command('submit')" />
 		<label id="messageLabel" value="@bind(vm.age) @converter(vm.ageLimitIndicator, limit=limitBox.value)" />
 		
 	</window>

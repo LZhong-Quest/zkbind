@@ -11,18 +11,18 @@
 		<label id="l1" value="@bind(vm.value1)" />
 	</hbox>
 	<hbox>Row 2
-		<textbox id="tb2" value="@bind(init=vm.value1,save=vm.value1 before 'cmd1')"/>
-		<label id="l2" value="@bind(init=vm.value1,load=vm.value1 after 'cmd1')" />
+		<textbox id="tb2" value="@init(vm.value1) @save(vm.value1, before='cmd1')"/>
+		<label id="l2" value="@init(vm.value1) @load(vm.value1, after='cmd1')" />
 	</hbox>
-	<hbox self="@form(id='fx', init=vm.form1, load=vm, save=vm after 'cmd2')">
+	<hbox form="@id('fx') @init(vm.form1) @load(vm) @save(vm, after='cmd2')">
 		Row 3
 		<textbox id="tb3" value="@bind(fx.value2)"/>
 		<label id="l31" value="@bind(vm.value2)" />
 		<label id="l32" value="@bind(vm.formValue2)" />
 	</hbox>
 	<hbox>
-		<button id="btn1" label="cmd1" onClick="@bind('cmd1')" />
-		<button id="btn2" label="cmd2" onClick="@bind('cmd2')" />
+		<button id="btn1" label="cmd1" onClick="@command('cmd1')" />
+		<button id="btn2" label="cmd2" onClick="@command('cmd2')" />
 		<button label="Dump" onClick="binder.getTracker().dump()" />
 	</hbox>	
 </window>

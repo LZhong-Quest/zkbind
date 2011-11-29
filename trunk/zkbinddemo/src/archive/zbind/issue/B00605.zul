@@ -1,5 +1,5 @@
 <window xmlns:n="http://www.zkoss.org/2005/zk/native" 
-title="outter" border="normal" apply="org.zkoss.bind.BindComposer" viewModel="@bind(vm='org.zkoss.zktest.zbind.issue.B00605')">
+title="outter" border="normal" apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('org.zkoss.zktest.zbind.issue.B00605')">
 	the value binding in outter, inner1 and inner2 should work separately, <n:br/>
 	1.change outter value to JJ, only effect value in outter .<n:br/>
 	2.change inner 1 value to KK, should only effect value in inner1 <n:br/>
