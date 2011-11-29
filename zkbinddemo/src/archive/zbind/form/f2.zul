@@ -45,7 +45,7 @@
 					<comboitem label="50" value="50" />
 				</combobox>
 				<button id="computeButton" label="Compute"
-					onClick="@bind('compute', off=offBox.selectedItem.value)" />
+					onClick="@command('compute', off=offBox.selectedItem.value)" />
 			</row>
 			<row>
 				<label value="Total" />

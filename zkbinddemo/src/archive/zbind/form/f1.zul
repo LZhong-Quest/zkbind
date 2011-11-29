@@ -8,7 +8,7 @@
 	1. click register, message doesn't change.
 	2. input account "john", password "1", retype password "2"
 	3. register, message no change.
-	4. input password "1", register, message show account.
+	4. input "1" at "Retype password", register, message show account.
 	5. input birthday 1978/1/1, register, message show "..are adult." 
 	</label>
 	<grid form="@id('fx') @load(vm.user) @save(vm.user,before='register') @validator(vm.f1Validator)">
@@ -30,14 +30,14 @@
 			</row>
 			<row>
 				Birthday
-				<datebox id="birthdayBox" format="yyyy/MM/dd" value="@bind(save=fx.adult) @converter(vm.birthdayAdultConverter)"/>
+				<datebox id="birthdayBox" format="yyyy/MM/dd" value="@save(fx.adult) @converter(vm.birthdayAdultConverter)"/>
 			</row>
 			<row>
 			</row>			
 			<row>
 				<label value="" />
 				<button id="registerButton" label="Register"
-					onClick="@bind('register')" />
+					onClick="@command('register')" />
 			</row>
 
 		</rows>
