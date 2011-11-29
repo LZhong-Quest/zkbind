@@ -15,9 +15,5 @@
 			</template>
 
 		</listbox>
-		<!-- 
-		<button label="Delete" onClick="@command('delete', index=0)"/>
-		 -->
-	
 	</vbox>
 </zk>
