@@ -11,8 +11,8 @@
 			<comboitem label="@bind(n)" value="@bind(n)"></comboitem>
 			</template>
 		</combobox>
-		<label id="contentListbox" value="List Content:"/>
-		<listbox model="@bind(vm.selectedList)">
+		<label value="List Content:"/>
+		<listbox id="contentListbox" model="@bind(vm.selectedList)">
 			<template name="model" var="f">
 				<listitem>
 					<listcell label="@bind(f)"></listcell>
