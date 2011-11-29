@@ -85,18 +85,19 @@ public class F1 {
 		}
 
 		public Object coerceToBean(Object val, Component component, BindContext ctx) {
-			
-			Calendar adultDay = Calendar.getInstance();
-			adultDay.setTime((Date)val);
-			adultDay.add(Calendar.YEAR, 18);
-			Calendar now = Calendar.getInstance();
-			
-			if (now.after(adultDay)){
-				return true;
-			}
-			return false;
-		}
+			boolean isAdult = false;
+			if (val!= null){
+				Calendar adultDay = Calendar.getInstance();
+				adultDay.setTime((Date)val);
+				adultDay.add(Calendar.YEAR, 18);
+				Calendar now = Calendar.getInstance();
 
+				if (now.after(adultDay)){
+					isAdult = true;
+				}
+			}
+			return isAdult;
+		}
 	}
 	
 	public Converter getBirthdayAdultConverter(){
