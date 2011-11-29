@@ -28,7 +28,7 @@ import org.zkoss.zul.ListModel;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Window;
 /**
- * An implementation in MVP pattern with zbind
+ * An implementation in MVP pattern with zkbind
  * @author Hawk
  */
 @SuppressWarnings("serial")

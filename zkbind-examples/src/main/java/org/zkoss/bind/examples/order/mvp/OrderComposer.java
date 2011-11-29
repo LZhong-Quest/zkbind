@@ -33,7 +33,7 @@ import org.zkoss.zul.Window;
 
 
 /**
- * An implementation in MVP pattern with zbind expression.
+ * An implementation in MVP pattern with zkbind expression.
  * @author Hawk
  * 
  */
