@@ -5,7 +5,7 @@
 }
 </style>
 <window title="Order Management" border="normal" width="600px"
-	apply="org.zkoss.bind.BindComposer" viewModel="@bind(vm='org.zkoss.bind.examples.order.OrderFormVM')" >
+	apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('org.zkoss.bind.examples.order.OrderFormVM')" >
 	<vbox hflex="true">
 		<listbox model="@bind(vm.orders)" selectedItem="@bind(vm.selected)" hflex="true" height="200px">
 			<listhead>
@@ -26,12 +26,12 @@
 			</template>
 		</listbox>
 		<toolbar>
-			<button label="New" onClick="@bind('newOrder')" />
-			<button label="Save" onClick="@bind('saveOrder')" disabled="@bind(empty vm.selected)" />
+			<button label="New" onClick="@command('newOrder')" />
+			<button label="Save" onClick="@command('saveOrder')" disabled="@bind(empty vm.selected)" />
 			<!-- show confirm dialog when selected is persisted -->
-			<button label="Delete" onClick="@bind(empty vm.selected.id?'deleteOrder':'confirmDelete')" disabled="@bind(empty vm.selected)" />
+			<button label="Delete" onClick="@command(empty vm.selected.id?'deleteOrder':'confirmDelete')" disabled="@bind(empty vm.selected)" />
 		</toolbar>
-		<groupbox self="@form(id='fx', load=vm.selected, save=vm.selected before 'saveOrder') @validator(vm.shippingDateValidator)" visible="@bind(not empty vm.selected)" hflex="true" mold="3d">
+		<groupbox form="@id('fx') @load(vm.selected) @save(vm.selected, before='saveOrder') @validator(vm.shippingDateValidator)" visible="@bind(not empty vm.selected)" hflex="true" mold="3d">
 			<grid hflex="true" >
 				<columns>
 					<column width="120px"/>
@@ -77,8 +77,8 @@
 				<label value="@bind(vm.deleteMessage)"/>
 			</hlayout>
 			<hbox pack="center" hflex="true">
-				<button label="Delete" onClick="@bind('deleteOrder')"/>
-				<button label="Cancel" onClick="@bind('cancelDelete')"/>
+				<button label="Delete" onClick="@command('deleteOrder')"/>
+				<button label="Cancel" onClick="@command('cancelDelete')"/>
 			</hbox>
 		</vbox>
 	</window>
