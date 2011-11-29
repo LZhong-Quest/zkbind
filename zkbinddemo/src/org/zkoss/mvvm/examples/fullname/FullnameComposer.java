@@ -13,8 +13,8 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 package org.zkoss.mvvm.examples.fullname;
 
 import org.zkoss.bind.BindComposer;
-import org.zkoss.bind.DependsOn;
-import org.zkoss.bind.NotifyChange;
+import org.zkoss.bind.annotation.DependsOn;
+import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Textbox;

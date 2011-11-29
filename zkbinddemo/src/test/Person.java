@@ -6,8 +6,8 @@ package test;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.zkoss.bind.DependsOn;
-import org.zkoss.bind.NotifyChange;
+import org.zkoss.bind.annotation.DependsOn;
+import org.zkoss.bind.annotation.NotifyChange;
 
 /**
  * A Person bean.

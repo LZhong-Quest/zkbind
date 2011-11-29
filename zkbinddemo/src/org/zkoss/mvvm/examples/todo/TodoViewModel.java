@@ -18,7 +18,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import org.zkoss.bind.BindComposer;
-import org.zkoss.bind.NotifyChange;
+import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zul.ListModel;
 import org.zkoss.zul.ListModelList;
 

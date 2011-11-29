@@ -12,10 +12,10 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 
 package org.zkoss.zktest.bind.issue;
 
-import org.zkoss.bind.NotifyChange;
 import org.zkoss.bind.Property;
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
+import org.zkoss.bind.annotation.NotifyChange;
 
 /**
  * @author dennis

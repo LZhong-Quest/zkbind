@@ -15,7 +15,7 @@ package org.zkoss.zktest.bind.basic;
 import java.util.Map;
 
 import org.zkoss.bind.BindComposer;
-import org.zkoss.bind.NotifyChange;
+import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zul.DefaultTreeModel;
 import org.zkoss.zul.DefaultTreeNode;
 import org.zkoss.zul.TreeModel;

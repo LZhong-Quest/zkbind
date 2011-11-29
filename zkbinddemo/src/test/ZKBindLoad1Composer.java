@@ -15,7 +15,7 @@ package test;
 import java.util.List;
 
 import org.zkoss.bind.BindComposer;
-import org.zkoss.bind.NotifyChange;
+import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zul.ListModelList;
 
 import test.Person.Address;

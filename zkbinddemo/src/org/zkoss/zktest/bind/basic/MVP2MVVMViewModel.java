@@ -1,6 +1,6 @@
 package org.zkoss.zktest.bind.basic;
 
-import org.zkoss.bind.NotifyChange;
+import org.zkoss.bind.annotation.NotifyChange;
 
 /**
  * a mix example of mvp to mvvm.

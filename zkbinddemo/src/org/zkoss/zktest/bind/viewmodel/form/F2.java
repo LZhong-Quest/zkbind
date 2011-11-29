@@ -3,9 +3,9 @@ package org.zkoss.zktest.bind.viewmodel.form;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.zkoss.bind.NotifyChange;
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
+import org.zkoss.bind.annotation.NotifyChange;
 
 
 public class F2{

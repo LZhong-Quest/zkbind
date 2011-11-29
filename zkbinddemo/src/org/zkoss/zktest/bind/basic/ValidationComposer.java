@@ -16,10 +16,10 @@ import java.util.Set;
 
 import org.zkoss.bind.BindComposer;
 import org.zkoss.bind.BindContext;
-import org.zkoss.bind.NotifyChange;
 import org.zkoss.bind.Property;
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
+import org.zkoss.bind.annotation.NotifyChange;
 
 /**
  * @author dennis
