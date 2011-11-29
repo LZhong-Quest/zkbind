@@ -5,7 +5,7 @@
 }
 </style>
 <window title="Order Management" border="normal" width="600px"
-	apply="org.zkoss.bind.BindComposer" viewModel="@bind(vm='org.zkoss.bind.examples.order.OrderVM3')" >
+	apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('org.zkoss.bind.examples.order.OrderVM3')" >
 	<vbox hflex="true">
 		<listbox model="@bind(vm.orders)" selectedItem="@bind(vm.selected)" hflex="true" height="200px">
 			<listhead>
@@ -26,10 +26,10 @@
 			</template>
 		</listbox>
 		<toolbar>
-			<button label="New" onClick="@bind('newOrder')" />
-			<button label="Save" onClick="@bind('saveOrder')" disabled="@bind(empty vm.selected)" />
+			<button label="New" onClick="@command('newOrder')" />
+			<button label="Save" onClick="@command('saveOrder')" disabled="@bind(empty vm.selected)" />
 			<!-- show confirm dialog when selected is persisted -->
-			<button label="Delete" onClick="@bind(empty vm.selected.id?'deleteOrder':'confirmDelete')" disabled="@bind(empty vm.selected)" />
+			<button label="Delete" onClick="@command(empty vm.selected.id?'deleteOrder':'confirmDelete')" disabled="@bind(empty vm.selected)" />
 		</toolbar>
 		<groupbox visible="@bind(not empty vm.selected)" hflex="true" mold="3d">
 			<grid hflex="true" >
@@ -39,17 +39,17 @@
 				</columns>
 				<rows>
 					<row>Id <label value="@bind(vm.selected.id)"/></row>
-					<row>Description <textbox value="@bind(vm.selected.description, save=vm.selected.description before 'saveOrder')"/></row>
+					<row>Description <textbox value="@load(vm.selected.description) @save(vm.selected.description,before='saveOrder')"/></row>
 					<row>Quantity
 						<hlayout> 
-							<intbox value="@bind(vm.selected.quantity, save=vm.selected.quantity before 'saveOrder') 
+							<intbox value="@load(vm.selected.quantity) @save(vm.selected.quantity,before='saveOrder') 
 							@validator(vm.quantityValidator)"/>
 							<label value="@bind(vm.validationMessages['quantity'])" sclass="red" />
 						</hlayout>	
 					</row>					
 					<row>Price 
 						<hlayout>
-							<doublebox value="@bind(vm.selected.price, save=vm.selected.price before 'saveOrder') 
+							<doublebox value="@load(vm.selected.price) @save(vm.selected.price,before='saveOrder') 
 							@validator(vm.priceValidator)" format="###,##0.00" />
 							<label value="@bind(vm.validationMessages['price'])" sclass="red" />
 						</hlayout>
@@ -57,14 +57,14 @@
 					<row>Total Price <label value="@bind(vm.selected.totalPrice) @converter('formatedNumber', format='###,##0.00')" /></row>
 					<row>Creation Date 
 						<hlayout> 
-							<datebox value="@bind(vm.selected.creationDate, save=vm.selected.creationDate before 'saveOrder')
+							<datebox value="@load(vm.selected.creationDate) @save(vm.selected.creationDate, before='saveOrder')
 							@validator(vm.creationDateValidator)"/>
 							<label value="@bind(vm.validationMessages['creationDate'])" sclass="red" />
 						</hlayout>	
 					</row>
 					<row>Shipping Date 
 						<hlayout> 
-							<datebox value="@bind(vm.selected.shippingDate, save=vm.selected.shippingDate before 'saveOrder')
+							<datebox value="@load(vm.selected.shippingDate) @save(vm.selected.shippingDate, before='saveOrder')
 							@validator(vm.shippingDateValidator)"/>
 							<label value="@bind(vm.validationMessages['shippingDate'])" sclass="red" />
 						</hlayout>
@@ -80,8 +80,8 @@
 				<label value="@bind(vm.deleteMessage)"/>
 			</hlayout>
 			<hbox pack="center" hflex="true">
-				<button label="Delete" onClick="@bind('deleteOrder')"/>
-				<button label="Cancel" onClick="@bind('cancelDelete')"/>
+				<button label="Delete" onClick="@command('deleteOrder')"/>
+				<button label="Cancel" onClick="@command('cancelDelete')"/>
 			</hbox>
 		</vbox>
 	</window>

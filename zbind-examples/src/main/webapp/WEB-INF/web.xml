@@ -15,8 +15,8 @@ Copyright (C) 2004 Potix Corporation. All Rights Reserved.
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
  xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"> 
 
-	<description><![CDATA[zbind-examples]]></description>
-	<display-name>zbind-examples</display-name>
+	<description><![CDATA[zkbind-examples]]></description>
+	<display-name>zkbind-examples</display-name>
 
 	<!-- //// -->
 	<!-- ZK -->

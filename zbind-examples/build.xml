@@ -1,4 +1,4 @@
-<project name="zbind-examples" basedir="." default="build">
+<project name="zkbind-examples" basedir="." default="build">
 
 	<description>
 	</description>
@@ -6,7 +6,7 @@
 	<!-- ================== -->
 	<!-- === PROPERTIES === -->
 	<!-- ================== -->
-	<property name="warname" value="zbind-examples.war" />
+	<property name="warname" value="zkbind-examples.war" />
 	<property name="dist_folder" value="${basedir}/dist" />
 	<property name="antbuild_folder" value="${basedir}/antbuild" />
 	<property name="classes_folder" value="${antbuild_folder}/classes" />
@@ -69,7 +69,7 @@
 				<include name="**/*.*" />
 			</fileset>
 		</war>
-		<zip destfile="zbind-examples-${build.time}.zip">
+		<zip destfile="zkbind-examples-${build.time}.zip">
 			<fileset dir="${basedir}">
 				<include name="${warname}" />
 			</fileset>

@@ -5,12 +5,12 @@
 }
 </style>
 <window title="Search Storage Item" border="normal" width="600px"
-	apply="org.zkoss.bind.BindComposer" viewModel="@bind(vm='org.zkoss.bind.examples.search.SearchVM')" >
+	apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('org.zkoss.bind.examples.search.SearchVM')" >
 	<vbox hflex="true">
 		<hbox>
 			Filter : 
 			<textbox value="@bind(vm.filter)" instant="true"/> 
-			<button label="Search" onClick="@bind('doSearch')" disabled="@bind(empty vm.filter)"/>
+			<button label="Search" onClick="@command('doSearch')" disabled="@bind(empty vm.filter)"/>
 		</hbox>
 		<listbox model="@bind(vm.items)" selectedItem="@bind(vm.selected)" hflex="true" height="300px">
 			<listhead>

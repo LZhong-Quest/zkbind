@@ -5,11 +5,11 @@
 }
 </style>
 <window title="Search Storage Item" border="normal" width="600px"
-	apply="org.zkoss.bind.BindComposer" viewModel="@bind(vm='org.zkoss.bind.examples.search.SearchVM')" >
+	apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('org.zkoss.bind.examples.search.SearchVM')" >
 	<vbox hflex="true">
 		<hbox>
 			Filter : 
-			<combobox value="@bind(vm.filter)" onSelect="@bind('doSearch')" onChange="@bind('doSearch')">
+			<combobox value="@bind(vm.filter)" onSelect="@command('doSearch')" onChange="@command('doSearch')">
 				<comboitem label="*" value="*"/>
 				<comboitem label="A" value="A"/>
 				<comboitem label="B" value="B"/>
