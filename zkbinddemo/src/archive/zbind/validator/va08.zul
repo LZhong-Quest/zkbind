@@ -8,10 +8,10 @@
 		2. input 1234, click, show 123
 		</label>
 		keyword (max length is 3):<textbox id="keywordBox"
-			value="@bind(save=vm.keyword) @validator(vm.maxLengthValidator, length=3)">
+			value="@save(vm.keyword) @validator(vm.maxLengthValidator, length=3)">
 		</textbox>
 		<separator />
-		you enter:<label id="keywordLabel" value="@bind(load=vm.keyword)" />
+		you enter:<label id="keywordLabel" value="@load(vm.keyword)" />
 		
 	</window>
 </zk>

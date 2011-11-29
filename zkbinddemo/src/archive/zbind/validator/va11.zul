@@ -8,9 +8,9 @@
 			Validator + Command. save before submit.
 
 			1. input a negative number, not save
-			2. input 1
-			3. input 15, less than 18
-			4. input 22, over 18
+			2. input 1, label is "Less than 13 Less than 18"
+			3. input 15, label is "less than 18"
+			4. input 22, label is "over 18"
 		</label>
 		Age :
 		<intbox id="ageBox"

@@ -11,7 +11,7 @@
 		<intbox id="ageBox"
 			value="@init(vm.negativeOne) @save(vm.adult, before='checkAdult') @converter(vm.adultConverter) @validator(vm.booleanValidator)" />
 		<button id="checkButton" label="checkAdult" onClick="@command('checkAdult')" />
-		<checkbox id="adultBox" checked="@bind(load=vm.adult)" label="Is Adult"/>			
+		<checkbox id="adultBox" checked="@load(vm.adult)" label="Is Adult"/>			
 		
 	</window>
 </zk>
