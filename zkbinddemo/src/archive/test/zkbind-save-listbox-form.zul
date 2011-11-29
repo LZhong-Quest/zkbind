@@ -15,7 +15,7 @@
 	</template>
 </listbox>
 <separator bar="true"></separator>
-<grid width="500px" self="@form(id='fx', load=vm.selected, save=vm.selected before 'myCommand')">
+<grid width="500px" form="@id('fx') @load(vm.selected) @save(vm.selected, before='myCommand')">
 	<columns>
 		<column label="First Name"></column>
 		<column label="Last Name"></column>
@@ -29,6 +29,6 @@
 		</row>
 	</rows>
 </grid>
-<button label="Save" onClick="@bind('myCommand')"/>
+<button label="Save" onClick="@command('myCommand')"/>
 <button label="Dump" onClick="binder.getTracker().dump()"/>
 </window>

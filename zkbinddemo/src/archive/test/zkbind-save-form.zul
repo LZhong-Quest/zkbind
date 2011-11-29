@@ -1,6 +1,6 @@
-<window apply="test.ZKBindSave1Composer" self="@form(id='fx', vm.p1, save=vm.p1 before 'myCommand')">
+<window apply="test.ZKBindSave1Composer">
 	<custom-attributes composerName="vm"/>
-<grid width="500px" >
+<grid width="500px" form="@id('fx') @load(vm.p1) @save(vm.p1, before='myCommand')">
 	<columns>
 		<column label="First Name"></column>
 		<column label="Last Name"></column>
@@ -8,12 +8,13 @@
 	</columns>
 	<rows>
 		<row id="row1">
-			<textbox value="@bind(fx.firstName) @converter('firstName'))"/>
-			<textbox value="@bind(fx.lastName) @converter('lastName'))"/>
+			<!-- notify change inside converter -->
+			<textbox value="@bind(fx.firstName) @converter('firstName')"/>
+			<textbox value="@bind(fx.lastName) @converter('lastName')"/>
 			<label value="@bind(fx) @converter('fullName')"/>
 		</row>
 	</rows>
 </grid>
-<button label="Save" onClick="@bind('myCommand')"/>
+<button label="Save" onClick="@command('myCommand')"/>
 <button label="Dump" onClick="binder.getTracker().dump()"/>
 </window>

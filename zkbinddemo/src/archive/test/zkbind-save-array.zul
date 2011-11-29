@@ -17,6 +17,6 @@
 	</rows>
 </grid>
 <hlayout>vm.p1.address.zip <textbox value="@bind(vm.p1.address.zip)"/></hlayout>
-<button label="change field name from firstName to lastName" onClick="@bind('changeFieldName', fieldName='lastName')"/>
+<button label="change field name from firstName to lastName" onClick="@command('changeFieldName', fieldName='lastName')"/>
 <button label="Dump" onClick="binder.getTracker().dump()"/>
 </window>

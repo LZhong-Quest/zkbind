@@ -8,12 +8,12 @@
 	</columns>
 	<rows>
 		<row id="row1">
-			<textbox value="@bind(vm.p1.firstName, save=vm.p1.firstName before 'myCommand')"/>
-			<textbox value="@bind(vm.p1.lastName, save=vm.p1.lastName before 'myCommand')"/>
+			<textbox value="@load(vm.p1.firstName) @save(vm.p1.firstName, before ='myCommand')"/>
+			<textbox value="@load(vm.p1.lastName) @save(vm.p1.lastName, before='myCommand')"/>
 			<label value="@bind(vm.p1.fullName)"/>
 		</row>
 	</rows>
 </grid>
-<button label="Save" onClick="@bind('myCommand')"/>
+<button label="Save" onClick="@command('myCommand')"/>
 <button label="Dump" onClick="binder.getTracker().dump()"/>
 </window>
