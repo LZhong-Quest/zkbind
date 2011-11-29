@@ -205,7 +205,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.zkoss.zk</groupId>
-			<artifactId>zbind</artifactId>
+			<artifactId>zkbind</artifactId>
 			<version>${zk.version}</version>
 		</dependency>		
 <!-- 		

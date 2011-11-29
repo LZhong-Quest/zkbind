@@ -1,6 +1,6 @@
 <zk>
 	<window apply="org.zkoss.bind.BindComposer"
-		viewModel="@bind(vm='org.zkoss.zktest.zbind.comp.ComboboxSelectedVM')" border="none"> 
+		viewModel="@id('vm') @init('org.zkoss.zktest.zbind.comp.ComboboxSelectedVM')" border="none"> 
 		<vbox>
 			<listbox mold="select" selectedItem="@bind(vm.selected)">
 				<listitem label="Item A" value="itemA"/>

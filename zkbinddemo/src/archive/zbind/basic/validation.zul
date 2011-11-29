@@ -11,11 +11,11 @@
 	</hbox>	
 	<hbox>
 		Command:
-		Value1:<textbox id="t31" value="@bind(vm.value1, save=vm.value1 before 'cmd1') @validator('validator1')" />
-		Value2:<textbox id="t32" value="@bind(vm.value2, save=vm.value2 before 'cmd1') @validator('validator2')" />
+		Value1:<textbox id="t31" value="@load(vm.value1) @save(vm.value1 ,before='cmd1') @validator('validator1')" />
+		Value2:<textbox id="t32" value="@load(vm.value2) @save(vm.value2 ,before='cmd1') @validator('validator2')" />
 	</hbox>
 	<hbox>
-		<button id="btn1" label="cmd1" onClick="@bind('cmd1')"/>
+		<button id="btn1" label="cmd1" onClick="@command('cmd1')"/>
 	</hbox>	
 	<vbox>
 		<label id="msg1" value="@bind(vm.lastMessage1)"></label>

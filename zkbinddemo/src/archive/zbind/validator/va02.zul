@@ -1,7 +1,7 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 <zk>
 	<window title="va2" border="normal"
-		apply="org.zkoss.bind.BindComposer" viewModel="@bind(vm='org.zkoss.zktest.zbind.viewmodel.validator.Va02')">
+		apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('org.zkoss.zktest.zbind.viewmodel.validator.Va02')">
 	
 		va2
 		<label multiline="true"> 
@@ -11,12 +11,12 @@
 		</label>
 		
 		Age :<intbox id="ageBox"
-			value="@bind(init=vm.negativeOne ,save=vm.age before 'add10') @validator(vm.nonNegative)"/>
-		<button id="addButton" label="Add 10" onClick="@bind('add10')" />
+			value="@init(vm.negativeOne) @save(vm.age, before='add10') @validator(vm.nonNegative)"/>
+		<button id="addButton" label="Add 10" onClick="@command('add10')" />
 		<label id="adultLabel" value="@bind(vm.age) @converter(vm.maturityIndicator)"/>			
 		<separator />
-		age before added:<label id="beforeAge" value="@bind(load=vm.age before 'add10')" />
+		age before added:<label id="beforeAge" value="@load(vm.age,before='add10')" />
 		<separator />
-		current age: <label id="ageLabel" value="@bind(load=vm.age after 'add10')" />
+		current age: <label id="ageLabel" value="@load(vm.age, after='add10')" />
 	</window>
 </zk>

@@ -1,5 +1,5 @@
-<window apply="org.zkoss.zktest.zbind.basic.LoadIndirectComposer" composerName="@bind('vm')" binderName="@bind('binder')">
-	<!-- <custom-attributes composerName="vm"/>-->
+<window apply="org.zkoss.zktest.zbind.basic.LoadIndirectComposer">
+	<custom-attributes composerName="vm"/>
 <grid width="500px" >
 	<columns>
 		<column label="First Name"></column>
@@ -8,7 +8,7 @@
 		<column label="Current Field"></column>
 	</columns>
 	<rows>
-		<row id="row1" self="@form(id='fx', load=vm.p1, save=vm.p1 before 'saveForm')">
+		<row id="row1" form="@id('fx') @load(vm.p1) @save(vm.p1, before='saveForm')">
 			<textbox id="l1" value="@bind(fx.firstName)"/>
 			<label id="l2" value="@bind(fx.lastName)"/>
 			<label id="l3" value="@bind(fx.fullName)"/>
@@ -26,10 +26,10 @@
 	<label id="l8" value="@bind(vm.p2.fullName)"/>
 </hbox>
 <hbox>
-<button id="btn1" label="to firstName" onClick="@bind('toFirstName')"/>
-<button id="btn2" label="to lastName" onClick="@bind('toLastName')"/>
-<button id="btn3" label="to fullName" onClick="@bind('toFullName')"/>
-<button id="btn4" label="save form" onClick="@bind('saveForm')"/>
+<button id="btn1" label="to firstName" onClick="@command('toFirstName')"/>
+<button id="btn2" label="to lastName" onClick="@command('toLastName')"/>
+<button id="btn3" label="to fullName" onClick="@command('toFullName')"/>
+<button id="btn4" label="save form" onClick="@command('saveForm')"/>
 </hbox>
 
 <button label="Dump" onClick="binder.getTracker().dump()"/>

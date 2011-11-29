@@ -1,4 +1,4 @@
-<window apply="org.zkoss.bind.BindComposer" viewModel="@bind(vm='org.zkoss.zktest.zbind.issue.B00604')">
+<window apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('org.zkoss.zktest.zbind.issue.B00604')">
 	you should see listbox in include1 which include direct when first load and it work. 
 	the listbox in Include 2 should show as well if you click include 2 
 	<vbox>

@@ -10,13 +10,13 @@
 		<label id="l13" value="@bind(vm.value3)" />
 	</hbox>
 	<hbox>Row 2
-		<label id="l21" value="@bind(load = vm.value1 after 'cmd1')" />
-		<label id="l22" value="@bind(load = vm.value2 after 'cmd2')" />
-		<label id="l23" value="@bind(load = vm.value3 after 'cmd3')" />
+		<label id="l21" value="@load(vm.value1, after='cmd1')" />
+		<label id="l22" value="@load(vm.value2, after='cmd2')" />
+		<label id="l23" value="@load(vm.value3, after='cmd3')" />
 	</hbox>
 	<hbox>
-		<button id="btn1" label="cmd1" onClick="@bind('cmd1')"/>
-		<button id="btn2" label="cmd2" onClick="@bind('cmd2')"/>
+		<button id="btn1" label="cmd1" onClick="@command('cmd1')"/>
+		<button id="btn2" label="cmd2" onClick="@command('cmd2')"/>
 		<button label="Dump" onClick="binder.getTracker().dump()" />
 	</hbox>	
 </window>

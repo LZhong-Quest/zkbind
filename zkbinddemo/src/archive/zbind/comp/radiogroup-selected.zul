@@ -1,6 +1,6 @@
 <zk>
 	<window apply="org.zkoss.bind.BindComposer"
-		viewModel="@bind(vm='org.zkoss.zktest.zbind.comp.RadiogroupSelectedVM')" border="none"> 
+		viewModel="@id('vm') @init('org.zkoss.zktest.zbind.comp.RadiogroupSelectedVM')" border="none"> 
 		<vbox>
 			<listbox id="listbox" selectedItem="@bind(vm.selected)">
 				<listitem id="itema" label="Item A" value="itemA"/>

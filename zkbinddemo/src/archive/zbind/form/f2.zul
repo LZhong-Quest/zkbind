@@ -1,7 +1,7 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 <zk>
 	<vbox apply="org.zkoss.bind.BindComposer"
-		viewModel="@bind(vm='org.zkoss.zktest.zbind.viewmodel.form.F2')" width="400px">
+		viewModel="@id('vm') @init('org.zkoss.zktest.zbind.viewmodel.form.F2')" width="400px">
 	<label multiline="true">
 	f1.
 	form, command+argument, validator+argument,notifychange
@@ -12,7 +12,7 @@
 	5. compute, total should be 75
 	
 	</label>
-	<grid self="@form(id='fx', load=vm.order, save=vm.order before 'compute') @validator(vm.f2Validator, max=10)">
+	<grid form="@id('fx') @load(vm.order) @save(vm.order, before='compute') @validator(vm.f2Validator, max=10)">
 		<columns>
 			<column label="Name" />
 			<column label="Price" />
@@ -51,7 +51,7 @@
 				<label value="Total" />
 				<label value="" />
 				<label value="" />
-				<label id="total" value="@bind(load=vm.order.total after 'compute')" />
+				<label id="total" value="@load(vm.order.total,after='compute')" />
 			</row>
 		</rows>
 

@@ -2,7 +2,7 @@
 <zk>
 	<window title="va11" border="normal"
 		apply="org.zkoss.bind.BindComposer"
-		viewModel="@bind(vm='org.zkoss.zktest.zbind.viewmodel.validator.Va11')">
+		viewModel="@id('vm') @init('org.zkoss.zktest.zbind.viewmodel.validator.Va11')">
 		va11.
 		<label multiline="true">
 			Validator + Command. save before submit.
@@ -14,16 +14,16 @@
 		</label>
 		Age :
 		<intbox id="ageBox"
-			value="@bind(init=vm.negativeOne ,save=vm.age before 'classify') @validator(vm.nonNegative)" />
-		<button id="submitButton" label="classify" onClick="@bind('classify')" />
+			value="@init(vm.negativeOne) @save(vm.age, before='classify') @validator(vm.nonNegative)" />
+		<button id="submitButton" label="classify" onClick="@command('classify')" />
 		<separator/>
 		CLASSIFY: 
 		<label id="less13" value="Less than 13"
-			visible="@bind(load = vm.lessThanThirteen after 'classify')" />
+			visible="@load(vm.lessThanThirteen, after='classify')" />
 		<label id="less18" value="Less than 18"
-			visible="@bind(load=vm.lessThanEighteen after 'classify')" />
+			visible="@load(vm.lessThanEighteen, after='classify')" />
 		<label id="over18" value="Over 18"
-			visible="@bind(init=vm.overEighteen,load=vm.overEighteen after 'classify')" />
+			visible="@init(vm.overEighteen) @load(vm.overEighteen,after='classify')" />
 		<separator/>
 
 	</window>

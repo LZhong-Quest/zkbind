@@ -2,7 +2,7 @@
 <zk>
 	<window border="normal" width="400px"
 		apply="org.zkoss.bind.BindComposer"
-		viewModel="@bind(vm='org.zkoss.zktest.zbind.viewmodel.validator.Va12')">
+		viewModel="@id('vm') @init('org.zkoss.zktest.zbind.viewmodel.validator.Va12')">
 		va12
 		<label multiline="true">
 			argument Validator + argument Command, dependsOn
@@ -43,13 +43,13 @@
 						<comboitem label="60" value="60"/>
 						<comboitem label="50" value="50"/>
 					</combobox>
-					<button id="computeButton" label="Compute" onClick="@bind('compute', off=offBox.selectedItem.value)"/>
+					<button id="computeButton" label="Compute" onClick="@command('compute', off=offBox.selectedItem.value)"/>
 				</row>				
 				<row>
 					<label value="Total"/>
 					<label value=""/>
 					<label value=""/>
-					<label id="total" value="@bind(load= vm.total after 'compute')"/>
+					<label id="total" value="@load(vm.total, after='compute')"/>
 				</row>
 			</rows>
 			

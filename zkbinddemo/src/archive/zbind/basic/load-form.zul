@@ -14,7 +14,7 @@
 			<label id="l3" value="@bind(vm.p1.fullName)"/>
 			<label id="l4" value="@bind(vm.p1.address.street)"/>
 		</row>	
-		<row id="row2" self="@form(id='fx', load=vm.p1, save=vm.p1 before 'saveForm')">
+		<row id="row2" form="@id('fx') @load(vm.p1) @save(vm.p1,before='saveForm')">
 			<textbox id="l5" value="@bind(fx.firstName)"/>
 			<label id="l6" value="@bind(fx.lastName)"/>
 			<label id="l7" value="@bind(fx.fullName)"/>
@@ -30,7 +30,7 @@
 	<label id="lc" value="@bind(vm.p2.address.street)"/>
 </hbox>
 <hbox>
-<button id="btn1" label="save form" onClick="@bind('saveForm')"/>
+<button id="btn1" label="save form" onClick="@command('saveForm')"/>
 </hbox>
 
 <button label="Dump" onClick="binder.getTracker().dump()"/>

@@ -1,6 +1,6 @@
 <zk>
 	<window apply="org.zkoss.bind.BindComposer"
-		viewModel="@bind(vm='org.zkoss.zktest.zbind.issue.B00619')" border="none">
+		viewModel="@id('vm') @init('org.zkoss.zktest.zbind.issue.B00619')" border="none">
 		1.select listbox, the label and tab selection should change
 		2.select tab, the the label and listbox selection should change
 		<vbox>

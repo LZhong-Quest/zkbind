@@ -14,10 +14,10 @@
 					<treecell label="@bind(node.data)"/>
 					<treecell>
 						<hbox>
-							<button label="Index" onClick="@bind('showIndex', index=s.index)"/>
-							<button label="Delete" onClick="@bind('delete', node=node)"/>
-							<button label="Add After" onClick="@bind('addAfter', node=node)"/>
-							<button label="Add Before" onClick="@bind('addBefore', node=node)"/>
+							<button label="Index" onClick="@command('showIndex', index=s.index)"/>
+							<button label="Delete" onClick="@command('delete', node=node)"/>
+							<button label="Add After" onClick="@command('addAfter', node=node)"/>
+							<button label="Add Before" onClick="@command('addBefore', node=node)"/>
 						</hbox>
 					</treecell>
 				</treerow>

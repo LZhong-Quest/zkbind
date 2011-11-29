@@ -1,5 +1,5 @@
 <zk xmlns:n="http://www.zkoss.org/2005/zk/native">
-	<window apply="org.zkoss.bind.BindComposer" viewModel="@bind(vm='org.zkoss.zktest.zbind.issue.B0004')">
+	<window apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('org.zkoss.zktest.zbind.issue.B0004')">
 		<div>
 			1.value 1 have to large than 10, <n:br/>
 			2.value 2 have to large than 20, <n:br/> 
@@ -9,7 +9,7 @@
 			<hbox>Value1:<label id="l11" value="@bind(vm.value1)"></label></hbox>
 			<hbox>Value2:<label id="l12" value="@bind(vm.value2)"></label></hbox>
 		</hbox>	
-		<hbox id="h1" self="@form(id='fx',load=vm, save=vm before 'cmd1') @validator(vm.validator3)">
+		<hbox id="h1" form="@id('fx') @load(vm) @save(vm, before='cmd1') @validator(vm.validator3)">
 			Form
 			Value1:<textbox id="t21" value="@bind(fx.value1) @validator(vm.validator1)" />
 			Value2:<textbox id="t22" value="@bind(fx.value2) @validator(vm.validator2)" />
@@ -21,7 +21,7 @@
 		</vbox>
 	
 		<hbox>
-			<button id="btn1" label="cmd1" onClick="@bind('cmd1')"/>
+			<button id="btn1" label="cmd1" onClick="@command('cmd1')"/>
 		</hbox>
 		
 		extra test :
