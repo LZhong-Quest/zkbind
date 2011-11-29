@@ -1,6 +1,6 @@
 package org.zkoss.zktest.bind.issue;
 
-import org.zkoss.bind.NotifyChange;
+import org.zkoss.bind.annotation.NotifyChange;
 
 /**
  * @author Dennis Chen

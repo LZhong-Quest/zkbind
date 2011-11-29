@@ -13,8 +13,8 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 package org.zkoss.mvvm.examples.wizard;
 
 import org.zkoss.bind.BindComposer;
-import org.zkoss.bind.DependsOn;
-import org.zkoss.bind.NotifyChange;
+import org.zkoss.bind.annotation.DependsOn;
+import org.zkoss.bind.annotation.NotifyChange;
 
 /**
  * View model for examples/wizard.zul

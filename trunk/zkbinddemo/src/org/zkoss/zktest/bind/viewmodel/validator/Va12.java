@@ -2,10 +2,10 @@ package org.zkoss.zktest.bind.viewmodel.validator;
 
 import java.util.Map;
 
-import org.zkoss.bind.DependsOn;
-import org.zkoss.bind.NotifyChange;
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
+import org.zkoss.bind.annotation.DependsOn;
+import org.zkoss.bind.annotation.NotifyChange;
 
 
 public class Va12{

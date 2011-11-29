@@ -1,6 +1,6 @@
 package org.zkoss.zktest.bind.comp;
 
-import org.zkoss.bind.NotifyChange;
+import org.zkoss.bind.annotation.NotifyChange;
 
 public class TabboxSelectedVM {
 

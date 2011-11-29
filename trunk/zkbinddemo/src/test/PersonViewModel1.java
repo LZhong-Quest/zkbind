@@ -21,11 +21,11 @@ import java.util.Map;
 
 import org.zkoss.bind.BindComposer;
 import org.zkoss.bind.BindContext;
-import org.zkoss.bind.Command;
 import org.zkoss.bind.Converter;
-import org.zkoss.bind.DependsOn;
 import org.zkoss.bind.Form;
-import org.zkoss.bind.NotifyChange;
+import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.DependsOn;
+import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;

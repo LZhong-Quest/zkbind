@@ -18,7 +18,7 @@ import java.util.Map;
 import org.zkoss.bind.BindComposer;
 import org.zkoss.bind.BindContext;
 import org.zkoss.bind.Converter;
-import org.zkoss.bind.NotifyChange;
+import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 
 /**

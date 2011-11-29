@@ -17,8 +17,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.zkoss.bind.BindComposer;
-import org.zkoss.bind.DependsOn;
-import org.zkoss.bind.NotifyChange;
+import org.zkoss.bind.annotation.DependsOn;
+import org.zkoss.bind.annotation.NotifyChange;
 
 /**
  * @author Dennis Chen

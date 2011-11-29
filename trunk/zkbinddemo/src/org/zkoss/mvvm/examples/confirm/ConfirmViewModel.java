@@ -16,10 +16,10 @@ import java.util.Date;
 
 import org.zkoss.bind.BindComposer;
 import org.zkoss.bind.Form;
-import org.zkoss.bind.NotifyChange;
 import org.zkoss.bind.SimpleForm;
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
+import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zul.ListModelList;
 
 /**
