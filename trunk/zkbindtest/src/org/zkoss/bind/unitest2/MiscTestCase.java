@@ -13,7 +13,7 @@ public class MiscTestCase extends TestCaseBase{
 
 	@Test
 	public void testArgs(){
-		navigate(getTestCaseUrl("/zbind/basic/args.zul"));
+		navigate(getTestCaseUrl("/bind/basic/args.zul"));
 		
 		Assert.assertEquals("A-Arg1",findWidget("$l1").getValue());
 		Assert.assertEquals("B-myarg1",findWidget("$l2").getValue());
@@ -60,7 +60,7 @@ public class MiscTestCase extends TestCaseBase{
 	}
 	@Test
 	public void testVMInit(){
-		navigate(getTestCaseUrl("/zbind/basic/vm-init.zul"));
+		navigate(getTestCaseUrl("/bind/basic/vm-init.zul"));
 		
 		Assert.assertEquals("AA",findWidget("$vm1_l1").getValue());
 		Assert.assertEquals("V1-AA",findWidget("$vm1_t1").getValue());
@@ -128,7 +128,7 @@ public class MiscTestCase extends TestCaseBase{
 	
 	@Test
 	public void testCommandIndirect(){
-		navigate(getTestCaseUrl("/zbind/basic/command-indirect.zul"));
+		navigate(getTestCaseUrl("/bind/basic/command-indirect.zul"));
 		
 		Assert.assertEquals("no-command",findWidget("$l1").getValue());
 		
@@ -155,7 +155,7 @@ public class MiscTestCase extends TestCaseBase{
 	
 	@Test
 	public void testMVP2MVVM(){
-		navigate(getTestCaseUrl("/zbind/basic/mvp2mvvm_mvp.zul"));
+		navigate(getTestCaseUrl("/bind/basic/mvp2mvvm_mvp.zul"));
 		
 		Assert.assertEquals(true,findWidget("$textA").getAttribute("disabled"));
 		findWidget("$outerToggle1").click();
