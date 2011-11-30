@@ -10,5 +10,5 @@
 		<textbox id="t11" value="@save(vm.value1, v1=true) @save(vm.value2,v2=true) @validator(vm.validator1)"/>
 	</hbox>
 </vbox>
-<button label="Dump" onClick="mybinder.getTracker().dump()"/>
+<button label="Dump" onClick="binder.getTracker().dump()"/>
 </window>
