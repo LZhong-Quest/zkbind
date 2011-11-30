@@ -143,4 +143,44 @@ public class LoadSaveTestCase extends TestCaseBase{
 		 Assert.assertEquals("Z", findWidget("$l16").getValue());
 
 	}
+	
+	@Test
+	public void testLoadSavePromptCommandValidation(){
+		navigate(getTestCaseUrl("/bind/basic/load-save-prompt-command-validation.zul"));
+		 
+		Assert.assertEquals("A", findWidget("$l11").getValue());
+		Assert.assertEquals("B", findWidget("$l12").getValue());
+		Assert.assertEquals("C", findWidget("$l13").getValue());
+		
+		findWidget("$t12").clear().keys("GG").tab();
+		
+		findWidget("$t11").clear().keys("PP").tab();
+		Assert.assertEquals("A", findWidget("$l11").getValue());
+		Assert.assertEquals("B", findWidget("$l12").getValue());
+		Assert.assertEquals("C", findWidget("$l13").getValue());
+		Assert.assertEquals("value 1 has to be XX or ZZ", findWidget("$msg1").getValue());
+		Assert.assertEquals("value 2 has to be YY or ZZ", findWidget("$msg2").getValue());
+		
+		
+		findWidget("$t11").clear().keys("XX").tab();
+		Assert.assertEquals("A", findWidget("$l11").getValue());
+		Assert.assertEquals("B", findWidget("$l12").getValue());
+		Assert.assertEquals("C", findWidget("$l13").getValue());
+		Assert.assertEquals("", findWidget("$msg1").getValue());
+		Assert.assertEquals("value 2 has to be YY or ZZ", findWidget("$msg2").getValue());
+		
+		findWidget("$t11").clear().keys("YY").tab();
+		Assert.assertEquals("A", findWidget("$l11").getValue());
+		Assert.assertEquals("B", findWidget("$l12").getValue());
+		Assert.assertEquals("C", findWidget("$l13").getValue());
+		Assert.assertEquals("value 1 has to be XX or ZZ", findWidget("$msg1").getValue());
+		Assert.assertEquals("", findWidget("$msg2").getValue());
+		
+		findWidget("$t11").clear().keys("ZZ").tab();
+		Assert.assertEquals("ZZ", findWidget("$l11").getValue());
+		Assert.assertEquals("ZZ", findWidget("$l12").getValue());
+		Assert.assertEquals("GG", findWidget("$l13").getValue());
+		Assert.assertEquals("doCmd1", findWidget("$msg1").getValue());
+		Assert.assertEquals("", findWidget("$msg2").getValue());
+	}
 }
