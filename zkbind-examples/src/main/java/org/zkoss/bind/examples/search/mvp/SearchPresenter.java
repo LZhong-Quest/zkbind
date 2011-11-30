@@ -35,10 +35,13 @@ import org.zkoss.zul.Textbox;
  * no need getter & setter.
  * 
  * Cons:
- * declare variable for each UI component to manipulate
+ * declare variable for each UI component to manipulate.
+ * view formating logic (ex: converter) is hard to reuse.
+ * Not do unit test
  * 
  * @author Hawk
  */
+
 @SuppressWarnings("serial")
 public class SearchPresenter extends GenericAnnotatedComposer<Component>{
 
@@ -90,7 +93,7 @@ public class SearchPresenter extends GenericAnnotatedComposer<Component>{
 	}
 	
 	@Listen("onChange = #filterBox")
-	public void changeFilterStatus(){
+	public void changeButtonStatus(){
 		searchButton.setDisabled(filterBox.getValue().length()==0);
 	}
 	@Listen("onSelect = listbox")
@@ -100,11 +103,11 @@ public class SearchPresenter extends GenericAnnotatedComposer<Component>{
 		detailBox.setVisible(true);
 		detailCaption.setLabel(selected.getName());
 		descriptionLabel.setValue(selected.getDescription());
-		priceLabel.setValue(new DecimalFormat("$ ###,###,###,##0.00").format(selected.getPrice()));
+		priceLabel.setValue(ItemRenderer.priceFormatter.format(selected.getPrice()));
 		quantityLabel.setValue(Integer.toString(selected.getQuantity()));
 		quantityLabel.setSclass(selected.getQuantity()<3?"red":"");
-		totalPriceLabel.setValue(new DecimalFormat("$ ###,###,###,##0.00").format(selected.getTotalPrice()));
-		
+		totalPriceLabel.setValue(ItemRenderer.priceFormatter.format(selected.getTotalPrice()));
+
 	}
 
 }

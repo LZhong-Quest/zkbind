@@ -9,13 +9,14 @@ import org.zkoss.bind.examples.search.*;
 
 public class ItemRenderer implements ListitemRenderer<Item>{
 
+	static DecimalFormat priceFormatter = new DecimalFormat("$ ###,###,###,##0.00");
 	@Override
 	public void render(Listitem item, Item data){
 		
 		Listcell nameCell = new Listcell();
 		nameCell.setLabel(data.getName());
 		Listcell priceCell = new Listcell();
-		priceCell.setLabel(new DecimalFormat("$ ###,###,###,##0.00").format(data.getPrice()));
+		priceCell.setLabel(priceFormatter.format(data.getPrice()));
 		Listcell quantityCell = new Listcell();
 		quantityCell.setLabel(Integer.toString(data.getQuantity()));
 		if (data.getQuantity()<3){
