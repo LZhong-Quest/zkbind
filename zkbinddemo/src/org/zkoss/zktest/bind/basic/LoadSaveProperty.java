@@ -1,15 +1,12 @@
 package org.zkoss.zktest.bind.basic;
 
-import org.zkoss.bind.Binder;
 import org.zkoss.bind.annotation.NotifyChange;
-import org.zkoss.bind.impl.BinderImpl;
 
 public class LoadSaveProperty {
 
 	String value1;
 	String value2;
 	String value3;
-	Binder binder;
 	
 	public LoadSaveProperty(){
 		value1 = "A";
@@ -49,6 +46,10 @@ public class LoadSaveProperty {
 	}
 	
 	public void cmd2(){
+		
+	}
+	
+	public void cmd3(){
 		
 	}
 }
