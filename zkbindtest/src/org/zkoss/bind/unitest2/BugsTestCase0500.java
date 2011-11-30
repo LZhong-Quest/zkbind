@@ -166,6 +166,23 @@ public class BugsTestCase0500 extends TestCaseBase{
 	}
 	
 	@Test
+	public void b00632(){
+		navigate(getTestCaseUrl("/bind/issue/B00632.zul"));
+		
+		Assert.assertEquals("XYZ", findWidget("$lb1").getValue());
+		Assert.assertEquals("XYZ", findWidget("$lb2").getValue());
+		Assert.assertEquals("XYZ", findWidget("$lb3").getValue());
+		Assert.assertEquals("XYZ", findWidget("$lb4").getValue());
+		
+		Assert.assertEquals("A", findWidget("$l11").getValue());
+		Assert.assertEquals("B", findWidget("$l12").getValue());
+		
+		findWidget("$t11").clear().keys("YY").tab();
+		Assert.assertEquals("YY", findWidget("$l11").getValue());
+		Assert.assertEquals("by-YY", findWidget("$l12").getValue());
+	}
+	
+	@Test
 	public void b00634(){
 		navigate(getTestCaseUrl("/bind/issue/B00634.zul"));
 		 
