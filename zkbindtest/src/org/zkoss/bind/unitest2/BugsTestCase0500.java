@@ -165,5 +165,38 @@ public class BugsTestCase0500 extends TestCaseBase{
 
 	}
 	
+	@Test
+	public void b00634(){
+		navigate(getTestCaseUrl("/bind/issue/B00634.zul"));
+		 
+		Assert.assertEquals("A", findWidget("$l11").getValue());
+		Assert.assertEquals("B", findWidget("$l12").getValue());
+		
+		findWidget("$t11").clear().keys("PP").tab();
+		Assert.assertEquals("A", findWidget("$l11").getValue());
+		Assert.assertEquals("B", findWidget("$l12").getValue());
+		Assert.assertEquals("value 1 has to be XX or ZZ", findWidget("$msg1").getValue());
+		Assert.assertEquals("value 2 has to be YY or ZZ", findWidget("$msg2").getValue());
+		
+		
+		findWidget("$t11").clear().keys("XX").tab();
+		Assert.assertEquals("A", findWidget("$l11").getValue());
+		Assert.assertEquals("B", findWidget("$l12").getValue());
+		Assert.assertEquals("", findWidget("$msg1").getValue());
+		Assert.assertEquals("value 2 has to be YY or ZZ", findWidget("$msg2").getValue());
+		
+		findWidget("$t11").clear().keys("YY").tab();
+		Assert.assertEquals("A", findWidget("$l11").getValue());
+		Assert.assertEquals("B", findWidget("$l12").getValue());
+		Assert.assertEquals("value 1 has to be XX or ZZ", findWidget("$msg1").getValue());
+		Assert.assertEquals("", findWidget("$msg2").getValue());
+		
+		findWidget("$t11").clear().keys("ZZ").tab();
+		Assert.assertEquals("ZZ", findWidget("$l11").getValue());
+		Assert.assertEquals("ZZ", findWidget("$l12").getValue());
+		Assert.assertEquals("", findWidget("$msg1").getValue());
+		Assert.assertEquals("", findWidget("$msg2").getValue());
+	}
+	
 	
 }
