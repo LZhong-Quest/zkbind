@@ -35,7 +35,7 @@ import org.zkoss.zul.Messagebox;
 /**
  * The ViewModel to show {@link Person}, example 1.
  * @author henrichen
- *
+ * @deprecated we do not maintain this.
  */
 public class PersonViewModel1 extends BindComposer {
 	private List<Person> persons;
