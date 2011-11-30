@@ -8,11 +8,11 @@ import org.junit.Test;
 import org.zkoss.zktc.core.junit.TestCaseBase;
 import org.zkoss.zktc.core.widget.WidgetDriver;
 /**
- * test case for features from number 1-100
+ * test case for features from number 1-499
  * @author dennis
  *
  */
-public class FeaturesTestCase0100 extends TestCaseBase{
+public class FeaturesTestCase0001 extends TestCaseBase{
 
 	@Test
 	public void f0002(){
