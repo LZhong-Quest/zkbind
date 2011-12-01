@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.zkoss.zbind</groupId>
-	<artifactId>springdemo</artifactId>
+	<groupId>org.zkoss.zk</groupId>
+	<artifactId>zkbind-springdemo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<properties>
-		<zk.version>6.0.0-RC</zk.version>
+		<zk.version>6.0.0-SNAPSHOT</zk.version>
 		<spring.version>3.0.5.RELEASE</spring.version>
 		<hibernate.version>3.3.1.ga</hibernate.version>
 		<zkspring.version>3.1-SNAPSHOT</zkspring.version>
@@ -152,8 +152,6 @@
 			<groupId>org.zkoss.zk</groupId>
 			<artifactId>zkspring-core</artifactId>
 			<version>${zkspring.version}</version>
-			<scope>system</scope>
-			<systemPath>D:\temp\spring-freshly\zkspring-core.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>org.zkoss.zk</groupId>
@@ -218,18 +216,6 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<dependency>
-			<groupId>org.zkoss.zk</groupId>
-			<artifactId>zkex</artifactId>
-			<version>${zk.version}</version>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.zkoss.zk</groupId>
-			<artifactId>zkmax</artifactId>
-			<version>${zk.version}</version>
-			<scope>runtime</scope>
-		</dependency>
 
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -271,7 +257,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.zkoss.zk</groupId>
-			<artifactId>zbind</artifactId>
+			<artifactId>zkbind</artifactId>
 			<version>${zk.version}</version>
 			<type>jar</type>
 			<scope>compile</scope>
