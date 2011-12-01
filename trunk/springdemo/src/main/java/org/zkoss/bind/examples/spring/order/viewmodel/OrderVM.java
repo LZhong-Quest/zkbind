@@ -14,7 +14,7 @@ package org.zkoss.bind.examples.spring.order.viewmodel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import org.zkoss.bind.NotifyChange;
+import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.bind.examples.spring.order.domain.Order;
 import org.zkoss.bind.examples.spring.order.domain.OrderService;
 import org.zkoss.bind.examples.spring.order.util.Messages;

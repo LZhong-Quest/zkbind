@@ -19,8 +19,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.zkoss.bind.DependsOn;
-import org.zkoss.bind.NotifyChange;
+import org.zkoss.bind.annotation.DependsOn;
+import org.zkoss.bind.annotation.NotifyChange;
 
 /**
  * Order is a keyword in SQL syntax, it can't be a table name.
@@ -92,7 +92,7 @@ public class Order {
 		this.quantity = quantity;
 	}
 
-	@DependsOn( { "price", "quantity" })
+	@DependsOn({ "price", "quantity" })
 	public double getTotalPrice() {
 		return price * quantity;
 	}
