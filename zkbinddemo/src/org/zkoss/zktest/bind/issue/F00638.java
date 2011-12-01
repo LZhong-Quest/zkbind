@@ -5,9 +5,9 @@ import org.zkoss.bind.Binder;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.select.Listen;
 import org.zkoss.zk.ui.select.Selectors;
-import org.zkoss.zk.ui.select.Wire;
+import org.zkoss.zk.ui.select.annotation.Listen;
+import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Textbox;
 
