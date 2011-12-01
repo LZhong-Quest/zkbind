@@ -84,17 +84,17 @@ public class OrderVM {
 	}
 
 
-	public Messages getMessagePool(){
+	public Messages getMessages(){
 		return messages;
 	}
-	@NotifyChange("messagePool")
+	@NotifyChange("messages")
 	public void confirmDelete(){
 		//set the message to show to user
 		messages.put("delete", "Do you want to delete "+selected.getId()+" ?");
 	}
 	
 	
-	@NotifyChange("messagePool")
+	@NotifyChange("messages")
 	public void cancelDelete(){
 		//clear the message
 		messages.remove("delete");
