@@ -11,15 +11,13 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 */
 package org.zkoss.bind.examples.search.mvp;
 
-import java.text.DecimalFormat;
-
 import org.zkoss.bind.examples.search.FakeSearchService;
 import org.zkoss.bind.examples.search.Item;
 import org.zkoss.bind.examples.search.SearchService;
 import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.select.GenericAnnotatedComposer;
-import org.zkoss.zk.ui.select.Listen;
-import org.zkoss.zk.ui.select.Wire;
+import org.zkoss.zk.ui.select.SelectorComposer;
+import org.zkoss.zk.ui.select.annotation.Listen;
+import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Caption;
 import org.zkoss.zul.Groupbox;
@@ -43,7 +41,7 @@ import org.zkoss.zul.Textbox;
  */
 
 @SuppressWarnings("serial")
-public class SearchPresenter extends GenericAnnotatedComposer<Component>{
+public class SearchPresenter extends SelectorComposer<Component>{
 
 	
 	//the search result
