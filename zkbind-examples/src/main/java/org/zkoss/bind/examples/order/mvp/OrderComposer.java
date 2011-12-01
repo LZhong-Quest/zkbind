@@ -22,9 +22,9 @@ import org.zkoss.bind.examples.order.FakeOrderService;
 import org.zkoss.bind.examples.order.Order;
 import org.zkoss.bind.examples.order.OrderService;
 import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.select.GenericAnnotatedComposer;
-import org.zkoss.zk.ui.select.Listen;
-import org.zkoss.zk.ui.select.Wire;
+import org.zkoss.zk.ui.select.SelectorComposer;
+import org.zkoss.zk.ui.select.annotation.Listen;
+import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Groupbox;
 import org.zkoss.zul.Label;
@@ -38,7 +38,7 @@ import org.zkoss.zul.Window;
  * 
  */
 @SuppressWarnings("serial")
-public class OrderComposer extends GenericAnnotatedComposer<Component>{
+public class OrderComposer extends SelectorComposer<Component>{
 	//the order list
 	ListModelList<Order> orders;
 	

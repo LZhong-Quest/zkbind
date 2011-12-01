@@ -21,9 +21,9 @@ import org.zkoss.bind.examples.search.FakeSearchService;
 import org.zkoss.bind.examples.search.Item;
 import org.zkoss.bind.examples.search.SearchService;
 import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.select.GenericAnnotatedComposer;
-import org.zkoss.zk.ui.select.Listen;
-import org.zkoss.zk.ui.select.Wire;
+import org.zkoss.zk.ui.select.SelectorComposer;
+import org.zkoss.zk.ui.select.annotation.Listen;
+import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.ListModel;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Window;
@@ -32,7 +32,7 @@ import org.zkoss.zul.Window;
  * @author Hawk
  */
 @SuppressWarnings("serial")
-public class SearchComposer extends GenericAnnotatedComposer<Component>{
+public class SearchComposer extends SelectorComposer<Component>{
 
 	//the search condition
 	private String filter = "*";

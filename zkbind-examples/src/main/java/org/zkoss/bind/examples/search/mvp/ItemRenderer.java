@@ -10,7 +10,7 @@ import org.zkoss.bind.examples.search.*;
 public class ItemRenderer implements ListitemRenderer<Item>{
 
 	static DecimalFormat priceFormatter = new DecimalFormat("$ ###,###,###,##0.00");
-	@Override
+
 	public void render(Listitem item, Item data){
 		
 		Listcell nameCell = new Listcell();
