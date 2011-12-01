@@ -5,7 +5,7 @@ import org.zkoss.bind.Binder;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.DefaultValue;
 import org.zkoss.bind.annotation.NotifyChange;
-import org.zkoss.bind.annotation.Parameter;
+import org.zkoss.bind.annotation.Param;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Desktop;
 import org.zkoss.zul.Label;
@@ -54,8 +54,8 @@ public class F00633 {
 	
 	@NotifyChange("value1")
 	@Command
-	public void cmd5(@Parameter("arg1") Integer arg1, BindContext ctx, Binder binder, @Parameter("arg2") Boolean arg2,
-			@Parameter("arg3") String arg3) {
+	public void cmd5(@Param("arg1") Integer arg1, BindContext ctx, Binder binder, @Param("arg2") Boolean arg2,
+			@Param("arg3") String arg3) {
 		//doCommand5 99 true XYZ btn5 true
 		value1 = "doCommand5 " + arg1 + " " + arg2 + " " + arg3 + " " + ctx.getComponent().getId() + " "
 				+ (binder.getViewModel() == this);
@@ -63,8 +63,8 @@ public class F00633 {
 	
 	@NotifyChange("value1")
 	@Command
-	public void cmd6(@Parameter("arg1") @DefaultValue("9") Integer arg1, BindContext ctx, Binder binder,
-			@Parameter("arg2") @DefaultValue("true") Boolean arg2, @DefaultValue("ABCD") @Parameter("arg3") String arg3) {
+	public void cmd6(@Param("arg1") @DefaultValue("9") Integer arg1, BindContext ctx, Binder binder,
+			@Param("arg2") @DefaultValue("true") Boolean arg2, @DefaultValue("ABCD") @Param("arg3") String arg3) {
 		//doCommand6 9 true ABCD btn6 true
 		value1 = "doCommand6 " + arg1 + " " + arg2 + " " + arg3 + " " + ctx.getComponent().getId() + " "
 				+ (binder.getViewModel() == this);
@@ -72,8 +72,8 @@ public class F00633 {
 	
 	@NotifyChange("value1")
 	@Command({"cmd7","cmd8","cmd9"})
-	public void doCommandX(@Parameter("arg1") @DefaultValue("9") Integer arg1,
-			@Parameter("arg2") @DefaultValue("true") Boolean arg2, @DefaultValue("ABCD") @Parameter("arg3") String arg3,
+	public void doCommandX(@Param("arg1") @DefaultValue("9") Integer arg1,
+			@Param("arg2") @DefaultValue("true") Boolean arg2, @DefaultValue("ABCD") @Param("arg3") String arg3,
 			BindContext ctx) {
 		//doCommandX 9 true XYZ cmd7
 		//doCommandX 22 true ABCD cmd8
@@ -84,7 +84,7 @@ public class F00633 {
 	
 
 	@Command({"cmdA"})
-	public void doCommandA(@Parameter("label") Label label, @Parameter("unknow") Object obj) {
+	public void doCommandA(@Param("label") Label label, @Param("unknow") Object obj) {
 		StringBuffer sb = new StringBuffer();
 		sb.append("object is ");
 		if(obj instanceof Component){
@@ -99,7 +99,7 @@ public class F00633 {
 	
 	@NotifyChange("value1")
 	@Command("create")
-	public void onCreate(@Parameter("label") Label label){
+	public void onCreate(@Param("label") Label label){
 		value1 = "onCreate 1";
 		label.setValue("onCreate 2");
 	}
