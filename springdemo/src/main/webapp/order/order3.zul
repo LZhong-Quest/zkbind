@@ -39,18 +39,18 @@
 					<column/>
 				</columns>
 				<rows>
-					<row>Id <label value="@bind(vm.selected.id)"/></row>
-					<row>Description <textbox value="@bind(vm.selected.description) @save(vm.selected.description, before='saveOrder')"/></row>
+					<row>Id <label value="@load(vm.selected.id)"/></row>
+					<row>Description <textbox value="@load(vm.selected.description) @save(vm.selected.description, before='saveOrder')"/></row>
 					<row>Quantity
 						<hlayout> 
-							<intbox value="@bind(vm.selected.quantity) @save(vm.selected.quantity, before='saveOrder') 
+							<intbox value="@load(vm.selected.quantity) @save(vm.selected.quantity, before='saveOrder') 
 							@validator(quantityValidator)"/>
 							<label value="@bind(messagePool['quantity'])" sclass="red" />
 						</hlayout>	
 					</row>					
 					<row>Price 
 						<hlayout>
-							<doublebox value="@bind(vm.selected.price) @save(vm.selected.price, before ='saveOrder') 
+							<doublebox value="@load(vm.selected.price) @save(vm.selected.price, before ='saveOrder') 
 							@validator(positiveNumberValidator)" format="###,##0.00" />
 							<label value="@bind(messagePool['price'])" sclass="red" />
 						</hlayout>
@@ -58,14 +58,14 @@
 					<row>Total Price <label value="@bind(vm.selected.totalPrice) @converter(numberFormatConverter, format='###,##0.00')" /></row>
 					<row>Creation Date 
 						<hlayout> 
-							<datebox value="@bind(vm.selected.creationDate) @save(vm.selected.creationDate,before='saveOrder')
+							<datebox value="@load(vm.selected.creationDate) @save(vm.selected.creationDate,before='saveOrder')
 							@validator(notNullValidator)"/>
 							<label value="@bind(messagePool['creationDate'])" sclass="red" />
 						</hlayout>	
 					</row>
 					<row>Shipping Date 
 						<hlayout> 
-							<datebox value="@bind(vm.selected.shippingDate) @save(vm.selected.shippingDate, before='saveOrder')
+							<datebox value="@load(vm.selected.shippingDate) @save(vm.selected.shippingDate, before='saveOrder')
 							@validator(shippingDateValidator)"/>
 							<label value="@bind(messagePool['shippingDate'])" sclass="red" />
 						</hlayout>
