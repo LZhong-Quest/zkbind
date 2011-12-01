@@ -5,7 +5,7 @@ import java.util.HashMap;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-@Component("messagePool")
+@Component("messages")
 @Scope("desktop")
 public class Messages extends HashMap<String, String> {
 
