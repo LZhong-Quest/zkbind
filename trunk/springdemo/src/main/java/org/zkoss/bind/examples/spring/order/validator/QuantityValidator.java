@@ -11,16 +11,16 @@ import org.zkoss.bind.examples.spring.order.util.Messages;
 @Scope("prototype")
 public class QuantityValidator implements Validator{
 	@Autowired
-	Messages validationMessages;
+	Messages messages;
 	public void validate(ValidationContext ctx) {
 		Integer quantity = (Integer)ctx.getProperty().getValue();
 		if(quantity==null || quantity<=0){
 			ctx.setInvalid();// mark invalid
-			validationMessages.put("quantity", "must large than 0");
+			messages.put("quantity", "must large than 0");
 		}else{
-			validationMessages.remove("quantity");
+			messages.remove("quantity");
 		}
 		//notify messages was changed.
-		ctx.getBindContext().getBinder().notifyChange(validationMessages, "quantity");
+		ctx.getBindContext().getBinder().notifyChange(messages, "quantity");
 	}
 }

@@ -11,16 +11,16 @@ import org.zkoss.bind.examples.spring.order.util.Messages;
 @Scope("prototype")
 public class PositiveNumberValidator implements Validator{
 	@Autowired
-	Messages validationMessages;
+	Messages messages;
 	public void validate(ValidationContext ctx) {
 		Number price = (Number)ctx.getProperty().getValue();
 		if(price==null || price.doubleValue()<=0){
 			ctx.setInvalid(); // mark invalid
-			validationMessages.put("price", "must large than 0");
+			messages.put("price", "must large than 0");
 		}else{
-			validationMessages.remove("price");
+			messages.remove("price");
 		}
 		//notify messages was changed.
-		ctx.getBindContext().getBinder().notifyChange(validationMessages, "price");
+		ctx.getBindContext().getBinder().notifyChange(messages, "price");
 	}
 }

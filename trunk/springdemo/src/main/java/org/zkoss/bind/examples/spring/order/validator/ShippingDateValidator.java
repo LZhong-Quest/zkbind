@@ -14,19 +14,19 @@ import org.zkoss.bind.examples.spring.order.util.Messages;
 @Scope("prototype")
 public class ShippingDateValidator implements Validator{
 	@Autowired
-	Messages validationMessages;
+	Messages messages;
 	public void validate(ValidationContext ctx) {
 		Date shipping = (Date)ctx.getProperty().getValue();//the main property
 		Date creation = (Date)ctx.getProperties("creationDate")[0].getValue();//the collected
 		//do mixed validation, shipping date have to large than creation more than 3 days.
 		if(!isDayAfter(creation,shipping,3)){
 			ctx.setInvalid();
-			validationMessages.put("shippingDate", "must large than creation date at least 3 days");
+			messages.put("shippingDate", "must large than creation date at least 3 days");
 		}else{
-			validationMessages.remove("shippingDate");
+			messages.remove("shippingDate");
 		}
 		//notify the 'price' message in messages was changed.
-		ctx.getBindContext().getBinder().notifyChange(validationMessages, "shippingDate");
+		ctx.getBindContext().getBinder().notifyChange(messages, "shippingDate");
 	}
 	
 	static public boolean isDayAfter(Date date, Date laterDay , int day) {
