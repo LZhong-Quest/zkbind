@@ -15,7 +15,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.springframework.context.annotation.Scope;
 import org.zkoss.bind.BindContext;
 import org.zkoss.bind.Converter;
 import org.zkoss.bind.sys.Binding;
@@ -26,7 +25,6 @@ import org.zkoss.zk.ui.UiException;
  *
  */
 @org.springframework.stereotype.Component("dateFormatConverter")
-@Scope("prototype")
 public class DateFormatConverter implements Converter {
 	/**
 	 * Convert Date to String.

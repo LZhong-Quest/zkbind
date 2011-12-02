@@ -14,7 +14,6 @@ package org.zkoss.bind.examples.spring.order.converter;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 
-import org.springframework.context.annotation.Scope;
 import org.zkoss.bind.BindContext;
 import org.zkoss.bind.Converter;
 import org.zkoss.bind.sys.Binding;
@@ -25,7 +24,6 @@ import org.zkoss.zk.ui.UiException;
  *
  */
 @org.springframework.stereotype.Component("numberFormatConverter")
-@Scope("prototype")
 public class NumberFormatConverter implements Converter {
 	/**
 	 * Convert Number to String.
