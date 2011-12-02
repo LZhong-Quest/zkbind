@@ -13,17 +13,17 @@ import org.zkoss.bind.examples.spring.order.util.Messages;
 @Scope("prototype")
 public class NotNullValidator implements Validator{
 	@Autowired
-	Messages validationMessages;
+	Messages messages;
 	public void validate(ValidationContext ctx) {
 		Date creation = (Date)ctx.getProperty().getValue();
 		if(creation==null){
 			ctx.setInvalid();// mark invalid
-			validationMessages.put("creationDate", "must not null ");
+			messages.put("creationDate", "must not null ");
 		}else{
-			validationMessages.remove("creationDate");
+			messages.remove("creationDate");
 		}
 		//notify messages was changed.
-		ctx.getBindContext().getBinder().notifyChange(validationMessages, "creationDate");
+		ctx.getBindContext().getBinder().notifyChange(messages, "creationDate");
 	}
 	
 }
