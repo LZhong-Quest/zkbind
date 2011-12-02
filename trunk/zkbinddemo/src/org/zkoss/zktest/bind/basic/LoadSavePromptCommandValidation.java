@@ -3,6 +3,7 @@ package org.zkoss.zktest.bind.basic;
 import org.zkoss.bind.Binder;
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
+import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
 
 public class LoadSavePromptCommandValidation {
@@ -88,7 +89,7 @@ public class LoadSavePromptCommandValidation {
 		};
 	}
 	
-	@NotifyChange("msg1")
+	@Command @NotifyChange("msg1")
 	public void cmd1(){
 		msg1 = "doCmd1";
 	}

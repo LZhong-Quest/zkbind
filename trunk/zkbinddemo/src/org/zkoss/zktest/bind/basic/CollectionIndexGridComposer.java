@@ -15,7 +15,9 @@ package org.zkoss.zktest.bind.basic;
 import java.util.Map;
 
 import org.zkoss.bind.BindComposer;
+import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
+import org.zkoss.bind.annotation.Param;
 import org.zkoss.zul.ListModelList;
 
 /**
@@ -39,33 +41,29 @@ public class CollectionIndexGridComposer extends BindComposer {
 		return items;
 	}
 
-	@NotifyChange({ "message1" })
-	public void showIndex(Map args) {
-		Number index = (Number) args.get("index");
+	@NotifyChange({ "message1" }) @Command
+	public void showIndex(@Param("index") Integer index) {
 		int i =index.intValue();
 		message1 = "item index " + i;
 	}
 
-	@NotifyChange({ "items", "message1" })
-	public void delete(Map args) {
-		Item item = (Item) args.get("item");
+	@NotifyChange({ "items", "message1" }) @Command
+	public void delete(@Param("item") Item item) {
 		int i = items.indexOf(item);
 		items.remove(item);
 		message1 = "remove item index " + i;
 	}
 
-	@NotifyChange({ "items", "message1" })
-	public void addAfter(Map args) {
-		Item item = (Item) args.get("item");
+	@NotifyChange({ "items", "message1" }) @Command
+	public void addAfter(@Param("item") Item item) {
 		int i = items.indexOf(item);
 		Item newi = new Item(item.getName() + i);
 		items.add(i + 1, newi);
 		message1 = "addAfter item index " + (i + 1);
 	}
 
-	@NotifyChange({ "items","message1" })
-	public void addBefore(Map args) {
-		Item item = (Item) args.get("item");
+	@NotifyChange({ "items","message1" }) @Command
+	public void addBefore(@Param("item") Item item) {
 		int i = items.indexOf(item);
 		Item newi = new Item(item.getName() + i);
 		items.add(i, newi);
@@ -103,8 +101,8 @@ public class CollectionIndexGridComposer extends BindComposer {
 
 	}
 
-	@NotifyChange("items")
-	public void reload(Map<String, Object> args) {
+	@NotifyChange("items") @Command
+	public void reload() {
 		
 	}
 

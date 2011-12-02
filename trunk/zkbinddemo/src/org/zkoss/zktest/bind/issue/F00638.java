@@ -37,7 +37,8 @@ public class F00638 extends F00638Base{
 	public void init(BindContext ctx){
 		this.value2 = "B";
 		
-		Component r = ctx.getComponent();
+//		Component r = ctx.getComponent();
+		Component r = ctx.getBinder().getView();
 		Selectors.wireVariables(r, this);
 		Selectors.wireEventListeners(r, this);
 		//to wire vm as vmex

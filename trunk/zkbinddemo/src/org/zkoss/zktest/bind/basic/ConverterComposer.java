@@ -21,6 +21,7 @@ import java.util.Date;
 import org.zkoss.bind.BindComposer;
 import org.zkoss.bind.BindContext;
 import org.zkoss.bind.Converter;
+import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.DependsOn;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
@@ -86,7 +87,7 @@ public class ConverterComposer extends BindComposer {
 	}
 	
 	
-	@NotifyChange(".")
+	@NotifyChange(".") @Command
 	public void saveForm(){
 		//notify vm is changed
 	}

@@ -3,7 +3,7 @@ package org.zkoss.zktest.bind.issue;
 import org.zkoss.bind.BindContext;
 import org.zkoss.bind.Binder;
 import org.zkoss.bind.annotation.Command;
-import org.zkoss.bind.annotation.DefaultValue;
+import org.zkoss.bind.annotation.Default;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.bind.annotation.Param;
 import org.zkoss.zk.ui.Component;
@@ -27,7 +27,7 @@ public class F00633 {
 		this.value1 = value1;
 	}
 	
-	@NotifyChange("value1")
+	@Command @NotifyChange("value1")
 	public void cmd1(){
 		value1 ="doCommand1";
 	}
@@ -47,8 +47,8 @@ public class F00633 {
 	
 	@NotifyChange("value1")
 	@Command
-	public void cmd4(Integer arg1,BindContext ctx, Binder binder,Boolean arg2, String arg3){
-		//doCommand4 null null null btn4 true
+	public void cmd4(@Default("3") Integer arg1,BindContext ctx, Binder binder,@Default("false") Boolean arg2, String arg3){
+		//doCommand4 3 false null btn4 true
 		value1 ="doCommand4 "+arg1+" "+arg2+" "+arg3+" "+ctx.getComponent().getId()+" "+(binder.getViewModel()==this);
 	}
 	
@@ -63,8 +63,8 @@ public class F00633 {
 	
 	@NotifyChange("value1")
 	@Command
-	public void cmd6(@Param("arg1") @DefaultValue("9") Integer arg1, BindContext ctx, Binder binder,
-			@Param("arg2") @DefaultValue("true") Boolean arg2, @DefaultValue("ABCD") @Param("arg3") String arg3) {
+	public void cmd6(@Param("arg1") @Default("9") Integer arg1, BindContext ctx, Binder binder,
+			@Param("arg2") @Default("true") Boolean arg2, @Default("ABCD") @Param("arg3") String arg3) {
 		//doCommand6 9 true ABCD btn6 true
 		value1 = "doCommand6 " + arg1 + " " + arg2 + " " + arg3 + " " + ctx.getComponent().getId() + " "
 				+ (binder.getViewModel() == this);
@@ -72,8 +72,8 @@ public class F00633 {
 	
 	@NotifyChange("value1")
 	@Command({"cmd7","cmd8","cmd9"})
-	public void doCommandX(@Param("arg1") @DefaultValue("9") Integer arg1,
-			@Param("arg2") @DefaultValue("true") Boolean arg2, @DefaultValue("ABCD") @Param("arg3") String arg3,
+	public void doCommandX(@Param("arg1") @Default("9") Integer arg1,
+			@Param("arg2") @Default("true") Boolean arg2, @Default("ABCD") @Param("arg3") String arg3,
 			BindContext ctx) {
 		//doCommandX 9 true XYZ cmd7
 		//doCommandX 22 true ABCD cmd8

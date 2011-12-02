@@ -2,6 +2,7 @@ package org.zkoss.zktest.bind.issue;
 
 import org.zkoss.bind.AnnotateBinder;
 import org.zkoss.bind.Binder;
+import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
 
 public class B00632 {
@@ -42,15 +43,15 @@ public class B00632 {
 	public void setValue2(String value2) {
 		this.value2 = value2;
 	}
-
+	@Command 
 	public void cmd1(){
 		
 	}
-	
+	@Command 
 	public void cmd2(){
 		
 	}
-	
+	@Command 
 	public void cmd3(){
 		
 	}

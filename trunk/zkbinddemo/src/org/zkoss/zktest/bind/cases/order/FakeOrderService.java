@@ -17,6 +17,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+import org.zkoss.bind.annotation.Command;
 import org.zkoss.lang.Strings;
 
 /**

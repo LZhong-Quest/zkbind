@@ -1,5 +1,6 @@
 package org.zkoss.zktest.bind.basic;
 
+import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
 
 public class LoadSaveProperty {
@@ -40,15 +41,15 @@ public class LoadSaveProperty {
 	public void setValue3(String value3) {
 		this.value3 = value3;
 	}
-	
+	@Command 
 	public void cmd1(){
 		
 	}
-	
+	@Command 
 	public void cmd2(){
 		
 	}
-	
+	@Command 
 	public void cmd3(){
 		
 	}

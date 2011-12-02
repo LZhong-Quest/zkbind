@@ -15,7 +15,9 @@ package org.zkoss.zktest.bind.basic;
 import java.util.Map;
 
 import org.zkoss.bind.BindComposer;
+import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
+import org.zkoss.bind.annotation.Param;
 import org.zkoss.zul.DefaultTreeModel;
 import org.zkoss.zul.DefaultTreeNode;
 import org.zkoss.zul.TreeModel;
@@ -61,34 +63,30 @@ public class CollectionIndexTreeComposer extends BindComposer {
 		return model;
 	}
 
-	@NotifyChange({ "message1" })
-	public void showIndex(Map args) {
-		Number index = (Number) args.get("index");
+	@NotifyChange({ "message1" }) @Command
+	public void showIndex(@Param("index") Integer index) {
 		int i = index.intValue();
 		message1 = "item index " + i;
 	}
 
-	@NotifyChange({ "model", "message1" })
-	public void delete(Map args) {
-		MyTreeNode node = (MyTreeNode) args.get("node");
+	@NotifyChange({ "model", "message1" }) @Command
+	public void delete(@Param("node") MyTreeNode node) {
 		MyTreeNode parent = (MyTreeNode)node.getParent();
 		int i = parent.getIndex(node);
 		parent.remove(i);
 		message1 = "remove item index " + i;
 	}
 
-	@NotifyChange({ "model", "message1" })
-	public void addAfter(Map args) {
-		MyTreeNode node = (MyTreeNode) args.get("node");
+	@NotifyChange({ "model", "message1" }) @Command
+	public void addAfter(@Param("node") MyTreeNode node) {
 		MyTreeNode parent = (MyTreeNode)node.getParent();
 		int i = parent.getIndex(node);
 		parent.insert(new MyTreeNode(node.getData()), i + 1);
 		message1 = "addAfter item index " + i;
 	}
 
-	@NotifyChange({ "model", "message1" })
-	public void addBefore(Map args) {
-		TreeNode<String> node = (TreeNode<String>) args.get("node");
+	@NotifyChange({ "model", "message1" }) @Command
+	public void addBefore(@Param("node") MyTreeNode node) {
 		TreeNode<String> parent = node.getParent();
 		int i = parent.getIndex(node);
 		parent.insert(new MyTreeNode(node.getData()), i);
