@@ -5,6 +5,11 @@ import java.util.HashMap;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+/**
+ * A container to store messages including validation and information.
+ * @author Hawk
+ *
+ */
 @Component("messages")
 @Scope("desktop")
 public class Messages extends HashMap<String, String> {
