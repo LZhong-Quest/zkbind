@@ -9,9 +9,9 @@ import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
 import org.zkoss.bind.examples.spring.order.util.Messages;
 
-@Component("notNullValidator")
+@Component("creationDateValidator")
 @Scope("prototype")
-public class NotNullValidator implements Validator{
+public class CreationDateValidator implements Validator{
 	@Autowired
 	Messages messages;
 	public void validate(ValidationContext ctx) {
