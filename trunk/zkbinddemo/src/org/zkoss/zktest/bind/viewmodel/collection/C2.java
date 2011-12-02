@@ -6,7 +6,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
+import org.zkoss.bind.annotation.Param;
 import org.zkoss.zul.ListModelList;
 
 
@@ -27,9 +29,8 @@ public class C2{
 
 	
 	// -----------command -----------------
-	@NotifyChange("fruitList")
-	public void delete(Map<String, Object> args){
-		Number index = (Number)args.get("index");
+	@Command @NotifyChange("fruitList")
+	public void delete(@Param("index") Integer index){
 		out.println(index);
 		fruitList.remove(index.intValue());
 		out.println("size:"+fruitList.size());

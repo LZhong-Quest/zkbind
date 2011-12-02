@@ -5,7 +5,9 @@ import java.util.Map;
 
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
+import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
+import org.zkoss.bind.annotation.Param;
 
 
 public class F2{
@@ -104,9 +106,8 @@ public class F2{
 	}
 	
 	// -----------command -----------------
-	@NotifyChange("order")
-	public void compute(Map<String, Object> args){
-		Object offObject = args.get("off");
+	@Command @NotifyChange("order")
+	public void compute(@Param("off") Object offObject){
 		if (offObject !=null){
 			Integer off = Integer.parseInt(offObject.toString());
 			order.setOff(off);
