@@ -7,9 +7,9 @@ import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
 import org.zkoss.bind.examples.spring.order.util.Messages;
 
-@Component("positiveNumberValidator")
+@Component("priceValidator")
 @Scope("prototype")
-public class PositiveNumberValidator implements Validator{
+public class PriceValidator implements Validator{
 	@Autowired
 	Messages messages;
 	public void validate(ValidationContext ctx) {

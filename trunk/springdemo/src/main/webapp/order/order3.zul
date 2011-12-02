@@ -51,7 +51,7 @@
 					<row>Price 
 						<hlayout>
 							<doublebox value="@load(vm.selected.price) @save(vm.selected.price, before ='saveOrder') 
-							@validator(positiveNumberValidator)" format="###,##0.00" />
+							@validator(priceValidator)" format="###,##0.00" />
 							<label value="@bind(messages['price'])" sclass="red" />
 						</hlayout>
 					</row>
@@ -59,7 +59,7 @@
 					<row>Creation Date 
 						<hlayout> 
 							<datebox value="@load(vm.selected.creationDate) @save(vm.selected.creationDate,before='saveOrder')
-							@validator(notNullValidator)"/>
+							@validator(creationDateValidator)"/>
 							<label value="@bind(messages['creationDate'])" sclass="red" />
 						</hlayout>	
 					</row>
@@ -78,7 +78,7 @@
 		<vbox hflex="true">
 			<hlayout height="50px">
 				<image src="~./zul/img/msgbox/question-btn.png"/>
-				<label value="@bind(vm.messages['delete'])"/>
+				<label value="@bind(messages['delete'])"/>
 			</hlayout>
 			<hbox pack="center" hflex="true">
 				<button label="Delete" onClick="@command('deleteOrder')"/>
