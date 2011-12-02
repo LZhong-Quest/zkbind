@@ -20,9 +20,9 @@
 							<listheader label="previous-index"/>
 							<listheader label="name"/>
 						</listhead>
-						<template name="model" var="option" status="ss">
+						<template name="model" var="option">
 							<listitem>
-								<listcell label="@bind(ss.index)"/>
+								<listcell label="@bind(optionStatus.index)"/>
 								<listcell label="@bind(s.index)"/>
 								<listcell label="@bind(option)"/>
 							</listitem>
