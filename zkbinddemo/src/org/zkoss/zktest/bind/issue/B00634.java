@@ -3,6 +3,7 @@ package org.zkoss.zktest.bind.issue;
 import org.zkoss.bind.Binder;
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
+import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
 
 public class B00634 {
@@ -87,15 +88,15 @@ public class B00634 {
 			}
 		};
 	}
-	
+	@Command 
 	public void cmd1(){
 		
 	}
-	
+	@Command 
 	public void cmd2(){
 		
 	}
-	
+	@Command 
 	public void cmd3(){
 		
 	}

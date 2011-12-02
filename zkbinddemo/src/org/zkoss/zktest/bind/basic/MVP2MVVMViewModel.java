@@ -1,5 +1,6 @@
 package org.zkoss.zktest.bind.basic;
 
+import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
 
 /**
@@ -24,7 +25,7 @@ public class MVP2MVVMViewModel {
 		return mWriteProtected;
 	}
 
-	@NotifyChange("writeProtected")
+	@Command @NotifyChange("writeProtected")
 	public void toggleWriteProtected() {
 		mWriteProtected = !mWriteProtected;
 	}

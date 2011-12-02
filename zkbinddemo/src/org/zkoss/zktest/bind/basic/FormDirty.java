@@ -28,9 +28,7 @@ public class FormDirty {
 	public Person getPerson() {
 		return person;
 	}
-	
-	
-	
+
 	public String getMsg() {
 		return msg;
 	}

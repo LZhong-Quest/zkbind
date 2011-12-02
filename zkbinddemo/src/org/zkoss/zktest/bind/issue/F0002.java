@@ -20,6 +20,7 @@ import org.zkoss.bind.BindContext;
 import org.zkoss.bind.Converter;
 import org.zkoss.bind.Form;
 import org.zkoss.bind.SimpleForm;
+import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 
@@ -63,12 +64,12 @@ public class F0002 extends BindComposer {
 		return form1;
 	}
 
-
+	@Command 
 	public void cmd1(){
 		
 	}
 	
-	@NotifyChange({"value2","formValue2"})
+	@Command @NotifyChange({"value2","formValue2"})
 	public void cmd2(){
 		
 	}

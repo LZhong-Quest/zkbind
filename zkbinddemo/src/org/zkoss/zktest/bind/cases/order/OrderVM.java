@@ -18,6 +18,7 @@ import java.util.Map;
 
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
+import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zul.ListModelList;
 
@@ -55,7 +56,7 @@ public class OrderVM {
 
 	//action command
 	
-	@NotifyChange({"selected","orders","validationMessages"})
+	@Command @NotifyChange({"selected","orders","validationMessages"})
 	public void newOrder(){
 		Order order = new Order();
 		getOrders().add(order);
@@ -63,14 +64,14 @@ public class OrderVM {
 		validationMessages.clear();//clear message
 	}
 	
-	@NotifyChange({"selected","validationMessages"})
+	@Command @NotifyChange({"selected","validationMessages"})
 	public void saveOrder(){
 		getService().save(selected);
 		validationMessages.clear();//clear message
 	}
 	
 	
-	@NotifyChange({"selected","orders","validationMessages","deleteMessage"})
+	@Command @NotifyChange({"selected","orders","validationMessages","deleteMessage"})
 	public void deleteOrder(){
 		getService().delete(selected);//delete selected
 		getOrders().remove(selected);
@@ -191,13 +192,13 @@ public class OrderVM {
 	}
 	
 	
-	@NotifyChange("deleteMessage")
+	@Command @NotifyChange("deleteMessage")
 	public void confirmDelete(){
 		//set the message to show to user
 		deleteMessage = "Do you want to delete "+selected.getId()+" ?";
 	}
 	
-	@NotifyChange("deleteMessage")
+	@Command @NotifyChange("deleteMessage")
 	public void cancelDelete(){
 		//clear the message
 		deleteMessage = null;

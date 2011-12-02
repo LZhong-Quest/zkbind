@@ -17,6 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.zkoss.bind.BindComposer;
+import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.DependsOn;
 import org.zkoss.bind.annotation.NotifyChange;
 
@@ -167,17 +168,17 @@ public class LoadIndirectComposer extends BindComposer {
 		this.currField = currField;
 	}
 
-	@NotifyChange({"currField"})
+	@Command @NotifyChange({"currField"})
 	public void toFirstName() {
 		currField = "firstName";
 	}
 	
-	@NotifyChange({"currField"})
+	@Command @NotifyChange({"currField"})
 	public void toLastName() {
 		currField = "lastName";
 	}
 	
-	@NotifyChange({"currField"})
+	@Command @NotifyChange({"currField"})
 	public void toFullName() {
 		currField = "fullName";
 	}
@@ -187,7 +188,7 @@ public class LoadIndirectComposer extends BindComposer {
 		return _p2;
 	}
 	
-	@NotifyChange({"p1","p2"})
+	@Command @NotifyChange({"p1","p2"})
 	public void saveForm(){
 		_p2 = new Person(_selected.getFirstName(),_selected.getLastName());
 	}
