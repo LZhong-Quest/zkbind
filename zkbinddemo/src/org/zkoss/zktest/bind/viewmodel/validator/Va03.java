@@ -6,7 +6,9 @@ import org.zkoss.bind.BindContext;
 import org.zkoss.bind.Converter;
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
+import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
+import org.zkoss.bind.annotation.Param;
 import org.zkoss.zk.ui.Component;
 
 
@@ -64,9 +66,8 @@ public class Va03{
 	}
 	
 	// -----------command -----------------
-	
-	public void minus(Map<String, Object> args){
-		Long decrement = (Long)args.get("decrement");
+	@Command 
+	public void minus(@Param("decrement") Long decrement){
 		age -= decrement.intValue();
 	}
 

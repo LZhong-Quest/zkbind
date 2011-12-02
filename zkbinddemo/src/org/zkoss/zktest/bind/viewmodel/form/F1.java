@@ -7,6 +7,7 @@ import org.zkoss.bind.BindContext;
 import org.zkoss.bind.Converter;
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
+import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 
@@ -104,7 +105,7 @@ public class F1 {
 		return new BirthdayAdultConverter();
 	}
 	
-	@NotifyChange("message")
+	@Command @NotifyChange("message")
 	public void register(){
 		System.out.println();
 	}
