@@ -13,6 +13,7 @@ package org.zkoss.bind.examples.spring.order.viewmodel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.bind.examples.spring.order.domain.Order;
 import org.zkoss.bind.examples.spring.order.domain.OrderService;
@@ -59,6 +60,7 @@ public class OrderVM {
 
 	//action command
 	@NotifyChange({"selected","orders","messages"})
+	@Command
 	public void newOrder(){
 		Order order = new Order();
 		getOrders().add(order);
@@ -67,12 +69,14 @@ public class OrderVM {
 	}
 	
 	@NotifyChange({"selected","messages"})
+	@Command
 	public void saveOrder(){
 		orderService.save(selected);
 		messages.clear();//clear message
 	}
 	
 	@NotifyChange({"selected","orders","messages"})
+	@Command
 	public void deleteOrder(){
 		orderService.delete(selected);//delete selected
 		getOrders().remove(selected);
@@ -85,6 +89,7 @@ public class OrderVM {
 		return messages;
 	}
 	@NotifyChange("messages")
+	@Command
 	public void confirmDelete(){
 		//set the message to show to user
 		messages.put("delete", "Do you want to delete "+selected.getId()+" ?");
@@ -92,6 +97,7 @@ public class OrderVM {
 	
 	
 	@NotifyChange("messages")
+	@Command
 	public void cancelDelete(){
 		//clear the message
 		messages.remove("delete");
