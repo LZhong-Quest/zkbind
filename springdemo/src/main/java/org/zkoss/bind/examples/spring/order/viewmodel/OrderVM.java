@@ -5,7 +5,6 @@
 	Description:
 		
 	History:
-		2011/10/31 Created by Dennis Chen
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
  */
@@ -52,14 +51,14 @@ public class OrderVM {
 		return selected;
 	}
 
-	@NotifyChange({"selected"})
+	@NotifyChange({"selected","messages"})
 	public void setSelected(Order selected) {
 		this.selected = selected;
 		messages.clear();//clear when another order selected
 	}
 
 	//action command
-	@NotifyChange({"selected","orders"})
+	@NotifyChange({"selected","orders","messages"})
 	public void newOrder(){
 		Order order = new Order();
 		getOrders().add(order);
@@ -67,15 +66,13 @@ public class OrderVM {
 		messages.clear();//clear message
 	}
 	
-	@NotifyChange({"selected"})
+	@NotifyChange({"selected","messages"})
 	public void saveOrder(){
-		System.out.println(">>>>vm>>>> "+this);
-		System.out.println(">>>>service>>>> "+orderService);
 		orderService.save(selected);
 		messages.clear();//clear message
 	}
 	
-	@NotifyChange({"selected","orders"})
+	@NotifyChange({"selected","orders","messages"})
 	public void deleteOrder(){
 		orderService.delete(selected);//delete selected
 		getOrders().remove(selected);
