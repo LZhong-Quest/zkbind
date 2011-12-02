@@ -158,6 +158,35 @@ public class FormTestCase extends TestCaseBase {
 				.getAttribute("value"));
 	}
 
-	
+	@Test
+	public void testFormDirty() {
+		navigate(getTestCaseUrl("/bind/basic/form-dirty.zul"));
+
+		Assert.assertEquals("false", findWidget("$dirty").getValue());
+		Assert.assertEquals("Dennis", findWidget("$l1").getValue());
+		
+		findWidget("$t1").clear().keys("X").tab();
+		Assert.assertEquals("true", findWidget("$dirty").getValue());
+		Assert.assertEquals("Dennis", findWidget("$l1").getValue());
+		
+		findWidget("$t1").clear().keys("Dennis").tab();
+		Assert.assertEquals("false", findWidget("$dirty").getValue());
+		Assert.assertEquals("Dennis", findWidget("$l1").getValue());
+		
+		findWidget("$t1").clear().keys("Y").tab();
+		Assert.assertEquals("true", findWidget("$dirty").getValue());
+		Assert.assertEquals("Dennis", findWidget("$l1").getValue());
+		
+		findWidget("$btn2").click();
+		Assert.assertEquals("old-name Dennis", findWidget("$msg").getValue());
+		
+		findWidget("$btn1").click();
+		Assert.assertEquals("saved Y", findWidget("$msg").getValue());
+		
+		findWidget("$btn2").click();
+		Assert.assertEquals("old-name Y", findWidget("$msg").getValue());
+		Assert.assertEquals("false", findWidget("$dirty").getValue());
+		Assert.assertEquals("Y", findWidget("$l1").getValue());
+	}
 
 }
