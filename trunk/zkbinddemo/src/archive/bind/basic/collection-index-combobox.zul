@@ -15,8 +15,8 @@
 				<label value="@bind(s.index)"/>
 				<label value="@bind(item.name)"/>
 				<combobox hflex="1" model="@bind(item.options)">
-					<template name="model" var="option" status="ss">
-						<comboitem label="@bind(ss) @converter(vm.statusConverter,name=option,si=s.index,ssi=ss.index)" description="@bind(option)"/>	
+					<template name="model" var="option" >
+						<comboitem label="@bind(optionStatus) @converter(vm.statusConverter,name=option,si=s.index,ssi=optionStatus.index)" description="@bind(option)"/>	
 					</template>
 				</combobox>
 				<hbox>

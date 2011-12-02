@@ -19,9 +19,9 @@
 						<column label="previous-index"/>
 						<column label="name"/>
 					</columns>
-					<template name="model" var="option" status="ss">
+					<template name="model" var="option">
 						<row>
-							<label value="@bind(ss.index)"/>
+							<label value="@bind(optionStatus.index)"/>
 							<label value="@bind(s.index)"/>
 							<label value="@bind(option)"/>
 						</row>
