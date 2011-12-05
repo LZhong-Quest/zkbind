@@ -22,7 +22,7 @@
 				<listitem >
 					<listcell label="@load(item.name)"/>				
 					<listcell label="@load(item.price) @converter('formatedNumber', format='###,##0.00')"/>
-					<listcell label="@load(item.quantity)" sclass="@bind(item.quantity lt 3 ?'red':'')"/>	
+					<listcell label="@load(item.quantity)" sclass="@load(item.quantity lt 3 ?'red':'')"/>	
 				</listitem>
 			</template>
 		</listbox>
@@ -36,7 +36,7 @@
 				<rows>
 					<row>Description <label value="@load(vm.selected.description)"/></row>
 					<row>Price <label value="@load(vm.selected.price) @converter('formatedNumber', format='###,##0.00')"/></row>
-					<row>Quantity <label value="@load(vm.selected.quantity)"  sclass="@bind(vm.selected.quantity lt 3 ?'red':'')"/></row>
+					<row>Quantity <label value="@load(vm.selected.quantity)"  sclass="@load(vm.selected.quantity lt 3 ?'red':'')"/></row>
 					<row>Total Price <label value="@load(vm.selected.totalPrice) @converter(vm.totalPriceConverter)"/></row>
 				</rows>
 			</grid>
