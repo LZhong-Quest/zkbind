@@ -16,6 +16,7 @@ import java.util.Map;
 
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
+import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zul.ListModelList;
 
@@ -52,6 +53,7 @@ public class OrderVM {
 	//action command
 	
 	@NotifyChange({"selected","orders","validationMessages"})
+	@Command
 	public void newOrder(){
 		Order order = new Order();
 		getOrders().add(order);
@@ -60,6 +62,7 @@ public class OrderVM {
 	}
 	
 	@NotifyChange({"selected","validationMessages"})
+	@Command
 	public void saveOrder(){
 		getService().save(selected);
 		validationMessages.clear();//clear message
@@ -67,6 +70,7 @@ public class OrderVM {
 	
 	
 	@NotifyChange({"selected","orders","validationMessages"})
+	@Command
 	public void deleteOrder(){
 		getService().delete(selected);//delete selected
 		getOrders().remove(selected);
