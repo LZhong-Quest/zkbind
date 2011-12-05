@@ -11,6 +11,7 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
  */
 package org.zkoss.bind.examples.order;
 
+import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
 
 
@@ -29,18 +30,21 @@ public class OrderVM3 extends OrderVM2{
 	
 	@Override
 	@NotifyChange({"selected","orders","validationMessages","deleteMessage"})
+	@Command
 	public void deleteOrder(){
 		super.deleteOrder();
 		deleteMessage = null;
 	}
 	
 	@NotifyChange("deleteMessage")
+	@Command
 	public void confirmDelete(){
 		//set the message to show to user
 		deleteMessage = "Do you want to delete "+selected.getId()+" ?";
 	}
 	
 	@NotifyChange("deleteMessage")
+	@Command
 	public void cancelDelete(){
 		//clear the message
 		deleteMessage = null;
