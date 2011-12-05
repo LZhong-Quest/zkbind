@@ -15,6 +15,7 @@ import java.text.DecimalFormat;
 
 import org.zkoss.bind.BindContext;
 import org.zkoss.bind.Converter;
+import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zul.ListModel;
@@ -57,6 +58,7 @@ public class SearchVM {
 	}
 
 	@NotifyChange({"items","selected"})
+	@Command
 	public void doSearch(){
 		items = new ListModelList<Item>();
 		items.addAll(getSearchService().search(filter));
