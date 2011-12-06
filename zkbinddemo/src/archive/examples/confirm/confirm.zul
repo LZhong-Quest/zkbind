@@ -2,8 +2,7 @@
 	<custom-attributes composerName="vm" />
 	<vbox>
 		<listbox model="@bind(vm.cityList)"
-			selectedItem="@bind(save={vm.selected},load={vm.selected,vm.selected after 'confirmCancel'})
-			@validator('dirtyValidator')"
+			selectedItem="@bind(vm.selected) @validator('dirtyValidator')"
 			width="500px">
 			<listhead>
 				<listheader label="City" />
@@ -18,8 +17,8 @@
 		</listbox>
 		Detail
 		<grid id="grid"
-			self="@form(id='fx', init=vm.form, load={vm.selected,vm.selected after 'confirmUpdate'},save={vm.selected before 'update',vm.selected before 'confirmUpdate'})
-			@validator('formValidator')"
+			form="@id('fx') @init(vm.form) @load(vm.selected) @save(vm.selected, before={'update','confirmUpdate'})
+			@validator('formValidator')" 
 			width="500px">
 			<rows>
 				<row>
@@ -38,9 +37,9 @@
 		</grid>
 	</vbox>
 	<hbox>
-		<button label="update" disabled="@bind(empty vm.selected)"
-			onClick="@bind('update')" />
+		<button label="update" disabled="@load(empty vm.selected)"
+			onClick="@command('update')" />
 	</hbox>
-	<label value="@bind(vm.message)" />
+	<label value="@load(vm.message)" />
 	<include src="dialog.zul"/>
 </window>

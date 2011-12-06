@@ -19,6 +19,7 @@ import org.zkoss.bind.Form;
 import org.zkoss.bind.SimpleForm;
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
+import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zul.ListModelList;
 
@@ -126,20 +127,20 @@ public class ConfirmViewModel extends BindComposer {
 
 	//commands
 	
-	@NotifyChange({"selected"})
+	@Command @NotifyChange({"selected"})
 	public void update(){
 		//update selected to database
 		setMessage("update "+selected.getName() +"["+new Date()+"]");
 	}
 	
-	
+	@Command @NotifyChange({"selected"})
 	public void confirmUpdate(){
 		selected = tobeSelected;
 		setDialog(false,null);
 		setMessage("confirmUpdate "+selected +"["+new Date()+"]");
 	}
 	
-	@NotifyChange({"selected"})
+	@Command @NotifyChange({"selected"})
 	public void confirmSelectOnly(){
 		//change selection to next
 		selected = tobeSelected;
@@ -147,6 +148,7 @@ public class ConfirmViewModel extends BindComposer {
 		setMessage("confirmSelectOnly "+selected +"["+new Date()+"]");
 	}
 	
+	@Command @NotifyChange({"selected"})
 	public void confirmCancel(){
 		//nothing, clean dialog
 		setDialog(false,null);
