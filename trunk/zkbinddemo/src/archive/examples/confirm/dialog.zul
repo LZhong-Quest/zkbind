@@ -9,11 +9,11 @@
 			</hlayout>
 			<hbox hflex="1" pack="center">
 				<button label="Yes, save it"
-					onClick="@bind('confirmUpdate')" />
+					onClick="@command('confirmUpdate')" />
 				<button label="No, don't save"
-					onClick="@bind('confirmSelectOnly')" />
+					onClick="@command('confirmSelectOnly')" />
 				<button label="Cancel, select back"
-					onClick="@bind('confirmCancel')" />
+					onClick="@command('confirmCancel')" />
 			</hbox>
 		</vbox>
 	</window>
