@@ -15,16 +15,16 @@ http://martinfowler.com/eaaDev/uiArchs.html
 	<window title="Model-View-Binder (MVB) aka MVVM with Databindings, Statebindings &amp; CommandBindings" 
 		apply="org.zkoss.mvvm.examples.wheather.WeathStationViewModel" width="640px" border="normal">
 		<custom-attributes composerName="testBean"/>
-		<hbox spacing="10px" align="top" hflex="1">
+		<hbox spacing="10px" align="top" >
 			<div width="200px">
 				<listbox id="list" multiple="true" rows="12"
-					model="@bind(load=testBean.stations)" selectedItem="@bind(testBean.station)">
+					model="@load(testBean.stations)" selectedItem="@bind(testBean.station)">
 					<listhead>
 						<listheader label="Station" />
 					</listhead>
 					<template name="model" var="station">
 						<listitem>
-							<listcell label="@bind(station.name)" />
+							<listcell label="@load(station.name)" />
 						</listitem>
 					</template>
 				</listbox>
@@ -33,7 +33,7 @@ http://martinfowler.com/eaaDev/uiArchs.html
 				<rows>
 					<row>
 						Station
-						<textbox id="nameTextbox" value="@bind(testBean.station.name)" instant="true" disabled="@bind(testBean.stationIsNotNew)" />
+						<textbox id="nameTextbox" value="@bind(testBean.station.name)" instant="true" disabled="@loads(testBean.stationIsNotNew)" />
 					</row>
 					<row>
 						Date
@@ -45,11 +45,11 @@ http://martinfowler.com/eaaDev/uiArchs.html
 					</row>
 					<row>
 						Actual
-						<intbox id="actualIntbox" value="@bind(testBean.station.actual)" disabled="@bind(testBean.station.confirmed after 'cofirmedCheckboxChecked'}" />
+						<intbox id="actualIntbox" value="@bind(testBean.station.actual)" disabled="@load(testBean.station.confirmed, after='cofirmedCheckboxChecked'}" />
 					</row>
 					<row>
 						Variance
-						<intbox value="@bind(load={testBean.station.variance, testBean.station.variance})" disabled="true" sclass="@bind(testBean.lessThan10 ? 'red' : testBean.moreThan5 ? 'green' : '')"/>
+						<intbox value="@load(testBean.station.variance)" disabled="true" sclass="@load(testBean.lessThan10 ? 'red' : testBean.moreThan5 ? 'green' : '')"/>
 					</row>
 					<row>
 						Confirmed
@@ -59,8 +59,8 @@ http://martinfowler.com/eaaDev/uiArchs.html
 						<div>	
 						</div>
 						<div>
-							<button id="create" label="New" onClick="@bind('create')"/>
-							<button id="add" label="Add" onClick="@bind('add')" disabled="@bind(testBean.notValidToAdd)"/>
+							<button id="create" label="New" onClick="@command('create')"/>
+							<button id="add" label="Add" onClick="@command('add')" disabled="@load(testBean.notValidToAdd)"/>
 						</div>
 					</row>
 				</rows>

@@ -3,6 +3,7 @@ package org.zkoss.mvvm.examples.wheather;
 import java.util.List;
 
 import org.zkoss.bind.BindComposer;
+import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.DependsOn;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zul.ListModelList;
@@ -45,13 +46,13 @@ public class WeathStationViewModel extends BindComposer {
 		this.stations = new ListModelList(stations, true);
 	}
 	
-	@NotifyChange("station")
+	@Command @NotifyChange("station")
 	public void create() {
 		this.station = new Station();
 		return;
 	}
 	
-	@NotifyChange("stations")
+	@Command @NotifyChange("stations")
 	public void add(){
 		if( !this.stations.contains(station)) {
 			this.stations.add(this.station);
