@@ -14,6 +14,7 @@ package org.zkoss.mvvm.examples.hello;
 
 import org.zkoss.bind.BindComposer;
 import org.zkoss.bind.BindContext;
+import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
 
 /**
@@ -28,12 +29,12 @@ public class HelloViewModel2 extends BindComposer {
 		return this.message;
 	}
 	
-	@NotifyChange("message")
+	@Command @NotifyChange("message")
 	public void showHello() {
 		this.message = "Hello World!";
 	}
 	
-	@NotifyChange("message")
+	@Command @NotifyChange("message")
 	public void hideHello(BindContext ctx) {
 		this.message = null;
 		ctx.getTriggerEvent().stopPropagation();
