@@ -2,9 +2,9 @@
 	<custom-attributes composerName="vm"/>
 	<hlayout>
 		<vlayout>
-			<hlayout>Enter Symbol: <textbox value="@bind(save=vm.symbol)" instant="true" width="100px"/></hlayout>
-			<hlayout>You last subscribed to: <label value="@bind(vm.lastSymbol)"/></hlayout>
+			<hlayout>Enter Symbol: <textbox value="@save(vm.symbol)" instant="true" width="100px"/></hlayout>
+			<hlayout>You last subscribed to: <label value="@load(vm.lastSymbol)"/></hlayout>
 		</vlayout>
-		<button label="Subscribe" disabled="@bind(empty vm.symbol)" onClick="@bind('subscribe')" vflex="true"/>
+		<button label="Subscribe" disabled="@load(empty vm.symbol)" onClick="@command('subscribe')" vflex="true"/>
 	</hlayout>
 </window>

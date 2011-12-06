@@ -13,9 +13,8 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 package org.zkoss.mvvm.examples.disabled;
 
 import org.zkoss.bind.BindComposer;
-import org.zkoss.bind.BindContext;
+import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
-import org.zkoss.zk.ui.event.InputEvent;
 
 /**
  * 1. whenever the textbox is empty, the button is disabled;
@@ -43,7 +42,7 @@ public class DisabledButtonViewModel extends BindComposer {
 	}
 
 	//commands//
-	@NotifyChange("lastSymbol")
+	@Command @NotifyChange("lastSymbol")
 	public void subscribe() {
 		this.lastSymbol = this.symbol;
 	}
