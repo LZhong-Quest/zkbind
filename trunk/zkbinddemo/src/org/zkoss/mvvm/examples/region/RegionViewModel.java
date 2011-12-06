@@ -16,6 +16,7 @@ import org.zkoss.bind.BindComposer;
 import org.zkoss.bind.annotation.DependsOn;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.lang.Objects;
+import org.zkoss.zul.ListModelList;
 
 /**
  * View model for examples/region/region.zul
@@ -67,24 +68,24 @@ public class RegionViewModel extends BindComposer {
 		this.city = city;
 	}
 
-	public Region[] getRegions() { //region ListModel
-		return country.getRegions();
+	public ListModelList<Region> getRegions() { //region ListModel
+		return new ListModelList<Region>(country.getRegions());
 	}
 	
 	@DependsOn("region")
-	public State[] getStates() { //state ListModel
+	public ListModelList<State> getStates() { //state ListModel
 		if (region != null) {
-			return country.getStates(region);
+			return new ListModelList<State>(country.getStates(region));
 		}
-		return new State[0];
+		return null;
 	}
 	
 	@DependsOn("state")
-	public City[] getCities() { //city ListModel
+	public ListModelList<City> getCities() { //city ListModel
 		if (state != null) {
-			return country.getCities(state);
+			return new ListModelList<City>(country.getCities(state));
 		}
-		return new City[0];
+		return null;
 	}
 	
 	public static Country getCountry() {
