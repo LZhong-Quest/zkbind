@@ -13,6 +13,7 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 package org.zkoss.mvvm.examples.wizard;
 
 import org.zkoss.bind.BindComposer;
+import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.DependsOn;
 import org.zkoss.bind.annotation.NotifyChange;
 
@@ -39,21 +40,21 @@ public class WizardViewModel extends BindComposer {
 		return lastStep == step;
 	}
 	
-	@NotifyChange("step")
+	@Command @NotifyChange("step")
 	public void next() {
 		if (step < lastStep) {
 			++step;
 		}
 	}
 	
-	@NotifyChange("step")
+	@Command @NotifyChange("step")
 	public void prev() {
 		if (step > 0) {
 			--step;
 		}
 	}
 	
-	@NotifyChange("finishMessage")
+	@Command @NotifyChange("finishMessage")
 	public void finish() {
 		finishMessage = "Finished!";
 	}
