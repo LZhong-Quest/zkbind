@@ -18,7 +18,7 @@
 			<template name="model" var="item">
 				<listitem >
 					<listcell label="@load(item.id)"/>				
-					<listcell label="@load(item.quantity)"/>
+					<listcell label="@load(item.quantity)" style="@load(item.quantity lt 3?'color:red':'')"/>
 					<listcell label="@load(item.price) @converter('formatedNumber', format='###,##0.00')"/>
 					<listcell label="@load(item.creationDate) @converter('formatedDate', format='yyyy/MM/dd')"/>
 					<listcell label="@load(item.shippingDate) @converter('formatedDate', format='yyyy/MM/dd')"/>
@@ -38,7 +38,11 @@
 					<column/>
 				</columns>
 				<rows>
-					<row>Id <label value="@load(fx.id)"/></row>
+					<row>Id 
+					<hlayout>
+					<label value="@load(fx.id)"/>
+					<image src="@load(fxStatus.dirty?'exclamation.png':'')"/>
+					</hlayout> </row>
 					<row>Description <textbox value="@bind(fx.description)"/></row>
 					<row>Quantity
 						<hlayout> 
