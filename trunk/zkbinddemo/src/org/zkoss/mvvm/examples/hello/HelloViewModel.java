@@ -13,6 +13,7 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 package org.zkoss.mvvm.examples.hello;
 
 import org.zkoss.bind.BindComposer;
+import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
 
 /**
@@ -27,7 +28,7 @@ public class HelloViewModel extends BindComposer {
 		return this.message;
 	}
 	
-	@NotifyChange("message")
+	@Command @NotifyChange("message")
 	public void showHello() {
 		this.message = "Hello World!";
 	}
