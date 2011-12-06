@@ -18,6 +18,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import org.zkoss.bind.BindComposer;
+import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zul.ListModel;
 import org.zkoss.zul.ListModelList;
@@ -74,7 +75,7 @@ public class TodoViewModel extends BindComposer {
 		return newTask;
 	}
 	
-	@NotifyChange({"selected", "allTasks"})
+	@Command @NotifyChange({"selected", "allTasks"})
 	public void add(){	
 		//insert into database
 		if (newTask != null) {
@@ -86,7 +87,7 @@ public class TodoViewModel extends BindComposer {
 		}
 	}
 
-	@NotifyChange("selected")
+	@Command @NotifyChange("selected")
 	public void update(){
 		//update database
 		if (selected != null) {
@@ -95,7 +96,7 @@ public class TodoViewModel extends BindComposer {
 		}
 	} 
 	
-	@NotifyChange({"selected", "allTasks"})
+	@Command @NotifyChange({"selected", "allTasks"})
 	public void delete(){
 		if (selected != null) {
 			taskdao.delete(selected);

@@ -14,15 +14,15 @@
 			</listitem>
 		</template>
 	</listbox>
-	<groupbox self="@form(id='fx', load=vm.selected, save={vm.selected before 'update', vm.newTask before 'add'})">
+	<groupbox form="@id('fx') @load(vm.selected) @save(vm.selected, before='update') @save(vm.newTask, before='add')">
 		<caption label="Task" />
 		<hlayout spacing="5px">
 		Item: <textbox value="@bind(fx.name)" cols="25"/>
 		Priority: <intbox value="@bind(fx.priority)" cols="1" />
 		Date: <datebox value="@bind(fx.date)" cols="8" />
-		<button label="Add" height="24px" onClick="@bind('add')" />
-		<button label="Update" height="24px" onClick="@bind('update')" />
-		<button label="Delete" height="24px" onClick="@bind('delete')" />
+		<button label="Add" height="24px" onClick="@command('add')" />
+		<button label="Update" height="24px" onClick="@command('update')" />
+		<button label="Delete" height="24px" onClick="@command('delete')" />
 		</hlayout>
 	</groupbox>
 	<button label="Dump" onClick="binder.getTracker().dump()"/> <!-- internal debug -->
