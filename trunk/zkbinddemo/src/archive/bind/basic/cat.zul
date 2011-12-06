@@ -1,0 +1,15 @@
+<vbox>
+	<vbox apply="org.zkoss.zktest.bind.basic.Cat">
+		<label id="l11" value="${ctrl.foo()}" />
+		<label id="l12" value="${ctrl.bar('2bar')}" />
+		<label id="l13" value="${ctrl.cat('a','b')}" />
+	</vbox>
+	<vbox apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('org.zkoss.zktest.bind.basic.Cat$VM')">
+		<label id="l11" value="@load(value=vm.foo())" />
+		<label id="l13" value="@load(vm.foo())" />
+		<label id="l14" value="@load(vm.bar('2bar'))" />
+		<!-- 
+		<label id="l14" value="@load(value=vm.cat('a','b'))" />
+		  -->
+	</vbox>
+</vbox>
