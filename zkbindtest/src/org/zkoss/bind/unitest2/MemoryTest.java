@@ -59,7 +59,7 @@ public class MemoryTest  extends TestCaseBase{
 			Assert.assertEquals(true,editor.isVisible());
 			
 			Widget id = editor.findWidget("$id");
-			String idstr = id.getValue();
+			String idstr = (String)id.getValue();
 			
 			if(count==0){
 				Assert.assertEquals("0000"+(i+1), idstr);

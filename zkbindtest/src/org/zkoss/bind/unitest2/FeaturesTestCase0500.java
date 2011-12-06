@@ -65,7 +65,7 @@ public class FeaturesTestCase0500 extends TestCaseBase{
 		Assert.assertEquals("doCommand3 btn3 true",findWidget("$l11").getValue());
 		
 		findWidget("$btn4").click();
-		Assert.assertEquals("doCommand4 null null null btn4 true",findWidget("$l11").getValue());
+		Assert.assertEquals("doCommand4 3 false null btn4 true",findWidget("$l11").getValue());
 		
 		findWidget("$btn5").click();
 		Assert.assertEquals("doCommand5 99 true XYZ btn5 true",findWidget("$l11").getValue());

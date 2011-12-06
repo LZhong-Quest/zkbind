@@ -166,4 +166,32 @@ public class MiscTestCase extends TestCaseBase{
 		Assert.assertEquals(false,findWidget("$textA").getAttribute("disabled"));
 	}
 	
+	@Test
+	public void testFunction(){
+		navigate(getTestCaseUrl("/bind/basic/function.zul"));
+		
+		Assert.assertEquals("foo",findWidget("$l11").getValue());
+		Assert.assertEquals("foo",findWidget("$l12").getValue());
+		Assert.assertEquals("foo:2bar",findWidget("$l13").getValue());
+		Assert.assertEquals("foo:foo:b",findWidget("$l14").getValue());
+		
+		findWidget("$cmd1").click();
+		Assert.assertEquals("foo0",findWidget("$l11").getValue());
+		Assert.assertEquals("foo0",findWidget("$l12").getValue());
+		Assert.assertEquals("foo:2bar",findWidget("$l13").getValue());
+		Assert.assertEquals("foo0:foo0:b",findWidget("$l14").getValue());
+		
+		findWidget("$cmd2").click();
+		Assert.assertEquals("foo1",findWidget("$l11").getValue());
+		Assert.assertEquals("foo1",findWidget("$l12").getValue());
+		Assert.assertEquals("foo1:2bar",findWidget("$l13").getValue());
+		Assert.assertEquals("foo1:foo1:b",findWidget("$l14").getValue());
+		
+		findWidget("$cmd3").click();
+		Assert.assertEquals("foo1",findWidget("$l11").getValue());
+		Assert.assertEquals("foo1",findWidget("$l12").getValue());
+		Assert.assertEquals("foo1:2bar",findWidget("$l13").getValue());
+		Assert.assertEquals("foo2:foo2:b",findWidget("$l14").getValue());
+	}
+	
 }
