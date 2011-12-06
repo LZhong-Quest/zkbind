@@ -12,8 +12,8 @@
 			<hlayout><checkbox checked="@bind(vm.classical)"/> Classical</hlayout>
 			<hlayout>Composer: <textbox value="@bind(vm.composer)" disabled="@bind(not vm.composerFieldEnabled)" instant="true" hflex="true"/></hlayout>
 			<hlayout>
-				<button onClick="@bind('apply')" disabled="@bind(not vm.applyEnabled)" label="Apply"/> 
-				<button onClick="@bind('cancel')" disabled="@bind(not vm.cancelEnabled)" label="Cancel"/>
+				<button onClick="@command('apply')" disabled="@bind(not vm.applyEnabled)" label="Apply"/> 
+				<button onClick="@command('cancel')" disabled="@bind(not vm.cancelEnabled)" label="Cancel"/>
 			</hlayout>
 		</vlayout>
 	</hlayout>

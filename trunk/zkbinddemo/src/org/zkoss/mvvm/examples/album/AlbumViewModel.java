@@ -13,6 +13,7 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 package org.zkoss.mvvm.examples.album;
 
 import org.zkoss.bind.BindComposer;
+import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.DependsOn;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zul.ListModel;
@@ -115,12 +116,12 @@ public class AlbumViewModel extends BindComposer {
 	}
 	
 	//Commands//
-	@NotifyChange("selectedAlbum")
+	@Command @NotifyChange("selectedAlbum")
 	public void apply() {
 		selectedAlbum.acceptChanges();
 	}
 	
-	@NotifyChange("selectedAlbum")
+	@Command @NotifyChange("selectedAlbum")
 	public void cancel() {
 		selectedAlbum.rejectChanges();
 	}
