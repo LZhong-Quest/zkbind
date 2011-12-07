@@ -100,7 +100,7 @@ public class MemoryTest  extends TestCaseBase{
 		
 		
 		
-		items = listbox.reattach().findWidgets("@listitem");
+		items = listbox.findWidgets("@listitem");
 		int newsize = items.size();
 		Assert.assertEquals(oldsize+1, newsize);
 		
@@ -112,7 +112,7 @@ public class MemoryTest  extends TestCaseBase{
 		shippingDate.clear().keys("2011/11/15");
 		
 		findWidget("$saveBtn").click();
-		items = listbox.reattach().findWidgets("@listitem");
+		items = listbox.findWidgets("@listitem");
 		newsize = items.size();
 		Assert.assertEquals(oldsize+1, newsize);
 		
@@ -149,7 +149,7 @@ public class MemoryTest  extends TestCaseBase{
 		dialog.findWidget("$deleteBtn2").click();
 		Assert.assertFalse(dialog.isVisible());
 		
-		items = listbox.reattach().findWidgets("@listitem");
+		items = listbox.findWidgets("@listitem");
 		newsize = items.size();
 		Assert.assertEquals(oldsize-1, newsize);
 	}
