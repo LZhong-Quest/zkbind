@@ -9,59 +9,58 @@
 
 Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 */
-package org.zkoss.bind.examples.search.mvp;
+package org.zkoss.bind.examples.search.wire;
 
 import java.text.DecimalFormat;
 
 import org.zkoss.bind.BindContext;
 import org.zkoss.bind.Binder;
 import org.zkoss.bind.Converter;
+import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
+import org.zkoss.bind.annotation.Param;
 import org.zkoss.bind.examples.search.FakeSearchService;
 import org.zkoss.bind.examples.search.Item;
 import org.zkoss.bind.examples.search.SearchService;
 import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.select.SelectorComposer;
+import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModel;
 import org.zkoss.zul.ListModelList;
-import org.zkoss.zul.Window;
+import org.zkoss.zul.Popup;
 /**
- * An implementation in MVP pattern with zkbind
+ * An implementation in MVVM pattern with autowire
  * @author Hawk
  */
-@SuppressWarnings("serial")
-public class SearchComposer extends SelectorComposer<Component>{
+public class SearchAutowireVM{
 
 	//the search condition
 	private String filter = "*";
 	
 	//the search result
 	private ListModelList<Item> items;
-
+	
 	private Converter totalPriceConverter;
 	//the selected item
 	private Item selected;
-	private Binder binder;
 	//UI component
-	@Wire("window")
-	private Window window;
+	@Wire("#msgPopup")
+	Popup popup;
+	@Wire("#msg")
+	Label msg;
 
+	@Init
+	public void init(BindContext ctx){
+		//Returns associated root component of the binder
+		Component component = ctx.getBinder().getView();
+		Selectors.wireVariables(component, this);
+		//wire event listener
+//		Selectors.wireEventListeners(component, this);
+	}
 	
-	@Override
-	public void doAfterCompose(Component comp) throws Exception {
-		super.doAfterCompose(comp);
-		comp.setAttribute("presenter", this);
-		
-	}
-	@Override
-	public void doFinally() throws Exception {
-		super.doFinally();
-
-		binder = (Binder)window.getAttribute("binder");
-
-	}
 	
 	protected SearchService getSearchService(){
 		return new FakeSearchService();
@@ -84,15 +83,12 @@ public class SearchComposer extends SelectorComposer<Component>{
 	}
 
 	
-	@Listen("onClick = button")
+	@NotifyChange({"items","selected"})
+	@Command
 	public void doSearch(){
 		items = new ListModelList<Item>();
 		items.addAll(getSearchService().search(filter));
 		setSelected(null);
-		if (binder != null){
-			binder.notifyChange(this, "items");
-			binder.notifyChange(this, "selected");
-		}
 	}
 	
 
@@ -124,5 +120,11 @@ public class SearchComposer extends SelectorComposer<Component>{
 			}
 			
 		};
+	}
+	
+	@Command
+	public void popupMessage(@Param("target")Component target, @Param("content")String content){
+		msg.setValue(content);
+		popup.open(target,"end_before");
 	}
 }
