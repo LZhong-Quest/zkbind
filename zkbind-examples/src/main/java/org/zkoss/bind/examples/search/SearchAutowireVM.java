@@ -55,11 +55,10 @@ public class SearchAutowireVM{
 	@Init
 	public void init(BindContext ctx){
 		
+		//Returns associated root component of the binder
 		Component component = ctx.getBinder().getView();
 		Selectors.wireVariables(component, this);
-		Selectors.wireEventListeners(component, this);
-		//to wire vm as vmex
-		Selectors.wireController(component, this);
+//		Selectors.wireEventListeners(component, this);
 		
 	}
 	
