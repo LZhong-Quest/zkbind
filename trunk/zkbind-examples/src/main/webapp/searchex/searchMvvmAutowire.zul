@@ -19,7 +19,7 @@
 				<listheader label="Quantity" align="center"  />
 			</listhead>
 			<template name="model" var="item">
-				<listitem onMouseOver="@command('showMessage', component=self, content=item)">
+				<listitem onMouseOver="@command('popupMessage', target=self, content=item.description)">
 					<listcell label="@bind(item.name)"/>
 					<listcell label="@bind(item.price)@converter('formatedNumber', format='###,##0.00')"/>
 					<listcell label="@bind(item.quantity)" sclass="@bind(item.quantity lt 3 ?'red':'')"/>

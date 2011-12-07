@@ -54,12 +54,11 @@ public class SearchAutowireVM{
 
 	@Init
 	public void init(BindContext ctx){
-		
 		//Returns associated root component of the binder
 		Component component = ctx.getBinder().getView();
 		Selectors.wireVariables(component, this);
+		//wire event listener
 //		Selectors.wireEventListeners(component, this);
-		
 	}
 	
 	
@@ -124,8 +123,8 @@ public class SearchAutowireVM{
 	}
 	
 	@Command
-	public void showMessage(@Param("component")Component self, @Param("content")Item item){
-		msg.setValue(item.getDescription());
-		popup.open(self,"end_before");
+	public void popupMessage(@Param("target")Component target, @Param("content")String content){
+		msg.setValue(content);
+		popup.open(target,"end_before");
 	}
 }
