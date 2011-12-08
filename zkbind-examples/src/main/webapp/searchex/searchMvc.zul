@@ -18,15 +18,6 @@
 				<listheader label="Price" align="center" width="80px" />
 				<listheader label="Quantity" align="center" width="80px" />
 			</listhead>
-			<!-- 
-			<template name="model" var="item">
-				<listitem>
-					<listcell label="@bind(item.name)"/>				
-					<listcell label="@bind(item.price)@converter('formatedNumber', format='###,##0.00')"/>
-					<listcell label="@bind(item.quantity)" sclass="@bind(item.quantity lt 3 ?'red':'')"/>
-				</listitem>
-			</template>
-			 -->
 		</listbox>
 		<groupbox id="detailBox" visible="false" hflex="true" mold="3d">
 			<caption id="detailCaption" />
@@ -38,11 +29,8 @@
 				<rows>
 					<row>Description <label id="descriptionLabel"/></row>
 					<row>Price <label id="priceLabel" /></row>
-					<!-- value="@bind(presenter.selected.price) @converter('formatedNumber', format='###,##0.00')" -->
 					<row>Quantity <label id="quantityLabel" value="@bind(presenter.selected.quantity)" /></row>
-					<!-- sclass="@bind(presenter.selected.quantity lt 3 ?'red':'')" -->
 					<row>Total Price <label id="totalPriceLabel" /></row>
-					<!-- value="@bind(presenter.selected.totalPrice) @converter(presenter.totalPriceConverter)" -->
 				</rows>
 			</grid>
 		</groupbox>
