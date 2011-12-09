@@ -229,6 +229,9 @@ Copyright (C) 2006 Potix Corporation. All Rights Reserved.
 		<crawlable>true</crawlable>
 	</system-config>
 	-->
+	<system-config>
+	    <id-generator-class>org.zkoss.zktest.bind.SequenceIdGenerator</id-generator-class>
+	</system-config>	
 
 	<!-- Optional -->
 	<!-- Map extensions to the xml language.
