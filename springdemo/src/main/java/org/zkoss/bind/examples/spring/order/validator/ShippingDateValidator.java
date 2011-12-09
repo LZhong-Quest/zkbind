@@ -18,14 +18,14 @@ public class ShippingDateValidator implements Validator{
 	public void validate(ValidationContext ctx) {
 		Date shipping = (Date)ctx.getProperty().getValue();//the main property
 		Date creation = (Date)ctx.getProperties("creationDate")[0].getValue();//the collected
-		//do mixed validation, shipping date have to large than creation more than 3 days.
+		//multiple fields dependent validation, shipping date have to large than creation more than 3 days.
 		if(!isDayAfter(creation,shipping,3)){
 			ctx.setInvalid();
 			messages.put("shippingDate", "must large than creation date at least 3 days");
 		}else{
 			messages.remove("shippingDate");
 		}
-		//notify the 'price' message in messages was changed.
+		//notify messages was changed.
 		ctx.getBindContext().getBinder().notifyChange(messages, "shippingDate");
 	}
 	
