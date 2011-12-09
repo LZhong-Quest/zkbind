@@ -38,11 +38,13 @@
 					<column/>
 				</columns>
 				<rows>
-					<row>Id 
-					<hlayout>
-					<label value="@load(fx.id)"/>
-					<image src="@load(fxStatus.dirty?'exclamation.png':'')"/>
-					</hlayout> </row>
+					<row>
+						Id
+						<hlayout>
+							<label value="@load(fx.id)" />
+							<image src="@load(fxStatus.dirty?'exclamation.png':'')" />
+						</hlayout>
+					</row>
 					<row>Description <textbox value="@bind(fx.description)"/></row>
 					<row>Quantity
 						<hlayout> 
