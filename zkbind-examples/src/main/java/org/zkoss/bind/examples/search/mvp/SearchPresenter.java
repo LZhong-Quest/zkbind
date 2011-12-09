@@ -42,8 +42,6 @@ import org.zkoss.zul.Textbox;
 
 @SuppressWarnings("serial")
 public class SearchPresenter extends SelectorComposer<Component>{
-
-	
 	//the search result
 	private ListModelList<Item> items;
 
@@ -75,7 +73,6 @@ public class SearchPresenter extends SelectorComposer<Component>{
 		doSearch();
 		itemListbox.setModel(items);
 		itemListbox.setItemRenderer(new ItemRenderer());
-		
 	}
 	
 	protected SearchService getSearchService(){
@@ -105,7 +102,5 @@ public class SearchPresenter extends SelectorComposer<Component>{
 		quantityLabel.setValue(Integer.toString(selected.getQuantity()));
 		quantityLabel.setSclass(selected.getQuantity()<3?"red":"");
 		totalPriceLabel.setValue(ItemRenderer.priceFormatter.format(selected.getTotalPrice()));
-
 	}
-
 }
