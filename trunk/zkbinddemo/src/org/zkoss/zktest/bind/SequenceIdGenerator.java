@@ -1,5 +1,8 @@
 package org.zkoss.zktest.bind;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.zkoss.zk.ui.Component;
@@ -9,16 +12,29 @@ import org.zkoss.zk.ui.Page;
 import org.zkoss.zk.ui.sys.IdGenerator;
 
 public class SequenceIdGenerator implements IdGenerator{
+	
+	
+	
+	
 	public String nextComponentUuid(Desktop desktop, Component comp) {
-		String number;
-		if ((number = (String)desktop.getAttribute("Id_Num")) == null) {
-			number = "0";
-			desktop.setAttribute("Id_Num", number);
+		
+		Map<String,Integer> idcmap = (Map<String,Integer>)desktop.getAttribute("__sidg_idhash");
+		if(idcmap==null){
+			idcmap = new HashMap<String,Integer>();
+			desktop.setAttribute("__sidg_idhash", idcmap);
 		}
-		int i = Integer.parseInt(number);
-		i++;// Start from 1
-		desktop.setAttribute("Id_Num", String.valueOf(i));
-		return "t_" + i;
+		
+		String name = comp.getClass().getSimpleName().toLowerCase();
+		if(name.length()>6){
+			name = name.substring(0,6);
+		}
+		Integer n = idcmap.get(name);
+		if(n==null){
+			n = new Integer(0);
+		}
+		int i = n.intValue()+1;
+		idcmap.put(name, i);
+		return name + "_" + i;
 	}
 
 	public String nextDesktopId(Desktop desktop) {
