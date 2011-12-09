@@ -29,7 +29,7 @@
 				<rows>
 					<row>Description <label id="descriptionLabel"/></row>
 					<row>Price <label id="priceLabel" /></row>
-					<row>Quantity <label id="quantityLabel" value="@bind(presenter.selected.quantity)" /></row>
+					<row>Quantity <label id="quantityLabel" /></row>
 					<row>Total Price <label id="totalPriceLabel" /></row>
 				</rows>
 			</grid>
