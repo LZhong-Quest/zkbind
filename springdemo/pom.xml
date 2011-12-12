@@ -3,13 +3,28 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.zkoss.zk</groupId>
 	<artifactId>zkbind-springdemo</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+	<name>zkbind-springdemo</name>
+	<version>1.0.0-SNAPSHOT</version>
 	<properties>
 		<zk.version>6.0.0-SNAPSHOT</zk.version>
 		<spring.version>3.0.5.RELEASE</spring.version>
 		<hibernate.version>3.3.1.ga</hibernate.version>
 		<zkspring.version>3.1-SNAPSHOT</zkspring.version>
 	</properties>
+	<description>To demonstrate how to develop an applicaiton in ZK  MVVM pattern with Spring framework.</description>
+	<build>
+		<plugins>
+		</plugins>
+		  <resources>
+            <resource>
+                <directory>${basedir}/src/main/resources</directory>
+            </resource>
+            <resource>
+                <directory>${basedir}/src/main/java</directory>
+            </resource>
+        </resources>
+	</build>
 	<repositories>
 		<repository>
 			<id>ZK EE</id>
