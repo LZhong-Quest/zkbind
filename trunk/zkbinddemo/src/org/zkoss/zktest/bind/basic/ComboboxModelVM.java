@@ -12,6 +12,9 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 
 package org.zkoss.zktest.bind.basic;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.zkoss.bind.BindContext;
 import org.zkoss.bind.Converter;
 import org.zkoss.bind.annotation.Command;
@@ -28,18 +31,18 @@ import org.zkoss.zul.ListModelList;
 public class ComboboxModelVM {
 	private String message1;
 
-	ListModelList<Item> items = new ListModelList<Item>();
+	List<Item> items;
 
 
 	public ComboboxModelVM() {
-		items = new ListModelList<Item>();
+		items = new ArrayList<Item>();
 		items.add(new Item("A"));
 		items.add(new Item("B"));
 		items.add(new Item("C"));
 		items.add(new Item("D"));	
 	}
 
-	public ListModelList<Item> getItems() {
+	public List<Item> getItems() {
 		return items;
 	}
 

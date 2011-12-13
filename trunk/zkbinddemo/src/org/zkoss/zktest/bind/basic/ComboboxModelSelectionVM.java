@@ -12,6 +12,9 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 
 package org.zkoss.zktest.bind.basic;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zul.ListModelList;
@@ -23,12 +26,12 @@ import org.zkoss.zul.ListModelList;
 public class ComboboxModelSelectionVM {
 	private String message1;
 
-	ListModelList<Item> items = new ListModelList<Item>();
+	List<Item> items ;
 	
 	Item selected;
 	
 	public ComboboxModelSelectionVM() {
-		items = new ListModelList<Item>();
+		items = new ArrayList<Item>();
 		items.add(new Item("A"));
 		items.add(new Item("B"));
 		items.add(new Item("C"));
@@ -46,7 +49,7 @@ public class ComboboxModelSelectionVM {
 		System.out.println(">>>>>"+selected);
 	}
 
-	public ListModelList<Item> getItems() {
+	public List<Item> getItems() {
 		return items;
 	}
 
@@ -74,6 +77,12 @@ public class ComboboxModelSelectionVM {
 	@Command @NotifyChange({"items","message1"}) 
 	public void reload() {
 		message1 = "reloaded";
+	}
+	
+	@Command @NotifyChange({"items","message1","selected"}) 
+	public void select() {
+		selected = items.get(items.size()-1);
+		message1 = "selected";
 	}
 
 }

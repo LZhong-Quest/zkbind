@@ -902,4 +902,38 @@ public class CollectionTestCase  extends TestCaseBase{
 		
 	}
 	
+	@Test
+	public void comboboxModelSelection(){
+		navigate(getTestCaseUrl("/bind/basic/comboboxmodelselection.zul"));
+		
+		Widget combobox1 = findWidget("$cb1");
+		Widget combobox2 = findWidget("$cb2");
+		
+		Assert.assertEquals("",findWidget("$msg").getValue());
+		List<Widget> items = combobox1.findWidgets("@comboitem");
+		combobox1.call("open");//has to wait for open
+		combobox1.waitForTrip(1, 1500);
+		
+		items.get(1).click();
+		Assert.assertEquals("B",combobox1.getValue());
+		Assert.assertEquals("A",combobox2.getValue());
+		
+		combobox1.call("open");//has to wait for open
+		combobox1.waitForTrip(1, 1500);
+		
+		items.get(2).click();
+		Assert.assertEquals("C",combobox1.getValue());
+		Assert.assertEquals("A",combobox2.getValue());
+		
+		findWidget("$btn1").click();
+		Assert.assertEquals("reloaded",findWidget("$msg").getValue());
+		Assert.assertEquals("C",combobox1.getValue());
+		Assert.assertEquals("A",combobox2.getValue());
+		
+		findWidget("$btn2").click();
+		Assert.assertEquals("selected",findWidget("$msg").getValue());
+		Assert.assertEquals("C",combobox1.getValue());
+		Assert.assertEquals("D",combobox2.getValue());
+	}
+	
 }
