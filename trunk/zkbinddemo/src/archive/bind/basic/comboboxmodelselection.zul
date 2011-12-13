@@ -1,0 +1,15 @@
+<window apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('org.zkoss.zktest.bind.basic.ComboboxModelSelectionVM')">
+	<label id="msg" value="@bind(vm.message1)"/>
+	
+	<combobox id="cb" model="@bind(vm.items)" width="100px" selectedItem="@bind(vm.selected)">
+		<template name="model" var="item" >
+			<comboitem label="@bind(item.name)"/>	
+		</template>
+	</combobox>
+	<hbox>
+		<button label="reload" onClick="@command('reload')" />
+		<button label="model selection" onClick='alert(">>>"+cb.getModel().getSelection())' />
+		<button label="selected index" onClick='alert(">>>"+cb.getSelectedItem())' />
+		<button label="Dump" onClick="binder.getTracker().dump()" />
+	</hbox>	
+</window>
