@@ -231,4 +231,20 @@ public class BugsTestCase0500 extends TestCaseBase{
 		Assert.assertEquals(2L, findWidget("$intbox").getValue());
 	}
 	
+	@Test
+	public void b00678(){
+		navigate(getTestCaseUrl("/bind/issue/B00678.zul"));
+		 
+		Assert.assertEquals("Value A", findWidget("$l1").getValue());
+		Assert.assertEquals("msg A", findWidget("$l2").getValue());
+		
+		findWidget("$btn1").click();
+		Assert.assertEquals("Value B", findWidget("$l1").getValue());
+		Assert.assertEquals("msg B", findWidget("$l2").getValue());
+		
+		findWidget("$btn2").click();
+		Assert.assertEquals("Value C", findWidget("$l1").getValue());
+		Assert.assertEquals("msg C", findWidget("$l2").getValue());
+	}
+	
 }
