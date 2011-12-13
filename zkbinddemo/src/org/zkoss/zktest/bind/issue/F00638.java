@@ -11,7 +11,7 @@ import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Textbox;
 
-@Wire("vmex")
+//@Wire("vmex")
 public class F00638 extends F00638Base{
 
 	String value2;
@@ -42,7 +42,7 @@ public class F00638 extends F00638Base{
 		Selectors.wireVariables(r, this);
 		Selectors.wireEventListeners(r, this);
 		//to wire vm as vmex
-		Selectors.wireController(r, this);
+//		Selectors.wireController(r, this);
 		
 		label.setValue("C");
 		textbox.setValue("D");
