@@ -247,4 +247,128 @@ public class BugsTestCase0500 extends TestCaseBase{
 		Assert.assertEquals("msg C", findWidget("$l2").getValue());
 	}
 	
+	
+	@Test
+	public void b00682(){
+		navigate(getTestCaseUrl("/bind/issue/B00682.zul"));
+		
+		Widget l1 = findWidget("$l1");
+		Widget l2 = findWidget("$l2");
+		Widget l3 = findWidget("$l3");
+		Widget l4 = findWidget("$l4");
+		Widget l5 = findWidget("$l5");
+		Widget l6 = findWidget("$l6");
+		
+		Assert.assertNotNull(l1);
+		Assert.assertNotNull(l2);
+		Assert.assertNotNull(l3);
+		Assert.assertNotNull(l4);
+		Assert.assertNotNull(l5);
+		Assert.assertNotNull(l6);
+		
+		Assert.assertEquals("", l1.getValue());
+		Assert.assertEquals("", l2.getValue());
+		Assert.assertEquals("-1.0", l3.getValue());
+		Assert.assertEquals("-2.0", l4.getValue());
+		Assert.assertEquals("-3", l5.getValue());
+		Assert.assertEquals("-4", l6.getValue());
+		
+		Widget i11 = findWidget("$inp11");
+		Widget i12 = findWidget("$inp12");
+		Widget i13 = findWidget("$inp13");
+		Widget i14 = findWidget("$inp14");
+		Widget i15 = findWidget("$inp15");
+		Widget i16 = findWidget("$inp16");
+		Widget i17 = findWidget("$inp17");
+		Widget i18 = findWidget("$inp18");
+		Widget i19 = findWidget("$inp19");
+		Widget i1a = findWidget("$inp1a");
+		Widget i1b = findWidget("$inp1b");
+		
+		Widget i21 = findWidget("$inp21");
+		Widget i22 = findWidget("$inp22");
+		Widget i23 = findWidget("$inp23");
+		Widget i24 = findWidget("$inp24");
+		Widget i25 = findWidget("$inp25");
+		Widget i26 = findWidget("$inp26");
+		Widget i27 = findWidget("$inp27");
+		Widget i28 = findWidget("$inp28");
+		Widget i29 = findWidget("$inp29");
+		Widget i2a = findWidget("$inp2a");
+		Widget i2b = findWidget("$inp2b");
+		
+		Assert.assertNotNull(i11);
+		Assert.assertNotNull(i12);
+		Assert.assertNotNull(i13);
+		Assert.assertNotNull(i14);
+		Assert.assertNotNull(i15);
+		Assert.assertNotNull(i16);
+		Assert.assertNotNull(i17);
+		Assert.assertNotNull(i18);
+		Assert.assertNotNull(i19);
+		Assert.assertNotNull(i1a);
+		Assert.assertNotNull(i1b);
+		
+		
+		Assert.assertNotNull(i21);
+		Assert.assertNotNull(i22);
+		Assert.assertNotNull(i23);
+		Assert.assertNotNull(i24);
+		Assert.assertNotNull(i25);
+		Assert.assertNotNull(i26);
+		Assert.assertNotNull(i27);
+		Assert.assertNotNull(i28);
+		Assert.assertNotNull(i29);
+		Assert.assertNotNull(i2a);
+		Assert.assertNotNull(i2b);
+		
+		
+		Assert.assertEquals("", i11.getValue());
+		Assert.assertEquals(null, i12.getValue());
+		Assert.assertEquals(null, i13.getValue());
+		Assert.assertEquals(null, i14.getValue());
+		Assert.assertEquals(null, i15.getValue());
+//		Assert.assertEquals(-1L, i16.getValue()); //widget bug
+		Assert.assertEquals(-2L, i17.getValue());
+		Assert.assertEquals(-2L, i18.getValue());
+		Assert.assertEquals(-3L, i19.getValue());
+		Assert.assertEquals(-3L, i1a.getValue());
+//		Assert.assertEquals(-4L, i1b.getValue()); //widget bug
+		
+		
+		i11.focus(0,1000);
+		i11.tab(0,1000);
+		i12.tab(0,1000);
+		i13.tab(0,1000);
+		i14.tab(0,1000);
+		i15.tab(0,1000);
+		i16.tab(0,1000);
+		i17.tab(0,1000);
+		i18.tab(0,1000);
+		i19.tab(0,1000);
+		i1a.tab(0,1000);
+		i1b.tab(0,1000);
+		
+		i21.tab(0,1000);
+		i22.tab(0,1000);
+		i23.tab(0,1000);
+		i24.tab(0,1000);
+		i25.tab(0,1000);
+		i26.tab(0,1000);
+		i27.tab(0,1000);
+		i28.tab(0,1000);
+		i29.tab(0,1000);
+		i2a.tab(0,1000);
+		i2b.tab(0,1000);
+		
+		
+		Assert.assertEquals("", l1.getValue());
+		Assert.assertEquals("", l2.getValue());
+		Assert.assertEquals("-1.0", l3.getValue());
+		Assert.assertEquals("-2.0", l4.getValue());
+		Assert.assertEquals("-3", l5.getValue());
+		Assert.assertEquals("-4", l6.getValue());
+		
+	}
+	
 }
