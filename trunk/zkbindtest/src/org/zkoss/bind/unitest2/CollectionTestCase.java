@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.zkoss.zktc.core.junit.TestCaseBase;
 import org.zkoss.zktc.core.widget.Widget;
+import org.zkoss.zktc.core.widget.Widgets;
 
 public class CollectionTestCase  extends TestCaseBase{
 	@Test
@@ -934,6 +935,44 @@ public class CollectionTestCase  extends TestCaseBase{
 		Assert.assertEquals("selected",findWidget("$msg").getValue());
 		Assert.assertEquals("C",combobox1.getValue());
 		Assert.assertEquals("D",combobox2.getValue());
+	}
+	
+	@Test
+	public void selectboxModelSelection(){
+		navigate(getTestCaseUrl("/bind/basic/selectboxmodelselection.zul"));
+		
+		Widget sb1 = findWidget("$sb1");
+		Widget sb2 = findWidget("$sb2");
+		Widget sb3 = findWidget("$sb3");
+		Widget msg = findWidget("$msg");
+		Widget btn1 = findWidget("$btn1");
+		Widget btn2 = findWidget("$btn2");
+		
+		
+		Assert.assertEquals("",msg.getValue());
+		
+		Assert.assertEquals(-1L, sb1.getAttribute("selectedIndex"));
+		Assert.assertEquals(-1L, sb2.getAttribute("selectedIndex"));
+		Assert.assertEquals(1L, sb3.getAttribute("selectedIndex"));
+		
+		Widgets.toSelectWidget(sb1).select(0);
+		Widgets.toSelectWidget(sb2).select(1);
+		Widgets.toSelectWidget(sb3).select(2);
+		
+		Assert.assertEquals(0L, sb1.getAttribute("selectedIndex"));
+		Assert.assertEquals(1L, sb2.getAttribute("selectedIndex"));
+		Assert.assertEquals(2L, sb3.getAttribute("selectedIndex"));
+		
+		btn1.click();
+		Assert.assertEquals(0L, sb1.getAttribute("selectedIndex"));
+		Assert.assertEquals(1L, sb2.getAttribute("selectedIndex"));
+		Assert.assertEquals(2L, sb3.getAttribute("selectedIndex"));
+		
+		btn2.click();
+		Assert.assertEquals(0L, sb1.getAttribute("selectedIndex"));
+		Assert.assertEquals(1L, sb2.getAttribute("selectedIndex"));
+		Assert.assertEquals(3L, sb3.getAttribute("selectedIndex"));
+		
 	}
 	
 }
