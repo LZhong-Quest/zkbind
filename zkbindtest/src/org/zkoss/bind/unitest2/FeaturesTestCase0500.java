@@ -1,12 +1,9 @@
 package org.zkoss.bind.unitest2;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.zkoss.zktc.core.junit.TestCaseBase;
-import org.zkoss.zktc.core.widget.WidgetDriver;
+import org.zkoss.zktc.core.widget.Widget;
 /**
  * test case for features from number 500-999
  * @author dennis
@@ -90,6 +87,53 @@ public class FeaturesTestCase0500 extends TestCaseBase{
 		
 		findWidget("$btn12").click();
 		Assert.assertEquals("object is h11",findWidget("$l12").getValue());
+		
+	}
+	
+	
+	
+	@Test
+	public void f00687(){
+		navigate(getTestCaseUrl("/bind/issue/F00687.zul"));
+		
+		Widget l11 = findWidget("$l11");
+		Widget l12 = findWidget("$l12");
+		Widget l13 = findWidget("$l13");
+		Widget l14 = findWidget("$l14");
+		Widget t11 = findWidget("$t11");
+		Widget t12 = findWidget("$t12");
+		Widget t13 = findWidget("$t13");
+		Widget t14 = findWidget("$t14");
+		
+		Assert.assertEquals("A",l11.getValue());
+		Assert.assertEquals("B",l12.getValue());
+		Assert.assertEquals("C",l13.getValue());
+		Assert.assertEquals("D",l14.getValue());
+		
+		t11.replace("Q").tab();
+		Assert.assertEquals("Q",l11.getValue());
+		Assert.assertEquals("B",l12.getValue());
+		Assert.assertEquals("C",l13.getValue());
+		Assert.assertEquals("D",l14.getValue());
+		
+		t12.replace("W").tab();
+		Assert.assertEquals("Q",l11.getValue());
+		Assert.assertEquals("B",l12.getValue());
+		Assert.assertEquals("C",l13.getValue());
+		Assert.assertEquals("D",l14.getValue());
+		
+		t13.replace("E").tab();
+		Assert.assertEquals("Q",l11.getValue());
+		Assert.assertEquals("W",l12.getValue());
+		Assert.assertEquals("E",l13.getValue());
+		Assert.assertEquals("D",l14.getValue());
+		
+		findWidget("$btn1").click();
+		Assert.assertEquals("Q",l11.getValue());
+		Assert.assertEquals("W",l12.getValue());
+		Assert.assertEquals("E",l13.getValue());
+		Assert.assertEquals("command 1",l14.getValue());
+		Assert.assertEquals("command 1",t14.getValue());
 		
 	}
 }
