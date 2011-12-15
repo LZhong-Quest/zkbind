@@ -2,6 +2,8 @@ package org.zkoss.zktest.bind.issue;
 
 import org.zkoss.bind.BindContext;
 import org.zkoss.bind.Binder;
+import org.zkoss.bind.annotation.ContextParam;
+import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
@@ -30,12 +32,16 @@ public class F00638 extends F00638Base{
 	@Wire("#t31")
 	Textbox textbox;
 	
+	 
 	@Init
 	public void init(BindContext ctx){
 		this.value2 = "B";
+	}
+	@Init
+	public void init(@ContextParam(ContextType.BINDER) Binder binder){
 		
 //		Component r = ctx.getComponent();
-		Component r = ctx.getBinder().getView();
+		Component r = binder.getView();
 		Selectors.wireComponents(r, this,false);
 //		Selectors.wireVariables(r, this, null);
 		Selectors.wireEventListeners(r, this);
