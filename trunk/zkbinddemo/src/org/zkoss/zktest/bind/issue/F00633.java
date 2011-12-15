@@ -3,6 +3,8 @@ package org.zkoss.zktest.bind.issue;
 import org.zkoss.bind.BindContext;
 import org.zkoss.bind.Binder;
 import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.ContextParam;
+import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.Default;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.bind.annotation.Param;
@@ -63,7 +65,8 @@ public class F00633 {
 	
 	@NotifyChange("value1")
 	@Command
-	public void cmd6(@Param("arg1") @Default("9") Integer arg1, BindContext ctx, Binder binder,
+	public void cmd6(@Param("arg1") @Default("9") Integer arg1, @ContextParam(ContextType.BIND_CONTEXT) BindContext ctx, 
+			@ContextParam(ContextType.BINDER) Binder binder,
 			@Param("arg2") @Default("true") Boolean arg2, @Default("ABCD") @Param("arg3") String arg3) {
 		//doCommand6 9 true ABCD btn6 true
 		value1 = "doCommand6 " + arg1 + " " + arg2 + " " + arg3 + " " + ctx.getComponent().getId() + " "
