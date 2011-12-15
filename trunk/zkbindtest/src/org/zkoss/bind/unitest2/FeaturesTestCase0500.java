@@ -20,8 +20,6 @@ public class FeaturesTestCase0500 extends TestCaseBase{
 		
 		Assert.assertEquals("A",findWidget("$l11").getValue());
 		Assert.assertEquals("B",findWidget("$l12").getValue());
-//		Assert.assertEquals("A",findWidget("$l21").getValue());
-//		Assert.assertEquals("B",findWidget("$l22").getValue());
 		Assert.assertEquals("C",findWidget("$l31").getValue());
 		Assert.assertEquals("D",findWidget("$t31").getValue());
 		
@@ -30,16 +28,12 @@ public class FeaturesTestCase0500 extends TestCaseBase{
 		
 		Assert.assertEquals("X",findWidget("$l11").getValue());
 		Assert.assertEquals("Y",findWidget("$l12").getValue());
-//		Assert.assertEquals("X",findWidget("$l21").getValue());
-//		Assert.assertEquals("Y",findWidget("$l22").getValue());
 		Assert.assertEquals("C",findWidget("$l31").getValue());
 		Assert.assertEquals("D",findWidget("$t31").getValue());
 	
 		findWidget("$btn1").click();
 		Assert.assertEquals("X",findWidget("$l11").getValue());
 		Assert.assertEquals("Y",findWidget("$l12").getValue());
-//		Assert.assertEquals("X",findWidget("$l21").getValue());
-//		Assert.assertEquals("Y",findWidget("$l22").getValue());
 		Assert.assertEquals("E",findWidget("$l31").getValue());
 		Assert.assertEquals("F",findWidget("$t31").getValue());
 	}

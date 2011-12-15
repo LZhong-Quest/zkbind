@@ -8,6 +8,7 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Textbox;
 
@@ -22,10 +23,6 @@ public class F00638 extends F00638Base{
 	public void setValue2(String value2) {
 		this.value2 = value2;
 	}
-	
-	//variable, to access object in attirbutes, we cannot set value of @Wire
-	@Wire
-	Binder binder;
 
 	//component
 	@Wire("#l31")
@@ -39,17 +36,14 @@ public class F00638 extends F00638Base{
 		
 //		Component r = ctx.getComponent();
 		Component r = ctx.getBinder().getView();
-		Selectors.wireVariables(r, this);
+		Selectors.wireComponents(r, this,false);
+//		Selectors.wireVariables(r, this, null);
 		Selectors.wireEventListeners(r, this);
 		//to wire vm as vmex
 //		Selectors.wireController(r, this);
 		
 		label.setValue("C");
 		textbox.setValue("D");
-	}
-	
-	public Binder getBinder(){
-		return binder;
 	}
 	
 	@Listen("onClick = #btn1")

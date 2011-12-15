@@ -7,7 +7,6 @@
 	
 	<textbox id="t11" value="@save(vm.value1)"/>
 	<textbox id="t12" value="@save(vm.value2)"/>
-	<hbox>binder[<label id="l13" value="@load(vm.binder)"/>]=binder instance string</hbox>
 	-------------MVP---------------------
 	<label id="l31"/>
 	<textbox id="t31"/>

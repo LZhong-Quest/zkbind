@@ -56,7 +56,7 @@ public class SearchAutowireVM{
 	public void init(BindContext ctx){
 		//Returns associated root component of the binder
 		Component component = ctx.getBinder().getView();
-		Selectors.wireVariables(component, this);
+		Selectors.wireComponents(component, this, false);
 		//wire event listener
 //		Selectors.wireEventListeners(component, this);
 	}
