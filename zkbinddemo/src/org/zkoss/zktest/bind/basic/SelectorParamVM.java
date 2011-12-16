@@ -11,31 +11,30 @@ import org.zkoss.zul.Label;
 
 public class SelectorParamVM {
 
-	
 	@Init
-	public void init(@SelectorParam("label") List<Label> labels,
-			@SelectorParam(value="#l14",index=0) Label l4){
-		for(int i=0;i<labels.size();i++){
-			labels.get(i).setValue("Init "+i);
+	public void init(@SelectorParam("#l14") Label l4,
+			@SelectorParam(value = "label", index = -1) List<Label> labels) {
+		for (int i = 0; i < labels.size(); i++) {
+			labels.get(i).setValue("Init " + i);
 		}
-		l4.setValue(l4.getValue()+":4");
+		l4.setValue(l4.getValue() + ":4");
 	}
 
-	
-	@NotifyChange("*") @Command
-	public void cmd1(@SelectorParam("label") List<Label> labels,
-			@SelectorParam(value="#l13",index=0) Label l3){
-		for(int i=0;i<labels.size();i++){
-			labels.get(i).setValue("Command "+i);
+	@NotifyChange("*")
+	@Command
+	public void cmd1(@SelectorParam(value = "label", index = -1) List<Label> labels,
+			@SelectorParam("#l13") Label l3) {
+		for (int i = 0; i < labels.size(); i++) {
+			labels.get(i).setValue("Command " + i);
 		}
-		l3.setValue(l3.getValue()+":3");
+		l3.setValue(l3.getValue() + ":3");
 	}
-	
-	@NotifyChange("*") @Command
-	public void cmd2(@SelectorParam(value="label",local=true) List<Label> labels,
-			@SelectorParam(value="button[label='cmd2']",index=0) Button btn){
-		btn.setLabel("size "+labels.size());
+
+	@NotifyChange("*")
+	@Command
+	public void cmd2(@SelectorParam(value = "label", local = true, index=-1) List<Label> labels,
+			@SelectorParam("button[label='cmd2']") Button btn) {
+		btn.setLabel("size " + labels.size());
 	}
-	
-	
+
 }
