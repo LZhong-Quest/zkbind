@@ -26,4 +26,26 @@ public class ParamTestCase extends TestCaseBase{
 		Assert.assertFalse("".equals(findWidget("$l13").getValue().toString().trim()));
 		
 	}
+	
+	@Test
+	public void testExecutionParam(){
+		navigate(getTestCaseUrl("/bind/basic/executionparam.zul"));
+		findWidget("$btn1").click();
+		
+		Assert.assertEquals("foo",findWidget("$w1 $l11").getValue());
+		Assert.assertEquals("bar",findWidget("$w1 $l12").getValue());
+		
+		findWidget("$w1 $cmd1").click();
+		Assert.assertEquals("",findWidget("$w1 $l11").getValue());
+		Assert.assertEquals("",findWidget("$w1 $l12").getValue());
+		
+		findWidget("$btn2").click();
+		
+		Assert.assertEquals("abc",findWidget("$w2 $l11").getValue());
+		Assert.assertEquals("goo",findWidget("$w2 $l12").getValue());
+		
+		findWidget("$w2 $cmd1").click();
+		Assert.assertEquals("",findWidget("$w2 $l11").getValue());
+		Assert.assertEquals("",findWidget("$w2 $l12").getValue());
+	}
 }
