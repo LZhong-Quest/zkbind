@@ -105,4 +105,23 @@ public class ParamTestCase extends TestCaseBase{
 		Assert.assertEquals("D",findWidget("$l17").getValue());
 		Assert.assertEquals("G",findWidget("$l18").getValue());
 	}
+	
+	@Test
+	public void testSelectorParam(){
+		navigate(getTestCaseUrl("/bind/basic/selectorparam.zul"));
+		
+		Assert.assertEquals("Init 0",findWidget("$l11").getValue());
+		Assert.assertEquals("Init 1",findWidget("$l12").getValue());
+		Assert.assertEquals("Init 2",findWidget("$l13").getValue());
+		Assert.assertEquals("Init 3:4",findWidget("$l14").getValue());
+		
+		findWidget("$cmd1").click();
+		Assert.assertEquals("Command 0",findWidget("$l11").getValue());
+		Assert.assertEquals("Command 1",findWidget("$l12").getValue());
+		Assert.assertEquals("Command 2:3",findWidget("$l13").getValue());
+		Assert.assertEquals("Command 3",findWidget("$l14").getValue());
+		
+		findWidget("$cmd2").click();
+		Assert.assertEquals("size 0",findWidget("$cmd2").getLabel());
+	}
 }
