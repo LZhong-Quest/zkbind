@@ -4,6 +4,7 @@ package org.zkoss.bind.examples.order.richlet;
 import java.util.HashMap;
 
 import org.zkoss.bind.Binder;
+import org.zkoss.bind.examples.order.Order;
 import org.zkoss.bind.examples.order.OrderVM3;
 import org.zkoss.bind.impl.BinderImpl;
 import org.zkoss.bind.sys.BinderCtrl;
@@ -48,7 +49,7 @@ public class OrderRichlet extends GenericRichlet{
 
 		//initialize binder
 		Binder binder = new BinderImpl(); //FIXME users shall not use BinderImpl directly
-		((BinderCtrl)binder).init(window, new OrderVM3()); //FIXME init() method doesn't belong to Binder 
+		((BinderCtrl)binder).init(window, new OrderVM4()); //FIXME init() method doesn't belong to Binder 
 		window.setAttribute("vm", binder.getViewModel());
 
 
@@ -62,21 +63,29 @@ public class OrderRichlet extends GenericRichlet{
 		buildConfirmDialog(binder, window);
 
 
-		/*
-		 * 
-		 Order o = new Order();
-		 ((OrderVM3)binder.getViewModel()).setSelected(o);
+		Groupbox initTestBox = new Groupbox();
+		initTestBox.setParent(vbox);
+		//test init binding
+		((OrderVM3)binder.getViewModel()).getValidationMessages().put("init", "init");
 
-		 Textbox textbox = new Textbox();
-		 Label label = new Label("init");
-		 window.appendChild(textbox);
-		 window.appendChild(label);
+		Label label = new Label("Init with 'init'");
+		Textbox textbox = new Textbox();
+		initTestBox.appendChild(label);
+		initTestBox.appendChild(textbox);
 
-		 binder.addPropertyLoadBindings(label, "value", "vm.selected.description", null, null, null, null, null);
-		 binder.addPropertySaveBindings(textbox, "value", "vm.selected.description", null, null, null, null, null, null, null);
+		binder.setPropertyInitBinding(textbox, "value", "vm.validationMessages['init']", null, null, null);
+		// Must load value to components once, call it after all "add property binding" statements
+		
+		Groupbox formTestBox = new Groupbox();
+		formTestBox.setParent(vbox);
+		binder.setFormInitBinding(formTestBox, "fx", "vm.myForm", null);
+		Label formLabel = new Label("Form init with 'init'");
+		Textbox formTextbox = new Textbox();
+		formTestBox.appendChild(formLabel);
+		formTestBox.appendChild(formTextbox);
 
-		 * Must load value to components once, call it after all "add property binding" statements
-		 */
+		binder.setPropertyInitBinding(formTextbox, "value", "fx.init", null, null, null);
+		
 		((BinderImpl)binder).loadComponent(window); 
 	}
 
