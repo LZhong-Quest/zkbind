@@ -56,7 +56,7 @@ public class ContextParamVM {
 			@ContextParam(ContextType.COMPONENT) Component component,
 			@ContextParam(ContextType.SPACE_OWNER) IdSpace spaceOwner, 
 			@ContextParam(ContextType.PAGE) Page page,
-			@ContextParam(ContextType.DEKSTOP) Desktop desktop,
+			@ContextParam(ContextType.DESKTOP) Desktop desktop,
 			@ContextParam(ContextType.SESSION) Session session,
 			@ContextParam(ContextType.APPLICATION) WebApp application,
 
@@ -227,7 +227,7 @@ public class ContextParamVM {
 			@ContextParam(ContextType.COMPONENT) Component component,
 			@ContextParam(ContextType.SPACE_OWNER) IdSpace spaceOwner, 
 			@ContextParam(ContextType.PAGE) Page page,
-			@ContextParam(ContextType.DEKSTOP) Desktop desktop,
+			@ContextParam(ContextType.DESKTOP) Desktop desktop,
 			@ContextParam(ContextType.SESSION) Session session,
 			@ContextParam(ContextType.APPLICATION) WebApp application,
 
