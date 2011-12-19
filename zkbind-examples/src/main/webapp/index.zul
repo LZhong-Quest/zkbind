@@ -13,7 +13,7 @@
 		</n:li>
 
 		<n:li>
-			<n:a href="search/searchex/searchMvc.zul">
+			<n:a href="searchex/searchMvc.zul">
 				A search filter example v2 in MVC (composer)
 			</n:a>
 		</n:li>
