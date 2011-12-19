@@ -14,6 +14,7 @@ public class ScopeParamVM {
 	String desktopScope;
 	String pageScope;
 	String spaceScope;
+	String requestScope;
 	String componentScope;
 	String componentScope1;
 	String componentScope2;
@@ -26,6 +27,7 @@ public class ScopeParamVM {
 			@ScopeParam("desktopScopeVar") String desktopScope,
 			@ScopeParam(value="pageScopeVar",scopes=Scope.ALL) String pageScope,
 			@ScopeParam(value="spaceScopeVar",scopes=Scope.ALL) String spaceScope,
+			@ScopeParam(value="requestScopeVar",scopes=Scope.ALL) String requestScope,
 			@ScopeParam(value="componentScopeVar",scopes=Scope.ALL) String componentScope,
 			@ScopeParam(value="componentScopeVar1",scopes=Scope.ALL) String componentScope1,
 			@ScopeParam(value="componentScopeVar2",scopes=Scope.ALL) String componentScope2,
@@ -39,7 +41,7 @@ public class ScopeParamVM {
 		this.componentScope1 = componentScope1;
 		this.componentScope2 = componentScope2;
 		this.componentScope3 = componentScope3;
-		
+		this.requestScope = requestScope;
 	}
 
 	
@@ -102,6 +104,19 @@ public class ScopeParamVM {
 		this.spaceScope = spaceScope;
 	}
 
+	
+
+
+	public String getRequestScope() {
+		return requestScope;
+	}
+
+
+
+	public void setRequestScope(String requestScope) {
+		this.requestScope = requestScope;
+	}
+
 
 
 	public String getComponentScope() {
@@ -158,6 +173,7 @@ public class ScopeParamVM {
 			@ScopeParam("desktopScopeVar") String desktopScope,
 			@ScopeParam(value="pageScopeVar",scopes=Scope.ALL) String pageScope,
 			@ScopeParam(value="spaceScopeVar",scopes=Scope.ALL) String spaceScope,
+			@ScopeParam(value="requestScopeVar",scopes=Scope.ALL) String requestScope,
 			@ScopeParam(value="componentScopeVar",scopes=Scope.ALL) String componentScope,
 			@ScopeParam(value="componentScopeVar1",scopes=Scope.ALL) String componentScope1,
 			@ScopeParam(value="componentScopeVar2",scopes=Scope.ALL) String componentScope2,
@@ -167,6 +183,7 @@ public class ScopeParamVM {
 		this.desktopScope = desktopScope;
 		this.pageScope = pageScope;
 		this.spaceScope = spaceScope;
+		this.requestScope = requestScope;
 		this.componentScope = componentScope;
 		this.componentScope1 = componentScope1;
 		this.componentScope2 = componentScope2;
