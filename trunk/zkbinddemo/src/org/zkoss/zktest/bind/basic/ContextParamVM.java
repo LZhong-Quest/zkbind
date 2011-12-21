@@ -32,28 +32,15 @@ public class ContextParamVM {
 
 	boolean bindContext;
 	boolean bindBinder;
-
-	boolean bindExecution;
-	boolean bindComponent;
-	boolean bindSpaceOwner;
-	boolean bindPage;
-	boolean bindDesktop;
-	boolean bindSession;
-	boolean bindApplication;
 	
 	String bindComponentId;
+	String bindViewId;
 
 	@Init
-	public void init(@ContextParam(ContextType.APPLICATION_SCOPE) Map<?, ?> applicationScope,
-			@ContextParam(ContextType.SESSION_SCOPE) Map<?, ?> sessionScope,
-			@ContextParam(ContextType.DESKTOP_SCOPE) Map<?, ?> desktopScope,
-			@ContextParam(ContextType.PAGE_SCOPE) Map<?, ?> pageScope,
-			@ContextParam(ContextType.SPACE_SCOPE) Map<?, ?> spaceScope,
-			@ContextParam(ContextType.REQUEST_SCOPE) Map<?, ?> requestScope,
-			@ContextParam(ContextType.COMPONENT_SCOPE) Map<?, ?> componentScope,
-
+	public void init(
 			@ContextParam(ContextType.EXECUTION) Execution execution,
 			@ContextParam(ContextType.COMPONENT) Component component,
+			@ContextParam(ContextType.VIEW) Component view,
 			@ContextParam(ContextType.SPACE_OWNER) IdSpace spaceOwner, 
 			@ContextParam(ContextType.PAGE) Page page,
 			@ContextParam(ContextType.DESKTOP) Desktop desktop,
@@ -62,25 +49,19 @@ public class ContextParamVM {
 
 			@ContextParam(ContextType.BIND_CONTEXT) BindContext bindContext,
 			@ContextParam(ContextType.BINDER) Binder binder) {
-		this.applicationScope = (String) applicationScope.get("applicationScopeVar");
-		this.sessionScope = (String) sessionScope.get("sessionScopeVar");
-		this.desktopScope = (String) desktopScope.get("desktopScopeVar");
-		this.pageScope = (String) pageScope.get("pageScopeVar");
-		this.spaceScope = (String) spaceScope.get("componentScopeVar");
-		this.componentScope = (String) componentScope.get("componentScopeVar");
-		this.requestScope = (String) requestScope.get("requestScopeVar");
+		this.applicationScope = (String) application.getAttribute("applicationScopeVar");
+		this.sessionScope = (String) session.getAttribute("sessionScopeVar");
+		this.desktopScope = (String) desktop.getAttribute("desktopScopeVar");
+		this.pageScope = (String) page.getAttribute("pageScopeVar");
+		this.spaceScope = (String) spaceOwner.getAttribute("componentScopeVar");
+		this.componentScope = (String) component.getAttribute("componentScopeVar");
+		this.requestScope = (String) execution.getAttribute("requestScopeVar");
 
-		this.bindExecution = this.requestScope.equals(execution.getAttribute("requestScopeVar"));
-		this.bindComponent = this.componentScope.equals(component.getAttribute("componentScopeVar"));
-		this.bindSpaceOwner = this.spaceScope.equals(spaceOwner.getAttribute("componentScopeVar"));
-		this.bindPage = this.pageScope.equals(page.getAttribute("pageScopeVar"));
-		this.bindDesktop = this.desktopScope.equals(desktop.getAttribute("desktopScopeVar"));
-		this.bindSession = this.sessionScope.equals(session.getAttribute("sessionScopeVar"));
-		this.bindApplication = this.applicationScope.equals(application.getAttribute("applicationScopeVar"));
 
 		this.bindContext = bindContext != null;
 		this.bindBinder = binder != null;
 		this.bindComponentId = component.getId();
+		this.bindViewId = view.getId();
 	}
 
 	public String getApplicationScope() {
@@ -155,74 +136,10 @@ public class ContextParamVM {
 		this.bindBinder = bindBinder;
 	}
 
-	
-
-	public boolean isBindExecution() {
-		return bindExecution;
-	}
-
-	public void setBindExecution(boolean bindExecution) {
-		this.bindExecution = bindExecution;
-	}
-
-	public boolean isBindComponent() {
-		return bindComponent;
-	}
-
-	public void setBindComponent(boolean bindComponent) {
-		this.bindComponent = bindComponent;
-	}
-
-	public boolean isBindSpaceOwner() {
-		return bindSpaceOwner;
-	}
-
-	public void setBindSpaceOwner(boolean bindSpaceOwner) {
-		this.bindSpaceOwner = bindSpaceOwner;
-	}
-
-	public boolean isBindPage() {
-		return bindPage;
-	}
-
-	public void setBindPage(boolean bindPage) {
-		this.bindPage = bindPage;
-	}
-
-	public boolean isBindDesktop() {
-		return bindDesktop;
-	}
-
-	public void setBindDesktop(boolean bindDesktop) {
-		this.bindDesktop = bindDesktop;
-	}
-
-	public boolean isBindSession() {
-		return bindSession;
-	}
-
-	public void setBindSession(boolean bindSession) {
-		this.bindSession = bindSession;
-	}
-
-	public boolean isBindApplication() {
-		return bindApplication;
-	}
-
-	public void setBindApplication(boolean bindApplication) {
-		this.bindApplication = bindApplication;
-	}
 
 	@NotifyChange("*")
 	@Command
-	public void cmd1(@ContextParam(ContextType.APPLICATION_SCOPE) Map<?, ?> applicationScope,
-			@ContextParam(ContextType.SESSION_SCOPE) Map<?, ?> sessionScope,
-			@ContextParam(ContextType.DESKTOP_SCOPE) Map<?, ?> desktopScope,
-			@ContextParam(ContextType.PAGE_SCOPE) Map<?, ?> pageScope,
-			@ContextParam(ContextType.SPACE_SCOPE) Map<?, ?> spaceScope,
-			@ContextParam(ContextType.REQUEST_SCOPE) Map<?, ?> requestScope,
-			@ContextParam(ContextType.COMPONENT_SCOPE) Map<?, ?> componentScope,
-
+	public void cmd1(
 			@ContextParam(ContextType.EXECUTION) Execution execution,
 			@ContextParam(ContextType.COMPONENT) Component component,
 			@ContextParam(ContextType.SPACE_OWNER) IdSpace spaceOwner, 
@@ -230,24 +147,16 @@ public class ContextParamVM {
 			@ContextParam(ContextType.DESKTOP) Desktop desktop,
 			@ContextParam(ContextType.SESSION) Session session,
 			@ContextParam(ContextType.APPLICATION) WebApp application,
-
+			@ContextParam(ContextType.VIEW) Component view,
 			@ContextParam(ContextType.BIND_CONTEXT) BindContext bindContext,
 			@ContextParam(ContextType.BINDER) Binder binder) {
-		this.applicationScope = (String) applicationScope.get("applicationScopeVar");
-		this.sessionScope = (String) sessionScope.get("sessionScopeVar");
-		this.desktopScope = (String) desktopScope.get("desktopScopeVar");
-		this.pageScope = (String) pageScope.get("pageScopeVar");
-		this.spaceScope = (String) spaceScope.get("componentScopeVar");
-		this.componentScope = (String) componentScope.get("componentScopeVar");
-		this.requestScope = (String) requestScope.get("requestScopeVar");
-
-		this.bindExecution = execution.getAttribute("requestScopeVar")!=null;
-		this.bindComponent = !this.componentScope.equals(component.getAttribute("componentScopeVar"));
-		this.bindSpaceOwner = !this.spaceScope.equals(spaceOwner.getAttribute("componentScopeVar"));
-		this.bindPage = !this.pageScope.equals(page.getAttribute("pageScopeVar"));
-		this.bindDesktop = !this.desktopScope.equals(desktop.getAttribute("desktopScopeVar"));
-		this.bindSession = !this.sessionScope.equals(session.getAttribute("sessionScopeVar"));
-		this.bindApplication = !this.applicationScope.equals(application.getAttribute("applicationScopeVar"));
+		this.applicationScope = (String) application.getAttribute("applicationScopeVar");
+		this.sessionScope = (String) session.getAttribute("sessionScopeVar");
+		this.desktopScope = (String) desktop.getAttribute("desktopScopeVar");
+		this.pageScope = (String) page.getAttribute("pageScopeVar");
+		this.spaceScope = (String) spaceOwner.getAttribute("componentScopeVar");
+		this.componentScope = (String) component.getAttribute("componentScopeVar");
+		this.requestScope = (String) execution.getAttribute("requestScopeVar");
 
 		this.bindContext = bindContext == null;
 		this.bindBinder = binder == null;
@@ -256,8 +165,10 @@ public class ContextParamVM {
 		Executions.getCurrent().getDesktop().setAttribute("applicationScopeVar", "var2 by Desktop");
 		
 		this.bindComponentId = component.getId();
+		this.bindViewId = view.getId();
 		
 		spaceOwner.setAttribute("componentScopeVar", "spaceScope-Y");
+		
 	}
 
 	@NotifyChange("*")
@@ -265,21 +176,25 @@ public class ContextParamVM {
 	public void cmd2(@ContextParam(ContextType.COMPONENT) Component component,
 			@ScopeParam("applicationScopeVar") String applicationScope,
 			@ScopeParam("sessionScopeVar") String sessionScope,
-			@ContextParam(ContextType.SPACE_SCOPE) Map<?, ?> spaceScope) {
+			@ContextParam(ContextType.VIEW) Component view,
+			@ContextParam(ContextType.SPACE_OWNER) IdSpace spaceOwner) {
 		this.applicationScope = applicationScope;
 		this.sessionScope = sessionScope;
 		this.bindComponentId = component.getId();
-		this.spaceScope = (String) spaceScope.get("componentScopeVar");
+		this.bindViewId = view.getId();
+		this.spaceScope = (String) spaceOwner.getAttribute("componentScopeVar");
 	}
 
 	@NotifyChange("*")
 	@Command
 	public void cmd3(@ContextParam(ContextType.COMPONENT) Component component,
 			@ScopeParam(value = "applicationScopeVar", scopes = Scope.APPLICATION) String applicationScope,
+			@ContextParam(ContextType.VIEW) Component view,
 			@ScopeParam(value = "sessionScopeVar", scopes = Scope.SESSION) String sessionScope) {
 		this.applicationScope = applicationScope;
 		this.sessionScope = sessionScope;
 		this.bindComponentId = component.getId();
+		this.bindViewId = view.getId();
 	}
 
 	public String getBindComponentId() {
@@ -289,6 +204,16 @@ public class ContextParamVM {
 	public void setBindComponentId(String bindComponentId) {
 		this.bindComponentId = bindComponentId;
 	}
+
+	public String getBindViewId() {
+		return bindViewId;
+	}
+
+	public void setBindViewId(String bindViewId) {
+		this.bindViewId = bindViewId;
+	}
+	
+	
 
 	
 }

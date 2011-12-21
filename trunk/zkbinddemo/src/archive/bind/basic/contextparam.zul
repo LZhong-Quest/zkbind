@@ -22,16 +22,10 @@
 			<hbox><label id="l16" value="@load(vm.componentScope)" />= componentScope-B | componentScope-C ||</hbox>
 			
 			<hbox><label id="l17" value="@load(vm.bindComponentId)" />= vbox1 | cmd1 | cmd2 | cmd3 ; bindComponentId</hbox>
+			<hbox><label id="l18" value="@load(vm.bindViewId)" />= vbox1 | vbox1 | vbox1 | vbox1 ; bindViewId</hbox>
 			
-			<hbox><label id="l18" value="@load(vm.bindContext)" />= true | false ||; bindContext</hbox>
-			<hbox><label id="l19" value="@load(vm.bindBinder)" />= true | false ||; binder</hbox>
-			<hbox><label id="l1a" value="@load(vm.bindExecution)" />= true | false ||; execution</hbox>
-			<hbox><label id="l1b" value="@load(vm.bindSpaceOwner)" />= true | false ||; spaceOwner</hbox>
-			<hbox><label id="l1c" value="@load(vm.bindPage)" />= true | false ||; page</hbox>
-			<hbox><label id="l1d" value="@load(vm.bindDesktop)" />= true | false ||; desktop</hbox>
-			<hbox><label id="l1e" value="@load(vm.bindSession)" />= true | false ||; session</hbox>
-			<hbox><label id="l1f" value="@load(vm.bindApplication)" />= true | false ||; application</hbox>
-			
+			<hbox><label id="l19" value="@load(vm.bindContext)" />= true | false ||; bindContext</hbox>
+			<hbox><label id="l1a" value="@load(vm.bindBinder)" />= true | false ||; binder</hbox>
 			
 
 			<button id="cmd1" label="cmd1" onClick="@command('cmd1')" >

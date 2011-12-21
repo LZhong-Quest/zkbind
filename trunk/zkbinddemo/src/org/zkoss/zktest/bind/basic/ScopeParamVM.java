@@ -1,6 +1,7 @@
 package org.zkoss.zktest.bind.basic;
 
 import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.ExecutionParam;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.bind.annotation.Scope;
@@ -25,13 +26,13 @@ public class ScopeParamVM {
 	public void init(@ScopeParam("applicationScopeVar") String applicationScope,
 			@ScopeParam("sessionScopeVar") String sessionScope,
 			@ScopeParam("desktopScopeVar") String desktopScope,
-			@ScopeParam(value="pageScopeVar",scopes=Scope.ALL) String pageScope,
-			@ScopeParam(value="spaceScopeVar",scopes=Scope.ALL) String spaceScope,
-			@ScopeParam(value="requestScopeVar",scopes=Scope.ALL) String requestScope,
-			@ScopeParam(value="componentScopeVar",scopes=Scope.ALL) String componentScope,
-			@ScopeParam(value="componentScopeVar1",scopes=Scope.ALL) String componentScope1,
-			@ScopeParam(value="componentScopeVar2",scopes=Scope.ALL) String componentScope2,
-			@ScopeParam(value="componentScopeVar3",scopes=Scope.ALL) String componentScope3){
+			@ScopeParam("pageScopeVar") String pageScope,
+			@ScopeParam("spaceScopeVar") String spaceScope,
+			@ExecutionParam("requestScopeVar") String requestScope,
+			@ScopeParam("componentScopeVar") String componentScope,
+			@ScopeParam("componentScopeVar1") String componentScope1,
+			@ScopeParam("componentScopeVar2") String componentScope2,
+			@ScopeParam("componentScopeVar3") String componentScope3){
 		this.applicationScope = applicationScope;
 		this.sessionScope = sessionScope;
 		this.desktopScope = desktopScope;
@@ -171,13 +172,13 @@ public class ScopeParamVM {
 	public void cmd1(@ScopeParam("applicationScopeVar") String applicationScope,
 			@ScopeParam("sessionScopeVar") String sessionScope,
 			@ScopeParam("desktopScopeVar") String desktopScope,
-			@ScopeParam(value="pageScopeVar",scopes=Scope.ALL) String pageScope,
-			@ScopeParam(value="spaceScopeVar",scopes=Scope.ALL) String spaceScope,
-			@ScopeParam(value="requestScopeVar",scopes=Scope.ALL) String requestScope,
-			@ScopeParam(value="componentScopeVar",scopes=Scope.ALL) String componentScope,
-			@ScopeParam(value="componentScopeVar1",scopes=Scope.ALL) String componentScope1,
-			@ScopeParam(value="componentScopeVar2",scopes=Scope.ALL) String componentScope2,
-			@ScopeParam(value="componentScopeVar3",scopes=Scope.ALL) String componentScope3){
+			@ScopeParam(value="pageScopeVar") String pageScope,
+			@ScopeParam(value="spaceScopeVar") String spaceScope,
+			@ExecutionParam("requestScopeVar") String requestScope,
+			@ScopeParam(value="componentScopeVar") String componentScope,
+			@ScopeParam(value="componentScopeVar1") String componentScope1,
+			@ScopeParam(value="componentScopeVar2") String componentScope2,
+			@ScopeParam(value="componentScopeVar3") String componentScope3){
 		this.applicationScope = applicationScope;
 		this.sessionScope = sessionScope;
 		this.desktopScope = desktopScope;
