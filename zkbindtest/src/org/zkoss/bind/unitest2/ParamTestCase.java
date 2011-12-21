@@ -74,7 +74,7 @@ public class ParamTestCase extends TestCaseBase{
 		
 		Assert.assertEquals("F",findWidget("$l16").getValue());
 		Assert.assertEquals("C",findWidget("$l17").getValue());
-		Assert.assertEquals("D",findWidget("$l18").getValue());
+		Assert.assertEquals("E",findWidget("$l18").getValue());
 		Assert.assertEquals("G",findWidget("$l19").getValue());
 		
 		
@@ -87,7 +87,7 @@ public class ParamTestCase extends TestCaseBase{
 		
 		Assert.assertEquals("F",findWidget("$l16").getValue());
 		Assert.assertEquals("C",findWidget("$l17").getValue());
-		Assert.assertEquals("D",findWidget("$l18").getValue());
+		Assert.assertEquals("E",findWidget("$l18").getValue());
 		Assert.assertEquals("G",findWidget("$l19").getValue());
 		
 		
@@ -100,7 +100,7 @@ public class ParamTestCase extends TestCaseBase{
 		
 		Assert.assertEquals("F",findWidget("$l16").getValue());
 		Assert.assertEquals("C",findWidget("$l17").getValue());
-		Assert.assertEquals("D",findWidget("$l18").getValue());
+		Assert.assertEquals("E",findWidget("$l18").getValue());
 		Assert.assertEquals("G",findWidget("$l19").getValue());
 		
 		findWidget("$cmd2").click();
@@ -112,7 +112,7 @@ public class ParamTestCase extends TestCaseBase{
 		
 		Assert.assertEquals("F",findWidget("$l16").getValue());
 		Assert.assertEquals("C",findWidget("$l17").getValue());
-		Assert.assertEquals("D",findWidget("$l18").getValue());
+		Assert.assertEquals("E",findWidget("$l18").getValue());
 		Assert.assertEquals("G",findWidget("$l19").getValue());
 	}
 	
@@ -147,14 +147,10 @@ public class ParamTestCase extends TestCaseBase{
 		Assert.assertEquals("requestScope-A",findWidget("$l15").getValue());
 		Assert.assertEquals("componentScope-B",findWidget("$l16").getValue());
 		Assert.assertEquals("vbox1",findWidget("$l17").getValue());
-		Assert.assertEquals("true",findWidget("$l18").getValue());
+		Assert.assertEquals("vbox1",findWidget("$l18").getValue());
 		Assert.assertEquals("true",findWidget("$l19").getValue());
 		Assert.assertEquals("true",findWidget("$l1a").getValue());
-		Assert.assertEquals("true",findWidget("$l1b").getValue());
-		Assert.assertEquals("true",findWidget("$l1c").getValue());
-		Assert.assertEquals("true",findWidget("$l1d").getValue());
-		Assert.assertEquals("true",findWidget("$l1e").getValue());
-		Assert.assertEquals("true",findWidget("$l1f").getValue());
+
 		
 		findWidget("$cmd1").click();
 		Assert.assertEquals("applicationScope-A",findWidget("$l11").getValue());
@@ -164,14 +160,10 @@ public class ParamTestCase extends TestCaseBase{
 		Assert.assertEquals("",findWidget("$l15").getValue());
 		Assert.assertEquals("componentScope-C",findWidget("$l16").getValue());
 		Assert.assertEquals("cmd1",findWidget("$l17").getValue());
-		Assert.assertEquals("false",findWidget("$l18").getValue());
+		Assert.assertEquals("vbox1",findWidget("$l18").getValue());
 		Assert.assertEquals("false",findWidget("$l19").getValue());
 		Assert.assertEquals("false",findWidget("$l1a").getValue());
-		Assert.assertEquals("false",findWidget("$l1b").getValue());
-		Assert.assertEquals("false",findWidget("$l1c").getValue());
-		Assert.assertEquals("false",findWidget("$l1d").getValue());
-		Assert.assertEquals("false",findWidget("$l1e").getValue());
-		Assert.assertEquals("false",findWidget("$l1f").getValue());
+
 		
 		
 		findWidget("$cmd2").click();
@@ -182,14 +174,10 @@ public class ParamTestCase extends TestCaseBase{
 		Assert.assertEquals("",findWidget("$l15").getValue());
 		Assert.assertEquals("componentScope-C",findWidget("$l16").getValue());
 		Assert.assertEquals("cmd2",findWidget("$l17").getValue());
-		Assert.assertEquals("false",findWidget("$l18").getValue());
+		Assert.assertEquals("vbox1",findWidget("$l18").getValue());
 		Assert.assertEquals("false",findWidget("$l19").getValue());
 		Assert.assertEquals("false",findWidget("$l1a").getValue());
-		Assert.assertEquals("false",findWidget("$l1b").getValue());
-		Assert.assertEquals("false",findWidget("$l1c").getValue());
-		Assert.assertEquals("false",findWidget("$l1d").getValue());
-		Assert.assertEquals("false",findWidget("$l1e").getValue());
-		Assert.assertEquals("false",findWidget("$l1f").getValue());
+
 		
 		
 		findWidget("$cmd3").click();
@@ -200,13 +188,8 @@ public class ParamTestCase extends TestCaseBase{
 		Assert.assertEquals("",findWidget("$l15").getValue());
 		Assert.assertEquals("componentScope-C",findWidget("$l16").getValue());
 		Assert.assertEquals("cmd3",findWidget("$l17").getValue());
-		Assert.assertEquals("false",findWidget("$l18").getValue());
+		Assert.assertEquals("vbox1",findWidget("$l18").getValue());
 		Assert.assertEquals("false",findWidget("$l19").getValue());
 		Assert.assertEquals("false",findWidget("$l1a").getValue());
-		Assert.assertEquals("false",findWidget("$l1b").getValue());
-		Assert.assertEquals("false",findWidget("$l1c").getValue());
-		Assert.assertEquals("false",findWidget("$l1d").getValue());
-		Assert.assertEquals("false",findWidget("$l1e").getValue());
-		Assert.assertEquals("false",findWidget("$l1f").getValue());
 	}
 }
