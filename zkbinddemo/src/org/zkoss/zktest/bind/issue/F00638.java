@@ -10,12 +10,11 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
-import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Textbox;
 
 //@Wire("vmex")
-public class F00638 extends F00638Base{
+public class F00638 extends F00638Base3{
 
 	String value2;
 	public String getValue2() {
@@ -34,12 +33,8 @@ public class F00638 extends F00638Base{
 	
 	 
 	@Init
-	public void init(BindContext ctx){
-		this.value2 = "B";
-	}
-	@Init
 	public void init(@ContextParam(ContextType.BINDER) Binder binder){
-		
+		this.value2 = "B";
 //		Component r = ctx.getComponent();
 		Component r = binder.getView();
 		Selectors.wireComponents(r, this,false);
