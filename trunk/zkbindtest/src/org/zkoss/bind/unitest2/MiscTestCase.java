@@ -3,6 +3,7 @@ package org.zkoss.bind.unitest2;
 import org.junit.Assert;
 import org.junit.Test;
 import org.zkoss.zktc.core.junit.TestCaseBase;
+import org.zkoss.zktc.core.widget.Widget;
 import org.zkoss.zktc.core.widget.WidgetDriver;
 /**
  * 
@@ -192,6 +193,172 @@ public class MiscTestCase extends TestCaseBase{
 		Assert.assertEquals("foo1",findWidget("$l12").getValue());
 		Assert.assertEquals("foo1:2bar",findWidget("$l13").getValue());
 		Assert.assertEquals("foo2:foo2:b",findWidget("$l14").getValue());
+	}
+	
+	@Test
+	public void testDeferInit(){
+		navigate(getTestCaseUrl("/bind/basic/deferinit.zul"));
+		
+		
+		Widget w1 = findWidget("$w1");
+		Widget w2 = findWidget("$w2");
+		
+		Widget w1l11 = w1.findWidget("$l11");
+		Widget w1l12 = w1.findWidget("$l12");
+		Widget w1t11 = w1.findWidget("$t11");
+		Widget w1btn11 = w1.findWidget("$btn11");
+		Widget w1btn12 = w1.findWidget("$btn12");
+		Widget w1btn13 = w1.findWidget("$btn13");
+		Widget w1l21 = w1.findWidget("$l21");
+		Widget w1t21 = w1.findWidget("$t21");
+		Widget w1btn21 = w1.findWidget("$btn21");
+		
+		
+		Widget w2l11 = w2.findWidget("$l11");
+		Widget w2l12 = w2.findWidget("$l12");
+		Widget w2t11 = w2.findWidget("$t11");
+		Widget w2btn11 = w2.findWidget("$btn11");
+		Widget w2btn12 = w2.findWidget("$btn12");
+		Widget w2btn13 = w2.findWidget("$btn13");
+		Widget w2l21 = w2.findWidget("$l21");
+		Widget w2t21 = w2.findWidget("$t21");
+		Widget w2btn21 = w2.findWidget("$btn21");
+		
+		
+		Assert.assertEquals("A", w1l11.getValue());
+		Assert.assertEquals("B", w1l12.getValue());
+		Assert.assertEquals("B", w1t11.getValue());
+		Assert.assertEquals("C:byForm", w1l21.getValue());
+		Assert.assertEquals("C:byForm", w1t21.getValue());
+		
+		Assert.assertEquals("X", w2l11.getValue());
+		Assert.assertEquals("Y", w2l12.getValue());
+		Assert.assertEquals("Y", w2t11.getValue());
+		Assert.assertEquals("Z:byForm", w2l21.getValue());
+		Assert.assertEquals("Z:byForm", w2t21.getValue());
+		
+		w1t11.replace("DD").tab();
+		Assert.assertEquals("A", w1l11.getValue());
+		Assert.assertEquals("DD", w1l12.getValue());
+		Assert.assertEquals("DD", w1t11.getValue());
+		Assert.assertEquals("C:byForm", w1l21.getValue());
+		Assert.assertEquals("C:byForm", w1t21.getValue());
+		Assert.assertEquals("X", w2l11.getValue());
+		Assert.assertEquals("Y", w2l12.getValue());
+		Assert.assertEquals("Y", w2t11.getValue());
+		Assert.assertEquals("Z:byForm", w2l21.getValue());
+		Assert.assertEquals("Z:byForm", w2t21.getValue());
+		
+		w1btn11.click();
+		Assert.assertEquals("DD:cmd1", w1l11.getValue());
+		Assert.assertEquals("DD:cmd1", w1l12.getValue());
+		Assert.assertEquals("DD:cmd1", w1t11.getValue());
+		Assert.assertEquals("C:byForm", w1l21.getValue());
+		Assert.assertEquals("C:byForm", w1t21.getValue());
+		Assert.assertEquals("X", w2l11.getValue());
+		Assert.assertEquals("Y", w2l12.getValue());
+		Assert.assertEquals("Y", w2t11.getValue());
+		Assert.assertEquals("Z:byForm", w2l21.getValue());
+		Assert.assertEquals("Z:byForm", w2t21.getValue());
+		
+		w1btn12.click();
+		Assert.assertEquals("DD:cmd1", w1l11.getValue());
+		Assert.assertEquals("DD:cmd1", w1l12.getValue());
+		Assert.assertEquals("DD:cmd1", w1t11.getValue());
+		Assert.assertEquals("C:cmd2:byForm", w1l21.getValue());
+		Assert.assertEquals("C:cmd2:byForm", w1t21.getValue());
+		Assert.assertEquals("X", w2l11.getValue());
+		Assert.assertEquals("Y", w2l12.getValue());
+		Assert.assertEquals("Y", w2t11.getValue());
+		Assert.assertEquals("Z:byForm", w2l21.getValue());
+		Assert.assertEquals("Z:byForm", w2t21.getValue());
+		
+		w1btn13.click();
+		Assert.assertEquals("DD:cmd1", w1l11.getValue());
+		Assert.assertEquals("DD:cmd1", w1l12.getValue());
+		Assert.assertEquals("DD:cmd1", w1t11.getValue());
+		Assert.assertEquals("C:cmd2:cmd3:byForm", w1l21.getValue());
+		Assert.assertEquals("C:cmd2:cmd3:byForm", w1t21.getValue());
+		Assert.assertEquals("X", w2l11.getValue());
+		Assert.assertEquals("Y", w2l12.getValue());
+		Assert.assertEquals("Y", w2t11.getValue());
+		Assert.assertEquals("Z:byForm", w2l21.getValue());
+		Assert.assertEquals("Z:byForm", w2t21.getValue());
+		
+		w1btn21.click();
+		Assert.assertEquals("DD:cmd1", w1l11.getValue());
+		Assert.assertEquals("C:cmd2:cmd3:byForm:cmd4", w1l12.getValue());
+		Assert.assertEquals("C:cmd2:cmd3:byForm:cmd4", w1t11.getValue());
+		Assert.assertEquals("C:cmd2:cmd3:byForm", w1l21.getValue());
+		Assert.assertEquals("C:cmd2:cmd3:byForm", w1t21.getValue());
+		Assert.assertEquals("X", w2l11.getValue());
+		Assert.assertEquals("Y", w2l12.getValue());
+		Assert.assertEquals("Y", w2t11.getValue());
+		Assert.assertEquals("Z:byForm", w2l21.getValue());
+		Assert.assertEquals("Z:byForm", w2t21.getValue());
+		
+		//test defer
+		
+		w2t11.replace("GG").tab();
+		Assert.assertEquals("DD:cmd1", w1l11.getValue());
+		Assert.assertEquals("C:cmd2:cmd3:byForm:cmd4", w1l12.getValue());
+		Assert.assertEquals("C:cmd2:cmd3:byForm:cmd4", w1t11.getValue());
+		Assert.assertEquals("C:cmd2:cmd3:byForm", w1l21.getValue());
+		Assert.assertEquals("C:cmd2:cmd3:byForm", w1t21.getValue());
+		Assert.assertEquals("X", w2l11.getValue());
+		Assert.assertEquals("GG", w2l12.getValue());
+		Assert.assertEquals("GG", w2t11.getValue());
+		Assert.assertEquals("Z:byForm", w2l21.getValue());
+		Assert.assertEquals("Z:byForm", w2t21.getValue());
+		
+		
+		w2btn11.click();
+		Assert.assertEquals("DD:cmd1", w1l11.getValue());
+		Assert.assertEquals("C:cmd2:cmd3:byForm:cmd4", w1l12.getValue());
+		Assert.assertEquals("C:cmd2:cmd3:byForm:cmd4", w1t11.getValue());
+		Assert.assertEquals("C:cmd2:cmd3:byForm", w1l21.getValue());
+		Assert.assertEquals("C:cmd2:cmd3:byForm", w1t21.getValue());
+		Assert.assertEquals("GG:cmd1", w2l11.getValue());
+		Assert.assertEquals("GG:cmd1", w2l12.getValue());
+		Assert.assertEquals("GG:cmd1", w2t11.getValue());
+		Assert.assertEquals("Z:byForm", w2l21.getValue());
+		Assert.assertEquals("Z:byForm", w2t21.getValue());
+		
+		w2btn12.click();
+		Assert.assertEquals("DD:cmd1", w1l11.getValue());
+		Assert.assertEquals("C:cmd2:cmd3:byForm:cmd4", w1l12.getValue());
+		Assert.assertEquals("C:cmd2:cmd3:byForm:cmd4", w1t11.getValue());
+		Assert.assertEquals("C:cmd2:cmd3:byForm", w1l21.getValue());
+		Assert.assertEquals("C:cmd2:cmd3:byForm", w1t21.getValue());
+		Assert.assertEquals("GG:cmd1", w2l11.getValue());
+		Assert.assertEquals("GG:cmd1", w2l12.getValue());
+		Assert.assertEquals("GG:cmd1", w2t11.getValue());
+		Assert.assertEquals("Z:cmd2:byForm", w2l21.getValue());
+		Assert.assertEquals("Z:cmd2:byForm", w2t21.getValue());
+		
+		w2btn13.click();
+		Assert.assertEquals("DD:cmd1", w1l11.getValue());
+		Assert.assertEquals("C:cmd2:cmd3:byForm:cmd4", w1l12.getValue());
+		Assert.assertEquals("C:cmd2:cmd3:byForm:cmd4", w1t11.getValue());
+		Assert.assertEquals("C:cmd2:cmd3:byForm", w1l21.getValue());
+		Assert.assertEquals("C:cmd2:cmd3:byForm", w1t21.getValue());
+		Assert.assertEquals("GG:cmd1", w2l11.getValue());
+		Assert.assertEquals("GG:cmd1", w2l12.getValue());
+		Assert.assertEquals("GG:cmd1", w2t11.getValue());
+		Assert.assertEquals("Z:cmd2:cmd3:byForm", w2l21.getValue());
+		Assert.assertEquals("Z:cmd2:cmd3:byForm", w2t21.getValue());
+		
+		w2btn21.click();
+		Assert.assertEquals("DD:cmd1", w1l11.getValue());
+		Assert.assertEquals("C:cmd2:cmd3:byForm:cmd4", w1l12.getValue());
+		Assert.assertEquals("C:cmd2:cmd3:byForm:cmd4", w1t11.getValue());
+		Assert.assertEquals("C:cmd2:cmd3:byForm", w1l21.getValue());
+		Assert.assertEquals("C:cmd2:cmd3:byForm", w1t21.getValue());
+		Assert.assertEquals("GG:cmd1", w2l11.getValue());
+		Assert.assertEquals("Z:cmd2:cmd3:byForm:cmd4", w2l12.getValue());
+		Assert.assertEquals("Z:cmd2:cmd3:byForm:cmd4", w2t11.getValue());
+		Assert.assertEquals("Z:cmd2:cmd3:byForm", w2l21.getValue());
+		Assert.assertEquals("Z:cmd2:cmd3:byForm", w2t21.getValue());
 	}
 	
 }
