@@ -18,6 +18,6 @@ public class F00638Base {
 
 	@Init
 	public void init(){
-		this.value1 = "A";
+		this.value1 = "X";
 	}
 }
