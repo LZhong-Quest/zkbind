@@ -9,7 +9,7 @@ import org.zkoss.zktc.core.widget.Widget;
 
 public class MemoryTest  extends TestCaseBase{
 
-	int loop = 2;
+	int loop = 10;
 	
 	@Test
 	public void testList(){

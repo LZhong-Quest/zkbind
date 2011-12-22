@@ -1,5 +1,6 @@
 package org.zkoss.zktest.bind.basic;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.zkoss.bind.annotation.Command;
@@ -13,7 +14,7 @@ public class SelectorParamVM {
 
 	@Init
 	public void init(@SelectorParam("#l14") Label l4,
-			@SelectorParam(value = "label", index = -1) List<Label> labels) {
+			@SelectorParam("label") List<Label> labels) {
 		for (int i = 0; i < labels.size(); i++) {
 			labels.get(i).setValue("Init " + i);
 		}
@@ -22,7 +23,7 @@ public class SelectorParamVM {
 
 	@NotifyChange("*")
 	@Command
-	public void cmd1(@SelectorParam(value = "label", index = -1) List<Label> labels,
+	public void cmd1(@SelectorParam("label") LinkedList<Label> labels,
 			@SelectorParam("#l13") Label l3) {
 		for (int i = 0; i < labels.size(); i++) {
 			labels.get(i).setValue("Command " + i);
@@ -32,9 +33,12 @@ public class SelectorParamVM {
 
 	@NotifyChange("*")
 	@Command
-	public void cmd2(@SelectorParam(value = "label", local = true, index=-1) List<Label> labels,
-			@SelectorParam("button[label='cmd2']") Button btn) {
+	public void cmd2(@SelectorParam("button[label='cmd2'] label") List<Label> labels,
+			@SelectorParam("button[label='cmd2']") Button btn, @SelectorParam("button[label='null-btn']") Button nullbtn) {
 		btn.setLabel("size " + labels.size());
+		if(nullbtn!=null){
+			btn.setLabel("wrong!!");
+		}
 	}
 
 }
