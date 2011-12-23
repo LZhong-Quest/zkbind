@@ -47,18 +47,18 @@ public class OrderRichlet extends GenericRichlet{
 		window.setWidth("600px");
 		window.setPage(page);
 
-		//initialize binder
+		//initialize binder, use DefaultBinder
 		Binder binder = new BinderImpl(); //FIXME users shall not use BinderImpl directly
-		((BinderCtrl)binder).init(window, new OrderVM4()); //FIXME init() method doesn't belong to Binder 
+		binder.init(window, new OrderVM4()); //FIXME init() method doesn't belong to Binder 
 		window.setAttribute("vm", binder.getViewModel());
 
 
 		Vbox vbox = new Vbox();
 		vbox.setHflex("true");
-		vbox.setParent(window);
+		window.appendChild(vbox);
 
 		vbox.appendChild(buildOrderListbox(binder));
-		buildToolbar(binder,vbox);
+		vbox.appendChild(buildToolbar(binder,vbox));
 		buildFormArea(binder, vbox);
 		buildConfirmDialog(binder, window);
 
@@ -73,20 +73,21 @@ public class OrderRichlet extends GenericRichlet{
 		initTestBox.appendChild(label);
 		initTestBox.appendChild(textbox);
 
-		binder.setPropertyInitBinding(textbox, "value", "vm.validationMessages['init']", null, null, null);
+		binder.addPropertyInitBinding(textbox, "value", "vm.validationMessages['init']", null, null, null);
 		// Must load value to components once, call it after all "add property binding" statements
 		
 		Groupbox formTestBox = new Groupbox();
 		formTestBox.setParent(vbox);
-		binder.setFormInitBinding(formTestBox, "fx", "vm.myForm", null);
+		binder.addFormInitBinding(formTestBox, "fx", "vm.myForm", null);
 		Label formLabel = new Label("Form init with 'init'");
 		Textbox formTextbox = new Textbox();
 		formTestBox.appendChild(formLabel);
 		formTestBox.appendChild(formTextbox);
 
-		binder.setPropertyInitBinding(formTextbox, "value", "fx.init", null, null, null);
+		binder.addPropertyInitBinding(formTextbox, "value", "fx.init", null, null, null);
 		
-		((BinderImpl)binder).loadComponent(window); 
+		//loadComponent(component, true)
+		((BinderImpl)binder).loadComponent(window,true); 
 	}
 
 	private Listbox buildOrderListbox(Binder binder){
@@ -112,7 +113,6 @@ public class OrderRichlet extends GenericRichlet{
 		Button deleteButton = new Button("Delete");
 
 		Toolbar toolbar = new Toolbar();
-		toolbar.setParent(vbox); //FIXME set before adding binding
 		toolbar.appendChild(newButton);
 		toolbar.appendChild(saveButton);
 		toolbar.appendChild(deleteButton);
@@ -120,9 +120,10 @@ public class OrderRichlet extends GenericRichlet{
 		binder.addCommandBinding(newButton, Events.ON_CLICK, "'newOrder'", null);
 		binder.addCommandBinding(saveButton, Events.ON_CLICK, "'saveOrder'", null);
 		binder.addPropertyLoadBindings(saveButton, "disabled", "empty vm.selected", null, null, null, null, null);
-		binder.addCommandBinding(deleteButton, Events.ON_CLICK, "empty vm.selected.id?'deleteOrder':'confirmDelete'", null);
-		binder.addPropertyLoadBindings(deleteButton, "disabled", "empty vm.selected", null, null, null, null, null);
+//		binder.addCommandBinding(deleteButton, Events.ON_CLICK, "empty vm.selected.id?'deleteOrder':'confirmDelete'", null);
+//		binder.addPropertyLoadBindings(deleteButton, "disabled", "empty vm.selected", null, null, null, null, null);
 		
+		vbox.appendChild(toolbar); //FIXME set before adding binding
 
 		return toolbar;
 	}
