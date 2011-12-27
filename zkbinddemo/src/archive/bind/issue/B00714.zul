@@ -1,0 +1,23 @@
+<window apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('org.zkoss.zktest.bind.issue.B00714')">
+	<listbox id="outerbox" width="300px" model="@bind(vm.items)" rows="5">
+		<template name="model" var="item" status="s">
+			<listitem>
+				<listcell >
+					<label value="@bind(item.name)"/>
+				</listcell>
+			</listitem>
+		</template>
+	</listbox>
+	<grid id="outergrid" width="300px" model="@bind(vm.items)" height="200px" >
+		<template name="model" var="item" status="s">
+			<row>
+				<label value="@bind(item.name)"/>			
+			</row>
+		</template>
+	</grid>	
+	<hbox>
+		<button label="reload" onClick="@command('reload')" />
+		<button label="invalidate" onClick="outerbox.invalidate()" />
+		<button label="Dump" onClick="binder.getTracker().dump()" />
+	</hbox>	
+</window>
