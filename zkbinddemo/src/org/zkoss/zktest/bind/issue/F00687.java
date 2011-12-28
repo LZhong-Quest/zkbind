@@ -3,7 +3,7 @@ package org.zkoss.zktest.bind.issue;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.bind.annotation.NotifyChangeDisabled;
-import org.zkoss.bind.annotation.Param;
+import org.zkoss.bind.annotation.BindingParam;
 
 public class F00687 {
 
@@ -51,7 +51,7 @@ public class F00687 {
 	}
 
 	@Command @NotifyChange("value4")
-	public void cmd1(@Param("val") String val) {
+	public void cmd1(@BindingParam("val") String val) {
 		value4 = val;
 	}
 

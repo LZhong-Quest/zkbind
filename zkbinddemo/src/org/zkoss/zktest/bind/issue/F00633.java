@@ -7,7 +7,7 @@ import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.Default;
 import org.zkoss.bind.annotation.NotifyChange;
-import org.zkoss.bind.annotation.Param;
+import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Desktop;
 import org.zkoss.zul.Label;
@@ -56,8 +56,8 @@ public class F00633 {
 	
 	@NotifyChange("value1")
 	@Command
-	public void cmd5(@Param("arg1") Integer arg1, BindContext ctx, Binder binder, @Param("arg2") Boolean arg2,
-			@Param("arg3") String arg3) {
+	public void cmd5(@BindingParam("arg1") Integer arg1, BindContext ctx, Binder binder, @BindingParam("arg2") Boolean arg2,
+			@BindingParam("arg3") String arg3) {
 		//doCommand5 99 true XYZ btn5 true
 		value1 = "doCommand5 " + arg1 + " " + arg2 + " " + arg3 + " " + ctx.getComponent().getId() + " "
 				+ (binder.getViewModel() == this);
@@ -65,9 +65,9 @@ public class F00633 {
 	
 	@NotifyChange("value1")
 	@Command
-	public void cmd6(@Param("arg1") @Default("9") Integer arg1, @ContextParam(ContextType.BIND_CONTEXT) BindContext ctx, 
+	public void cmd6(@BindingParam("arg1") @Default("9") Integer arg1, @ContextParam(ContextType.BIND_CONTEXT) BindContext ctx, 
 			@ContextParam(ContextType.BINDER) Binder binder,
-			@Param("arg2") @Default("true") Boolean arg2, @Default("ABCD") @Param("arg3") String arg3) {
+			@BindingParam("arg2") @Default("true") Boolean arg2, @Default("ABCD") @BindingParam("arg3") String arg3) {
 		//doCommand6 9 true ABCD btn6 true
 		value1 = "doCommand6 " + arg1 + " " + arg2 + " " + arg3 + " " + ctx.getComponent().getId() + " "
 				+ (binder.getViewModel() == this);
@@ -75,8 +75,8 @@ public class F00633 {
 	
 	@NotifyChange("value1")
 	@Command({"cmd7","cmd8","cmd9"})
-	public void doCommandX(@Param("arg1") @Default("9") Integer arg1,
-			@Param("arg2") @Default("true") Boolean arg2, @Default("ABCD") @Param("arg3") String arg3,
+	public void doCommandX(@BindingParam("arg1") @Default("9") Integer arg1,
+			@BindingParam("arg2") @Default("true") Boolean arg2, @Default("ABCD") @BindingParam("arg3") String arg3,
 			BindContext ctx) {
 		//doCommandX 9 true XYZ cmd7
 		//doCommandX 22 true ABCD cmd8
@@ -87,7 +87,7 @@ public class F00633 {
 	
 
 	@Command({"cmdA"})
-	public void doCommandA(@Param("label") Label label, @Param("unknow") Object obj) {
+	public void doCommandA(@BindingParam("label") Label label, @BindingParam("unknow") Object obj) {
 		StringBuffer sb = new StringBuffer();
 		sb.append("object is ");
 		if(obj instanceof Component){
@@ -102,7 +102,7 @@ public class F00633 {
 	
 	@NotifyChange("value1")
 	@Command("create")
-	public void onCreate(@Param("label") Label label){
+	public void onCreate(@BindingParam("label") Label label){
 		value1 = "onCreate 1";
 		label.setValue("onCreate 2");
 	}

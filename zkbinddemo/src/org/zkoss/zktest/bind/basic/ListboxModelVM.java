@@ -17,7 +17,7 @@ import java.util.List;
 
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
-import org.zkoss.bind.annotation.Param;
+import org.zkoss.bind.annotation.BindingParam;
 
 /**
  * @author Dennis Chen
@@ -41,20 +41,20 @@ public class ListboxModelVM {
 	}
 
 	@NotifyChange({ "message1" }) @Command
-	public void showIndex(@Param("index") Integer index) {
+	public void showIndex(@BindingParam("index") Integer index) {
 		int i =index.intValue();
 		message1 = "item index " + i;
 	}
 
 	@NotifyChange({ "items", "message1" }) @Command
-	public void delete(@Param("item") Item item) {
+	public void delete(@BindingParam("item") Item item) {
 		int i = items.indexOf(item);
 		items.remove(item);
 		message1 = "remove item index " + i;
 	}
 
 	@NotifyChange({ "items", "message1" }) @Command
-	public void addAfter(@Param("item") Item item) {
+	public void addAfter(@BindingParam("item") Item item) {
 		int i = items.indexOf(item);
 		Item newi = new Item(item.getName() + i);
 		items.add(i + 1, newi);
@@ -62,7 +62,7 @@ public class ListboxModelVM {
 	}
 
 	@NotifyChange({ "items","message1" }) @Command
-	public void addBefore(@Param("item") Item item) {
+	public void addBefore(@BindingParam("item") Item item) {
 		int i = items.indexOf(item);
 		Item newi = new Item(item.getName() + i);
 		items.add(i, newi);

@@ -26,7 +26,7 @@ import org.zkoss.bind.Form;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.DependsOn;
 import org.zkoss.bind.annotation.NotifyChange;
-import org.zkoss.bind.annotation.Param;
+import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
@@ -210,7 +210,7 @@ public class PersonViewModel1 extends BindComposer {
 	
 	@Command
 	@NotifyChange("persons")
-	public void removePerson(@Param("person") Person person) {
+	public void removePerson(@BindingParam("person") Person person) {
 		persons.remove(person);
 		//remove from db
 	}
