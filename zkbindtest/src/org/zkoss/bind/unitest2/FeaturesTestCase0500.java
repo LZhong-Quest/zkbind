@@ -20,6 +20,7 @@ public class FeaturesTestCase0500 extends TestCaseBase{
 		
 		Assert.assertEquals("A",findWidget("$l11").getValue());
 		Assert.assertEquals("B",findWidget("$l12").getValue());
+		Assert.assertEquals("Y2",findWidget("$l13").getValue());
 		Assert.assertEquals("C",findWidget("$l31").getValue());
 		Assert.assertEquals("D",findWidget("$t31").getValue());
 		
