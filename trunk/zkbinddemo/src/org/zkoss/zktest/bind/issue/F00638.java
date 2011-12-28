@@ -32,7 +32,7 @@ public class F00638 extends F00638Base3{
 	Textbox textbox;
 	
 	 
-	@Init
+	@Init(upward=true)
 	public void init(@ContextParam(ContextType.BINDER) Binder binder){
 		this.value2 = "B";
 //		Component r = ctx.getComponent();
