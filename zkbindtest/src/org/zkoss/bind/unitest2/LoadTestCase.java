@@ -3,8 +3,6 @@ package org.zkoss.bind.unitest2;
 import org.junit.Assert;
 import org.junit.Test;
 import org.zkoss.zktc.core.junit.TestCaseBase;
-import org.zkoss.zktc.core.widget.SelectWidget;
-import org.zkoss.zktc.core.widget.WidgetScripts;
 import org.zkoss.zktc.core.widget.Widgets;
 
 public class LoadTestCase extends TestCaseBase{
