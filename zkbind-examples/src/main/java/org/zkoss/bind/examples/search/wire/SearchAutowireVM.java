@@ -19,7 +19,7 @@ import org.zkoss.bind.Converter;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
-import org.zkoss.bind.annotation.Param;
+import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.examples.search.FakeSearchService;
 import org.zkoss.bind.examples.search.Item;
 import org.zkoss.bind.examples.search.SearchService;
@@ -123,7 +123,7 @@ public class SearchAutowireVM{
 	}
 	
 	@Command
-	public void popupMessage(@Param("target")Component target, @Param("content")String content){
+	public void popupMessage(@BindingParam("target")Component target, @BindingParam("content")String content){
 		msg.setValue(content);
 		popup.open(target,"end_before");
 	}
