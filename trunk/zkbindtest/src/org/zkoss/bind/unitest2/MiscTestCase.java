@@ -361,4 +361,294 @@ public class MiscTestCase extends TestCaseBase{
 		Assert.assertEquals("Z:cmd2:cmd3:byForm", w2t21.getValue());
 	}
 	
+	@Test
+	public void testValidationMessages(){
+		navigate(getTestCaseUrl("/bind/basic/validationmessages.zul"));
+		Widget l11 = findWidget("$l11");
+		Widget l12 = findWidget("$l12");
+		
+		Widget t21 = findWidget("$t21");
+		Widget t22 = findWidget("$t22");
+		
+		Widget t31 = findWidget("$t31");
+		Widget t32 = findWidget("$t32");
+		Widget m31 = findWidget("$m31");
+		Widget m32 = findWidget("$m32");
+		
+		Widget btn1 = findWidget("$btn1");
+		
+		Widget t41 = findWidget("$t41");
+		Widget t42 = findWidget("$t42");
+		Widget m41 = findWidget("$m41");
+		Widget m42 = findWidget("$m42");
+		Widget m43 = findWidget("$m43");
+		Widget m44 = findWidget("$m44");
+		Widget m45 = findWidget("$m45");
+		Widget m46 = findWidget("$m46");
+		
+		Widget btn2 = findWidget("$btn2");
+		Widget btn3 = findWidget("$btn3");
+		
+		Assert.assertEquals("ABC", l11.getValue());
+		Assert.assertEquals("10", l12.getValue());
+		
+		Assert.assertEquals("ABC", t21.getValue());
+		Assert.assertEquals(10L, t22.getValue());
+		
+		Assert.assertEquals("ABC", t31.getValue());
+		Assert.assertEquals(10L, t32.getValue());
+		Assert.assertEquals("", m31.getValue());
+		Assert.assertEquals("", m32.getValue());
+		
+		Assert.assertEquals("ABC", t41.getValue());
+		Assert.assertEquals(10L, t42.getValue());
+		Assert.assertEquals("", m41.getValue());
+		Assert.assertEquals("", m42.getValue());
+		Assert.assertEquals("", m43.getValue());
+		Assert.assertEquals("", m44.getValue());
+		
+		t21.replace("ABCD").tab().focus(1,1000);
+		t22.replace("6").tab().focus(1,1000);
+		Assert.assertEquals("ABC", l11.getValue());
+		
+		Assert.assertEquals("10", l12.getValue());
+		
+		Assert.assertEquals("ABCD", t21.getValue());
+		Assert.assertEquals(6L, t22.getValue());
+		Assert.assertEquals("ABC", t31.getValue());
+		Assert.assertEquals(10L, t32.getValue());
+		Assert.assertEquals("", m31.getValue());
+		Assert.assertEquals("", m32.getValue());
+		Assert.assertEquals("ABC", t41.getValue());
+		Assert.assertEquals(10L, t42.getValue());
+		Assert.assertEquals("", m41.getValue());
+		Assert.assertEquals("", m42.getValue());
+		Assert.assertEquals("", m43.getValue());
+		Assert.assertEquals("", m44.getValue());
+		
+		
+		t21.replace("Abc").tab().focus(1,1000);
+		t22.replace("33").tab().focus(1,1000);//intbox has reset issue...too bad
+		Assert.assertEquals("Abc", l11.getValue());
+		
+		Assert.assertEquals("33", l12.getValue());
+		
+		Assert.assertEquals("Abc", t21.getValue());
+		Assert.assertEquals(33L, t22.getValue());
+		Assert.assertEquals("Abc", t31.getValue());
+		Assert.assertEquals(33L, t32.getValue());
+		Assert.assertEquals("", m31.getValue());
+		Assert.assertEquals("", m32.getValue());
+		Assert.assertEquals("ABC", t41.getValue());
+		Assert.assertEquals(10L, t42.getValue());
+		Assert.assertEquals("", m41.getValue());
+		Assert.assertEquals("", m42.getValue());
+		Assert.assertEquals("", m43.getValue());
+		Assert.assertEquals("", m44.getValue());
+		
+		
+		t31.replace("XXX").tab().focus(0,0);
+		t32.replace("1").tab().focus(0,0);//intbox has reset issue...too bad
+		Assert.assertEquals("Abc", l11.getValue());
+		Assert.assertEquals("33", l12.getValue());
+		Assert.assertEquals("Abc", t21.getValue());
+		Assert.assertEquals(33L, t22.getValue());
+		Assert.assertEquals("XXX", t31.getValue());
+		Assert.assertEquals(1L, t32.getValue());
+		Assert.assertEquals("", m31.getValue());
+		Assert.assertEquals("", m32.getValue());
+		Assert.assertEquals("ABC", t41.getValue());
+		Assert.assertEquals(10L, t42.getValue());
+		Assert.assertEquals("", m41.getValue());
+		Assert.assertEquals("", m42.getValue());
+		Assert.assertEquals("", m43.getValue());
+		Assert.assertEquals("", m44.getValue());
+		
+		btn1.click();
+		Assert.assertEquals("Abc", l11.getValue());
+		Assert.assertEquals("33", l12.getValue());
+		Assert.assertEquals("Abc", t21.getValue());
+		Assert.assertEquals(33L, t22.getValue());
+		Assert.assertEquals("XXX", t31.getValue());
+		Assert.assertEquals(1L, t32.getValue());
+		Assert.assertEquals("value must equals ignore case 'abc', but is XXX", m31.getValue());
+		Assert.assertEquals("value must not < 10 or > 100, but is 1", m32.getValue());
+		Assert.assertEquals("ABC", t41.getValue());
+		Assert.assertEquals(10L, t42.getValue());
+		Assert.assertEquals("", m41.getValue());
+		Assert.assertEquals("", m42.getValue());
+		Assert.assertEquals("", m43.getValue());
+		Assert.assertEquals("", m44.getValue());
+		
+		t32.replace("55").tab().focus(0,0);//intbox has reset issue...too bad
+		Assert.assertEquals("Abc", l11.getValue());
+		Assert.assertEquals("33", l12.getValue());
+		Assert.assertEquals("Abc", t21.getValue());
+		Assert.assertEquals(33L, t22.getValue());
+		Assert.assertEquals("XXX", t31.getValue());
+		Assert.assertEquals(55L, t32.getValue());
+		Assert.assertEquals("value must equals ignore case 'abc', but is XXX", m31.getValue());
+		Assert.assertEquals("value must not < 10 or > 100, but is 1", m32.getValue());
+		Assert.assertEquals("ABC", t41.getValue());
+		Assert.assertEquals(10L, t42.getValue());
+		Assert.assertEquals("", m41.getValue());
+		Assert.assertEquals("", m42.getValue());
+		Assert.assertEquals("", m43.getValue());
+		Assert.assertEquals("", m44.getValue());
+		
+		btn1.click();
+		Assert.assertEquals("Abc", l11.getValue());
+		Assert.assertEquals("33", l12.getValue());
+		Assert.assertEquals("Abc", t21.getValue());
+		Assert.assertEquals(33L, t22.getValue());
+		Assert.assertEquals("XXX", t31.getValue());
+		Assert.assertEquals(55L, t32.getValue());
+		Assert.assertEquals("value must equals ignore case 'abc', but is XXX", m31.getValue());
+		Assert.assertEquals("", m32.getValue());
+		Assert.assertEquals("ABC", t41.getValue());
+		Assert.assertEquals(10L, t42.getValue());
+		Assert.assertEquals("", m41.getValue());
+		Assert.assertEquals("", m42.getValue());
+		Assert.assertEquals("", m43.getValue());
+		Assert.assertEquals("", m44.getValue());
+		
+		t31.replace("aBC").tab().focus(0,0);//intbox has reset issue...too bad
+		Assert.assertEquals("Abc", l11.getValue());
+		Assert.assertEquals("33", l12.getValue());
+		Assert.assertEquals("Abc", t21.getValue());
+		Assert.assertEquals(33L, t22.getValue());
+		Assert.assertEquals("aBC", t31.getValue());
+		Assert.assertEquals(55L, t32.getValue());
+		Assert.assertEquals("value must equals ignore case 'abc', but is XXX", m31.getValue());
+		Assert.assertEquals("", m32.getValue());
+		Assert.assertEquals("ABC", t41.getValue());
+		Assert.assertEquals(10L, t42.getValue());
+		Assert.assertEquals("", m41.getValue());
+		Assert.assertEquals("", m42.getValue());
+		Assert.assertEquals("", m43.getValue());
+		Assert.assertEquals("", m44.getValue());
+		
+		btn1.click();
+		Assert.assertEquals("aBC", l11.getValue());
+		Assert.assertEquals("55", l12.getValue());
+		Assert.assertEquals("aBC", t21.getValue());
+		Assert.assertEquals(55L, t22.getValue());
+		Assert.assertEquals("aBC", t31.getValue());
+		Assert.assertEquals(55L, t32.getValue());
+		Assert.assertEquals("", m31.getValue());
+		Assert.assertEquals("", m32.getValue());
+		Assert.assertEquals("ABC", t41.getValue());
+		Assert.assertEquals(10L, t42.getValue());
+		Assert.assertEquals("", m41.getValue());
+		Assert.assertEquals("", m42.getValue());
+		Assert.assertEquals("", m43.getValue());
+		Assert.assertEquals("", m44.getValue());
+		
+		/////////
+		
+		t41.replace("YYY").tab().focus(0,0);
+		t42.replace("1999").tab().focus(0,0);//intbox has reset issue...too bad
+		Assert.assertEquals("aBC", l11.getValue());
+		Assert.assertEquals("55", l12.getValue());
+		Assert.assertEquals("aBC", t21.getValue());
+		Assert.assertEquals(55L, t22.getValue());
+		Assert.assertEquals("aBC", t31.getValue());
+		Assert.assertEquals(55L, t32.getValue());
+		Assert.assertEquals("", m31.getValue());
+		Assert.assertEquals("", m32.getValue());
+		Assert.assertEquals("YYY", t41.getValue());
+		Assert.assertEquals(1999L, t42.getValue());
+		Assert.assertEquals("value must equals ignore case 'abc', but is YYY", m41.getValue());
+		Assert.assertEquals("value must not < 10 or > 100, but is 1999", m42.getValue());
+		Assert.assertEquals("", m43.getValue());
+		Assert.assertEquals("", m44.getValue());
+		
+		btn2.click();
+		Assert.assertEquals("aBC", l11.getValue());
+		Assert.assertEquals("55", l12.getValue());
+		Assert.assertEquals("aBC", t21.getValue());
+		Assert.assertEquals(55L, t22.getValue());
+		Assert.assertEquals("aBC", t31.getValue());
+		Assert.assertEquals(55L, t32.getValue());
+		Assert.assertEquals("", m31.getValue());
+		Assert.assertEquals("", m32.getValue());
+		Assert.assertEquals("YYY", t41.getValue());
+		Assert.assertEquals(1999L, t42.getValue());
+		Assert.assertEquals("value must equals ignore case 'abc', but is YYY", m41.getValue());
+		Assert.assertEquals("value must not < 10 or > 100, but is 1999", m42.getValue());
+		Assert.assertEquals("value must equals 'AbC', but is ABC", m43.getValue());
+		Assert.assertEquals("value must equals 'AbC', but is ABC", m44.getValue());
+		Assert.assertEquals("value must equals 'AbC', but is ABC", m45.getValue());
+		Assert.assertEquals("extra validation info ABC", m46.getValue());
+		
+		
+		t41.replace("abc").tab().focus(0,0);
+		t42.replace("77").tab().focus(0,0);//intbox has reset issue...too bad
+		Assert.assertEquals("aBC", l11.getValue());
+		Assert.assertEquals("55", l12.getValue());
+		Assert.assertEquals("aBC", t21.getValue());
+		Assert.assertEquals(55L, t22.getValue());
+		Assert.assertEquals("aBC", t31.getValue());
+		Assert.assertEquals(55L, t32.getValue());
+		Assert.assertEquals("", m31.getValue());
+		Assert.assertEquals("", m32.getValue());
+		Assert.assertEquals("abc", t41.getValue());
+		Assert.assertEquals(77L, t42.getValue());
+		Assert.assertEquals("", m41.getValue());
+		Assert.assertEquals("", m42.getValue());
+		Assert.assertEquals("value must equals 'AbC', but is ABC", m43.getValue());
+		Assert.assertEquals("value must equals 'AbC', but is ABC", m44.getValue());
+		Assert.assertEquals("value must equals 'AbC', but is ABC", m45.getValue());
+		Assert.assertEquals("extra validation info ABC", m46.getValue());
+		
+		btn2.click();
+		Assert.assertEquals("aBC", l11.getValue());
+		Assert.assertEquals("55", l12.getValue());
+		Assert.assertEquals("aBC", t21.getValue());
+		Assert.assertEquals(55L, t22.getValue());
+		Assert.assertEquals("aBC", t31.getValue());
+		Assert.assertEquals(55L, t32.getValue());
+		Assert.assertEquals("", m31.getValue());
+		Assert.assertEquals("", m32.getValue());
+		Assert.assertEquals("abc", t41.getValue());
+		Assert.assertEquals(77L, t42.getValue());
+		Assert.assertEquals("", m41.getValue());
+		Assert.assertEquals("", m42.getValue());
+		Assert.assertEquals("value must equals 'AbC', but is abc", m43.getValue());
+		Assert.assertEquals("value must equals 'AbC', but is abc", m44.getValue());
+		Assert.assertEquals("value must equals 'AbC', but is abc", m45.getValue());
+		Assert.assertEquals("extra validation info abc", m46.getValue());
+		
+		t41.replace("AbC").tab().focus(0,0);
+		btn2.click();
+		Assert.assertEquals("AbC", l11.getValue());
+		Assert.assertEquals("77", l12.getValue());
+		Assert.assertEquals("AbC", t21.getValue());
+		Assert.assertEquals(77L, t22.getValue());
+		Assert.assertEquals("AbC", t31.getValue());
+		Assert.assertEquals(77L, t32.getValue());
+		Assert.assertEquals("", m31.getValue());
+		Assert.assertEquals("", m32.getValue());
+		Assert.assertEquals("AbC", t41.getValue());
+		Assert.assertEquals(77L, t42.getValue());
+		Assert.assertEquals("", m41.getValue());
+		Assert.assertEquals("", m42.getValue());
+		Assert.assertEquals("", m43.getValue());
+		Assert.assertEquals("", m44.getValue());
+		
+		
+		t31.replace("YYY").tab().focus(0,0);
+		t32.replace("2").tab().focus(0,0);//intbox has reset issue...too bad
+		btn1.click();
+		Assert.assertEquals("YYY", t31.getValue());
+		Assert.assertEquals(2L, t32.getValue());
+		Assert.assertEquals("value must equals ignore case 'abc', but is YYY", m31.getValue());
+		Assert.assertEquals("value must not < 10 or > 100, but is 2", m32.getValue());
+		
+		btn3.click();
+		Assert.assertEquals("AbC", t31.getValue());
+		Assert.assertEquals(2L, t32.getValue());
+		Assert.assertEquals("", m31.getValue());
+		Assert.assertEquals("value must not < 10 or > 100, but is 2", m32.getValue());
+	}
 }
