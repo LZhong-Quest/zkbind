@@ -15,6 +15,7 @@ package org.zkoss.zktest.bind.issue;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zul.ListModelList;
@@ -43,9 +44,10 @@ public class B00714 {
 
 	static public class Item {
 		String name;
-
+		List<String> options = new ArrayList<String>();
 		public Item(String name) {
 			this.name = name;
+			options.add(name+" 0");
 		}
 
 		public String getName() {
@@ -55,12 +57,33 @@ public class B00714 {
 		public void setName(String name) {
 			this.name = name;
 		}
+		public List<String> getOptions() {
+			return options;
+		}
 
+	}
+	
+	
+
+	public Item getSelected() {
+		return selected;
+	}
+
+	public void setSelected(Item selected) {
+		this.selected = selected;
 	}
 
 	@NotifyChange("items") @Command
 	public void reload() {
 		
+	}
+	
+	@NotifyChange({"items","selected"}) @Command
+	public void delete(@BindingParam("item") Item item) {
+		items.remove(item);
+		if(item.equals(selected)){
+			selected = null;
+		}
 	}
 
 }
