@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openqa.selenium.WebElement;
 import org.zkoss.zktc.core.junit.TestCaseBase;
 import org.zkoss.zktc.core.widget.Widget;
 import org.zkoss.zktc.core.widget.Widgets;
@@ -380,10 +381,11 @@ public class CollectionTestCase  extends TestCaseBase{
 		List<Widget> outerrows = outerbox.findWidget("@rows").getChildren();
 		String[] itemLabel = new String[]{"A","B","C", "D"};
 		Assert.assertEquals(itemLabel.length, outerrows.size());
-		
 		for(int i=0;i<itemLabel.length;i++){
 			Widget outerrow = outerrows.get(i);
 			Widget combobox = outerrow.findWidget("@combobox");
+			combobox.call("open");//to show popu first so we can find comboitem in zkmax
+			
 			List<Widget> comboitems = combobox.findWidgets("@comboitem");
 			Assert.assertEquals(2, comboitems.size());
 			for(int j=0;j<2;j++){
@@ -418,6 +420,8 @@ public class CollectionTestCase  extends TestCaseBase{
 		for(int i=0;i<itemLabel.length;i++){
 			Widget outerrow = outerrows.get(i);
 			Widget combobox = outerrow.findWidget("@combobox");
+			combobox.call("open");//has to wait for open
+			
 			List<Widget> comboitems = combobox.findWidgets("@comboitem");
 			Assert.assertEquals(2, comboitems.size());
 			for(int j=0;j<2;j++){
@@ -444,6 +448,8 @@ public class CollectionTestCase  extends TestCaseBase{
 		for(int i=0;i<itemLabel.length;i++){
 			Widget outerrow = outerrows.get(i);
 			Widget combobox = outerrow.findWidget("@combobox");
+			combobox.call("open");//to show popu first so we can find comboitem in zkmax
+			
 			List<Widget> comboitems = combobox.findWidgets("@comboitem");
 			Assert.assertEquals(2, comboitems.size());
 			for(int j=0;j<2;j++){
@@ -470,6 +476,8 @@ public class CollectionTestCase  extends TestCaseBase{
 		for(int i=0;i<itemLabel.length;i++){
 			Widget outerrow = outerrows.get(i);
 			Widget combobox = outerrow.findWidget("@combobox");
+			combobox.call("open");//to show popu first so we can find comboitem in zkmax
+			
 			List<Widget> comboitems = combobox.findWidgets("@comboitem");
 			Assert.assertEquals(2, comboitems.size());
 			for(int j=0;j<2;j++){
@@ -676,7 +684,14 @@ public class CollectionTestCase  extends TestCaseBase{
 		
 		findWidget("$btn1").click();
 		
-		Assert.assertEquals(1L, outerbox.getAttribute("selectedIndex"));
+		
+		//Assert.assertEquals(1L, outerbox.getAttribute("selectedIndex")); // fail in max
+		
+		outeritems = outerbox.getChildren();//include header
+		outeritems.remove(0);//don't care header
+		outeritem = outeritems.get(1);//select 2nd
+		
+		Assert.assertEquals(outeritem.getUuid(), outerbox.getWidgetAttribute("selectedItem").getUuid());
 		Assert.assertEquals("reloaded", msg.getValue());
 		
 	}
@@ -835,6 +850,7 @@ public class CollectionTestCase  extends TestCaseBase{
 		for(int i=0;i<itemLabel.length;i++){
 			Widget outerrow = outerrows.get(i);
 			Widget combobox = outerrow.findWidget("@combobox");
+			combobox.call("open");//to show popu first so we can find comboitem in zkmax
 			List<Widget> comboitems = combobox.findWidgets("@comboitem");
 			Assert.assertEquals(2, comboitems.size());
 			for(int j=0;j<2;j++){
@@ -861,6 +877,7 @@ public class CollectionTestCase  extends TestCaseBase{
 		for(int i=0;i<itemLabel.length;i++){
 			Widget outerrow = outerrows.get(i);
 			Widget combobox = outerrow.findWidget("@combobox");
+			combobox.call("open");//to show popu first so we can find comboitem in zkmax
 			List<Widget> comboitems = combobox.findWidgets("@comboitem");
 			Assert.assertEquals(2, comboitems.size());
 			for(int j=0;j<2;j++){
@@ -887,6 +904,7 @@ public class CollectionTestCase  extends TestCaseBase{
 		for(int i=0;i<itemLabel.length;i++){
 			Widget outerrow = outerrows.get(i);
 			Widget combobox = outerrow.findWidget("@combobox");
+			combobox.findElement(".z-combobox-btn").click();//to show popu first so we can find comboitem in zkmax
 			List<Widget> comboitems = combobox.findWidgets("@comboitem");
 			Assert.assertEquals(2, comboitems.size());
 			for(int j=0;j<2;j++){
@@ -911,16 +929,17 @@ public class CollectionTestCase  extends TestCaseBase{
 		Widget combobox2 = findWidget("$cb2");
 		
 		Assert.assertEquals("",findWidget("$msg").getValue());
+		combobox1.call("open");//has to wait for open
 		List<Widget> items = combobox1.findWidgets("@comboitem");
 		combobox1.call("open");//has to wait for open
-		combobox1.waitForTrip(1, 1500);
+		waitForTrip(1, 1500);
 		
 		items.get(1).click();
 		Assert.assertEquals("B",combobox1.getValue());
 		Assert.assertEquals("A",combobox2.getValue());
 		
 		combobox1.call("open");//has to wait for open
-		combobox1.waitForTrip(1, 1500);
+		waitForTrip(1, 1500);
 		
 		items.get(2).click();
 		Assert.assertEquals("C",combobox1.getValue());
