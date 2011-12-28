@@ -17,7 +17,7 @@ import java.util.Map;
 import org.zkoss.bind.BindComposer;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
-import org.zkoss.bind.annotation.Param;
+import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.zul.DefaultTreeModel;
 import org.zkoss.zul.DefaultTreeNode;
 import org.zkoss.zul.TreeModel;
@@ -64,13 +64,13 @@ public class CollectionIndexTreeComposer extends BindComposer {
 	}
 
 	@NotifyChange({ "message1" }) @Command
-	public void showIndex(@Param("index") Integer index) {
+	public void showIndex(@BindingParam("index") Integer index) {
 		int i = index.intValue();
 		message1 = "item index " + i;
 	}
 
 	@NotifyChange({ "model", "message1" }) @Command
-	public void delete(@Param("node") MyTreeNode node) {
+	public void delete(@BindingParam("node") MyTreeNode node) {
 		MyTreeNode parent = (MyTreeNode)node.getParent();
 		int i = parent.getIndex(node);
 		parent.remove(i);
@@ -78,7 +78,7 @@ public class CollectionIndexTreeComposer extends BindComposer {
 	}
 
 	@NotifyChange({ "model", "message1" }) @Command
-	public void addAfter(@Param("node") MyTreeNode node) {
+	public void addAfter(@BindingParam("node") MyTreeNode node) {
 		MyTreeNode parent = (MyTreeNode)node.getParent();
 		int i = parent.getIndex(node);
 		parent.insert(new MyTreeNode(node.getData()), i + 1);
@@ -86,7 +86,7 @@ public class CollectionIndexTreeComposer extends BindComposer {
 	}
 
 	@NotifyChange({ "model", "message1" }) @Command
-	public void addBefore(@Param("node") MyTreeNode node) {
+	public void addBefore(@BindingParam("node") MyTreeNode node) {
 		TreeNode<String> parent = node.getParent();
 		int i = parent.getIndex(node);
 		parent.insert(new MyTreeNode(node.getData()), i);
