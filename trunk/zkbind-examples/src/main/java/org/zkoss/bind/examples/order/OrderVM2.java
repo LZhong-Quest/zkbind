@@ -13,13 +13,10 @@ package org.zkoss.bind.examples.order;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
-import org.zkoss.bind.annotation.NotifyChange;
-import org.zkoss.zul.ListModelList;
+import org.zkoss.bind.validator.AbstractValidator;
 
 /**
  * @author dennis
@@ -29,36 +26,25 @@ public class OrderVM2 extends OrderVM{
 
 	//validators for command
 	public Validator getCreationDateValidator(){
-		return new Validator(){
+		return new AbstractValidator(){
 			public void validate(ValidationContext ctx) {
 				Date creation = (Date)ctx.getProperty().getValue();
 				if(creation==null){
-					ctx.setInvalid();// mark invalid
-					validationMessages.put("creationDate", "must not null");
-				}else{
-					validationMessages.remove("creationDate");
+					addInvalidMessage(ctx,"must not null");
 				}
-				//notify messages was changed.
-				ctx.getBindContext().getBinder().notifyChange(validationMessages, "creationDate");
 			}
 		};
 	}
 	public Validator getShippingDateValidator(){
-		return new Validator(){
+		return new AbstractValidator(){
 			public void validate(ValidationContext ctx) {
 				Date shipping = (Date)ctx.getProperty().getValue();//the main property
 				Date creation = (Date)ctx.getProperties("creationDate")[0].getValue();//the collected
 				//do mixed validation, shipping date have to large than creation more than 3 days.
 				if(!CaldnearUtil.isDayAfter(creation,shipping,3)){
-					ctx.setInvalid();
-					validationMessages.put("shippingDate", "must large than creation date at least 3 days");
-				}else{
-					validationMessages.remove("shippingDate");
+					addInvalidMessage(ctx,"must large than creation date at least 3 days");
 				}
-				//notify the 'price' message in messages was changed.
-				ctx.getBindContext().getBinder().notifyChange(validationMessages, "shippingDate");
 			}
-
 		};
 	}
 	

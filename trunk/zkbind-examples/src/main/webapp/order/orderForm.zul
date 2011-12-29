@@ -5,7 +5,8 @@
 }
 </style>
 <window title="Order Management" border="normal" width="600px"
-	apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('org.zkoss.bind.examples.order.OrderFormVM')" >
+	apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('org.zkoss.bind.examples.order.OrderFormVM')" 
+	validationMessages="@id('vmsgs')">
 	<vbox hflex="true">
 		<listbox model="@load(vm.orders)" selectedItem="@bind(vm.selected)" hflex="true" height="200px">
 			<listhead>
@@ -48,28 +49,28 @@
 					<row>Description <textbox value="@bind(fx.description)"/></row>
 					<row>Quantity
 						<hlayout> 
-							<intbox value="@bind(fx.quantity) @validator(vm.quantityValidator)"/>
-							<label value="@load(vm.validationMessages['quantity'])" sclass="red" />
+							<intbox id="qbox" value="@bind(fx.quantity) @validator(vm.quantityValidator)"/>
+							<label value="@load(vmsgs[qbox])" sclass="red" />
 						</hlayout>	
 					</row>					
 					<row>Price 
 						<hlayout>
-							<doublebox value="@bind(fx.price) @validator(vm.priceValidator)" format="###,##0.00" />
-							<label value="@load(vm.validationMessages['price'])" sclass="red" />
+							<doublebox id="pbox" value="@bind(fx.price) @validator(vm.priceValidator)" format="###,##0.00" />
+							<label value="@load(vmsgs[pbox])" sclass="red" />
 						</hlayout>
 					</row>
 					<row>Total Price <label value="@load(fx.totalPrice) @converter('formatedNumber', format='###,##0.00')" /></row>
 					<row>Creation Date 
 						<hlayout> 
-							<datebox value="@bind(fx.creationDate)
+							<datebox id="cdbox" value="@bind(fx.creationDate)
 							@validator(vm.creationDateValidator)"/>
-							<label value="@load(vm.validationMessages['creationDate'])" sclass="red" />
+							<label value="@load(vmsgs[cdbox])" sclass="red" />
 						</hlayout>	
 					</row>
 					<row>Shipping Date 
 						<hlayout> 
-							<datebox value="@bind(fx.shippingDate)"/>
-							<label value="@load(vm.validationMessages['shippingDate'])" sclass="red" />
+							<datebox id="sdbox" value="@bind(fx.shippingDate)"/>
+							<label value="@load(vmsgs[sdbox])" sclass="red" />
 						</hlayout>
 					</row>	
 				</rows>
