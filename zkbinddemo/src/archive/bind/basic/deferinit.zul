@@ -1,5 +1,0 @@
-<zk>
-	<window apply="org.zkoss.zktest.bind.basic.DeferInitVM">
-		
-	</window>
-</zk>
