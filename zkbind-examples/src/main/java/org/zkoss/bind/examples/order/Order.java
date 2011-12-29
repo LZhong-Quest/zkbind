@@ -50,7 +50,6 @@ public class Order {
 		return id;
 	}
 
-	@NotifyChange
 	public void setId(String id) {
 		this.id = id;
 	}
@@ -58,7 +57,7 @@ public class Order {
 	public Date getCreationDate() {
 		return creationDate;
 	}
-	@NotifyChange
+
 	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
 	}
@@ -66,7 +65,7 @@ public class Order {
 	public Date getShippingDate() {
 		return shippingDate;
 	}
-	@NotifyChange
+
 	public void setShippingDate(Date shippingDate) {
 		this.shippingDate = shippingDate;
 	}
@@ -75,7 +74,6 @@ public class Order {
 		return description;
 	}
 
-	@NotifyChange
 	public void setDescription(String description) {
 		this.description = description;
 	}
@@ -84,7 +82,6 @@ public class Order {
 		return price;
 	}
 
-	@NotifyChange
 	public void setPrice(double price) {
 		this.price = price;
 	}
@@ -93,7 +90,6 @@ public class Order {
 		return quantity;
 	}
 
-	@NotifyChange
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}

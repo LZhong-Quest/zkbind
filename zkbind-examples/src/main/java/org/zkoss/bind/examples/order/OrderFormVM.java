@@ -14,6 +14,7 @@ package org.zkoss.bind.examples.order;
 import java.util.Date;
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
+import org.zkoss.bind.validator.AbstractValidator;
 
 
 /**
@@ -24,22 +25,15 @@ public class OrderFormVM extends OrderVM3{
 
 	@Override
 	public Validator getShippingDateValidator() {
-		return new Validator(){
+		return new AbstractValidator(){
 			public void validate(ValidationContext ctx) {
 				Date shipping = (Date)ctx.getProperties("shippingDate")[0].getValue();
 				Date creation = (Date)ctx.getProperties("creationDate")[0].getValue();
 				//do dependent validation, shipping date have to large than creation more than 3 days.
 				if(!CaldnearUtil.isDayAfter(creation,shipping,3)){
-					ctx.setInvalid();
-					validationMessages.put("shippingDate", "must large than creation date at least 3 days");
-				}else{
-					validationMessages.remove("shippingDate");
+					addInvalidMessage(ctx,"must large than creation date at least 3 days");
 				}
-				//notify the binder of validation message changed
-				ctx.getBindContext().getBinder().notifyChange(validationMessages, "shippingDate");
 			}
-
 		};
 	}
-	
 }

@@ -5,7 +5,8 @@
 }
 </style>
 <window title="Order Management" border="normal" width="600px"
-	apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('org.zkoss.bind.examples.order.OrderVM')" >
+	apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('org.zkoss.bind.examples.order.OrderVM')" 
+	validationMessages="@id('vmsgs')">
 	<vbox hflex="true">
 		<listbox model="@load(vm.orders)" selectedItem="@bind(vm.selected)" hflex="true" height="200px">
 			<listhead>
@@ -41,14 +42,14 @@
 					<row>Description <textbox value="@bind(vm.selected.description)"/></row>
 					<row>Quantity
 						<hlayout> 
-							<intbox value="@bind(vm.selected.quantity) @validator(vm.quantityValidator)"/>
-							<label value="@load(vm.validationMessages['quantity'])" sclass="red" />
+							<intbox id="qbox" value="@bind(vm.selected.quantity) @validator(vm.quantityValidator)"/>
+							<label value="@load(vmsgs[qbox])" sclass="red" />
 						</hlayout>	
 					</row>					
 					<row>Price 
 						<hlayout>
-							<doublebox value="@bind(vm.selected.price) @validator(vm.priceValidator)" format="###,##0.00" />
-							<label value="@load(vm.validationMessages['price'])" sclass="red" />
+							<doublebox id="pbox" value="@bind(vm.selected.price) @validator(vm.priceValidator)" format="###,##0.00" />
+							<label value="@load(msgs[pbox])" sclass="red" />
 						</hlayout>
 					</row>
 					<row>Total Price <label value="@load(vm.selected.totalPrice) @converter('formatedNumber', format='###,##0.00')" /></row>

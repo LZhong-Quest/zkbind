@@ -64,20 +64,12 @@ public class SearchVM {
 		items.addAll(getSearchService().search(filter));
 		selected = null;
 	}
-	
-//	@NotifyChange({"items","selected","filter"})
-//	public void doFixedSearch(Map<String,Object> args){
-//		items = new ListModelList<Item>();
-//		filter = (String)args.get("arg");
-//		items.addAll(getSearchService().search(filter));
-//		selected = null;
-//	}
 
 	public Item getSelected() {
 		return selected;
 	}
 
-	@NotifyChange
+	//@NotifyChange, you could ignore it too, it is triggered automatically.
 	public void setSelected(Item selected) {
 		this.selected = selected;
 	}
