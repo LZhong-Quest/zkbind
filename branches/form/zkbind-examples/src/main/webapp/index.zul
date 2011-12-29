@@ -20,7 +20,7 @@
 
 		<n:li>
 			<n:a href="searchex/searchMvvmAutowire.zul">
-				A search filter example v2 in MVC (composer)
+				A search filter example v2 in MVVM + Autowire
 			</n:a>
 		</n:li>
 	</n:ul>
