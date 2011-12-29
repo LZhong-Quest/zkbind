@@ -1,5 +1,8 @@
 package org.zkoss.bind.unitest2;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.zkoss.zktc.core.junit.TestCaseBase;
@@ -129,6 +132,84 @@ public class FeaturesTestCase0500 extends TestCaseBase{
 		Assert.assertEquals("E",l13.getValue());
 		Assert.assertEquals("command 1",l14.getValue());
 		Assert.assertEquals("command 1",t14.getValue());
+		
+	}
+	
+	
+	@Test
+	public void f00718(){
+		navigate(getTestCaseUrl("/bind/issue/F00718.zul"));
+		
+		Widget tb1 = findWidget("$tb1");
+		Widget tb2 = findWidget("$tb2");
+		Widget msg2 = findWidget("$msg2");
+		
+		Widget tb3 = findWidget("$tb3");
+		Widget msg3 = findWidget("$msg3");
+		
+		Widget db4 = findWidget("$db4");
+		Widget msg4 = findWidget("$msg4");
+		
+		
+		Widget reload = findWidget("$reload");
+		
+		
+		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+		Calendar now = Calendar.getInstance();
+		String today = format.format(now.getTime());
+		now.add(Calendar.DATE, 1);
+		String tomorrow = format.format(now.getTime());
+		now.add(Calendar.DATE, -2);
+		String yesterday = format.format(now.getTime());
+		
+		Assert.assertEquals("Dennis",tb1.getValue());
+		Assert.assertEquals("Chen",tb2.getValue());
+		Assert.assertEquals("",msg2.getValue());
+		Assert.assertEquals("",tb3.getValue());
+		Assert.assertEquals("",msg3.getValue());
+		Assert.assertEquals(today,db4.getText());
+		Assert.assertEquals("",msg4.getValue());
+		
+		tb1.replace("").tab();
+		tb2.replace("").tab();
+		tb3.replace("A").tab();
+		db4.replace(tomorrow).tab();
+		
+		
+		
+		
+		Assert.assertEquals("",tb1.getValue());
+		Assert.assertEquals("",tb2.getValue());
+		Assert.assertEquals("Last name can not be null",msg2.getValue());
+		Assert.assertEquals("A",tb3.getValue());
+		Assert.assertEquals("not a well-formed email address",msg3.getValue());
+		Assert.assertEquals(tomorrow,db4.getText());
+		Assert.assertEquals("Birth date must be in the past",msg4.getValue());
+		
+		reload.click();
+		Assert.assertEquals("Dennis",tb1.getValue());
+		Assert.assertEquals("Chen",tb2.getValue());
+		Assert.assertEquals("",msg2.getValue());
+		Assert.assertEquals("",tb3.getValue());
+		Assert.assertEquals("",msg3.getValue());
+		Assert.assertEquals(today,db4.getText());
+		Assert.assertEquals("",msg4.getValue());
+		
+		tb3.replace("A@B.C").tab();
+		Assert.assertEquals("A@B.C",tb3.getValue());
+		Assert.assertEquals("email lenght must large than 8",msg3.getValue());
+		
+		tb3.replace("AA@BB.CC.DD").tab();
+		Assert.assertEquals("AA@BB.CC.DD",tb3.getValue());
+		Assert.assertEquals("",msg3.getValue());
+		
+		db4.replace(tomorrow).tab();
+		Assert.assertEquals(tomorrow,db4.getText());
+		Assert.assertEquals("Birth date must be in the past",msg4.getValue());
+		
+		db4.replace(yesterday).tab();
+		Assert.assertEquals(yesterday,db4.getText());
+		Assert.assertEquals("",msg4.getValue());
 		
 	}
 }

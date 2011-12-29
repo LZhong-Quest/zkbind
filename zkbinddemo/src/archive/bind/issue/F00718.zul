@@ -16,7 +16,7 @@
                 <row>
                     Last Name
                     <hlayout>
-                    <textbox id="tb2" value="@bind(vm.user.lastName) @validator('org.zkoss.bind.validator.BeanValidator')" />
+                    <textbox id="tb2" value="@bind(vm.user.lastName) @validator('beanValidator')" />
                     <label id="msg2" value="@load(vmsgs[tb2])"/>
                     </hlayout>
                 </row>
@@ -30,7 +30,7 @@
                 <row>
                     Birth Date
                     <hlayout>
-                    <datebox id="db4" value="@bind(vm.user.birthDate) @validator('org.zkoss.bind.validator.BeanValidator')" />
+                    <datebox id="db4" value="@bind(vm.user.birthDate) @validator('org.zkoss.bind.validator.BeanValidator')" format="yyyy/MM/dd" />
                     <label id="msg4" value="@load(vmsgs[self.previousSibling])"/>
                     </hlayout>
                 </row>
