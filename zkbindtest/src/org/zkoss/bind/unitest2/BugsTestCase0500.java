@@ -371,4 +371,51 @@ public class BugsTestCase0500 extends TestCaseBase{
 		
 	}
 	
+	
+	@Test
+	public void b00722(){
+		navigate(getTestCaseUrl("/bind/issue/B00722.zul"));
+		
+		Widget l11 = findWidget("$l11");
+		Widget t21 = findWidget("$t21");
+		Widget m21 = findWidget("$m21");
+		Widget cmd1 = findWidget("$cmd1");
+		Widget cmd2 = findWidget("$cmd2");
+		
+		
+		Assert.assertEquals("abc", l11.getValue());
+		Assert.assertEquals("abc", t21.getValue());
+		Assert.assertEquals("", m21.getValue());
+		
+		t21.replace("efg").tab();
+		Assert.assertEquals("abc", l11.getValue());
+		Assert.assertEquals("efg", t21.getValue());
+		Assert.assertEquals("the value has to be 'abc' or 'ABC'", m21.getValue());
+		
+		cmd1.click();
+		Assert.assertEquals("abc", l11.getValue());
+		Assert.assertEquals("efg", t21.getValue());
+		Assert.assertEquals("the value has to be 'abc' or 'ABC'", m21.getValue());
+		
+		t21.replace("ABC").tab();
+		Assert.assertEquals("abc", l11.getValue());
+		Assert.assertEquals("ABC", t21.getValue());
+		Assert.assertEquals("", m21.getValue());
+		
+		cmd1.click();
+		Assert.assertEquals("ABC:saved", l11.getValue());
+		Assert.assertEquals("ABC", t21.getValue());
+		Assert.assertEquals("", m21.getValue());
+		
+		t21.replace("kkk").tab();
+		Assert.assertEquals("ABC:saved", l11.getValue());
+		Assert.assertEquals("kkk", t21.getValue());
+		Assert.assertEquals("the value has to be 'abc' or 'ABC'", m21.getValue());
+		
+		cmd2.click();
+		Assert.assertEquals("ABC:saved", l11.getValue());
+		Assert.assertEquals("ABC:saved", t21.getValue());
+		Assert.assertEquals("", m21.getValue());
+	}
+	
 }
