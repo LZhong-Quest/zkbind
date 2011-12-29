@@ -18,13 +18,11 @@
 			</n:a>
 		</n:li>
 
-		<!-- 
 		<n:li>
-			<n:a href="search/searchex/searchMvvmAutowire.zul">
+			<n:a href="searchex/searchMvvmAutowire.zul">
 				A search filter example v2 in MVC (composer)
 			</n:a>
 		</n:li>
-		 -->
 	</n:ul>
 	<n:h3>Design CRUD page by MVVM pattern</n:h3>
 	<n:ul>
@@ -43,12 +41,10 @@
 				A order CRUD example v3
 			</n:a>
 		</n:li>
-		<!-- 
 		<n:li>
 			<n:a href="order/orderForm.zul">
 				A order CRUD example v3 using Form Binding
 			</n:a>
 		</n:li>
-		 -->
 	</n:ul>
 </zk>
