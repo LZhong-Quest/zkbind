@@ -70,7 +70,6 @@ public class SearchAutowireVM{
 		return filter;
 	}
 	
-	@NotifyChange
 	public void setFilter(String filter) {
 		this.filter = filter;
 	}
@@ -96,7 +95,6 @@ public class SearchAutowireVM{
 		return selected;
 	}
 
-	@NotifyChange
 	public void setSelected(Item selected) {
 		this.selected = selected;
 	}

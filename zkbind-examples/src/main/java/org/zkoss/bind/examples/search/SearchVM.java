@@ -45,7 +45,7 @@ public class SearchVM {
 		return filter;
 	}
 
-	@NotifyChange
+//	@NotifyChange, you could ignore it too, it is triggered automatically.
 	public void setFilter(String filter) {
 		this.filter = filter;
 	}
