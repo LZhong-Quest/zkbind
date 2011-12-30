@@ -13,13 +13,9 @@ package org.zkoss.bind.examples.order;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.Validator;
-import org.zkoss.bind.annotation.NotifyChange;
-import org.zkoss.zul.ListModelList;
 
 /**
  * @author dennis
