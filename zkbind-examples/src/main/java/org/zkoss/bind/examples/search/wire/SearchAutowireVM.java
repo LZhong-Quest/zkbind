@@ -14,18 +14,16 @@ package org.zkoss.bind.examples.search.wire;
 import java.text.DecimalFormat;
 
 import org.zkoss.bind.BindContext;
-import org.zkoss.bind.Binder;
 import org.zkoss.bind.Converter;
+import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
-import org.zkoss.bind.annotation.Param;
 import org.zkoss.bind.examples.search.FakeSearchService;
 import org.zkoss.bind.examples.search.Item;
 import org.zkoss.bind.examples.search.SearchService;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.Selectors;
-import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModel;
@@ -123,7 +121,7 @@ public class SearchAutowireVM{
 	}
 	
 	@Command
-	public void popupMessage(@Param("target")Component target, @Param("content")String content){
+	public void popupMessage(@BindingParam("target")Component target, @BindingParam("content")String content){
 		msg.setValue(content);
 		popup.open(target,"end_before");
 	}
