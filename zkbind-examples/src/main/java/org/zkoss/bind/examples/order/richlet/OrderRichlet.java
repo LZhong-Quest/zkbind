@@ -4,10 +4,9 @@ package org.zkoss.bind.examples.order.richlet;
 import java.util.HashMap;
 
 import org.zkoss.bind.Binder;
-import org.zkoss.bind.examples.order.Order;
+import org.zkoss.bind.DefaultBinder;
 import org.zkoss.bind.examples.order.OrderVM3;
 import org.zkoss.bind.impl.BinderImpl;
-import org.zkoss.bind.sys.BinderCtrl;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.GenericRichlet;
 import org.zkoss.zk.ui.Page;
@@ -48,8 +47,8 @@ public class OrderRichlet extends GenericRichlet{
 		window.setPage(page);
 
 		//initialize binder, use DefaultBinder
-		Binder binder = new BinderImpl(); //FIXME users shall not use BinderImpl directly
-		binder.init(window, new OrderVM4()); //FIXME init() method doesn't belong to Binder 
+		Binder binder = new DefaultBinder(); 
+		binder.init(window, new OrderVM4());  
 		window.setAttribute("vm", binder.getViewModel());
 
 
@@ -58,7 +57,7 @@ public class OrderRichlet extends GenericRichlet{
 		window.appendChild(vbox);
 
 		vbox.appendChild(buildOrderListbox(binder));
-		vbox.appendChild(buildToolbar(binder,vbox));
+		vbox.appendChild(buildToolbar(binder));
 		buildFormArea(binder, vbox);
 		buildConfirmDialog(binder, window);
 
@@ -87,7 +86,7 @@ public class OrderRichlet extends GenericRichlet{
 		binder.addPropertyInitBinding(formTextbox, "value", "fx.init", null, null, null);
 		
 		//loadComponent(component, true)
-		((BinderImpl)binder).loadComponent(window,true); 
+		binder.loadComponent(window,true); 
 	}
 
 	private Listbox buildOrderListbox(Binder binder){
@@ -107,7 +106,7 @@ public class OrderRichlet extends GenericRichlet{
 		return listbox;
 	}
 
-	private Toolbar buildToolbar(Binder binder, Vbox vbox ){
+	private Toolbar buildToolbar(Binder binder){
 		Button newButton = new Button("New");
 		Button saveButton = new Button("Save");
 		Button deleteButton = new Button("Delete");
@@ -120,11 +119,9 @@ public class OrderRichlet extends GenericRichlet{
 		binder.addCommandBinding(newButton, Events.ON_CLICK, "'newOrder'", null);
 		binder.addCommandBinding(saveButton, Events.ON_CLICK, "'saveOrder'", null);
 		binder.addPropertyLoadBindings(saveButton, "disabled", "empty vm.selected", null, null, null, null, null);
-//		binder.addCommandBinding(deleteButton, Events.ON_CLICK, "empty vm.selected.id?'deleteOrder':'confirmDelete'", null);
-//		binder.addPropertyLoadBindings(deleteButton, "disabled", "empty vm.selected", null, null, null, null, null);
+		binder.addCommandBinding(deleteButton, Events.ON_CLICK, "empty vm.selected.id?'deleteOrder':'confirmDelete'", null);
+		binder.addPropertyLoadBindings(deleteButton, "disabled", "empty vm.selected", null, null, null, null, null);
 		
-		vbox.appendChild(toolbar); //FIXME set before adding binding
-
 		return toolbar;
 	}
 
