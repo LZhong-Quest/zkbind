@@ -6,7 +6,6 @@ import java.util.HashMap;
 import org.zkoss.bind.Binder;
 import org.zkoss.bind.DefaultBinder;
 import org.zkoss.bind.examples.order.OrderVM3;
-import org.zkoss.bind.impl.BinderImpl;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.GenericRichlet;
 import org.zkoss.zk.ui.Page;
@@ -58,7 +57,7 @@ public class OrderRichlet extends GenericRichlet{
 
 		vbox.appendChild(buildOrderListbox(binder));
 		vbox.appendChild(buildToolbar(binder));
-		buildFormArea(binder, vbox);
+		vbox.appendChild(buildFormArea(binder));
 		buildConfirmDialog(binder, window);
 
 
@@ -125,7 +124,7 @@ public class OrderRichlet extends GenericRichlet{
 		return toolbar;
 	}
 
-	private Groupbox buildFormArea(Binder binder, Component parent){
+	private Groupbox buildFormArea(Binder binder){
 		Style messageStyle = new Style();
 		messageStyle.setContent(".z-label.red{ color:red;}");
 		
@@ -133,7 +132,6 @@ public class OrderRichlet extends GenericRichlet{
 		form.setMold("3d");
 		form.setHflex("true");
 		form.setVisible(false); 
-		form.setParent(parent);
 		form.appendChild(messageStyle);
 		
 		binder.addPropertyLoadBindings(form, "visible", "not empty vm.selected", null, null, null, null, null);
