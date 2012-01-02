@@ -29,7 +29,7 @@ public class OrderVM3 extends OrderVM2{
 	}
 	
 	@Override
-	@NotifyChange({"selected","orders","validationMessages","deleteMessage"})
+	@NotifyChange({"selected","orders","deleteMessage"})
 	@Command
 	public void deleteOrder(){
 		super.deleteOrder();
