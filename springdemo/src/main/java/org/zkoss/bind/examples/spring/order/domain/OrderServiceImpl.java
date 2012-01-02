@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
  * @author Hawk
  * 
  */
-@Service
+@Service("orderService")
 public class OrderServiceImpl implements OrderService {
 
 	@Autowired
