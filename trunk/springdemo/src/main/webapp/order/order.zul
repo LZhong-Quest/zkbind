@@ -6,7 +6,8 @@
 }
 </style>
 <window title="Order Management" border="normal" width="600px"
-	apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init(orderVm)" >
+	apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init(orderVm)" 
+	validationMessages="@id('vmsgs')">
 	<vbox hflex="true">
 		<listbox model="@bind(vm.orders)" selectedItem="@bind(vm.selected)" hflex="true" height="200px">
 			<listhead>
@@ -43,42 +44,42 @@
 					<row>Description <textbox value="@load(vm.selected.description) @save(vm.selected.description, before='saveOrder')"/></row>
 					<row>Quantity
 						<hlayout> 
-							<intbox value="@load(vm.selected.quantity) @save(vm.selected.quantity, before='saveOrder') 
+							<intbox id="qbox" value="@load(vm.selected.quantity) @save(vm.selected.quantity, before='saveOrder') 
 							@validator(quantityValidator)"/>
-							<label value="@bind(messages['quantity'])" sclass="red" />
+							<label value="@bind(vmsgs[qbox])" sclass="red" />
 						</hlayout>	
 					</row>					
 					<row>Price 
 						<hlayout>
-							<doublebox value="@load(vm.selected.price) @save(vm.selected.price, before ='saveOrder') 
+							<doublebox id="pbox" value="@load(vm.selected.price) @save(vm.selected.price, before ='saveOrder') 
 							@validator(priceValidator)" format="###,##0.00" />
-							<label value="@bind(messages['price'])" sclass="red" />
+							<label value="@bind(vmsgs[pbox])" sclass="red" />
 						</hlayout>
 					</row>
 					<row>Total Price <label value="@bind(vm.selected.totalPrice) @converter(numberFormatConverter, format='###,##0.00')" /></row>
 					<row>Creation Date 
 						<hlayout> 
-							<datebox value="@load(vm.selected.creationDate) @save(vm.selected.creationDate,before='saveOrder')
+							<datebox id="cdbox" value="@load(vm.selected.creationDate) @save(vm.selected.creationDate,before='saveOrder')
 							@validator(creationDateValidator)"/>
-							<label value="@bind(messages['creationDate'])" sclass="red" />
+							<label value="@bind(vmsgs[cdbox])" sclass="red" />
 						</hlayout>	
 					</row>
 					<row>Shipping Date 
 						<hlayout> 
-							<datebox value="@load(vm.selected.shippingDate) @save(vm.selected.shippingDate, before='saveOrder')
+							<datebox id="pdbox" value="@load(vm.selected.shippingDate) @save(vm.selected.shippingDate, before='saveOrder')
 							@validator(shippingDateValidator)"/>
-							<label value="@bind(messages['shippingDate'])" sclass="red" />
+							<label value="@bind(vmsgs[pdbox])" sclass="red" />
 						</hlayout>
 					</row>	
 				</rows>
 			</grid>
 		</groupbox>
 	</vbox>
-	<window title="Confirm" mode="modal" border="normal" width="300px" visible="@bind(not empty vm.messages['delete'])">
+	<window title="Confirm" mode="modal" border="normal" width="300px" visible="@bind(not empty vm.confirmMessage)">
 		<vbox hflex="true">
 			<hlayout height="50px">
 				<image src="~./zul/img/msgbox/question-btn.png"/>
-				<label value="@bind(messages['delete'])"/>
+				<label value="@bind(vm.confirmMessage)"/>
 			</hlayout>
 			<hbox pack="center" hflex="true">
 				<button label="Delete" onClick="@command('deleteOrder')"/>
