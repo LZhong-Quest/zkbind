@@ -1,5 +1,9 @@
 package org.zkoss.bind.unitest2;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.zkoss.zktc.core.junit.TestCaseBase;
@@ -307,10 +311,27 @@ public class LoadTestCase extends TestCaseBase{
 	public void testConverter(){
 		navigate(getTestCaseUrl("/bind/basic/converter.zul"));
 		
+		 SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		
+		Calendar c = Calendar.getInstance();
+		try {
+			c.setTime(sdf.parse("1975/02/13"));
+		} catch (ParseException e) {}
+		String age1 = "" + (Calendar.getInstance().get(Calendar.YEAR) - c.get(Calendar.YEAR));
+		try {
+			c.setTime(sdf.parse("1980/02/13"));
+		} catch (ParseException e) {}
+		String age2 = "" + (Calendar.getInstance().get(Calendar.YEAR) - c.get(Calendar.YEAR));
+		try {
+			c.setTime(sdf.parse("1985/02/13"));
+		} catch (ParseException e) {}
+		String age3 = "" + (Calendar.getInstance().get(Calendar.YEAR) - c.get(Calendar.YEAR));
+		
+		
 		Assert.assertEquals("1975/02/13",findWidget("$t1").getAttribute("value"));
-		Assert.assertEquals("36",findWidget("$l1").getAttribute("value"));
+		Assert.assertEquals(age1,findWidget("$l1").getAttribute("value"));
 		Assert.assertEquals("1975/02/13",findWidget("$t2").getAttribute("value"));
-		Assert.assertEquals("36",findWidget("$l2").getAttribute("value"));
+		Assert.assertEquals(age1,findWidget("$l2").getAttribute("value"));
 		
 		findWidget("$t1").clear().keys("1980/02/AA");
 		findWidget("$saveForm").focus();
@@ -318,32 +339,32 @@ public class LoadTestCase extends TestCaseBase{
 		Assert.assertEquals("",findWidget("$t1").getAttribute("value"));
 		Assert.assertEquals("0",findWidget("$l1").getAttribute("value"));
 		Assert.assertEquals("1975/02/13",findWidget("$t2").getAttribute("value"));
-		Assert.assertEquals("36",findWidget("$l2").getAttribute("value"));
+		Assert.assertEquals(age1,findWidget("$l2").getAttribute("value"));
 		
 		
 		findWidget("$t1").clear().keys("1980/02/13");
 		findWidget("$saveForm").focus();
 		
 		Assert.assertEquals("1980/02/13",findWidget("$t1").getAttribute("value"));
-		Assert.assertEquals("31",findWidget("$l1").getAttribute("value"));
+		Assert.assertEquals(age2,findWidget("$l1").getAttribute("value"));
 		Assert.assertEquals("1975/02/13",findWidget("$t2").getAttribute("value"));
-		Assert.assertEquals("36",findWidget("$l2").getAttribute("value"));
+		Assert.assertEquals(age1,findWidget("$l2").getAttribute("value"));
 		
 		
 		findWidget("$t2").clear().keys("1985/02/13");
 		findWidget("$saveForm").focus();
 		
 		Assert.assertEquals("1980/02/13",findWidget("$t1").getAttribute("value"));
-		Assert.assertEquals("31",findWidget("$l1").getAttribute("value"));
+		Assert.assertEquals(age2,findWidget("$l1").getAttribute("value"));
 		Assert.assertEquals("1985/02/13",findWidget("$t2").getAttribute("value"));
-		Assert.assertEquals("36",findWidget("$l2").getAttribute("value"));
+		Assert.assertEquals(age1,findWidget("$l2").getAttribute("value"));
 		
 		findWidget("$saveForm").click();
 		
 		Assert.assertEquals("1985/02/13",findWidget("$t1").getAttribute("value"));
-		Assert.assertEquals("26",findWidget("$l1").getAttribute("value"));
+		Assert.assertEquals(age3,findWidget("$l1").getAttribute("value"));
 		Assert.assertEquals("1985/02/13",findWidget("$t2").getAttribute("value"));
-		Assert.assertEquals("26",findWidget("$l2").getAttribute("value"));
+		Assert.assertEquals(age3,findWidget("$l2").getAttribute("value"));
 		
 		
 	}
