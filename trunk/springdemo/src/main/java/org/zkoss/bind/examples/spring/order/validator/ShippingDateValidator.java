@@ -3,13 +3,11 @@ package org.zkoss.bind.examples.spring.order.validator;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.validator.AbstractValidator;
 
 @Component("shippingDateValidator")
-@Scope("prototype")
 public class ShippingDateValidator extends AbstractValidator{
 
 	public void validate(ValidationContext ctx) {
