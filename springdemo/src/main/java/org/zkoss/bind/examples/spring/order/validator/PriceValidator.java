@@ -6,7 +6,6 @@ import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.validator.AbstractValidator;
 
 @Component("priceValidator")
-@Scope("prototype")
 public class PriceValidator extends AbstractValidator{
 
 	public void validate(ValidationContext ctx) {

@@ -12,27 +12,24 @@ package org.zkoss.bind.examples.spring.order.viewmodel;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.bind.examples.spring.order.domain.Order;
 import org.zkoss.bind.examples.spring.order.domain.OrderService;
+import org.zkoss.zk.ui.select.annotation.WireVariable;
 
 /**
  * @author Hawk
  * 
  */
-@Component("orderVm")
-@Scope("prototype")
 public class OrderVM {
 
 	//the order list
 	List<Order> orders;
 	
-	@Autowired
+	@WireVariable
 	OrderService orderService;
+	
 	//the selected order
 	Order selected;
 	

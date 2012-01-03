@@ -8,7 +8,6 @@ import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.validator.AbstractValidator;
 
 @Component("creationDateValidator")
-@Scope("prototype")
 public class CreationDateValidator extends AbstractValidator{
 
 	public void validate(ValidationContext ctx) {
