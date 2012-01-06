@@ -1,10 +1,12 @@
 package org.zkoss.bind.unitest2;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.WebElement;
+import org.zkoss.bind.unitest2.ChildrenTestCase.Node;
 import org.zkoss.zktc.core.junit.TestCaseBase;
 import org.zkoss.zktc.core.widget.Widget;
 import org.zkoss.zktc.core.widget.Widgets;
@@ -494,39 +496,154 @@ public class CollectionTestCase  extends TestCaseBase{
 		
 	}
 	
-//	@Test
-//	public void indexTree1(){
-//		navigate(getTestCaseUrl("/bind/basic/collection-index-tree.zul"));
-//		
-//		Widget tree = findWidget("$tree");
-//		dumpWidget(tree);
-//		Widget children = tree.findWidget("@treechildren");//retrun tree row?
-//		
-//		System.out.println("children -0 "+children.getClassName());
-//		
-//		List<Widget> rows = children.getChildren();
-//		String[] itemLabel = new String[]{"A","B","C"};
-//		Assert.assertEquals(itemLabel.length, rows.size());
-//		
-//		for(int i=0;i<itemLabel.length;i++){
-//			Widget treerow = rows.get(i);
-//			System.out.println("treerow -0 "+treerow.getClassName()+":"+treerow.getUuid());
-//			List<Widget> cells = treerow.getChildren();//treerow.findWidgets("@treecell");// selector didn't get children correctly
-//			Widget cell = cells.get(0);
-//			System.out.println("cell -0 "+cell.getClassName()+":"+cell.getLabel());
-//			Assert.assertEquals(""+i, cell.getLabel());
-//			cell = cell.getNextSibling();
-//			System.out.println("cell -1 "+cell.getClassName()+":"+cell.getLabel());
-//			Assert.assertEquals(itemLabel[i]+i, cell.getLabel());
-//			
-//			cell = cell.getNextSibling();
-//			Widget btn = cell.findWidget("@button");//index button
-//			Widget msg = findWidget("$msg");
-//			btn.click();
-//			
-//			Assert.assertEquals("item index "+i, msg.getValue());
+	@Test
+	public void indexTree1(){
+		navigate(getTestCaseUrl("/bind/basic/collection-index-tree.zul"));
+		
+		
+		MyTreeNode root = new MyTreeNode("Root");
+		String[] labs = new String[]{"A","B","C"};
+		for (int i = 0; i < 3; i++) {
+			MyTreeNode ni = new MyTreeNode(labs[i] + i);
+			for (int j = 0; j < 3; j++) {
+				MyTreeNode nj = new MyTreeNode(ni.data
+						+ "-" + j);
+				for (int k = 0; k < 2; k++) {
+					MyTreeNode nk = new MyTreeNode(
+							nj.data + "-" + k);
+					nj.add(nk);
+				}
+				ni.add(nj);
+			}
+			root.add(ni);
+		}
+		
+		
+		Widget tree = findWidget("$tree");
+		Widget treeChildren = tree.getFirstChild().getNextSibling();
+		testTree1(root,treeChildren);
+	}
+	
+	void testTree1(MyTreeNode node,Widget parent){
+		List<Widget> children = parent.getChildren();
+		List<MyTreeNode> nodes =  node.getChildren();
+		Assert.assertEquals(nodes.size(), children.size());
+		Widget addBeforeBtn = null;
+		Widget addAfterBtn = null;
+		Widget deleteBtn = null;
+		MyTreeNode n1 = nodes.get(1);
+		for(int i=0;i<nodes.size();i++){
+			MyTreeNode n = nodes.get(i);
+			Widget item = children.get(i);
+			Widget row = item.getFirstChild();
+			Widget cell = row.getFirstChild();
+			Widget treechildren = row.getNextSibling();
+			Assert.assertEquals(""+i, cell.getLabel());
+			cell = cell.getNextSibling();
+			Assert.assertEquals(n.data, cell.getLabel());
+			cell = cell.getNextSibling();
+			
+			List<Widget> buttons = cell.findWidgets("@button");
+			buttons.get(0).click();
+			Assert.assertEquals("item index "+i, findWidget("$msg").getValue());
+			
+			if(i==1){
+				deleteBtn = buttons.get(1);
+				addAfterBtn =  buttons.get(2);
+				addBeforeBtn =  buttons.get(3);
+			}
+			
+			if(n.getChildren().size()==0){
+				Assert.assertEquals(0, treechildren==null?0:treechildren.getChildrenSize());
+			}else{
+				item.call("setOpen", true); 
+				waitForTrip(1, 1000);
+				testTree1(n,treechildren);
+			}
+		}
+		
+//		if(action){//check after before
+//			nodes.add(2, new MyTreeNode(n1.data+"-after"));
+//			addAfterBtn.click();
+//			nodes.add(1, new MyTreeNode(n1.data+"-before"));
+//			addBeforeBtn.click();
+//			nodes.remove(2);
+//			deleteBtn.click();
 //		}
-//	}
+	}
+	
+	
+	static public class MyTreeNode {
+
+		String data;
+		List<MyTreeNode> children;
+		public MyTreeNode(String data) {
+			this.data = data;
+			children = new ArrayList<MyTreeNode>();
+		}
+		public void add(MyTreeNode node){
+			children.add(node);
+		}
+		public List<MyTreeNode> getChildren(){
+			return children;
+		}
+	}
+	
+	@Test
+	public void templateTree(){
+		navigate(getTestCaseUrl("/bind/basic/collection-template-tree.zul"));
+		
+		
+		MyTreeNode root = new MyTreeNode("Root");
+		String[] labs = new String[]{"A","B","C"};
+		for (int i = 0; i < 3; i++) {
+			MyTreeNode ni = new MyTreeNode(labs[i] + i);
+			for (int j = 0; j < 3; j++) {
+				MyTreeNode nj = new MyTreeNode(ni.data
+						+ "-" + j);
+				for (int k = 0; k < 2; k++) {
+					MyTreeNode nk = new MyTreeNode(
+							nj.data + "-" + k);
+					nj.add(nk);
+				}
+				ni.add(nj);
+			}
+			root.add(ni);
+		}
+		
+		
+		Widget tree = findWidget("$tree");
+		Widget treeChildren = tree.getFirstChild().getNextSibling();
+		templateTree(root,treeChildren);
+	}
+	
+	void templateTree(MyTreeNode node,Widget parent){
+		List<Widget> children = parent.getChildren();
+		List<MyTreeNode> nodes =  node.getChildren();
+		Assert.assertEquals(nodes.size(), children.size());
+		for(int i=0;i<nodes.size();i++){
+			MyTreeNode n = nodes.get(i);
+			Widget item = children.get(i);
+			Widget row = item.getFirstChild();
+			Widget cell = row.getLastChild();
+			Widget treechildren = row.getNextSibling();
+			
+			if(i==1 || n.data.startsWith("A")){
+				Assert.assertEquals("Model1", cell.getLabel());
+			}else{
+				Assert.assertEquals("Model2", cell.getLabel());
+			}
+			
+
+			if(n.getChildren().size()==0){
+				Assert.assertEquals(0, treechildren==null?0:treechildren.getChildrenSize());
+			}else{
+				item.call("setOpen", true); 
+				waitForTrip(1, 1000);
+				templateTree(n,treechildren);
+			}
+		}
+	}
 	
 	
 	@Test

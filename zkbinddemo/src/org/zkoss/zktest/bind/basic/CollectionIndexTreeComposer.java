@@ -33,12 +33,9 @@ public class CollectionIndexTreeComposer extends BindComposer {
 	TreeModel<TreeNode<String>> model;
 
 	public CollectionIndexTreeComposer() {
-
 		MyTreeNode root = new MyTreeNode("Root",
 				new MyTreeNode[] {});
-
 		String[] labs = new String[]{"A","B","C"};
-		
 		for (int i = 0; i < 3; i++) {
 			MyTreeNode ni = new MyTreeNode(labs[i] + i,
 					new MyTreeNode[] {});
@@ -54,7 +51,6 @@ public class CollectionIndexTreeComposer extends BindComposer {
 			}
 			root.add(ni);
 		}
-
 		model = new DefaultTreeModel<String>(root);
 
 	}
@@ -81,7 +77,7 @@ public class CollectionIndexTreeComposer extends BindComposer {
 	public void addAfter(@BindingParam("node") MyTreeNode node) {
 		MyTreeNode parent = (MyTreeNode)node.getParent();
 		int i = parent.getIndex(node);
-		parent.insert(new MyTreeNode(node.getData()), i + 1);
+		parent.insert(new MyTreeNode(node.getData()+"-after"), i + 1);
 		message1 = "addAfter item index " + i;
 	}
 
@@ -89,7 +85,7 @@ public class CollectionIndexTreeComposer extends BindComposer {
 	public void addBefore(@BindingParam("node") MyTreeNode node) {
 		TreeNode<String> parent = node.getParent();
 		int i = parent.getIndex(node);
-		parent.insert(new MyTreeNode(node.getData()), i);
+		parent.insert(new MyTreeNode(node.getData()+"-before"), i);
 		message1 = "addBefore item index " + (i + 1);
 	}
 
