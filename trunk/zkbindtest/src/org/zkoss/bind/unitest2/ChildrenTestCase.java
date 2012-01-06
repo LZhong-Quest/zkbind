@@ -6,11 +6,8 @@ import java.util.List;
 import junit.framework.Assert;
 
 import org.junit.Test;
-import org.openqa.selenium.WebDriverBackedSelenium;
 import org.zkoss.zktc.core.junit.TestCaseBase;
 import org.zkoss.zktc.core.widget.Widget;
-
-import com.thoughtworks.selenium.Selenium;
 
 public class ChildrenTestCase extends TestCaseBase{
 	@Test
