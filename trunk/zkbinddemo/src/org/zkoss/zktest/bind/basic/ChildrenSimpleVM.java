@@ -3,7 +3,10 @@ package org.zkoss.zktest.bind.basic;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.zkoss.bind.Binder;
 import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.ContextParam;
+import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.NotifyChange;
 
 public class ChildrenSimpleVM {
@@ -45,6 +48,14 @@ public class ChildrenSimpleVM {
 	@Command @NotifyChange("nodes")
 	public void clear(){
 		nodes.clear();
+	}
+	
+	@Command 
+	public void cmd3(@ContextParam(ContextType.BINDER)Binder binder){
+		nodes.get(0).name="Item X";
+		binder.notifyChange(nodes.get(0), "name");
+		nodes.get(1).name="Item A";
+		binder.notifyChange(nodes.get(1), "name");
 	}
 	
 	static public class Node{

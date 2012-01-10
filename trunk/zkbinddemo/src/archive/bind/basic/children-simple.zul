@@ -19,8 +19,19 @@
 		</template>
 	</vlayout>
 	
+	Simple - dependency
+	<vlayout id="dependency" children="@load(vm.nodes) @template(each.name eq 'Item A'?'c1':'c2')">
+		<template name="c1" var="node">
+			<label value="@bind(node.name)" sclass="c1" style="padding-left:10px;border:2px solid blue;"/>
+		</template>
+		<template name="c2" var="node">
+			<label value="@bind(node.name)" sclass="c2" style="padding-left:10px;border:2px solid red;"/>
+		</template>
+	</vlayout>
+	
 	<button label="relaod 1" id="cmd1" onClick="@command('cmd1')"/>
 	<button label="relaod 2" id="cmd2" onClick="@command('cmd2')"/>
+	<button label="relaod 3" id="cmd3" onClick="@command('cmd3')"/>
 	
 	<button label="clear " id="clear" onClick="@command('clear')"/> 
 	
