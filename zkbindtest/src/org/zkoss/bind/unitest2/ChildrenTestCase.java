@@ -11,7 +11,7 @@ import org.zkoss.zktc.core.widget.Widget;
 
 public class ChildrenTestCase extends TestCaseBase{
 	@Test
-	public void testSimple(){
+	public void testSimple1(){
 		navigate(getTestCaseUrl("/bind/basic/children-simple.zul"));
 		
 		Widget init = findWidget("$init");
@@ -83,6 +83,30 @@ public class ChildrenTestCase extends TestCaseBase{
 		Assert.assertEquals(compare.length, labels.size());
 		for(int i=0;i<compare.length;i++){
 			Assert.assertEquals(compare[i], labels.get(i).getValue());
+		}
+	}
+	
+	@Test
+	public void testSimple2(){
+		navigate(getTestCaseUrl("/bind/basic/children-simple.zul"));
+		
+		Widget dependency = findWidget("$dependency");
+		Widget cmd3 = findWidget("$cmd3");
+		
+		List<Widget> labels = dependency.findWidgets("@label");
+		String[] compare = new String[]{"Item A","Item B","Item C"};
+		Assert.assertEquals(compare.length, labels.size());
+		for(int i=0;i<compare.length;i++){
+			Assert.assertEquals(compare[i], labels.get(i).getValue());
+			Assert.assertEquals("Item A".equals(compare[i])?"c1":"c2", labels.get(i).getAttribute("sclass"));
+		}
+		cmd3.click();
+		compare = new String[]{"Item X","Item A","Item C"};
+		labels = dependency.findWidgets("@label");
+		Assert.assertEquals(compare.length, labels.size());
+		for(int i=0;i<compare.length;i++){
+			Assert.assertEquals(compare[i], labels.get(i).getValue());
+			Assert.assertEquals("Item A".equals(compare[i])?"c1":"c2", labels.get(i).getAttribute("sclass"));
 		}
 	}
 	
