@@ -1,7 +1,9 @@
 package org.zkoss.bind.unitest2;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -150,9 +152,7 @@ public class FeaturesTestCase0500 extends TestCaseBase{
 		Widget db4 = findWidget("$db4");
 		Widget msg4 = findWidget("$msg4");
 		
-		
 		Widget reload = findWidget("$reload");
-		
 		
 		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
 		Calendar now = Calendar.getInstance();
@@ -210,6 +210,117 @@ public class FeaturesTestCase0500 extends TestCaseBase{
 		db4.replace(yesterday).tab();
 		Assert.assertEquals(yesterday,db4.getText());
 		Assert.assertEquals("",msg4.getValue());
+		
+	}
+	
+	@Test
+	public void f00743_1(){
+		navigate(getTestCaseUrl("/bind/issue/F00743_1.zul"));
+		Widget outerbox = findWidget("$outerbox");
+		Widget selected = findWidget("$selected");
+		Widget range = findWidget("$range");
+
+		Widget clean1 = findWidget("$clean1");
+		Widget clean2 = findWidget("$clean2");
+		Widget select = findWidget("$select");
+		Widget reload = findWidget("$reload");
+		Widget select0 = findWidget("$select0");
+		Widget showselect = findWidget("$showselect");
+		
+		
+		outerbox.findWidgets("@listitem").get(0).click();
+		outerbox.findWidgets("@listitem").get(2).click();
+		Assert.assertEquals("[A, C]", selected.getValue());
+		showselect.click();
+		Assert.assertEquals("[0, 2]", range.getValue());
+		
+		clean1.click();
+		Assert.assertEquals("", selected.getValue());
+		Assert.assertArrayEquals(new long[0], ListboxUtil.getSelectedIndexs(outerbox));
+		showselect.click();
+		Assert.assertEquals("[]", range.getValue());
+		
+		
+		outerbox.findWidgets("@listitem").get(2).click();
+		outerbox.findWidgets("@listitem").get(4).click();
+		Assert.assertEquals("[C, E]", selected.getValue());
+		showselect.click();
+		Assert.assertEquals("[2, 4]", range.getValue());
+		
+		clean2.click();
+		Assert.assertEquals("[]", selected.getValue());
+//		Assert.assertArrayEquals(new long[0], ListboxUtil.getSelectedIndexs(outerbox));
+		showselect.click();
+		Assert.assertEquals("[]", range.getValue());
+		
+		select.click();
+//		Assert.assertArrayEquals(new long[]{1L,3L}, ListboxUtil.getSelectedIndexs(outerbox));
+		Assert.assertEquals("[B, D]", selected.getValue());
+		showselect.click();
+		Assert.assertEquals("[1, 3]", range.getValue());
+		
+		
+		select0.click();
+//		Assert.assertArrayEquals(new long[]{0L,1L}, ListboxUtil.getSelectedIndexs(outerbox));
+		Assert.assertEquals("[B, D]", selected.getValue());
+		showselect.click();
+		Assert.assertEquals("[0, 1]", range.getValue());
+		
+		
+		reload.click();
+//		Assert.assertArrayEquals(new long[]{1L,3L}, ListboxUtil.getSelectedIndexs(outerbox));
+		Assert.assertEquals("[B, D]", selected.getValue());
+		showselect.click();
+		Assert.assertEquals("[1, 3]", range.getValue());
+		
+	}
+	
+	
+	@Test
+	public void f00743_2(){
+		navigate(getTestCaseUrl("/bind/issue/F00743_2.zul"));
+		Widget outerbox = findWidget("$outerbox");
+		Widget range = findWidget("$range");
+
+		Widget clean = findWidget("$clean");
+		Widget select = findWidget("$select");
+		Widget reload = findWidget("$reload");
+		Widget select0 = findWidget("$select0");
+		Widget showselect = findWidget("$showselect");
+		
+		
+		outerbox.findWidgets("@listitem").get(0).click();
+		outerbox.findWidgets("@listitem").get(2).click();
+		showselect.click();
+		Assert.assertEquals("[0, 2]", range.getValue());
+		
+		clean.click();
+		Assert.assertArrayEquals(new long[0], ListboxUtil.getSelectedIndexs(outerbox));
+		showselect.click();
+		Assert.assertEquals("[]", range.getValue());
+		
+		
+		outerbox.findWidgets("@listitem").get(2).click();
+		outerbox.findWidgets("@listitem").get(4).click();
+		showselect.click();
+		Assert.assertEquals("[2, 4]", range.getValue());
+		
+		select.click();
+//		Assert.assertArrayEquals(new long[]{1L,3L}, ListboxUtil.getSelectedIndexs(outerbox));
+		showselect.click();
+		Assert.assertEquals("[1, 3]", range.getValue());
+		
+		
+		select0.click();
+//		Assert.assertArrayEquals(new long[]{0L,1L}, ListboxUtil.getSelectedIndexs(outerbox));
+		showselect.click();
+		Assert.assertEquals("[0, 1]", range.getValue());
+		
+		
+		reload.click();
+//		Assert.assertArrayEquals(new long[]{0L,1L}, ListboxUtil.getSelectedIndexs(outerbox));
+		showselect.click();
+		Assert.assertEquals("[0, 1]", range.getValue());
 		
 	}
 }
