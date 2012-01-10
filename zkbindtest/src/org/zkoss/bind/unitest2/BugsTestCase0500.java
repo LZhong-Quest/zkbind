@@ -1,5 +1,6 @@
 package org.zkoss.bind.unitest2;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
@@ -418,4 +419,244 @@ public class BugsTestCase0500 extends TestCaseBase{
 		Assert.assertEquals("", m21.getValue());
 	}
 	
+	long getListboxSelectedIndex(Widget listbox){
+		
+		long index;
+//		long index = (Long)listbox.getAttribute("selectedIndex");////listbox bug in zkmax, don't get form selectedIndex
+//		if(index!=-1) return index;
+		Widget selected = listbox.getWidgetAttribute("selectedItem");
+		if(selected==null) return -1L;
+		
+		List<Widget> outeritems = listbox.getChildren();//include header
+		index = 0;
+		for(Widget w:outeritems){
+			if("listitem".equals(w.getWidgetName())){
+				if(w.getUuid().equals(selected.getUuid())) return index;
+				index++;
+			}
+		}
+		return -1L;
+	}
+
+	@Test
+	public void b00762Listbox1(){
+		navigate(getTestCaseUrl("/bind/issue/B00762Listbox1.zul"));
+		Widget outerbox = findWidget("$outerbox");
+		Widget selected = findWidget("$selected");
+		Widget min = findWidget("$min");
+		Widget max = findWidget("$max");
+
+		Widget clean = findWidget("$clean");
+		Widget select = findWidget("$select");
+		Widget reload = findWidget("$reload");
+		Widget select0 = findWidget("$select0");
+		Widget showselect = findWidget("$showselect");
+		
+		
+		outerbox.findWidgets("@listitem").get(0).click();
+		Assert.assertEquals("A", selected.getValue());
+		showselect.click();
+		Assert.assertEquals("0", min.getValue());
+		Assert.assertEquals("0", max.getValue());
+		
+		outerbox.findWidgets("@listitem").get(2).click();
+		Assert.assertEquals("C", selected.getValue());
+		showselect.click();
+		Assert.assertEquals("2", min.getValue());
+		Assert.assertEquals("2", max.getValue());
+		
+		clean.click();
+		Assert.assertEquals(-1L, getListboxSelectedIndex(outerbox));
+		Assert.assertEquals("", selected.getValue());
+		showselect.click();
+		Assert.assertEquals("-1", min.getValue());
+		Assert.assertEquals("-1", max.getValue());
+		
+		select.click();
+		Assert.assertEquals(1L, getListboxSelectedIndex(outerbox));
+		Assert.assertEquals("B", selected.getValue());
+		showselect.click();
+		Assert.assertEquals("1", min.getValue());
+		Assert.assertEquals("1", max.getValue());
+		
+		
+		select0.click();
+		Assert.assertEquals(0L, getListboxSelectedIndex(outerbox));
+		Assert.assertEquals("B", selected.getValue());//still in B
+		showselect.click();
+		Assert.assertEquals("0", min.getValue());
+		Assert.assertEquals("0", max.getValue());
+		
+		reload.click();
+		Assert.assertEquals(1L, getListboxSelectedIndex(outerbox));
+		Assert.assertEquals("B", selected.getValue());
+		showselect.click();
+		Assert.assertEquals("1", min.getValue());
+		Assert.assertEquals("1", max.getValue());
+	}
+	
+	
+	@Test
+	public void b00762Listbox2(){
+		navigate(getTestCaseUrl("/bind/issue/B00762Listbox2.zul"));
+		Widget outerbox = findWidget("$outerbox");
+		Widget min = findWidget("$min");
+		Widget max = findWidget("$max");
+
+		Widget clean = findWidget("$clean");
+		Widget select = findWidget("$select");
+		Widget reload = findWidget("$reload");
+		Widget select0 = findWidget("$select0");
+		Widget showselect = findWidget("$showselect");
+		
+		
+		outerbox.findWidgets("@listitem").get(0).click();
+		showselect.click();
+		Assert.assertEquals("0", min.getValue());
+		Assert.assertEquals("0", max.getValue());
+		
+		outerbox.findWidgets("@listitem").get(2).click();
+		showselect.click();
+		Assert.assertEquals("2", min.getValue());
+		Assert.assertEquals("2", max.getValue());
+		
+		clean.click();
+		Assert.assertEquals(-1L, getListboxSelectedIndex(outerbox));
+		showselect.click();
+		Assert.assertEquals("-1", min.getValue());
+		Assert.assertEquals("-1", max.getValue());
+		
+		select.click();
+		Assert.assertEquals(1L, getListboxSelectedIndex(outerbox));
+		showselect.click();
+		Assert.assertEquals("1", min.getValue());
+		Assert.assertEquals("1", max.getValue());
+		
+		
+		select0.click();
+		Assert.assertEquals(0L, getListboxSelectedIndex(outerbox));
+		showselect.click();
+		Assert.assertEquals("0", min.getValue());
+		Assert.assertEquals("0", max.getValue());
+		
+		reload.click();
+		Assert.assertEquals(0L, getListboxSelectedIndex(outerbox));
+		showselect.click();
+		Assert.assertEquals("0", min.getValue());
+		Assert.assertEquals("0", max.getValue());
+	}
+	
+	
+	@Test
+	public void b00762Combobox1(){
+		navigate(getTestCaseUrl("/bind/issue/B00762Combobox1.zul"));
+		Widget outerbox = findWidget("$outerbox");
+		Widget selected = findWidget("$selected");
+		Widget min = findWidget("$min");
+		Widget max = findWidget("$max");
+
+		Widget clean = findWidget("$clean");
+		Widget select = findWidget("$select");
+		Widget reload = findWidget("$reload");
+		Widget select0 = findWidget("$select0");
+		Widget showselect = findWidget("$showselect");
+		
+		outerbox.call("open");
+		waitForTrip(1, 500);
+		outerbox.findWidgets("@comboitem").get(0).click();
+		Assert.assertEquals("A", selected.getValue());
+		showselect.click();
+		Assert.assertEquals("0", min.getValue());
+		Assert.assertEquals("0", max.getValue());
+		
+		outerbox.call("open");
+		waitForTrip(1, 500);
+		outerbox.findWidgets("@comboitem").get(2).click();
+		Assert.assertEquals("C", selected.getValue());
+		showselect.click();
+		Assert.assertEquals("2", min.getValue());
+		Assert.assertEquals("2", max.getValue());
+		
+		clean.click();
+		Assert.assertEquals("", outerbox.getValue());
+		Assert.assertEquals("", selected.getValue());
+		showselect.click();
+		Assert.assertEquals("-1", min.getValue());
+		Assert.assertEquals("-1", max.getValue());
+		
+		select.click();
+		Assert.assertEquals("B", outerbox.getValue());
+		Assert.assertEquals("B", selected.getValue());
+		showselect.click();
+		Assert.assertEquals("1", min.getValue());
+		Assert.assertEquals("1", max.getValue());
+		
+		
+		select0.click();
+		Assert.assertEquals("A", outerbox.getValue());
+		Assert.assertEquals("B", selected.getValue());//still in B
+		showselect.click();
+		Assert.assertEquals("0", min.getValue());
+		Assert.assertEquals("0", max.getValue());
+		
+		reload.click();
+		Assert.assertEquals("B", outerbox.getValue());
+		Assert.assertEquals("B", selected.getValue());
+		showselect.click();
+		Assert.assertEquals("1", min.getValue());
+		Assert.assertEquals("1", max.getValue());
+	}
+	
+	@Test
+	public void b00762Combobox2(){
+		navigate(getTestCaseUrl("/bind/issue/B00762Combobox2.zul"));
+		Widget outerbox = findWidget("$outerbox");
+		Widget min = findWidget("$min");
+		Widget max = findWidget("$max");
+
+		Widget clean = findWidget("$clean");
+		Widget select = findWidget("$select");
+		Widget reload = findWidget("$reload");
+		Widget select0 = findWidget("$select0");
+		Widget showselect = findWidget("$showselect");
+		
+		outerbox.call("open");
+		waitForTrip(1, 500);
+		outerbox.findWidgets("@comboitem").get(0).click();
+		showselect.click();
+		Assert.assertEquals("0", min.getValue());
+		Assert.assertEquals("0", max.getValue());
+		
+		outerbox.call("open");
+		waitForTrip(1, 500);
+		outerbox.findWidgets("@comboitem").get(2).click();
+		showselect.click();
+		Assert.assertEquals("2", min.getValue());
+		Assert.assertEquals("2", max.getValue());
+		
+		clean.click();
+		Assert.assertEquals("", outerbox.getValue());
+		showselect.click();
+		Assert.assertEquals("-1", min.getValue());
+		Assert.assertEquals("-1", max.getValue());
+		
+		select.click();
+		Assert.assertEquals("B", outerbox.getValue());
+		showselect.click();
+		Assert.assertEquals("1", min.getValue());
+		Assert.assertEquals("1", max.getValue());
+		
+		
+		select0.click();
+		Assert.assertEquals("A", outerbox.getValue());
+		showselect.click();
+		Assert.assertEquals("0", min.getValue());
+		Assert.assertEquals("0", max.getValue());
+		
+		reload.click();
+		Assert.assertEquals("A", outerbox.getValue());
+		showselect.click();
+		Assert.assertEquals("0", min.getValue());
+		Assert.assertEquals("0", max.getValue());
+	}
 }
