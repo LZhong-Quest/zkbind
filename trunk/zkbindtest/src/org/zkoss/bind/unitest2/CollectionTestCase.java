@@ -1283,6 +1283,90 @@ public class CollectionTestCase  extends TestCaseBase{
 	
 	
 	@Test
+	public void templateGrid3(){
+		navigate(getTestCaseUrl("/bind/basic/collection-template-grid.zul"));
+		
+		Widget outerbox = findWidget("$outergrid");
+		List<Widget> outerrows = outerbox.findWidget("@rows").getChildren();
+		
+		String[] itemLabel = new String[]{"A","B","C", "D"};
+		Assert.assertEquals(itemLabel.length, outerrows.size());
+		
+		for(int i=0;i<itemLabel.length;i++){
+			Widget outerrow = outerrows.get(i);
+			String outerl = itemLabel[i];
+			
+			Widget rowkid = outerrow.getFirstChild();
+			Assert.assertEquals(""+i, rowkid.getValue());// verify the index  on label
+			rowkid = rowkid.getNextSibling();
+			Assert.assertEquals(outerl, rowkid.getValue());//verify the label on label
+			
+			//verify template
+			rowkid = outerrow.getLastChild();
+			Widget label = rowkid.findWidget("@label");//index button
+			if(outerl.equals("A") || i==2){
+				Assert.assertEquals("Model1", label.getValue());
+			}else{
+				Assert.assertEquals("Model2", label.getValue());
+			}
+		}
+		
+		
+		findWidget("@button[label='change1']").click();
+		outerbox = findWidget("$outergrid");
+		outerrows = outerbox.findWidget("@rows").getChildren();
+		
+		itemLabel = new String[]{"X","A","C", "D"};
+		Assert.assertEquals(itemLabel.length, outerrows.size());
+		
+		for(int i=0;i<itemLabel.length;i++){
+			Widget outerrow = outerrows.get(i);
+			String outerl = itemLabel[i];
+			
+			Widget rowkid = outerrow.getFirstChild();
+			Assert.assertEquals(""+i, rowkid.getValue());// verify the index  on label
+			rowkid = rowkid.getNextSibling();
+			Assert.assertEquals(outerl, rowkid.getValue());//verify the label on label
+			
+			//verify template
+			rowkid = outerrow.getLastChild();
+			Widget label = rowkid.findWidget("@label");//index button
+			if(outerl.equals("A") || i==2){
+				Assert.assertEquals("Model1", label.getValue());
+			}else{
+				Assert.assertEquals("Model2", label.getValue());
+			}
+		}
+		
+		findWidget("@button[label='change2']").click();
+		outerbox = findWidget("$outergrid");
+		outerrows = outerbox.findWidget("@rows").getChildren();
+		
+		itemLabel = new String[]{"A","B","C", "D"};
+		Assert.assertEquals(itemLabel.length, outerrows.size());
+		
+		for(int i=0;i<itemLabel.length;i++){
+			Widget outerrow = outerrows.get(i);
+			String outerl = itemLabel[i];
+			
+			Widget rowkid = outerrow.getFirstChild();
+			Assert.assertEquals(""+i, rowkid.getValue());// verify the index  on label
+			rowkid = rowkid.getNextSibling();
+			Assert.assertEquals(outerl, rowkid.getValue());//verify the label on label
+			
+			//verify template
+			rowkid = outerrow.getLastChild();
+			Widget label = rowkid.findWidget("@label");//index button
+			if(outerl.equals("A") || i==2){
+				Assert.assertEquals("Model1", label.getValue());
+			}else{
+				Assert.assertEquals("Model2", label.getValue());
+			}
+		}
+	}
+	
+	
+	@Test
 	public void templateListbox1(){
 		navigate(getTestCaseUrl("/bind/basic/collection-template-listbox.zul"));
 		
@@ -1434,6 +1518,89 @@ public class CollectionTestCase  extends TestCaseBase{
 		
 		for(int i=0;i<itemLabel.length;i++){
 			outeritem = outeritems.get(i);
+			String outerl = itemLabel[i];
+			
+			Widget cell = outeritem.getFirstChild();
+			Assert.assertEquals(""+i, cell.getLabel());// verify the index
+			cell = cell.getNextSibling();
+			Assert.assertEquals(outerl, cell.getLabel());//verify the label
+			
+			//verify template
+			cell = outeritem.getLastChild();
+			if(outerl.equals("A") || i==2){
+				Assert.assertEquals("Model1", cell.getLabel());
+			}else{
+				Assert.assertEquals("Model2", cell.getLabel());
+			}
+		}
+	}
+	
+	@Test
+	public void templateListbox3(){
+		navigate(getTestCaseUrl("/bind/basic/collection-template-listbox.zul"));
+		
+		Widget outerbox = findWidget("$outerbox");
+		List<Widget> outeritems = outerbox.getChildren();//include header
+		outeritems.remove(0);//don't care header
+		
+		String[] itemLabel = new String[]{"A","B","C", "D"};
+		Assert.assertEquals(itemLabel.length, outeritems.size());
+		
+		for(int i=0;i<itemLabel.length;i++){
+			Widget outeritem = outeritems.get(i);
+			String outerl = itemLabel[i];
+			
+			Widget cell = outeritem.getFirstChild();
+			Assert.assertEquals(""+i, cell.getLabel());// verify the index
+			cell = cell.getNextSibling();
+			Assert.assertEquals(outerl, cell.getLabel());//verify the label
+			
+			//verify template
+			cell = outeritem.getLastChild();
+			if(outerl.equals("A") || i==2){
+				Assert.assertEquals("Model1", cell.getLabel());
+			}else{
+				Assert.assertEquals("Model2", cell.getLabel());
+			}
+		}
+		
+		
+		findWidget("@button[label='change1']").click();
+		outerbox = findWidget("$outerbox");
+		outeritems = outerbox.getChildren();//include header
+		outeritems.remove(0);//don't care header
+		
+		itemLabel = new String[]{"X","A","C", "D"};
+		Assert.assertEquals(itemLabel.length, outeritems.size());
+		
+		for(int i=0;i<itemLabel.length;i++){
+			Widget outeritem = outeritems.get(i);
+			String outerl = itemLabel[i];
+			
+			Widget cell = outeritem.getFirstChild();
+			Assert.assertEquals(""+i, cell.getLabel());// verify the index
+			cell = cell.getNextSibling();
+			Assert.assertEquals(outerl, cell.getLabel());//verify the label
+			
+			//verify template
+			cell = outeritem.getLastChild();
+			if(outerl.equals("A") || i==2){
+				Assert.assertEquals("Model1", cell.getLabel());
+			}else{
+				Assert.assertEquals("Model2", cell.getLabel());
+			}
+		}
+		
+		findWidget("@button[label='change2']").click();
+		outerbox = findWidget("$outerbox");
+		outeritems = outerbox.getChildren();//include header
+		outeritems.remove(0);//don't care header
+		
+		itemLabel = new String[]{"A","B","C", "D"};
+		Assert.assertEquals(itemLabel.length, outeritems.size());
+		
+		for(int i=0;i<itemLabel.length;i++){
+			Widget outeritem = outeritems.get(i);
 			String outerl = itemLabel[i];
 			
 			Widget cell = outeritem.getFirstChild();
