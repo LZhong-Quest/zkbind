@@ -419,24 +419,7 @@ public class BugsTestCase0500 extends TestCaseBase{
 		Assert.assertEquals("", m21.getValue());
 	}
 	
-	long getListboxSelectedIndex(Widget listbox){
-		
-		long index;
-//		long index = (Long)listbox.getAttribute("selectedIndex");////listbox bug in zkmax, don't get form selectedIndex
-//		if(index!=-1) return index;
-		Widget selected = listbox.getWidgetAttribute("selectedItem");
-		if(selected==null) return -1L;
-		
-		List<Widget> outeritems = listbox.getChildren();//include header
-		index = 0;
-		for(Widget w:outeritems){
-			if("listitem".equals(w.getWidgetName())){
-				if(w.getUuid().equals(selected.getUuid())) return index;
-				index++;
-			}
-		}
-		return -1L;
-	}
+
 
 	@Test
 	public void b00762Listbox1(){
@@ -466,14 +449,14 @@ public class BugsTestCase0500 extends TestCaseBase{
 		Assert.assertEquals("2", max.getValue());
 		
 		clean.click();
-		Assert.assertEquals(-1L, getListboxSelectedIndex(outerbox));
+		Assert.assertEquals(-1L, ListboxUtil.getSelectedIndex(outerbox));
 		Assert.assertEquals("", selected.getValue());
 		showselect.click();
 		Assert.assertEquals("-1", min.getValue());
 		Assert.assertEquals("-1", max.getValue());
 		
 		select.click();
-		Assert.assertEquals(1L, getListboxSelectedIndex(outerbox));
+		Assert.assertEquals(1L, ListboxUtil.getSelectedIndex(outerbox));
 		Assert.assertEquals("B", selected.getValue());
 		showselect.click();
 		Assert.assertEquals("1", min.getValue());
@@ -481,14 +464,14 @@ public class BugsTestCase0500 extends TestCaseBase{
 		
 		
 		select0.click();
-		Assert.assertEquals(0L, getListboxSelectedIndex(outerbox));
+		Assert.assertEquals(0L, ListboxUtil.getSelectedIndex(outerbox));
 		Assert.assertEquals("B", selected.getValue());//still in B
 		showselect.click();
 		Assert.assertEquals("0", min.getValue());
 		Assert.assertEquals("0", max.getValue());
 		
 		reload.click();
-		Assert.assertEquals(1L, getListboxSelectedIndex(outerbox));
+		Assert.assertEquals(1L, ListboxUtil.getSelectedIndex(outerbox));
 		Assert.assertEquals("B", selected.getValue());
 		showselect.click();
 		Assert.assertEquals("1", min.getValue());
@@ -521,26 +504,26 @@ public class BugsTestCase0500 extends TestCaseBase{
 		Assert.assertEquals("2", max.getValue());
 		
 		clean.click();
-		Assert.assertEquals(-1L, getListboxSelectedIndex(outerbox));
+		Assert.assertEquals(-1L, ListboxUtil.getSelectedIndex(outerbox));
 		showselect.click();
 		Assert.assertEquals("-1", min.getValue());
 		Assert.assertEquals("-1", max.getValue());
 		
 		select.click();
-		Assert.assertEquals(1L, getListboxSelectedIndex(outerbox));
+		Assert.assertEquals(1L, ListboxUtil.getSelectedIndex(outerbox));
 		showselect.click();
 		Assert.assertEquals("1", min.getValue());
 		Assert.assertEquals("1", max.getValue());
 		
 		
 		select0.click();
-		Assert.assertEquals(0L, getListboxSelectedIndex(outerbox));
+		Assert.assertEquals(0L, ListboxUtil.getSelectedIndex(outerbox));
 		showselect.click();
 		Assert.assertEquals("0", min.getValue());
 		Assert.assertEquals("0", max.getValue());
 		
 		reload.click();
-		Assert.assertEquals(0L, getListboxSelectedIndex(outerbox));
+		Assert.assertEquals(0L, ListboxUtil.getSelectedIndex(outerbox));
 		showselect.click();
 		Assert.assertEquals("0", min.getValue());
 		Assert.assertEquals("0", max.getValue());
