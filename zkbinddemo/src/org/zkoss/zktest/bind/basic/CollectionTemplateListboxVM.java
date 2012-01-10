@@ -15,8 +15,11 @@ package org.zkoss.zktest.bind.basic;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.zkoss.bind.Binder;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.ContextParam;
+import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.NotifyChange;
 
 /**
@@ -102,8 +105,22 @@ public class CollectionTemplateListboxVM{
 	}
 
 	@Command @NotifyChange("items")
-	public void change() {
+	public void reload() {
+		System.out.println(">>>>>>>>>>>>>>>>>reload");
+	}
+	
+	@Command @NotifyChange("items")
+	public void change1() {
 		items.get(0).setName("X");
+		items.get(1).setName("A");
+	}
+	
+	@Command
+	public void change2(@ContextParam(ContextType.BINDER)Binder binder) {
+		items.get(0).setName("A");
+		binder.notifyChange(items.get(0), "name");
+		items.get(1).setName("B");
+		binder.notifyChange(items.get(1), "*");
 	}
 
 }

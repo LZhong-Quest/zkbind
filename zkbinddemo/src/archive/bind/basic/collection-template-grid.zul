@@ -69,7 +69,8 @@
 
 	<hbox>
 		<button label="reload" onClick="@command('reload')" />
-		<button label="change" onClick="@command('change')" />
+		<button label="change1" onClick="@command('change1')" />
+		<button label="change2" onClick="@command('change2')" />
 		<button label="detach" onClick="grid.detach()" />
 		<button label="Dump" onClick="binder.getTracker().dump()" />
 	</hbox>	
