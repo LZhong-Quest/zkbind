@@ -796,19 +796,13 @@ public class CollectionTestCase  extends TestCaseBase{
 		
 		Widget outeritem = outeritems.get(1);//select 2nd
 		outeritem.getFirstChild().click();//click on listitem is not work if it has listbox inside, (it will click on the inside listbox)
-		Assert.assertEquals(1L, outerbox.getAttribute("selectedIndex"));
+		Assert.assertEquals(1L, ListboxUtil.getSelectedIndex(outerbox));
 		Assert.assertEquals("", msg.getValue());
 		
 		findWidget("$btn1").click();
 		
 		
-		//Assert.assertEquals(1L, outerbox.getAttribute("selectedIndex")); // fail in max
-		
-		outeritems = outerbox.getChildren();//include header
-		outeritems.remove(0);//don't care header
-		outeritem = outeritems.get(1);//select 2nd
-		
-		Assert.assertEquals(outeritem.getUuid(), outerbox.getWidgetAttribute("selectedItem").getUuid());
+		Assert.assertEquals(1L, ListboxUtil.getSelectedIndex(outerbox));
 		Assert.assertEquals("reloaded", msg.getValue());
 		
 	}

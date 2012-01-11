@@ -18,7 +18,9 @@ public class ListboxUtil {
 		index = 0;
 		for(Widget w:outeritems){
 			if("listitem".equals(w.getWidgetName())){
-				if(w.getUuid().equals(selected.getUuid())) return index;
+				if(isSelected(w)){
+					return index;
+				}
 				index++;
 			}
 		}
