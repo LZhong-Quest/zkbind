@@ -329,8 +329,6 @@ public class FeaturesTestCase0500 extends TestCaseBase{
 	public void f00769(){
 		navigate(getTestCaseUrl("/bind/issue/F00769.zul"));
 		
-		Widget tree = findWidget("$tree");
-		
 		Widget msg = findWidget("$msg");
 		Widget selected = findWidget("$selected");
 		Widget clean1 = findWidget("$clean1");
@@ -391,5 +389,229 @@ public class FeaturesTestCase0500 extends TestCaseBase{
 		Assert.assertEquals("reloaded [A-0-1, A-1-1-1]", msg.getValue());
 		showselect.click();
 		Assert.assertEquals("[[0, 1], [1, 1, 1]]", msg.getValue());
+	}
+	
+	
+	@Test
+	public void f00771_1(){
+		navigate(getTestCaseUrl("/bind/issue/F00771.zul"));
+		
+		Widget val1 = findWidget("$val1");
+		Widget val2 = findWidget("$val2");
+		Widget val3 = findWidget("$val3");
+		
+		Widget t11 = findWidget("$t11");
+		Widget l11 = findWidget("$l11");
+		Widget l12 = findWidget("$l12");
+		
+		Widget t21 = findWidget("$t21");
+		Widget l21 = findWidget("$l21");
+		Widget l22 = findWidget("$l22");
+		
+		Widget t31 = findWidget("$t31");
+		Widget l31 = findWidget("$l31");
+		Widget l32 = findWidget("$l32");
+		
+		Widget reload1 = findWidget("$reload1");
+		Widget reload2 = findWidget("$reload2");
+		
+		Assert.assertEquals("", val1.getValue());
+		Assert.assertEquals("", val2.getValue());
+		Assert.assertEquals("", val3.getValue());
+		
+		t11.replace("ab").tab();
+		Assert.assertEquals("", val1.getValue());
+		Assert.assertEquals("", val2.getValue());
+		Assert.assertEquals("", val3.getValue());
+		Assert.assertEquals("value1 must equalsIgnoreCase to abc", l11.getValue());
+		Assert.assertEquals("value1 must equalsIgnoreCase to abc - by key", l12.getValue());
+		Assert.assertEquals("", l21.getValue());
+		Assert.assertEquals("value1 must equalsIgnoreCase to abc - by key", l22.getValue());
+		Assert.assertEquals("", l31.getValue());
+		Assert.assertEquals("", l32.getValue());
+		
+		t21.replace("de").tab();
+		Assert.assertEquals("", val1.getValue());
+		Assert.assertEquals("", val2.getValue());
+		Assert.assertEquals("", val3.getValue());
+		Assert.assertEquals("value1 must equalsIgnoreCase to abc", l11.getValue());
+		Assert.assertEquals("value1 must equalsIgnoreCase to abc - by key", l12.getValue());
+		Assert.assertEquals("value2 must equalsIgnoreCase to def", l21.getValue());
+		Assert.assertEquals("value1 must equalsIgnoreCase to abc - by key", l22.getValue());
+		Assert.assertEquals("", l31.getValue());
+		Assert.assertEquals("", l32.getValue());
+		
+		t31.replace("xy").tab();
+		Assert.assertEquals("", val1.getValue());
+		Assert.assertEquals("", val2.getValue());
+		Assert.assertEquals("", val3.getValue());
+		Assert.assertEquals("value1 must equalsIgnoreCase to abc", l11.getValue());
+		Assert.assertEquals("value1 must equalsIgnoreCase to abc - by key", l12.getValue());
+		Assert.assertEquals("value2 must equalsIgnoreCase to def", l21.getValue());
+		Assert.assertEquals("value1 must equalsIgnoreCase to abc - by key", l22.getValue());
+		Assert.assertEquals("value3 must equalsIgnoreCase to xyz", l31.getValue());
+		Assert.assertEquals("value3 must equalsIgnoreCase to xyz - by key", l32.getValue());
+		
+		
+		t11.replace("abc").tab();
+		Assert.assertEquals("abc", val1.getValue());
+		Assert.assertEquals("", val2.getValue());
+		Assert.assertEquals("", val3.getValue());
+		Assert.assertEquals("", l11.getValue());
+		Assert.assertEquals("value2 must equalsIgnoreCase to def - by key", l12.getValue());
+		Assert.assertEquals("value2 must equalsIgnoreCase to def", l21.getValue());
+		Assert.assertEquals("value2 must equalsIgnoreCase to def - by key", l22.getValue());
+		Assert.assertEquals("value3 must equalsIgnoreCase to xyz", l31.getValue());
+		Assert.assertEquals("value3 must equalsIgnoreCase to xyz - by key", l32.getValue());
+		
+		t21.replace("def").tab();
+		Assert.assertEquals("abc", val1.getValue());
+		Assert.assertEquals("def", val2.getValue());
+		Assert.assertEquals("", val3.getValue());
+		Assert.assertEquals("", l11.getValue());
+		Assert.assertEquals("value3 must equalsIgnoreCase to xyz - by key", l12.getValue());
+		Assert.assertEquals("", l21.getValue());
+		Assert.assertEquals("value3 must equalsIgnoreCase to xyz - by key", l22.getValue());
+		Assert.assertEquals("value3 must equalsIgnoreCase to xyz", l31.getValue());
+		Assert.assertEquals("value3 must equalsIgnoreCase to xyz - by key", l32.getValue());
+		
+		t31.replace("xyz").tab();
+		Assert.assertEquals("abc", val1.getValue());
+		Assert.assertEquals("def", val2.getValue());
+		Assert.assertEquals("xyz", val3.getValue());
+		Assert.assertEquals("", l11.getValue());
+		Assert.assertEquals("", l12.getValue());
+		Assert.assertEquals("", l21.getValue());
+		Assert.assertEquals("", l22.getValue());
+		Assert.assertEquals("", l31.getValue());
+		Assert.assertEquals("", l32.getValue());
+		
+		
+		t11.replace("ab").tab();
+		t21.replace("de").tab();
+		t31.replace("xy").tab();
+		Assert.assertEquals("abc", val1.getValue());
+		Assert.assertEquals("def", val2.getValue());
+		Assert.assertEquals("xyz", val3.getValue());
+		Assert.assertEquals("value1 must equalsIgnoreCase to abc", l11.getValue());
+		Assert.assertEquals("value1 must equalsIgnoreCase to abc - by key", l12.getValue());
+		Assert.assertEquals("value2 must equalsIgnoreCase to def", l21.getValue());
+		Assert.assertEquals("value1 must equalsIgnoreCase to abc - by key", l22.getValue());
+		Assert.assertEquals("value3 must equalsIgnoreCase to xyz", l31.getValue());
+		Assert.assertEquals("value3 must equalsIgnoreCase to xyz - by key", l32.getValue());
+		
+		reload1.click();
+		Assert.assertEquals("abc", t11.getValue());
+		Assert.assertEquals("de", t21.getValue());
+		Assert.assertEquals("xy", t31.getValue());
+		Assert.assertEquals("", l11.getValue());
+		Assert.assertEquals("value2 must equalsIgnoreCase to def - by key", l12.getValue());
+		Assert.assertEquals("value2 must equalsIgnoreCase to def", l21.getValue());
+		Assert.assertEquals("value2 must equalsIgnoreCase to def - by key", l22.getValue());
+		Assert.assertEquals("value3 must equalsIgnoreCase to xyz", l31.getValue());
+		Assert.assertEquals("value3 must equalsIgnoreCase to xyz - by key", l32.getValue());
+		
+		reload2.click();
+		Assert.assertEquals("abc", t11.getValue());
+		Assert.assertEquals("def", t21.getValue());
+		Assert.assertEquals("xy", t31.getValue());
+		Assert.assertEquals("", l11.getValue());
+		Assert.assertEquals("value3 must equalsIgnoreCase to xyz - by key", l12.getValue());
+		Assert.assertEquals("", l21.getValue());
+		Assert.assertEquals("value3 must equalsIgnoreCase to xyz - by key", l22.getValue());
+		Assert.assertEquals("value3 must equalsIgnoreCase to xyz", l31.getValue());
+		Assert.assertEquals("value3 must equalsIgnoreCase to xyz - by key", l32.getValue());
+		
+	}
+	@Test
+	public void f00771_2(){
+		navigate(getTestCaseUrl("/bind/issue/F00771.zul"));
+		Widget val1 = findWidget("$val1");
+		Widget val2 = findWidget("$val2");
+		Widget val3 = findWidget("$val3");
+		
+		Widget t11 = findWidget("$t11");
+		Widget l11 = findWidget("$l11");
+		Widget l12 = findWidget("$l12");
+		
+		Widget t21 = findWidget("$t21");
+		Widget l21 = findWidget("$l21");
+		Widget l22 = findWidget("$l22");
+		
+		Widget t31 = findWidget("$t31");
+		Widget l31 = findWidget("$l31");
+		Widget l32 = findWidget("$l32");
+		
+		
+		t11.replace("ab").tab();
+		t21.replace("de").tab();
+		t31.replace("xy").tab();
+		Assert.assertEquals("", val1.getValue());
+		Assert.assertEquals("", val2.getValue());
+		Assert.assertEquals("", val3.getValue());
+		Assert.assertEquals("value1 must equalsIgnoreCase to abc", l11.getValue());
+		Assert.assertEquals("value1 must equalsIgnoreCase to abc - by key", l12.getValue());
+		Assert.assertEquals("value2 must equalsIgnoreCase to def", l21.getValue());
+		Assert.assertEquals("value1 must equalsIgnoreCase to abc - by key", l22.getValue());
+		Assert.assertEquals("value3 must equalsIgnoreCase to xyz", l31.getValue());
+		Assert.assertEquals("value3 must equalsIgnoreCase to xyz - by key", l32.getValue());
+		
+		
+		
+		Widget t41 = findWidget("$t41");
+		Widget t42 = findWidget("$t42");
+		Widget t43 = findWidget("$t43");
+		
+		Widget l41 = findWidget("$l41");
+		Widget l42 = findWidget("$l42");
+		Widget l43 = findWidget("$l43");
+		
+		Widget submit = findWidget("$submit");
+		
+		t41.replace("ab");
+		t42.replace("de");
+		t43.replace("xy");
+		submit.click();
+		Assert.assertEquals("", val1.getValue());
+		Assert.assertEquals("", val2.getValue());
+		Assert.assertEquals("", val3.getValue());
+		Assert.assertEquals("value1 must equalsIgnoreCase to abc - by key", l41.getValue());
+		Assert.assertEquals("value2 must equalsIgnoreCase to def - by key", l42.getValue());
+		Assert.assertEquals("value3 must equalsIgnoreCase to xyz - by key", l43.getValue());
+		
+		t41.replace("ABC");
+		submit.click();
+		Assert.assertEquals("", val1.getValue());
+		Assert.assertEquals("", val2.getValue());
+		Assert.assertEquals("", val3.getValue());
+		Assert.assertEquals("", l41.getValue());
+		Assert.assertEquals("value2 must equalsIgnoreCase to def - by key", l42.getValue());
+		Assert.assertEquals("value3 must equalsIgnoreCase to xyz - by key", l43.getValue());
+		
+		
+		t42.replace("DEF");
+		submit.click();
+		Assert.assertEquals("", val1.getValue());
+		Assert.assertEquals("", val2.getValue());
+		Assert.assertEquals("", val3.getValue());
+		Assert.assertEquals("", l41.getValue());
+		Assert.assertEquals("", l42.getValue());
+		Assert.assertEquals("value3 must equalsIgnoreCase to xyz - by key", l43.getValue());
+		
+		t43.replace("XYZ");
+		submit.click();
+		Assert.assertEquals("ABC", val1.getValue());
+		Assert.assertEquals("DEF", val2.getValue());
+		Assert.assertEquals("XYZ", val3.getValue());
+		Assert.assertEquals("", l41.getValue());
+		Assert.assertEquals("", l42.getValue());
+		Assert.assertEquals("", l43.getValue());
+		
+		Assert.assertEquals("", l11.getValue());
+		Assert.assertEquals("", l12.getValue());
+		Assert.assertEquals("", l21.getValue());
+		Assert.assertEquals("", l22.getValue());
+		Assert.assertEquals("", l31.getValue());
+		Assert.assertEquals("", l32.getValue());
 	}
 }

@@ -34,9 +34,9 @@
 		</hlayout>
 		<label id="m43" value="@bind(vmsgs[self.parent])"/>
 		<label id="m44" value="@bind(vmsgs.getMessages(self.parent,'fx')[0])"/>
-		<label id="m45" value="@bind(vmsgs.multiple[self.parent][0])"/>
-		<label id="m46" value="@bind(vmsgs.multiple[self.parent][1])"/>
-		<grid id="msggrid" model="@bind(vmsgs.multiple[self.parent])" visible="@bind(not empty vmsgs.multiple[self.parent])">
+		<label id="m45" value="@bind(vmsgs.getMultiple()[self.parent][0])"/>
+		<label id="m46" value="@bind(vmsgs.getMultiple()[self.parent][1])"/>
+		<grid id="msggrid" model="@bind(vmsgs.getMultiple()[self.parent])" visible="@bind(not empty vmsgs.getMultiple()[self.parent])">
 			<template name="model" var="msg">
 				<row>
 					<label value="@bind(msg)" />
