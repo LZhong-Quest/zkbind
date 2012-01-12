@@ -13,12 +13,17 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 package org.zkoss.zktest.bind.issue;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.zkoss.bind.BindContext;
+import org.zkoss.bind.Converter;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
+import org.zkoss.zk.ui.Component;
 
 /**
  * @author Dennis Chen
@@ -49,6 +54,32 @@ public class F00743_1 {
 
 	public void setSelected(Set<Item> selected) {
 		this.selected = selected;
+	}
+	
+	List sort(Set set){
+		if(set==null) return null;
+		ArrayList list = new ArrayList((Set)set);
+		Collections.sort(list, new Comparator<Item>() {
+
+			public int compare(Item o1, Item o2) {
+				// TODO Auto-generated method stub
+				return o1.getName().compareTo(o2.getName());
+			}
+		});
+		return list;
+	}
+	
+	public Converter getSelectedConverter(){
+		return new Converter() {
+			
+			public Object coerceToUi(Object val, Component component, BindContext ctx) {
+				return sort((Set)val);
+			}
+			
+			public Object coerceToBean(Object val, Component component, BindContext ctx) {
+				return val;
+			}
+		};
 	}
 
 	public String getMessage1() {
@@ -84,7 +115,7 @@ public class F00743_1 {
 
 	@Command @NotifyChange({"items","message1"}) 
 	public void reload() {
-		message1 = "reloaded "+(selected==null?"no selection":selected);
+		message1 = "reloaded "+(selected==null?"no selection":sort(selected));
 	}
 	@Command @NotifyChange({"selected","message1"}) 
 	public void select() {
