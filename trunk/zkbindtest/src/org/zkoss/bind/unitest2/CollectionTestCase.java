@@ -5,8 +5,6 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openqa.selenium.WebElement;
-import org.zkoss.bind.unitest2.ChildrenTestCase.Node;
 import org.zkoss.zktc.core.junit.TestCaseBase;
 import org.zkoss.zktc.core.widget.Widget;
 import org.zkoss.zktc.core.widget.Widgets;
@@ -1644,5 +1642,63 @@ public class CollectionTestCase  extends TestCaseBase{
 			Assert.assertEquals("item index "+i, msg.getValue());
 		}
 	}
+
 	
+	@Test
+	public void testTreeselection(){
+		navigate(getTestCaseUrl("/bind/basic/tree-selection.zul"));
+		
+		Widget tree = findWidget("$tree");
+		
+		Widget msg = findWidget("$msg");
+		Widget selected = findWidget("$selected");
+		Widget clean = findWidget("$clean");
+		Widget select = findWidget("$select");
+		Widget reload = findWidget("$reload");
+		Widget select0 = findWidget("$select0");
+		Widget select1 = findWidget("$select1");
+		Widget showselect = findWidget("$showselect");
+		
+		findWidget("$A-0-1").getFirstChild().click();//treeitem->treerow
+		Assert.assertEquals("A-0-1", selected.getValue());
+		showselect.click();
+		Assert.assertEquals("[0, 1]", msg.getValue());
+		
+		findWidget("$A-1-0-1").getFirstChild().click();//treeitem->treerow
+		Assert.assertEquals("A-1-0-1", selected.getValue());
+		showselect.click();
+		Assert.assertEquals("[1, 0, 1]", msg.getValue());
+		
+		clean.click();
+		Assert.assertEquals("", selected.getValue());
+		showselect.click();
+		Assert.assertEquals("no selection", msg.getValue());
+		
+		select.click();
+		Assert.assertEquals("A-1-1-1", selected.getValue());
+		showselect.click();
+		Assert.assertEquals("[1, 1, 1]", msg.getValue());
+		
+		select0.click();
+		showselect.click();
+		Assert.assertEquals("[0, 1]", msg.getValue());
+		
+		reload.click();
+		Assert.assertEquals("A-1-1-1", selected.getValue());
+		Assert.assertEquals("reloaded A-1-1-1", msg.getValue());
+		showselect.click();
+		Assert.assertEquals("[1, 1, 1]", msg.getValue());
+		
+		select1.click();
+		showselect.click();
+		Assert.assertEquals("[0, 1, 1]", msg.getValue());
+		
+		reload.click();
+		Assert.assertEquals("A-1-1-1", selected.getValue());
+		Assert.assertEquals("reloaded A-1-1-1", msg.getValue());
+		showselect.click();
+		Assert.assertEquals("[1, 1, 1]", msg.getValue());
+		
+		
+	}
 }

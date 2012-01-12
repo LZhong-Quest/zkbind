@@ -323,4 +323,73 @@ public class FeaturesTestCase0500 extends TestCaseBase{
 		Assert.assertEquals("[0, 1]", range.getValue());
 		
 	}
+	
+	
+	@Test
+	public void f00769(){
+		navigate(getTestCaseUrl("/bind/issue/F00769.zul"));
+		
+		Widget tree = findWidget("$tree");
+		
+		Widget msg = findWidget("$msg");
+		Widget selected = findWidget("$selected");
+		Widget clean1 = findWidget("$clean1");
+		Widget clean2 = findWidget("$clean2");
+		Widget select = findWidget("$select");
+		Widget reload = findWidget("$reload");
+		Widget select0 = findWidget("$select0");
+		Widget select1 = findWidget("$select1");
+		Widget showselect = findWidget("$showselect");
+		
+		findWidget("$A-0-1").getFirstChild().click();//treeitem->treerow
+		Assert.assertEquals("[A-0-1]", selected.getValue());
+		showselect.click();
+		Assert.assertEquals("[[0, 1]]", msg.getValue());
+		
+		findWidget("$A-1-0-1").getFirstChild().click();//treeitem->treerow
+		Assert.assertEquals("[A-0-1, A-1-0-1]", selected.getValue());
+		showselect.click();
+		Assert.assertEquals("[[0, 1], [1, 0, 1]]", msg.getValue());
+		
+		clean1.click();
+		Assert.assertEquals("", selected.getValue());
+		showselect.click();
+		Assert.assertEquals("no selection", msg.getValue());
+		
+		select.click();
+		Assert.assertEquals("[A-0-1, A-1-1-1]", selected.getValue());
+		showselect.click();
+		Assert.assertEquals("[[0, 1], [1, 1, 1]]", msg.getValue());
+		
+		findWidget("$A-1-0-1").getFirstChild().click();//treeitem->treerow
+		Assert.assertEquals("[A-0-1, A-1-0-1, A-1-1-1]", selected.getValue());
+		showselect.click();
+		Assert.assertEquals("[[0, 1], [1, 0, 1], [1, 1, 1]]", msg.getValue());
+		
+		clean2.click();
+		Assert.assertEquals("[]", selected.getValue());
+		showselect.click();
+		Assert.assertEquals("no selection", msg.getValue());
+		
+		select.click();
+		select0.click();
+		showselect.click();
+		Assert.assertEquals("[[0, 0], [0, 1], [1, 1, 1]]", msg.getValue());
+		
+		reload.click();
+		Assert.assertEquals("[A-0-1, A-1-1-1]", selected.getValue());
+		Assert.assertEquals("reloaded [A-0-1, A-1-1-1]", msg.getValue());
+		showselect.click();
+		Assert.assertEquals("[[0, 1], [1, 1, 1]]", msg.getValue());
+		
+		select1.click();
+		showselect.click();
+		Assert.assertEquals("[[0, 0, 1], [0, 1], [1, 1, 1]]", msg.getValue());
+		
+		reload.click();
+		Assert.assertEquals("[A-0-1, A-1-1-1]", selected.getValue());
+		Assert.assertEquals("reloaded [A-0-1, A-1-1-1]", msg.getValue());
+		showselect.click();
+		Assert.assertEquals("[[0, 1], [1, 1, 1]]", msg.getValue());
+	}
 }
