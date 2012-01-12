@@ -15,7 +15,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 import org.zkoss.bind.annotation.DependsOn;
-import org.zkoss.bind.annotation.NotifyChange;
 
 /**
  * @author dennis
