@@ -17,6 +17,8 @@ import org.zkoss.bind.BindContext;
 import org.zkoss.bind.Binder;
 import org.zkoss.bind.Converter;
 import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.ContextParam;
+import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.bind.annotation.BindingParam;
@@ -53,10 +55,8 @@ public class SearchAutowireVM{
 	Label msg;
 
 	@Init
-	public void init(BindContext ctx){
-		//Returns associated root component of the binder
-		Component component = ctx.getBinder().getView();
-		Selectors.wireComponents(component, this, false);
+	public void init(@ContextParam(ContextType.VIEW) Component view){
+		Selectors.wireComponents(view, this, false);
 		//wire event listener
 //		Selectors.wireEventListeners(component, this);
 	}
