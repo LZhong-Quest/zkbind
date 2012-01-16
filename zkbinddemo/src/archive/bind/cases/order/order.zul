@@ -55,7 +55,7 @@
 							<label value="@bind(vm.validationMessages['price'])" sclass="red" />
 						</hlayout>
 					</row>
-					<row>Total Price <label value="@bind(vm.selected.totalPrice) @converter('formatedNumber', format='###,##0.00')" /></row>
+					<row>Total Price <label id="totalPrice" value="@bind(vm.selected.totalPrice) @converter('formatedNumber', format='###,##0.00')" /></row>
 					<row>Creation Date 
 						<hlayout> 
 							<datebox id="creationDate" value="@load(vm.selected.creationDate) @save(vm.selected.creationDate, before='saveOrder')
