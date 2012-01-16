@@ -62,8 +62,7 @@
 					<row>Total Price <label value="@load(fx.totalPrice) @converter('formatedNumber', format='###,##0.00')" /></row>
 					<row>Creation Date 
 						<hlayout> 
-							<datebox id="cdbox" value="@bind(fx.creationDate)
-							@validator(vm.creationDateValidator)"/>
+							<datebox id="cdbox" value="@bind(fx.creationDate) @validator(vm.creationDateValidator)"/>
 							<label value="@load(vmsgs[cdbox])" sclass="red" />
 						</hlayout>	
 					</row>
