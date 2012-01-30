@@ -7,6 +7,7 @@
 <div>
 <window id="main" title="Order Management" border="normal" width="600px"
 	apply="org.zkoss.zktest.bind.cases.order.OrderComposer" >
+	<custom-attributes org.zkoss.zul.listbox.initRodSize="20"/>
 	<vbox hflex="true">
 		<listbox id="orderList" hflex="true" height="200px">
 			<listhead>
