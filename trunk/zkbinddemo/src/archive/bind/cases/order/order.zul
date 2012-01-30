@@ -7,6 +7,7 @@
 <div>
 <window id="main" title="Order Management" border="normal" width="600px"
 	apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('org.zkoss.zktest.bind.cases.order.OrderVM')" >
+	<custom-attributes org.zkoss.zul.listbox.initRodSize="20"/>
 	<vbox hflex="true">
 		<listbox id="orderList" model="@bind(vm.orders)" selectedItem="@bind(vm.selected)" hflex="true" height="200px">
 			<listhead>
