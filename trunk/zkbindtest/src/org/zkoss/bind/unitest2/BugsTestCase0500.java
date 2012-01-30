@@ -642,4 +642,25 @@ public class BugsTestCase0500 extends TestCaseBase{
 		Assert.assertEquals("0", min.getValue());
 		Assert.assertEquals("0", max.getValue());
 	}
+	
+	@Test
+	public void b775_listmodel_selectionl(){
+		navigate(getTestCaseUrl("/bind/issue/B775-listmodel-selection.zul"));
+		Widget listbox = findWidget("$listbox");
+		Widget header = findWidget("$header");
+		Widget shrink = findWidget("$shrink");
+		
+		header.click();
+		header.click();//twice
+		
+		listbox.findWidgets("@listitem").get(8).click();
+		Assert.assertEquals(8L,ListboxUtil.getSelectedIndex(listbox));
+		
+		shrink.click();
+		Assert.assertEquals(0L,ListboxUtil.getSelectedIndex(listbox));
+
+		
+		
+		
+	}
 }
