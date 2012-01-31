@@ -33,10 +33,6 @@ public class ItemDao{
 		em.remove(em.merge(item));
 	}
 	
-	public List<Item> findByLimit(int limit){
-		return em.createQuery("select I from Item I ").getResultList();
-	}
-	
 	public List<Item> findByFilter(String keyword){
 		String jql = "select I from Item I ";
 		if (keyword != null){
@@ -53,17 +49,17 @@ public class ItemDao{
 		return em.createQuery(jql).setFirstResult(begin).setMaxResults(max).getResultList();
 	}
 	
-	public List<Item> findByRangeOrder(int begin, int max, boolean descending, String orderBy,String filter){
+	public List<Item> findByRangeOrder(int begin, int max, boolean ascending, String orderBy,String filter){
 		String jql = "select I from Item I " ;
 
 		if (filter != null){
 			jql += "where I.name like '%"+filter+"%'";
 		}
 		jql += " order by I."+orderBy;
-		if (descending){
-			jql += " desc";
-		}else{
+		if (ascending){
 			jql += " asc";
+		}else{
+			jql += " desc";
 		}
 		return em.createQuery(jql).setFirstResult(begin).setMaxResults(max).getResultList();
 	}

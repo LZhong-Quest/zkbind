@@ -25,7 +25,7 @@ public class MyItemListModel extends AbstractListModel<Item> implements Sortable
 	private int pageSize = 10;
 	private int beginOffset;
 	
-	private Boolean descending;
+	private Boolean ascending;
 	private String orderBy;
 	private String filter;
 	
@@ -34,8 +34,8 @@ public class MyItemListModel extends AbstractListModel<Item> implements Sortable
 		
 		if (cache == null || index < beginOffset || index >= beginOffset + pageSize) {
 			beginOffset = index;
-			if (descending!=null &&orderBy!=null){
-				cache = itemDao.findByRangeOrder(index, pageSize, descending, orderBy, filter);
+			if (ascending!=null &&orderBy!=null){
+				cache = itemDao.findByRangeOrder(index, pageSize, ascending, orderBy, filter);
 			}else{
 				cache = itemDao.findByRange(index,pageSize, filter);
 			}
@@ -59,7 +59,7 @@ public class MyItemListModel extends AbstractListModel<Item> implements Sortable
 	   if (comparator instanceof FieldComparator) {
 		   //Find all selected item
 		   
-	       descending = flag;
+	       ascending = flag;
 	       orderBy = ((FieldComparator)comparator).getRawOrderBy();
 	       cache = null;
 	       size = null;
