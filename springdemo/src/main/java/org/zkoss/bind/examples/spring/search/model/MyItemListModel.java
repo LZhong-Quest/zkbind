@@ -22,7 +22,7 @@ public class MyItemListModel extends AbstractListModel<Item> implements Sortable
 	
 	private List<Item> cache;
 	private Integer size;
-	private int pageSize = 20;
+	private int pageSize = 10;
 	private int beginOffset;
 	
 	private Boolean descending;
@@ -40,7 +40,7 @@ public class MyItemListModel extends AbstractListModel<Item> implements Sortable
 				cache = itemDao.findByRange(index,pageSize, filter);
 			}
 		}
-		return cache.get(index%pageSize);
+		return cache.get(index-beginOffset);
 	}
 	
 	public int getSize(){
