@@ -15,21 +15,28 @@ public class F00772InterComm extends SelectorComposer<Component>{
 	public void postX(){
 		Map<String,Object> args = new HashMap<String,Object>();
 		args.put("data", "postX");
-		BindUtils.postGlobalCommand(BindUtils.DEFAULT_QUEUE, BindUtils.DEFAULT_SCOPE, "cmdX", args);
+		BindUtils.postGlobalCommand(BindUtils.DEFAULT_QUEUE_NAME, BindUtils.DEFAULT_QUEUE_SCOPE, "cmdX", args);
 	}
 	
 	@Listen("onClick=button#posty")
 	public void postY(){
 		Map<String,Object> args = new HashMap<String,Object>();
 		args.put("data", "postY");
-		BindUtils.postGlobalCommand(BindUtils.DEFAULT_QUEUE, BindUtils.DEFAULT_SCOPE, "cmdY", args);
+		BindUtils.postGlobalCommand(null, null, "cmdY", args);
 	}
 	
 	@Listen("onClick=button#postz")
 	public void postZ(){
 		Map<String,Object> args = new HashMap<String,Object>();
 		args.put("data", "postZ");
-		BindUtils.postGlobalCommand(BindUtils.DEFAULT_QUEUE, BindUtils.DEFAULT_SCOPE, "cmdZ", args);
+		BindUtils.postGlobalCommand(null, null, "cmdZ", args);
+	}
+	
+	@Listen("onClick=button#postmy")
+	public void postMy(){
+		Map<String,Object> args = new HashMap<String,Object>();
+		args.put("data", "postMy");
+		BindUtils.postGlobalCommand("myqueue", null, "cmdX", args);
 	}
 	
 }

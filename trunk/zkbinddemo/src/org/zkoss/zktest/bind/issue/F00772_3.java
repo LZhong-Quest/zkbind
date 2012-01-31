@@ -1,5 +1,9 @@
 package org.zkoss.zktest.bind.issue;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.GlobalCommand;
 //import org.zkoss.bind.annotation.CommandParam;
@@ -25,5 +29,10 @@ public class F00772_3 {
 	@GlobalCommand @NotifyChange("value2")
 	public void cmdZ(@BindingParam("data") String value1){
 		value2 = value1 + "-X3";
+		Map<String,Object> args = new HashMap<String,Object>();
+		args.put("data", "postE");
+		BindUtils.postGlobalCommand(BindUtils.DEFAULT_QUEUE_NAME, BindUtils.DEFAULT_QUEUE_SCOPE, "cmdE", args);
 	}
+	
+	
 }
