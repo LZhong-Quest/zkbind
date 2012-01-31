@@ -3,21 +3,16 @@ package org.zkoss.bind.examples.spring.search.model;
 import java.util.Comparator;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 import org.zkoss.bind.examples.spring.search.domain.Item;
 import org.zkoss.bind.examples.spring.search.domain.ItemDao;
+import org.zkoss.zkplus.spring.SpringUtil;
 import org.zkoss.zul.AbstractListModel;
 import org.zkoss.zul.FieldComparator;
 import org.zkoss.zul.event.ListDataEvent;
 import org.zkoss.zul.ext.Sortable;
 
-@Component("itemList")
-@Scope("prototype")
 public class MyItemListModel extends AbstractListModel<Item> implements Sortable<Item>{
 
-	@Autowired
 	private ItemDao itemDao;
 	
 	private List<Item> cache;
@@ -29,6 +24,9 @@ public class MyItemListModel extends AbstractListModel<Item> implements Sortable
 	private String orderBy;
 	private String filter;
 	
+	public MyItemListModel() {
+		itemDao = (ItemDao)SpringUtil.getBean("itemDao");
+	}
 	
 	public Item getElementAt(int index){
 		

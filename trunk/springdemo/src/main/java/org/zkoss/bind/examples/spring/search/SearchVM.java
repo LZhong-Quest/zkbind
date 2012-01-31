@@ -12,8 +12,6 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 package org.zkoss.bind.examples.spring.search;
 
 import java.text.DecimalFormat;
-import java.util.Arrays;
-import java.util.List;
 
 import org.zkoss.bind.BindContext;
 import org.zkoss.bind.Converter;
@@ -24,7 +22,6 @@ import org.zkoss.bind.examples.spring.search.domain.ItemService;
 import org.zkoss.bind.examples.spring.search.model.MyItemListModel;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
-import org.zkoss.zkplus.spring.SpringUtil;
 import org.zkoss.zul.ListModelList;
 /**
  * a Search View Model
@@ -49,7 +46,7 @@ public class SearchVM {
 	private String selections;
 	
 	public SearchVM(){
-		itemList = (MyItemListModel)SpringUtil.getBean("itemList");
+		itemList = new MyItemListModel();
 		itemList.setMultiple(true);
 	}
 	protected ItemService getSearchService(){
