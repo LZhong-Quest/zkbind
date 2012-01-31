@@ -15,8 +15,8 @@ public class F00772_1 {
 	}
 	
 	@Command
-	public String cmd1(){
-		return value1;
+	public void cmd1(){
+		value1 = value1+"-local";
 	}
 	
 }

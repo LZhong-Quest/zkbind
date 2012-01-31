@@ -621,10 +621,12 @@ public class FeaturesTestCase0500 extends TestCaseBase{
 		Widget t11 = findWidget("$t11");
 		Widget l21 = findWidget("$l21");
 		Widget l31 = findWidget("$l31");
+		Widget l41 = findWidget("$l41");
 		
 		Widget postx = findWidget("$postx");
 		Widget posty = findWidget("$posty");
 		Widget postz = findWidget("$postz");
+		Widget postmy = findWidget("$postmy");
 		
 		Widget globalx = findWidget("$globalx");
 		Widget globaly = findWidget("$globaly");
@@ -633,30 +635,42 @@ public class FeaturesTestCase0500 extends TestCaseBase{
 		Assert.assertEquals("", t11.getValue());
 		Assert.assertEquals("", l21.getValue());
 		Assert.assertEquals("", l31.getValue());
+		Assert.assertEquals("", l41.getValue());
 		
 		postx.click();
 		Assert.assertEquals("postX-X1", l21.getValue());
 		Assert.assertEquals("postX-X2", l31.getValue());
+		Assert.assertEquals("", l41.getValue());
 		
 		posty.click();
 		Assert.assertEquals("postX-X1", l21.getValue());
 		Assert.assertEquals("postY-X2", l31.getValue());
+		Assert.assertEquals("", l41.getValue());
 		
 		postz.click();
-		Assert.assertEquals("postX-X1", l21.getValue());
+		Assert.assertEquals("postE-X1", l21.getValue());
 		Assert.assertEquals("postZ-X3", l31.getValue());
+		Assert.assertEquals("", l41.getValue());
+		
+		postmy.click();
+		Assert.assertEquals("postE-X1", l21.getValue());
+		Assert.assertEquals("postZ-X3", l31.getValue());
+		Assert.assertEquals("postMy-XMy", l41.getValue());
 		
 		t11.replace("A");
 		globalx.click();
-		Assert.assertEquals("A-X1", l21.getValue());
-		Assert.assertEquals("A-X2", l31.getValue());
+		Assert.assertEquals("A-local-X1", l21.getValue());
+		Assert.assertEquals("A-local-X2", l31.getValue());
+		Assert.assertEquals("postMy-XMy", l41.getValue());
 		
 		globaly.click();
-		Assert.assertEquals("A-X1", l21.getValue());
-		Assert.assertEquals("A-X1-X2", l31.getValue());
+		Assert.assertEquals("A-local-X1", l21.getValue());
+		Assert.assertEquals("A-local-X1-X2", l31.getValue());
+		Assert.assertEquals("postMy-XMy", l41.getValue());
 		
 		globalz.click();
-		Assert.assertEquals("A-X1", l21.getValue());
-		Assert.assertEquals("A-X1-X2-X3", l31.getValue());
+		Assert.assertEquals("postE-X1", l21.getValue());
+		Assert.assertEquals("A-local-X1-X2-X3", l31.getValue());
+		Assert.assertEquals("postMy-XMy", l41.getValue());
 	}
 }
