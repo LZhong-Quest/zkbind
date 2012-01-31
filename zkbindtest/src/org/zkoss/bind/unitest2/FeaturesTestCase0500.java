@@ -614,4 +614,49 @@ public class FeaturesTestCase0500 extends TestCaseBase{
 		Assert.assertEquals("", l31.getValue());
 		Assert.assertEquals("", l32.getValue());
 	}
+	
+	@Test
+	public void f00772_inter_comm(){
+		navigate(getTestCaseUrl("/bind/issue/F00772-inter-comm.zul"));
+		Widget t11 = findWidget("$t11");
+		Widget l21 = findWidget("$l21");
+		Widget l31 = findWidget("$l31");
+		
+		Widget postx = findWidget("$postx");
+		Widget posty = findWidget("$posty");
+		Widget postz = findWidget("$postz");
+		
+		Widget globalx = findWidget("$globalx");
+		Widget globaly = findWidget("$globaly");
+		Widget globalz = findWidget("$globalz");
+		
+		Assert.assertEquals("", t11.getValue());
+		Assert.assertEquals("", l21.getValue());
+		Assert.assertEquals("", l31.getValue());
+		
+		postx.click();
+		Assert.assertEquals("postX-X1", l21.getValue());
+		Assert.assertEquals("postX-X2", l31.getValue());
+		
+		posty.click();
+		Assert.assertEquals("postX-X1", l21.getValue());
+		Assert.assertEquals("postY-X2", l31.getValue());
+		
+		postz.click();
+		Assert.assertEquals("postX-X1", l21.getValue());
+		Assert.assertEquals("postZ-X3", l31.getValue());
+		
+		t11.replace("A");
+		globalx.click();
+		Assert.assertEquals("A-X1", l21.getValue());
+		Assert.assertEquals("A-X2", l31.getValue());
+		
+		globaly.click();
+		Assert.assertEquals("A-X1", l21.getValue());
+		Assert.assertEquals("A-X1-X2", l31.getValue());
+		
+		globalz.click();
+		Assert.assertEquals("A-X1", l21.getValue());
+		Assert.assertEquals("A-X1-X2-X3", l31.getValue());
+	}
 }
