@@ -1,0 +1,10 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<window id="win" title="new page title" border="normal"
+	apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('org.zkoss.zktest.bind.issue.B00757OnChange')">
+	<textbox id="t1" value="@bind(vm.value1)" onChange="@command('cmd1')"/>
+	<textbox id="t2" value="@bind(vm.value1)" onChange="@command('cmd1')"/>
+	
+	<label id="l1" value="@load(vm.value1)"/>
+	<label id="l2" value="@load(vm.value2)"/>
+</window>
