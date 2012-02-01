@@ -427,12 +427,10 @@ public class BugsTestCase0500 extends TestCaseBase{
 		Widget outerbox = findWidget("$outerbox");
 		Widget selected = findWidget("$selected");
 		Widget min = findWidget("$min");
-		Widget max = findWidget("$max");
+//		Widget max = findWidget("$max");
 
 		Widget clean = findWidget("$clean");
 		Widget select = findWidget("$select");
-		Widget reload = findWidget("$reload");
-		Widget select0 = findWidget("$select0");
 		Widget showselect = findWidget("$showselect");
 		
 		
@@ -440,42 +438,29 @@ public class BugsTestCase0500 extends TestCaseBase{
 		Assert.assertEquals("A", selected.getValue());
 		showselect.click();
 		Assert.assertEquals("0", min.getValue());
-		Assert.assertEquals("0", max.getValue());
+//		Assert.assertEquals("0", max.getValue());
 		
 		outerbox.findWidgets("@listitem").get(2).click();
 		Assert.assertEquals("C", selected.getValue());
 		showselect.click();
 		Assert.assertEquals("2", min.getValue());
-		Assert.assertEquals("2", max.getValue());
+//		Assert.assertEquals("2", max.getValue());
 		
 		clean.click();
 		Assert.assertEquals(-1L, ListboxUtil.getSelectedIndex(outerbox));
 		Assert.assertEquals("", selected.getValue());
 		showselect.click();
 		Assert.assertEquals("-1", min.getValue());
-		Assert.assertEquals("-1", max.getValue());
+//		Assert.assertEquals("-1", max.getValue());
 		
 		select.click();
 		Assert.assertEquals(1L, ListboxUtil.getSelectedIndex(outerbox));
 		Assert.assertEquals("B", selected.getValue());
 		showselect.click();
 		Assert.assertEquals("1", min.getValue());
-		Assert.assertEquals("1", max.getValue());
+//		Assert.assertEquals("1", max.getValue());
 		
 		
-		select0.click();
-		Assert.assertEquals(0L, ListboxUtil.getSelectedIndex(outerbox));
-		Assert.assertEquals("B", selected.getValue());//still in B
-		showselect.click();
-		Assert.assertEquals("0", min.getValue());
-		Assert.assertEquals("0", max.getValue());
-		
-		reload.click();
-		Assert.assertEquals(1L, ListboxUtil.getSelectedIndex(outerbox));
-		Assert.assertEquals("B", selected.getValue());
-		showselect.click();
-		Assert.assertEquals("1", min.getValue());
-		Assert.assertEquals("1", max.getValue());
 	}
 	
 	
@@ -484,49 +469,35 @@ public class BugsTestCase0500 extends TestCaseBase{
 		navigate(getTestCaseUrl("/bind/issue/B00762Listbox2.zul"));
 		Widget outerbox = findWidget("$outerbox");
 		Widget min = findWidget("$min");
-		Widget max = findWidget("$max");
+//		Widget max = findWidget("$max");
 
 		Widget clean = findWidget("$clean");
 		Widget select = findWidget("$select");
-		Widget reload = findWidget("$reload");
-		Widget select0 = findWidget("$select0");
 		Widget showselect = findWidget("$showselect");
 		
 		
 		outerbox.findWidgets("@listitem").get(0).click();
 		showselect.click();
 		Assert.assertEquals("0", min.getValue());
-		Assert.assertEquals("0", max.getValue());
+//		Assert.assertEquals("0", max.getValue());
 		
 		outerbox.findWidgets("@listitem").get(2).click();
 		showselect.click();
 		Assert.assertEquals("2", min.getValue());
-		Assert.assertEquals("2", max.getValue());
+//		Assert.assertEquals("2", max.getValue());
 		
 		clean.click();
 		Assert.assertEquals(-1L, ListboxUtil.getSelectedIndex(outerbox));
 		showselect.click();
 		Assert.assertEquals("-1", min.getValue());
-		Assert.assertEquals("-1", max.getValue());
+//		Assert.assertEquals("-1", max.getValue());
 		
 		select.click();
 		Assert.assertEquals(1L, ListboxUtil.getSelectedIndex(outerbox));
 		showselect.click();
 		Assert.assertEquals("1", min.getValue());
-		Assert.assertEquals("1", max.getValue());
+//		Assert.assertEquals("1", max.getValue());
 		
-		
-		select0.click();
-		Assert.assertEquals(0L, ListboxUtil.getSelectedIndex(outerbox));
-		showselect.click();
-		Assert.assertEquals("0", min.getValue());
-		Assert.assertEquals("0", max.getValue());
-		
-		reload.click();
-		Assert.assertEquals(0L, ListboxUtil.getSelectedIndex(outerbox));
-		showselect.click();
-		Assert.assertEquals("0", min.getValue());
-		Assert.assertEquals("0", max.getValue());
 	}
 	
 	
@@ -536,12 +507,11 @@ public class BugsTestCase0500 extends TestCaseBase{
 		Widget outerbox = findWidget("$outerbox");
 		Widget selected = findWidget("$selected");
 		Widget min = findWidget("$min");
-		Widget max = findWidget("$max");
+//		Widget max = findWidget("$max");
 
 		Widget clean = findWidget("$clean");
 		Widget select = findWidget("$select");
 		Widget reload = findWidget("$reload");
-		Widget select0 = findWidget("$select0");
 		Widget showselect = findWidget("$showselect");
 		
 		outerbox.call("open");
@@ -550,7 +520,7 @@ public class BugsTestCase0500 extends TestCaseBase{
 		Assert.assertEquals("A", selected.getValue());
 		showselect.click();
 		Assert.assertEquals("0", min.getValue());
-		Assert.assertEquals("0", max.getValue());
+//		Assert.assertEquals("0", max.getValue());
 		
 		outerbox.call("open");
 		waitForTrip(1, 500);
@@ -558,36 +528,22 @@ public class BugsTestCase0500 extends TestCaseBase{
 		Assert.assertEquals("C", selected.getValue());
 		showselect.click();
 		Assert.assertEquals("2", min.getValue());
-		Assert.assertEquals("2", max.getValue());
+//		Assert.assertEquals("2", max.getValue());
 		
 		clean.click();
 		Assert.assertEquals("", outerbox.getValue());
 		Assert.assertEquals("", selected.getValue());
 		showselect.click();
 		Assert.assertEquals("-1", min.getValue());
-		Assert.assertEquals("-1", max.getValue());
+//		Assert.assertEquals("-1", max.getValue());
 		
 		select.click();
 		Assert.assertEquals("B", outerbox.getValue());
 		Assert.assertEquals("B", selected.getValue());
 		showselect.click();
 		Assert.assertEquals("1", min.getValue());
-		Assert.assertEquals("1", max.getValue());
+//		Assert.assertEquals("1", max.getValue());
 		
-		
-		select0.click();
-		Assert.assertEquals("A", outerbox.getValue());
-		Assert.assertEquals("B", selected.getValue());//still in B
-		showselect.click();
-		Assert.assertEquals("0", min.getValue());
-		Assert.assertEquals("0", max.getValue());
-		
-		reload.click();
-		Assert.assertEquals("B", outerbox.getValue());
-		Assert.assertEquals("B", selected.getValue());
-		showselect.click();
-		Assert.assertEquals("1", min.getValue());
-		Assert.assertEquals("1", max.getValue());
 	}
 	
 	@Test
@@ -595,12 +551,11 @@ public class BugsTestCase0500 extends TestCaseBase{
 		navigate(getTestCaseUrl("/bind/issue/B00762Combobox2.zul"));
 		Widget outerbox = findWidget("$outerbox");
 		Widget min = findWidget("$min");
-		Widget max = findWidget("$max");
+//		Widget max = findWidget("$max");
 
 		Widget clean = findWidget("$clean");
 		Widget select = findWidget("$select");
 		Widget reload = findWidget("$reload");
-		Widget select0 = findWidget("$select0");
 		Widget showselect = findWidget("$showselect");
 		
 		outerbox.call("open");
@@ -608,39 +563,27 @@ public class BugsTestCase0500 extends TestCaseBase{
 		outerbox.findWidgets("@comboitem").get(0).click();
 		showselect.click();
 		Assert.assertEquals("0", min.getValue());
-		Assert.assertEquals("0", max.getValue());
+//		Assert.assertEquals("0", max.getValue());
 		
 		outerbox.call("open");
 		waitForTrip(1, 500);
 		outerbox.findWidgets("@comboitem").get(2).click();
 		showselect.click();
 		Assert.assertEquals("2", min.getValue());
-		Assert.assertEquals("2", max.getValue());
+//		Assert.assertEquals("2", max.getValue());
 		
 		clean.click();
 		Assert.assertEquals("", outerbox.getValue());
 		showselect.click();
 		Assert.assertEquals("-1", min.getValue());
-		Assert.assertEquals("-1", max.getValue());
+//		Assert.assertEquals("-1", max.getValue());
 		
 		select.click();
 		Assert.assertEquals("B", outerbox.getValue());
 		showselect.click();
 		Assert.assertEquals("1", min.getValue());
-		Assert.assertEquals("1", max.getValue());
+//		Assert.assertEquals("1", max.getValue());
 		
-		
-		select0.click();
-		Assert.assertEquals("A", outerbox.getValue());
-		showselect.click();
-		Assert.assertEquals("0", min.getValue());
-		Assert.assertEquals("0", max.getValue());
-		
-		reload.click();
-		Assert.assertEquals("A", outerbox.getValue());
-		showselect.click();
-		Assert.assertEquals("0", min.getValue());
-		Assert.assertEquals("0", max.getValue());
 	}
 	
 	@Test
