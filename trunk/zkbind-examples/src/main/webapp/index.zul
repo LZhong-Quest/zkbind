@@ -17,14 +17,11 @@
 				A search filter example v2 in MVC (composer)
 			</n:a>
 		</n:li>
-
-		<!-- 
 		<n:li>
 			<n:a href="search/searchex/searchMvvmAutowire.zul">
-				A search filter example v2 in MVC (composer)
+				A search filter example v2 with @Wire
 			</n:a>
 		</n:li>
-		 -->
 	</n:ul>
 	<n:h3>Design CRUD page by MVVM pattern</n:h3>
 	<n:ul>
