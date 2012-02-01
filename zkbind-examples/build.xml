@@ -30,7 +30,7 @@
 		<delete dir="${antbuild_folder}" />
 	</target>
 
-	<target name="setup">
+	<target name="setup" depends="clean">
 		<mkdir dir="${antbuild_folder}" />
 		<mkdir dir="${classes_folder}" />
 		<mkdir dir="${war_folder}" />
