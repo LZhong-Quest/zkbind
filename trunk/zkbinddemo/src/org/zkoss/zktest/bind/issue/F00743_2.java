@@ -13,7 +13,10 @@ Copyright (C) 2011 Potix Corporation. All Rights Reserved.
 package org.zkoss.zktest.bind.issue;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
@@ -76,20 +79,21 @@ public class F00743_2 {
 
 	@Command @NotifyChange({"items","message1"}) 
 	public void reload() {
-		java.util.List selection = new java.util.ArrayList();
-		for(int i = items.getMinSelectionIndex(); i<=items.getMaxSelectionIndex();i++){
-			if(items.isSelectedIndex(i)){
-				selection.add(i);
-			}
-		}
-		message1 = "reloaded "+selection;
+		Set<Item> sels = items.getSelection();
+		List<Item> list = new ArrayList<Item>();
+		list.addAll(sels);
+		Collections.sort(list,new Comparator<Item>(){
+			public int compare(Item o1, Item o2) {
+				return o1.getName().compareTo(o2.getName());
+			}});
+		message1 = "reloaded "+list;
 	}
 	@Command @NotifyChange({"message1"}) 
 	public void select() {
 		message1 = "select";
 		items.clearSelection();
-		items.addSelectionInterval(1,1);
-		items.addSelectionInterval(3,3);
+		items.addToSelection(items.get(1));
+		items.addToSelection(items.get(3));
 	}
 	@Command @NotifyChange({"message1"}) 
 	public void clean() {

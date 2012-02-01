@@ -14,6 +14,7 @@ package org.zkoss.zktest.bind.issue;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
@@ -70,14 +71,14 @@ public class B00762Combobox2 {
 
 	@Command @NotifyChange({"items","message1"}) 
 	public void reload() {
-		int max = items.getMaxSelectionIndex();
-		Item selected = max==-1?null:items.get(max);
+		Set<Item> sels = items.getSelection();
+		Item selected = sels==null || sels.size()==0?null:sels.iterator().next();
 		message1 = "reloaded "+ (selected==null?"no selection":selected.name);
 	}
 	@Command @NotifyChange({"message1"}) 
 	public void select() {
 		message1 = "select";
-		items.addSelectionInterval(1,1);
+		items.addToSelection(items.get(1));
 	}
 	@Command @NotifyChange({"message1"}) 
 	public void clean() {

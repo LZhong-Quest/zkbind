@@ -163,17 +163,17 @@ public class LoadSaveTestCase extends TestCaseBase{
 		
 		
 		findWidget("$t11").clear().keys("XX").tab();
-		Assert.assertEquals("A", findWidget("$l11").getValue());
+		Assert.assertEquals("XX", findWidget("$l11").getValue());
 		Assert.assertEquals("B", findWidget("$l12").getValue());
 		Assert.assertEquals("C", findWidget("$l13").getValue());
 		Assert.assertEquals("", findWidget("$msg1").getValue());
 		Assert.assertEquals("value 2 has to be YY or ZZ", findWidget("$msg2").getValue());
 		
 		findWidget("$t11").clear().keys("YY").tab();
-		Assert.assertEquals("A", findWidget("$l11").getValue());
-		Assert.assertEquals("B", findWidget("$l12").getValue());
-		Assert.assertEquals("C", findWidget("$l13").getValue());
-		Assert.assertEquals("value 1 has to be XX or ZZ", findWidget("$msg1").getValue());
+		Assert.assertEquals("XX", findWidget("$l11").getValue());
+		Assert.assertEquals("YY", findWidget("$l12").getValue());
+		Assert.assertEquals("GG", findWidget("$l13").getValue());
+		Assert.assertEquals("doCmd1", findWidget("$msg1").getValue());
 		Assert.assertEquals("", findWidget("$msg2").getValue());
 		
 		findWidget("$t11").clear().keys("ZZ").tab();

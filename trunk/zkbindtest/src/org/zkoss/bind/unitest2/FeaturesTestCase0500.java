@@ -232,7 +232,7 @@ public class FeaturesTestCase0500 extends TestCaseBase{
 		outerbox.findWidgets("@listitem").get(2).click();
 		Assert.assertEquals("[A, C]", selected.getValue());
 		showselect.click();
-		Assert.assertEquals("[0, 2]", range.getValue());
+		Assert.assertEquals("[A, C]", range.getValue());
 		
 		clean1.click();
 		Assert.assertEquals("", selected.getValue());
@@ -245,7 +245,7 @@ public class FeaturesTestCase0500 extends TestCaseBase{
 		outerbox.findWidgets("@listitem").get(4).click();
 		Assert.assertEquals("[C, E]", selected.getValue());
 		showselect.click();
-		Assert.assertEquals("[2, 4]", range.getValue());
+		Assert.assertEquals("[C, E]", range.getValue());
 		
 		clean2.click();
 		Assert.assertEquals("[]", selected.getValue());
@@ -257,21 +257,21 @@ public class FeaturesTestCase0500 extends TestCaseBase{
 //		Assert.assertArrayEquals(new long[]{1L,3L}, ListboxUtil.getSelectedIndexs(outerbox));
 		Assert.assertEquals("[B, D]", selected.getValue());
 		showselect.click();
-		Assert.assertEquals("[1, 3]", range.getValue());
+		Assert.assertEquals("[B, D]", range.getValue());
 		
 		
 		select0.click();
 //		Assert.assertArrayEquals(new long[]{0L,1L}, ListboxUtil.getSelectedIndexs(outerbox));
 		Assert.assertEquals("[B, D]", selected.getValue());
 		showselect.click();
-		Assert.assertEquals("[0, 1]", range.getValue());
+		Assert.assertEquals("[A, B]", range.getValue());
 		
 		
 		reload.click();
 //		Assert.assertArrayEquals(new long[]{1L,3L}, ListboxUtil.getSelectedIndexs(outerbox));
 		Assert.assertEquals("[B, D]", selected.getValue());
 		showselect.click();
-		Assert.assertEquals("[1, 3]", range.getValue());
+		Assert.assertEquals("[B, D]", range.getValue());
 		
 	}
 	
@@ -292,7 +292,7 @@ public class FeaturesTestCase0500 extends TestCaseBase{
 		outerbox.findWidgets("@listitem").get(0).click();
 		outerbox.findWidgets("@listitem").get(2).click();
 		showselect.click();
-		Assert.assertEquals("[0, 2]", range.getValue());
+		Assert.assertEquals("[A, C]", range.getValue());
 		
 		clean.click();
 		Assert.assertArrayEquals(new long[0], ListboxUtil.getSelectedIndexs(outerbox));
@@ -303,24 +303,24 @@ public class FeaturesTestCase0500 extends TestCaseBase{
 		outerbox.findWidgets("@listitem").get(2).click();
 		outerbox.findWidgets("@listitem").get(4).click();
 		showselect.click();
-		Assert.assertEquals("[2, 4]", range.getValue());
+		Assert.assertEquals("[C, E]", range.getValue());
 		
 		select.click();
 //		Assert.assertArrayEquals(new long[]{1L,3L}, ListboxUtil.getSelectedIndexs(outerbox));
 		showselect.click();
-		Assert.assertEquals("[1, 3]", range.getValue());
+		Assert.assertEquals("[B, D]", range.getValue());
 		
 		
 		select0.click();
 //		Assert.assertArrayEquals(new long[]{0L,1L}, ListboxUtil.getSelectedIndexs(outerbox));
 		showselect.click();
-		Assert.assertEquals("[0, 1]", range.getValue());
+		Assert.assertEquals("[A, B]", range.getValue());
 		
 		
 		reload.click();
 //		Assert.assertArrayEquals(new long[]{0L,1L}, ListboxUtil.getSelectedIndexs(outerbox));
 		showselect.click();
-		Assert.assertEquals("[0, 1]", range.getValue());
+		Assert.assertEquals("[A, B]", range.getValue());
 		
 	}
 	
