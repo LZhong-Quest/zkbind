@@ -18,7 +18,7 @@
 			</n:a>
 		</n:li>
 		<n:li>
-			<n:a href="search/searchex/searchMvvmAutowire.zul">
+			<n:a href="searchex/searchMvvmAutowire.zul">
 				A search filter example v2 with @Wire
 			</n:a>
 		</n:li>
