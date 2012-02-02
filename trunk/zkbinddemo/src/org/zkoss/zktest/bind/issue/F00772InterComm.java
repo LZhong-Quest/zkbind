@@ -15,7 +15,7 @@ public class F00772InterComm extends SelectorComposer<Component>{
 	public void postX(){
 		Map<String,Object> args = new HashMap<String,Object>();
 		args.put("data", "postX");
-		BindUtils.postGlobalCommand(BindUtils.DEFAULT_QUEUE_NAME, BindUtils.DEFAULT_QUEUE_SCOPE, "cmdX", args);
+		BindUtils.postGlobalCommand(null, null, "cmdX", args);
 	}
 	
 	@Listen("onClick=button#posty")

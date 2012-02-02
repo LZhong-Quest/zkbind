@@ -31,7 +31,7 @@ public class F00772_3 {
 		value2 = value1 + "-X3";
 		Map<String,Object> args = new HashMap<String,Object>();
 		args.put("data", "postE");
-		BindUtils.postGlobalCommand(BindUtils.DEFAULT_QUEUE_NAME, BindUtils.DEFAULT_QUEUE_SCOPE, "cmdE", args);
+		BindUtils.postGlobalCommand(null, null, "cmdE", args);
 	}
 	
 	
