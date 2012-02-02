@@ -646,15 +646,55 @@ public class BugsTestCase0500 extends TestCaseBase{
 		Assert.assertEquals("C-J", l4.getValue());
 	}
 	
-//	@Test
-//	public void b00810ListboxMultiple(){
-//		navigate(getTestCaseUrl("/bind/issue/B00810ListboxMultiple.zul"));
-//		Widget listbox1 = findWidget("$listbox1");
-//		Widget listbox1 = findWidget("$listbox2");
-//		Widget listbox1 = findWidget("$listbox3");
-//		
-//		Widget t2 = findWidget("$t2");
-//		Widget l2 = findWidget("$l2");
-//		
-//	}
+	@Test
+	public void b00810ListboxMultiple(){
+		navigate(getTestCaseUrl("/bind/issue/B00810ListboxMultiple.zul"));
+		Widget listbox1 = findWidget("$listbox1");
+		Widget listbox2 = findWidget("$listbox2");
+		Widget listbox3 = findWidget("$listbox3");
+		Widget l1 = findWidget("$l1");
+		Widget toggle = findWidget("$toggle");
+		Widget update = findWidget("$update");
+		
+		listbox1.findWidgets("@listitem").get(1).click();
+		Assert.assertArrayEquals(new long[]{1}, ListboxUtil.getSelectedIndexs(listbox1));
+		Assert.assertArrayEquals(new long[]{1}, ListboxUtil.getSelectedIndexs(listbox2));
+		Assert.assertArrayEquals(new long[]{1}, ListboxUtil.getSelectedIndexs(listbox3));
+		Assert.assertEquals("[1]", l1.getValue());
+		
+		
+		listbox2.findWidgets("@listitem").get(3).click();
+		Assert.assertArrayEquals(new long[]{1,3}, ListboxUtil.getSelectedIndexs(listbox1));
+		Assert.assertArrayEquals(new long[]{1,3}, ListboxUtil.getSelectedIndexs(listbox2));
+		Assert.assertArrayEquals(new long[]{1,3}, ListboxUtil.getSelectedIndexs(listbox3));
+		Assert.assertEquals("[1, 3]", l1.getValue());
+		
+		listbox3.findWidgets("@listitem").get(6).click();
+		Assert.assertArrayEquals(new long[]{1,3,6}, ListboxUtil.getSelectedIndexs(listbox1));
+		Assert.assertArrayEquals(new long[]{1,3,6}, ListboxUtil.getSelectedIndexs(listbox2));
+		Assert.assertArrayEquals(new long[]{1,3,6}, ListboxUtil.getSelectedIndexs(listbox3));
+		Assert.assertEquals("[1, 3, 6]", l1.getValue());
+		
+		toggle.click();
+		listbox3.findWidgets("@listitem").get(7).click();
+		Assert.assertArrayEquals(new long[]{7}, ListboxUtil.getSelectedIndexs(listbox1));
+		Assert.assertArrayEquals(new long[]{7}, ListboxUtil.getSelectedIndexs(listbox2));
+		Assert.assertArrayEquals(new long[]{7}, ListboxUtil.getSelectedIndexs(listbox3));
+		Assert.assertEquals("[7]", l1.getValue());
+		
+		listbox3.findWidgets("@listitem").get(1).click();
+		Assert.assertArrayEquals(new long[]{1}, ListboxUtil.getSelectedIndexs(listbox1));
+		Assert.assertArrayEquals(new long[]{1}, ListboxUtil.getSelectedIndexs(listbox2));
+		Assert.assertArrayEquals(new long[]{1}, ListboxUtil.getSelectedIndexs(listbox3));
+		Assert.assertEquals("[1]", l1.getValue());
+		
+		listbox2.findWidgets("@listitem").get(3).click();
+		toggle.click();
+		update.click();
+		Assert.assertArrayEquals(new long[]{1,3}, ListboxUtil.getSelectedIndexs(listbox1));
+		Assert.assertArrayEquals(new long[]{1,3}, ListboxUtil.getSelectedIndexs(listbox2));
+		Assert.assertArrayEquals(new long[]{1,3}, ListboxUtil.getSelectedIndexs(listbox3));
+		Assert.assertEquals("[1, 3]", l1.getValue());
+		
+	}
 }
