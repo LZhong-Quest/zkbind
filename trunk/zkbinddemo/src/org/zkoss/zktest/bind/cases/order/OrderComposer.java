@@ -86,7 +86,7 @@ public class OrderComposer extends SelectorComposer<Component>{
 		
 		orderList.setModel(getOrders());
 		orderList.setItemRenderer(new ListitemRenderer<Order>() {
-			public void render(Listitem item, Order data) throws Exception {
+			public void render(Listitem item, Order data, int index) throws Exception {
 				new Listcell(data.getId()).setParent(item);
 				new Listcell(Integer.toString(data.getQuantity())).setParent(item);
 				new Listcell(numberFormat.format(data.getPrice())).setParent(item);
