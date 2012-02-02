@@ -602,4 +602,59 @@ public class BugsTestCase0500 extends TestCaseBase{
 		shrink.click();
 		Assert.assertEquals(0L,ListboxUtil.getSelectedIndex(listbox));
 	}
+	
+	@Test
+	public void b00757OnChange(){
+		navigate(getTestCaseUrl("/bind/issue/B00757OnChange.zul"));
+		Widget t1 = findWidget("$t1");
+		Widget l1 = findWidget("$l1");
+		
+		Widget t2 = findWidget("$t2");
+		Widget l2 = findWidget("$l2");
+		
+		Widget t3 = findWidget("$t3");
+		Widget l31 = findWidget("$l31");
+		Widget l32 = findWidget("$l32");
+		
+		Widget t4 = findWidget("$t4");
+		Widget l4 = findWidget("$l4");
+		
+		
+		t1.replace("A").tab();
+		Assert.assertEquals("A-X", l1.getValue());
+		
+		t2.replace("A").tab();
+		Assert.assertEquals("null-Y", l2.getValue());
+		t2.replace("B").tab();
+		Assert.assertEquals("B-Y", l2.getValue());
+		t2.replace("C").tab();
+		Assert.assertEquals("B-Y", l2.getValue());
+		
+		t3.replace("A").tab();
+		Assert.assertEquals("A", l31.getValue());
+		Assert.assertEquals("", l32.getValue());
+		Assert.assertEquals("", l4.getValue());
+		
+		t4.replace("C").tab();
+		Assert.assertEquals("A", l31.getValue());
+		Assert.assertEquals("", l32.getValue());
+		Assert.assertEquals("", l4.getValue());
+		
+		t3.replace("B").tab();
+		Assert.assertEquals("B", l31.getValue());
+		Assert.assertEquals("B-I", l32.getValue());
+		Assert.assertEquals("C-J", l4.getValue());
+	}
+	
+//	@Test
+//	public void b00810ListboxMultiple(){
+//		navigate(getTestCaseUrl("/bind/issue/B00810ListboxMultiple.zul"));
+//		Widget listbox1 = findWidget("$listbox1");
+//		Widget listbox1 = findWidget("$listbox2");
+//		Widget listbox1 = findWidget("$listbox3");
+//		
+//		Widget t2 = findWidget("$t2");
+//		Widget l2 = findWidget("$l2");
+//		
+//	}
 }
