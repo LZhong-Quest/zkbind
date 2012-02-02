@@ -3,7 +3,7 @@
 	<label id="msg" value="@bind(vm.message1)"/>
 	<label id="selected" value="@bind(vm.selected) @converter(vm.selectedConverter)"/>
 	</vlayout>
-	<listbox id="outerbox" width="700px" model="@bind(vm.items)" checkmark="true" rows="5" selectedItems="@bind(vm.selected)">
+	<listbox id="outerbox" width="700px" model="@bind(vm.items)" checkmark="true" rows="5" selectedItems="@bind(vm.selected)" multiple="true">
 		<listhead>
 			<listheader label="index"/>
 			<listheader label="name"/>

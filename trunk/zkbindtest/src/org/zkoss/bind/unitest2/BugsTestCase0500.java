@@ -587,8 +587,8 @@ public class BugsTestCase0500 extends TestCaseBase{
 	}
 	
 	@Test
-	public void b775_listmodel_selectionl(){
-		navigate(getTestCaseUrl("/bind/issue/B775-listmodel-selection.zul"));
+	public void b00775ListmodelSelection(){
+		navigate(getTestCaseUrl("/bind/issue/B00775ListmodelSelection.zul"));
 		Widget listbox = findWidget("$listbox");
 		Widget header = findWidget("$header");
 		Widget shrink = findWidget("$shrink");
@@ -601,9 +601,5 @@ public class BugsTestCase0500 extends TestCaseBase{
 		
 		shrink.click();
 		Assert.assertEquals(0L,ListboxUtil.getSelectedIndex(listbox));
-
-		
-		
-		
 	}
 }

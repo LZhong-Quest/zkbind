@@ -13,11 +13,11 @@ import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listheader;
 
-public class B775ListmodelSelection {
+public class B00775ListmodelSelection {
 	private List<String> model;
 	private Set<String> selected;
 	
-	public B775ListmodelSelection() {
+	public B00775ListmodelSelection() {
 		generateModel(10);
 	}
 
