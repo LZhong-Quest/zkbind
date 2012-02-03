@@ -1,6 +1,6 @@
 <window apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('org.zkoss.zktest.bind.basic.CollectionTemplateTreeVM')">
 	<label id="msg" value="@bind(vm.message1)"/>
-	<tree id="tree" model="@bind(vm.model) @template(each.startA or eachStatus.index eq 1?'model1':'model2')" width="600px">
+	<tree id="tree" model="@bind(vm.model) @template(each.startA or forEachStatus.index eq 1?'model1':'model2')" width="600px">
 		<treecols>
 			<treecol label="index"/>
 			<treecol label="name"/>
