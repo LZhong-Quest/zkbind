@@ -4,7 +4,7 @@
               To include a user specific buildfile here, simply create one in the same
               directory with the processing instruction <?eclipse.ant.import?>
               as the first entry and export the buildfile again. -->
-<project basedir="." default="build" name="zkbindtest">
+<project basedir="." default="usage" name="zkbindtest">
 	<property environment="env" />
 	<property name="ECLIPSE_HOME" value="../../../../java/eclipse-jee-3.6-zk" />
 	<tstamp>
@@ -55,7 +55,14 @@
 		<pathelement location="target/classes" />
 		<path refid="Maven Dependencies.libraryclasspath" />
 	</path>
-	
+	<target name="usage">
+		<echo>Use following target to test and generate report</echo>
+		<echo>  ant reportAll</echo>
+		<echo>  ant reportAllBasic</echo>
+		<echo>  ant reportAllCollection</echo>
+		<echo>  ant reportAllFeature</echo>
+		<echo>  ant reportAllBug</echo>
+	</target>
 	<target name="init">
 		<mkdir dir="target/classes" />
 		<copy includeemptydirs="false" todir="target/classes">
@@ -207,20 +214,24 @@
 		</junitreport>
 	</target>
 
-	<target name="runAll" depends="runAllBasic, runAllBasic, runAllFeature, runAllBug"/>
+	<target name="runAll" depends="runAllBasic, runAllCollection, runAllFeature, runAllBug"/>
 	<target name="reportAll" depends="cleanall, runAll, junitreport" />
 
 	<target name="runAllBasic" depends="clean, build">
 		<antcall target="LoadTestCase" />
 		<antcall target="FormTestCase" />
 		<antcall target="LoadSaveTestCase" />
-		<antcall target="ChildrenTestCase" />
-		<antcall target="CollectionTestCase" />
 		<antcall target="ParamTestCase" />
 		<antcall target="MiscTestCase" />
 		<antcall target="ComponentTestCase" />
 	</target>
 	<target name="reportAllBasic" depends="cleanall, runAllBasic, junitreport" />
+	
+	<target name="runAllCollection" depends="clean, build">
+		<antcall target="ChildrenTestCase" />
+		<antcall target="CollectionTestCase" />
+	</target>
+	<target name="reportAllCollection" depends="cleanall, runAllCollection, junitreport" />	
 
 	<target name="runAllFeature" depends="clean, build">
 		<antcall target="FeaturesTestCase0001" />

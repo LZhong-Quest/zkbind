@@ -1701,4 +1701,54 @@ public class CollectionTestCase  extends TestCaseBase{
 		
 		
 	}
+	
+	
+	@Test
+	public void indexDefault(){
+		navigate(getTestCaseUrl("/bind/basic/collection-index-default.zul"));
+		
+		Widget listbox = findWidget("$listbox");
+		List<Widget> outeritems = listbox.getChildren();//include header
+		outeritems.remove(0);//don't care header
+		
+		String[] itemLabel = new String[]{"A","B","C", "D"};
+		Assert.assertEquals(itemLabel.length, outeritems.size());
+		
+		for(int i=0;i<itemLabel.length;i++){
+			Widget outeritem = outeritems.get(i);
+			String outerl = itemLabel[i];
+			
+			Widget cell = outeritem.getFirstChild();
+			Assert.assertEquals(""+i, cell.getLabel());// verify the index
+			cell = cell.getNextSibling();
+			Assert.assertEquals(outerl, cell.getLabel());//verify the label
+		}
+		
+		Widget grid = findWidget("$grid");
+		List<Widget> outerrows = grid.findWidget("@rows").getChildren();
+		
+		Assert.assertEquals(itemLabel.length, outerrows.size());
+		
+		for(int i=0;i<itemLabel.length;i++){
+			Widget outerrow = outerrows.get(i);
+			String outerl = itemLabel[i];
+			
+			Widget rowkid = outerrow.getFirstChild();
+			Assert.assertEquals(""+i, rowkid.getValue());// verify the index  on label
+			rowkid = rowkid.getNextSibling();
+			Assert.assertEquals(outerl, rowkid.getValue());//verify the label on label
+		}
+		
+		
+		Widget combobox = findWidget("$combobox");
+		combobox.call("open");//to show popu first so we can find comboitem in zkmax
+		List<Widget> comboitems = combobox.findWidgets("@comboitem");
+		Assert.assertEquals(itemLabel.length, comboitems.size());
+		for(int i=0;i<itemLabel.length;i++){
+			Widget comboitem = comboitems.get(i);
+			Assert.assertEquals(itemLabel[i], comboitem.getLabel());
+			Assert.assertEquals(""+i, comboitem.getAttribute("description"));
+		}
+		
+	}
 }
