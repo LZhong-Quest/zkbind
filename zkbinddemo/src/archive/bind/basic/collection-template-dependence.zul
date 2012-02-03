@@ -4,7 +4,7 @@
 	2.after click change1, the 1st item('A') becomes to 'X' and 'model2', the 2nd item('B') becomes to 'A' and model1
 	3.then after click change2, the 1st item('X') becomes to 'A' and 'model1', the 2nd item('A') becomes to 'X' and model2    
 	</label>
-	<grid id="outergrid" width="700px" model="@bind(vm.items) @template(each.name eq 'A' or eachStatus.index eq 2?'model1':'model2')">
+	<grid id="outergrid" width="700px" model="@bind(vm.items) @template(each.name eq 'A' or forEachStatus.index eq 2?'model1':'model2')">
 		<columns>
 			<column label="item name"/>
 			<column label="template name"/>
