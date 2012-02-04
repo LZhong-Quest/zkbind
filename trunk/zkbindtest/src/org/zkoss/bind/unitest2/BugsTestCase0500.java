@@ -697,4 +697,26 @@ public class BugsTestCase0500 extends TestCaseBase{
 		Assert.assertEquals("[1, 3]", l1.getValue());
 		
 	}
+	
+	@Test
+	public void b00821SelectedIndex(){
+		navigate(getTestCaseUrl("/bind/issue/B00821SelectedIndex.zul"));
+		Widget selectbox = findWidget("$selectbox");
+		Widget listbox = findWidget("$listbox");
+		Widget combobox = findWidget("$combobox");
+		Widget i1 = findWidget("$i1");
+		
+		i1.replace("1").tab();
+		
+		Assert.assertEquals(1L, ListboxUtil.getSelectedIndex(listbox));
+		Assert.assertEquals(1L, selectbox.getAttribute("selectedIndex"));
+		Assert.assertEquals("B", combobox.getValue());
+		
+		i1.replace("2").tab();
+		Assert.assertEquals(2L, ListboxUtil.getSelectedIndex(listbox));
+		Assert.assertEquals(2L, selectbox.getAttribute("selectedIndex"));
+		Assert.assertEquals("C", combobox.getValue());
+		
+		
+	}
 }
