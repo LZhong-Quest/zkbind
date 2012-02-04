@@ -673,4 +673,88 @@ public class FeaturesTestCase0500 extends TestCaseBase{
 		Assert.assertEquals("A-local-X1-X2-X3", l31.getValue());
 		Assert.assertEquals("postMy-XMy", l41.getValue());
 	}
+	
+	@Test
+	public void f00823RadiogroupModel1(){
+		navigate(getTestCaseUrl("/bind/issue/F00823RadiogroupModel1.zul"));
+		Widget l1 = findWidget("$l1");
+		Widget l2 = findWidget("$l2");
+		Widget box1 = findWidget("$box1");
+		Widget box2 = findWidget("$box2");
+		Widget select = findWidget("$select");
+		Widget clean = findWidget("$clean");
+		
+		Assert.assertEquals("-1", l1.getValue());
+		Assert.assertEquals("", l2.getValue());
+		
+		box1.findWidgets("@radio").get(1).click();
+		Assert.assertEquals("1", l1.getValue());
+		Assert.assertEquals("", l2.getValue());
+		box1.findWidgets("@radio").get(3).click();
+		Assert.assertEquals("3", l1.getValue());
+		Assert.assertEquals("", l2.getValue());
+		
+		clean.click();
+		Assert.assertEquals("-1", l1.getValue());
+		Assert.assertEquals("", l2.getValue());
+		
+		
+		box2.findWidgets("@radio").get(1).click();
+		Assert.assertEquals("-1", l1.getValue());
+		Assert.assertEquals("B", l2.getValue());
+		box2.findWidgets("@radio").get(3).click();
+		Assert.assertEquals("-1", l1.getValue());
+		Assert.assertEquals("D", l2.getValue());
+		
+		
+		clean.click();
+		Assert.assertEquals("-1", l1.getValue());
+		Assert.assertEquals("", l2.getValue());
+		
+		select.click();
+		Assert.assertEquals("0", l1.getValue());
+		Assert.assertEquals("A", l2.getValue());
+	}
+	
+	@Test
+	public void f00823RadiogroupModel2(){
+		navigate(getTestCaseUrl("/bind/issue/F00823RadiogroupModel2.zul"));
+		Widget l1 = findWidget("$l1");
+		Widget l2 = findWidget("$l2");
+		Widget box1 = findWidget("$box1");
+		Widget box2 = findWidget("$box2");
+		Widget select = findWidget("$select");
+		Widget clean = findWidget("$clean");
+		
+		Assert.assertEquals("-1", l1.getValue());
+		Assert.assertEquals("", l2.getValue());
+		
+		box1.findWidgets("@radio").get(1).click();
+		Assert.assertEquals("1", l1.getValue());
+		Assert.assertEquals("", l2.getValue());
+		box1.findWidgets("@radio").get(3).click();
+		Assert.assertEquals("3", l1.getValue());
+		Assert.assertEquals("", l2.getValue());
+		
+		clean.click();
+		Assert.assertEquals("-1", l1.getValue());
+		Assert.assertEquals("", l2.getValue());
+		
+		
+		box2.findWidgets("@radio").get(1).click();
+		Assert.assertEquals("-1", l1.getValue());
+		Assert.assertEquals("B", l2.getValue());
+		box2.findWidgets("@radio").get(3).click();
+		Assert.assertEquals("-1", l1.getValue());
+		Assert.assertEquals("D", l2.getValue());
+		
+		
+		clean.click();
+		Assert.assertEquals("-1", l1.getValue());
+		Assert.assertEquals("", l2.getValue());
+		
+		select.click();
+		Assert.assertEquals("0", l1.getValue());
+		Assert.assertEquals("A", l2.getValue());
+	}
 }

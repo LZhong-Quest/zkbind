@@ -716,7 +716,17 @@ public class BugsTestCase0500 extends TestCaseBase{
 		Assert.assertEquals(2L, ListboxUtil.getSelectedIndex(listbox));
 		Assert.assertEquals(2L, selectbox.getAttribute("selectedIndex"));
 		Assert.assertEquals("C", combobox.getValue());
-		
+	}
+	
+	@Test
+	public void b00828GlobalCommand(){
+		navigate(getTestCaseUrl("/bind/issue/B00828GlobalCommand.zul"));
+		Widget post = findWidget("$post");
+		for(int i=0;i<5;i++){
+			post.click();
+			Widget w = findWidget(".z-window-modal");
+			Assert.assertNull(w);
+		}
 		
 	}
 }
