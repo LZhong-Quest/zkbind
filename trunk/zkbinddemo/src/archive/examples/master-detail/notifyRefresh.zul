@@ -20,7 +20,7 @@
 			<vbox id="mainArea" width="200px" height="300px"
 				style="border:dashed 2px" visible="@bind(vm.visible)"
 				apply="org.zkoss.bind.BindComposer"
-				viewModel="@id('vm') @init('org.zkoss.mvvm.examples.globalcommand.AddViewModel')"
+				viewModel="@id('vm') @init('org.zkoss.mvvm.examples.globalcommand.MainViewModel')"
 				validationMessages="@id('vmsgs')">
 				<label value="Main Panel" style="font-size:30px" />
 

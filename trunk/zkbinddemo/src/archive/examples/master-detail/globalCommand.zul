@@ -15,13 +15,13 @@
 			<menuitem label="Hide" onClick="@global-command('hide')"></menuitem>
 		</menubar>
 		<hlayout>
-			<vbox width="200px" height="300px" style="border:dashed 2px"
+			<vbox id="mainBox" width="200px" height="300px" style="border:dashed 2px"
 				visible="@bind(vm.visible)" apply="org.zkoss.bind.BindComposer"
-				viewModel="@id('vm') @init('org.zkoss.mvvm.examples.globalcommand.MainViewModel')" 
+				viewModel="@id('vm') @init('org.zkoss.mvvm.examples.globalcommand.MasterViewModel')" 
 				validationMessages="@id('vmsgs')">
 				<label value="Main Panel" style="font-size:30px" />
 				<!-- 
-				<combobox model="@load(vm.names)"
+				<combobox model="@load(vm.staffs)" onSelect="@command('select') @global-command('detail', name=vm.selected)"
 					selectedItem="@bind(vm.selected)">
 					<template name="model">
 						<comboitem label="@load(each)"
@@ -38,7 +38,7 @@
 				<separator height="20px" />
 				<label value="@load(vm.msg)" />
 			</vbox>
-			<vbox width="400px" height="300px"
+			<vbox id="detailBox" width="400px" height="300px"
 				visible="@bind(vm.visible)" apply="org.zkoss.bind.BindComposer"
 				style="border:solid 2px"
 				viewModel="@id('vm') @init('org.zkoss.mvvm.examples.globalcommand.DetailViewModel')" >
