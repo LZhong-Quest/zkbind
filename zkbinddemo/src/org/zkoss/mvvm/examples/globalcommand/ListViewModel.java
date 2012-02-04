@@ -10,7 +10,6 @@ import org.zkoss.bind.annotation.NotifyChange;
 public class ListViewModel {
 
 	private boolean visible = true;
-	
 
 	private List<String> items;
 	private Date lastUpdate;
