@@ -67,6 +67,11 @@ public class MyItemListModel extends AbstractListModel<Item> implements Sortable
 	    }
 	}
 	
+	public String getSortDirection(Comparator<Item> cmpr){
+		if(ascending==null) return "natural";
+		return ascending?"ascending":"descending";
+	}
+	
 	public void setFilter(String filter){
 		this.filter = filter;
 		cache = null;
