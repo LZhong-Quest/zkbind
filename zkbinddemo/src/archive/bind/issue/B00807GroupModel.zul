@@ -3,7 +3,7 @@
 		org.zkoss.zul.grid.rod="false" />
 	<vlayout apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('org.zkoss.zktest.bind.issue.B00807GroupModel')">
-		<grid height="600px" width="800px"
+		<grid id="grid" height="600px" width="800px"
 			model="@load(vm.groupsModel) @template(vm.getTemplate(each))">
 			<columns sizable="true">
 				<column label="Category" />
@@ -19,9 +19,7 @@
 				<group label="@load(each[0].category)"/>
 			</template>
 			<template name="foot">
-				<groupfoot spans="2" sclass="foodFooter">
-					<div> Total <label value="@load(each)" /> Items</div>
-				 </groupfoot>
+				<groupfoot spans="2" sclass="foodFooter" label="@load(each)"/>
 			</template>
 		</grid>
 	</vlayout>
