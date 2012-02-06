@@ -651,4 +651,20 @@ public class MiscTestCase extends TestCaseBase{
 		Assert.assertEquals("", m31.getValue());
 		Assert.assertEquals("value must not < 10 or > 100, but is 2", m32.getValue());
 	}
+	
+	@Test
+	public void testELTag(){
+		navigate(getTestCaseUrl("/bind/basic/eltag.zul"));
+		Widget t1 = findWidget("$t1");
+		Widget l1 = findWidget("$l1");
+		Widget l2 = findWidget("$l2");
+		
+		t1.replace("AA").tab();
+		Assert.assertEquals("AA:A",l1.getValue());
+		Assert.assertEquals("AA-B",l2.getValue());
+		
+		t1.replace("BB").tab();
+		Assert.assertEquals("BB:A",l1.getValue());
+		Assert.assertEquals("BB-B",l2.getValue());
+	}
 }
