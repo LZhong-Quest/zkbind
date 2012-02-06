@@ -2,9 +2,12 @@ package org.zkoss.zktest.bind.issue;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
@@ -13,14 +16,14 @@ import org.zkoss.zul.GroupsModelArray;
 /**
  *
  */
-public class B00807GroupModelListbox {
+public class B00807GroupModelListboxMultiple {
 
 	private MyGroupsModelArray groupsModel;
 
 	
-	Object selected;
+	Set<Food> selected;
 	
-	public B00807GroupModelListbox() {
+	public B00807GroupModelListboxMultiple() {
 		groupsModel = new MyGroupsModelArray(FoodData.getAllFoodsArray(), new FoodComparator());
 	}
 
@@ -28,13 +31,24 @@ public class B00807GroupModelListbox {
 		return groupsModel;
 	}
 
-	public Object getSelected() {
+	public Set<Food> getSelected() {
 		return selected;
 	}
 
-	public void setSelected(Object selected) {
+	@NotifyChange({"selected","sortedName"})
+	public void setSelected(Set<Food> selected) {
 		this.selected = selected;
-		System.out.println(">>selected:"+selected);
+	}
+	
+	public List<Food> getSortedName(){
+		if(selected==null) return null;
+		List sorted = new ArrayList();
+		for(Food f:selected){
+			sorted.add(f.getName());
+		}
+		Collections.sort(sorted);
+		return sorted;
+		
 	}
 
 	public String getTemplate(Object data) {
@@ -48,12 +62,10 @@ public class B00807GroupModelListbox {
 	}
 	
 	@Command @NotifyChange("selected")
-	public void select1(){
-		selected = groupsModel.getChild(0,0);
-	}
-	@Command @NotifyChange("selected")
-	public void select2(){
-		selected = groupsModel.getChild(1,0);
+	public void select(){
+		selected = new HashSet<Food>();
+		selected.add((Food)groupsModel.getChild(0,0));
+		selected.add((Food)groupsModel.getChild(1,1));
 	}
 
 	public static class MyGroupsModelArray extends GroupsModelArray {
