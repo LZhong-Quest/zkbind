@@ -726,7 +726,122 @@ public class BugsTestCase0500 extends TestCaseBase{
 			post.click();
 			Widget w = findWidget(".z-window-modal");
 			Assert.assertNull(w);
-		}
+		}		
+	}
+	
+	@Test
+	public void b00807GroupModel_1(){
+		navigate(getTestCaseUrl("/bind/issue/B00807GroupModel.zul"));
 		
+		Widget grid = findWidget("$grid");
+		List<Widget> groups = grid.findWidgets("@group");
+		List<Widget> groupfoots = grid.findWidgets("@groupfoot");
+		List<Widget> rows = grid.findWidgets("@row");
+		
+		Assert.assertEquals(3, groups.size());
+		Assert.assertEquals(3, groupfoots.size());
+		Assert.assertEquals(5, rows.size());
+		
+		Assert.assertEquals("Fruits", groups.get(0).getAttribute("label"));
+		Assert.assertEquals("Seafood", groups.get(1).getAttribute("label"));
+		Assert.assertEquals("Vegetables", groups.get(2).getAttribute("label"));
+		
+		Assert.assertEquals("1", groupfoots.get(0).findWidget("@label").getAttribute("value"));
+		Assert.assertEquals("2", groupfoots.get(1).findWidget("@label").getAttribute("value"));
+		Assert.assertEquals("2", groupfoots.get(2).findWidget("@label").getAttribute("value"));
+		
+		Assert.assertEquals("Apples", rows.get(0).findWidgets("@label").get(1).getAttribute("value"));
+		Assert.assertEquals("Salmon", rows.get(1).findWidgets("@label").get(1).getAttribute("value"));
+		Assert.assertEquals("Shrimp", rows.get(2).findWidgets("@label").get(1).getAttribute("value"));
+		Assert.assertEquals("Asparagus", rows.get(3).findWidgets("@label").get(1).getAttribute("value"));
+		Assert.assertEquals("Beets", rows.get(4).findWidgets("@label").get(1).getAttribute("value"));
+		
+	}
+	@Test
+	public void b00807GroupModel_2(){
+		navigate(getTestCaseUrl("/bind/issue/B00807GroupModelListbox.zul"));
+		
+		Widget listbox = findWidget("$listbox");
+		List<Widget> groups = listbox.findWidgets("@listgroup");
+		List<Widget> groupfoots = listbox.findWidgets("@listgroupfoot");
+		List<Widget> items = listbox.findWidgets("@listitem");
+		Widget l1 = findWidget("$l1");
+		Widget sel1 = findWidget("$sel1");
+		Widget sel2 = findWidget("$sel2");
+		
+		listbox.dump(false);
+		
+		Assert.assertEquals(3, groups.size());
+		Assert.assertEquals(3, groupfoots.size());
+		Assert.assertEquals(5, items.size());
+		
+		Assert.assertEquals("Fruits", groups.get(0).findWidget("@listcell").getAttribute("label"));
+		Assert.assertEquals("Seafood", groups.get(1).findWidget("@listcell").getAttribute("label"));
+		Assert.assertEquals("Vegetables", groups.get(2).findWidget("@listcell").getAttribute("label"));
+		
+		Assert.assertEquals("1", groupfoots.get(0).findWidget("@listcell").getAttribute("label"));
+		Assert.assertEquals("2", groupfoots.get(1).findWidget("@listcell").getAttribute("label"));
+		Assert.assertEquals("2", groupfoots.get(2).findWidget("@listcell").getAttribute("label"));
+		
+		Assert.assertEquals("Apples", items.get(0).findWidgets("@label").get(1).getAttribute("value"));
+		Assert.assertEquals("Salmon", items.get(1).findWidgets("@label").get(1).getAttribute("value"));
+		Assert.assertEquals("Shrimp", items.get(2).findWidgets("@label").get(1).getAttribute("value"));
+		Assert.assertEquals("Asparagus", items.get(3).findWidgets("@label").get(1).getAttribute("value"));
+		Assert.assertEquals("Beets", items.get(4).findWidgets("@label").get(1).getAttribute("value"));
+		
+		
+		
+		items.get(4).click();
+		Assert.assertEquals("Beets",l1.getValue());
+
+		sel1.click();
+		Assert.assertEquals("Apples",l1.getValue());
+		
+		sel2.click();
+		Assert.assertEquals("Salmon",l1.getValue());
+		
+	}
+	
+	@Test
+	public void b00807GroupModel_3(){
+		navigate(getTestCaseUrl("/bind/issue/B00807GroupModelListboxMultiple.zul"));
+		
+		Widget listbox = findWidget("$listbox");
+		List<Widget> groups = listbox.findWidgets("@listgroup");
+		List<Widget> groupfoots = listbox.findWidgets("@listgroupfoot");
+		List<Widget> items = listbox.findWidgets("@listitem");
+		Widget l1 = findWidget("$l1");
+		Widget sel1 = findWidget("$sel1");
+		
+		listbox.dump(false);
+		
+		Assert.assertEquals(3, groups.size());
+		Assert.assertEquals(3, groupfoots.size());
+		Assert.assertEquals(5, items.size());
+		
+		Assert.assertEquals("Fruits", groups.get(0).findWidget("@listcell").getAttribute("label"));
+		Assert.assertEquals("Seafood", groups.get(1).findWidget("@listcell").getAttribute("label"));
+		Assert.assertEquals("Vegetables", groups.get(2).findWidget("@listcell").getAttribute("label"));
+		
+		Assert.assertEquals("1", groupfoots.get(0).findWidget("@listcell").getAttribute("label"));
+		Assert.assertEquals("2", groupfoots.get(1).findWidget("@listcell").getAttribute("label"));
+		Assert.assertEquals("2", groupfoots.get(2).findWidget("@listcell").getAttribute("label"));
+		
+		Assert.assertEquals("Apples", items.get(0).findWidgets("@label").get(1).getAttribute("value"));
+		Assert.assertEquals("Salmon", items.get(1).findWidgets("@label").get(1).getAttribute("value"));
+		Assert.assertEquals("Shrimp", items.get(2).findWidgets("@label").get(1).getAttribute("value"));
+		Assert.assertEquals("Asparagus", items.get(3).findWidgets("@label").get(1).getAttribute("value"));
+		Assert.assertEquals("Beets", items.get(4).findWidgets("@label").get(1).getAttribute("value"));
+		
+		
+		
+		items.get(3).click();
+		Assert.assertEquals("[Asparagus]",l1.getValue());
+		items.get(4).click();
+		Assert.assertEquals("[Asparagus, Beets]",l1.getValue());
+
+		sel1.click();
+		Assert.assertEquals("[Apples, Shrimp]",l1.getValue());
+		Assert.assertArrayEquals(new long[]{0,2}, ListboxUtil.getSelectedIndexs(listbox));
 	}
 }
