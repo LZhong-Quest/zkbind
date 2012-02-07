@@ -667,4 +667,37 @@ public class MiscTestCase extends TestCaseBase{
 		Assert.assertEquals("BB:A",l1.getValue());
 		Assert.assertEquals("BB-B",l2.getValue());
 	}
+	
+	@Test
+	public void testImmutable(){
+		navigate(getTestCaseUrl("/bind/basic/immutable.zul"));
+		Widget l1 = findWidget("$l1");
+		Widget l2 = findWidget("$l2");
+		Widget l3 = findWidget("$l3");
+		Widget l4 = findWidget("$l4");
+		Widget l5 = findWidget("$l5");
+		Widget cmd1 = findWidget("$cmd1");
+		Widget cmd2 = findWidget("$cmd2");
+		
+		Assert.assertEquals("A", l1.getValue());
+		Assert.assertEquals("A-option", l2.getValue());
+		Assert.assertEquals("A-option", l3.getValue());
+		Assert.assertEquals("A-option", l4.getValue());
+		Assert.assertEquals("A-option", l5.getValue());
+		
+		cmd1.click();
+		Assert.assertEquals("A", l1.getValue());
+		Assert.assertEquals("A-option", l2.getValue());
+		Assert.assertEquals("A-option", l3.getValue());
+		Assert.assertEquals("A-option", l4.getValue());
+		Assert.assertEquals("A-option", l5.getValue());
+		
+		cmd2.click();
+		Assert.assertEquals("A", l1.getValue());
+		Assert.assertEquals("A-option", l2.getValue());
+		Assert.assertEquals("A-option", l3.getValue());
+		Assert.assertEquals("B-option", l4.getValue());
+		Assert.assertEquals("B-option", l5.getValue());
+		
+	}
 }
