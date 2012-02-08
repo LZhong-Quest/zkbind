@@ -769,8 +769,6 @@ public class BugsTestCase0500 extends TestCaseBase{
 		Widget sel1 = findWidget("$sel1");
 		Widget sel2 = findWidget("$sel2");
 		
-		listbox.dump(false);
-		
 		Assert.assertEquals(3, groups.size());
 		Assert.assertEquals(3, groupfoots.size());
 		Assert.assertEquals(5, items.size());
@@ -812,8 +810,6 @@ public class BugsTestCase0500 extends TestCaseBase{
 		List<Widget> items = listbox.findWidgets("@listitem");
 		Widget l1 = findWidget("$l1");
 		Widget sel1 = findWidget("$sel1");
-		
-		listbox.dump(false);
 		
 		Assert.assertEquals(3, groups.size());
 		Assert.assertEquals(3, groupfoots.size());
