@@ -757,4 +757,26 @@ public class FeaturesTestCase0500 extends TestCaseBase{
 		Assert.assertEquals("0", l1.getValue());
 		Assert.assertEquals("A", l2.getValue());
 	}
+	
+	@Test
+	public void f00843SelectedboxSelectedItem() {
+		navigate(getTestCaseUrl("/bind/issue/F00843SelectboxSelectedItem.zul"));
+		Widget selectbox = findWidget("$selectbox");
+		Widget listbox = findWidget("$listbox");
+		Widget combobox = findWidget("$combobox");
+		Widget l1 = findWidget("$l1");
+
+		listbox.findWidgets("@listitem").get(1).click();
+
+		Assert.assertEquals(1L, ListboxUtil.getSelectedIndex(listbox));
+		Assert.assertEquals(1L, selectbox.getAttribute("selectedIndex"));
+		Assert.assertEquals("B", combobox.getValue());
+		Assert.assertEquals("B", combobox.getValue());
+
+		listbox.findWidgets("@listitem").get(2).click();
+		Assert.assertEquals(2L, ListboxUtil.getSelectedIndex(listbox));
+		Assert.assertEquals(2L, selectbox.getAttribute("selectedIndex"));
+		Assert.assertEquals("C", combobox.getValue());
+		Assert.assertEquals("C", l1.getValue());
+	}
 }
