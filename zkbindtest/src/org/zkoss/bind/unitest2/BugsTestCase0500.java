@@ -862,4 +862,46 @@ public class BugsTestCase0500 extends TestCaseBase{
 		Assert.assertEquals("yellow",l1.getValue());
 		Assert.assertEquals("yellow",l2.getValue());
 	}
+	
+	@Test
+	public void b00849ConverterParameters(){
+		navigate(getTestCaseUrl("/bind/issue/B00849ConverterParameters.zul"));
+		
+		Widget l11 = findWidget("$l11");
+		Widget l12 = findWidget("$l12");
+		Widget tb1 = findWidget("$tb1");
+		
+		Widget l21 = findWidget("$l21");
+		Widget l22 = findWidget("$l22");
+		Widget tb2 = findWidget("$tb2");
+		
+		Widget l31 = findWidget("$l31");
+		Widget l32 = findWidget("$l32");
+		Widget tb3 = findWidget("$tb3");
+		
+		Widget cmd1 = findWidget("$btn1");
+		Widget cmd2 = findWidget("$btn2");
+		Widget cmd3 = findWidget("$btn3");
+		
+		
+		tb1.replace("A");
+		cmd1.click();
+		Assert.assertEquals("",l11.getValue());
+		Assert.assertEquals("",l12.getValue());
+		Assert.assertEquals("A:value1",tb1.getValue());
+		
+		
+		tb2.replace("B");
+		cmd2.click();
+		Assert.assertEquals("",l21.getValue());
+		Assert.assertEquals("",l22.getValue());
+		Assert.assertEquals("B:value2",tb2.getValue());
+		
+		tb3.replace("C");
+		cmd3.click();
+		Assert.assertEquals("",l31.getValue());
+		Assert.assertEquals("",l32.getValue());
+		Assert.assertEquals("C:value3",tb3.getValue());
+		
+	}
 }
