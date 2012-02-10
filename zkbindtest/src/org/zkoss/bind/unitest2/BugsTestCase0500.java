@@ -840,4 +840,26 @@ public class BugsTestCase0500 extends TestCaseBase{
 		Assert.assertEquals("[Apples, Shrimp]",l1.getValue());
 		Assert.assertArrayEquals(new long[]{0,2}, ListboxUtil.getSelectedIndexs(listbox));
 	}
+	
+	@Test
+	public void b00847FormInit(){
+		navigate(getTestCaseUrl("/bind/issue/B00847FormInit.zul"));
+		
+		Widget l1 = findWidget("$l1");
+		Widget l2 = findWidget("$l2");
+		
+		Widget cmd1 = findWidget("$cmd1");
+		Widget cmd2 = findWidget("$cmd2");
+		
+		Assert.assertEquals("blue",l1.getValue());
+		Assert.assertEquals("blue",l2.getValue());
+		
+		cmd1.click();
+		Assert.assertEquals("red",l1.getValue());
+		Assert.assertEquals("blue",l2.getValue());
+		
+		cmd2.click();
+		Assert.assertEquals("yellow",l1.getValue());
+		Assert.assertEquals("yellow",l2.getValue());
+	}
 }
