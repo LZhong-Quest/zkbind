@@ -67,12 +67,13 @@ public class OrderVM {
 		orderService.save(selected);
 	}
 	
-	@NotifyChange({"selected","orders"})
+	@NotifyChange({"selected","orders","confirmMessage"})
 	@Command
 	public void deleteOrder(){
 		orderService.delete(selected);//delete selected
 		orders = orderService.list();//refresh
 		selected = null; //clean the selected
+		confirmMessage = null;
 	}
 
 
