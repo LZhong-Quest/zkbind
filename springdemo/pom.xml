@@ -5,7 +5,7 @@
 	<artifactId>zkbind-springdemo</artifactId>
 	<packaging>war</packaging>
 	<name>zkbind-springdemo</name>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<properties>
 		<zk.version>6.0.0-SNAPSHOT</zk.version>
 		<spring.version>3.0.5.RELEASE</spring.version>
