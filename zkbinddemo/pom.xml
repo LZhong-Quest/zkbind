@@ -5,7 +5,7 @@
 	<artifactId>zkbinddemo</artifactId>
 	<properties>
 		<zkel.version>2.2.1</zkel.version>
-		<zk.version>6.0.0-SNAPSHOT</zk.version>
+		<zk.version>6.0.1-SNAPSHOT</zk.version>
 		<commons-lang.version>2.4</commons-lang.version>
 		<bsh.version>2.0b4</bsh.version>
 		<commons-fileupload.version>1.2.1</commons-fileupload.version>
@@ -24,7 +24,7 @@
 		<zuljsp.version>1.5</zuljsp.version>
 		<hsqldb.version>2.2.4</hsqldb.version>
 	</properties>
-	<version>6.0.0-SNAPSHOT</version>
+	<version>6.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<licenses>
 		<license>
@@ -187,6 +187,7 @@
 			<artifactId>zml</artifactId>
 			<version>${zk.version}</version>
 		</dependency>
+		-->
 		<dependency>
 			<groupId>org.zkoss.zk</groupId>
 			<artifactId>zkex</artifactId>
@@ -197,7 +198,7 @@
 			<artifactId>zkmax</artifactId>
 			<version>${zk.version}</version>
 		</dependency>
-		 -->
+		 
 		<dependency>
 			<groupId>org.zkoss.zk</groupId>
 			<artifactId>zkplus</artifactId>

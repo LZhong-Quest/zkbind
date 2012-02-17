@@ -7,7 +7,7 @@
 	<name>zkbind-springdemo</name>
 	<version>1.0.0</version>
 	<properties>
-		<zk.version>6.0.0-SNAPSHOT</zk.version>
+		<zk.version>6.0.1-SNAPSHOT</zk.version>
 		<spring.version>3.0.5.RELEASE</spring.version>
 		<hibernate.version>3.3.1.ga</hibernate.version>
 		<zkspring.version>3.1-SNAPSHOT</zkspring.version>
