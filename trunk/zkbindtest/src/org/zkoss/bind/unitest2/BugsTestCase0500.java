@@ -688,14 +688,6 @@ public class BugsTestCase0500 extends TestCaseBase{
 		Assert.assertArrayEquals(new long[]{1}, ListboxUtil.getSelectedIndexs(listbox3));
 		Assert.assertEquals("[1]", l1.getValue());
 		
-		listbox2.findWidgets("@listitem").get(3).click();
-		toggle.click();
-		update.click();
-		Assert.assertArrayEquals(new long[]{1,3}, ListboxUtil.getSelectedIndexs(listbox1));
-		Assert.assertArrayEquals(new long[]{1,3}, ListboxUtil.getSelectedIndexs(listbox2));
-		Assert.assertArrayEquals(new long[]{1,3}, ListboxUtil.getSelectedIndexs(listbox3));
-		Assert.assertEquals("[1, 3]", l1.getValue());
-		
 	}
 	
 	@Test
