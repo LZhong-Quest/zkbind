@@ -896,4 +896,344 @@ public class BugsTestCase0500 extends TestCaseBase{
 		Assert.assertEquals("C:value3",tb3.getValue());
 		
 	}
+	
+	@Test
+	public void b00878WrongValueException1(){
+		navigate(getTestCaseUrl("/bind/issue/B00878WrongValueException.zul"));
+		
+		Widget msgName = findWidget("$msgName");
+		Widget msgAge = findWidget("$msgAge");
+		Widget msgScore = findWidget("$msgScore");
+		
+		Widget inpName = findWidget("$inpName");
+		Widget inpAge = findWidget("$inpAge");
+		Widget inpScore = findWidget("$inpScore");
+		Widget save = findWidget("$save");
+		
+		Assert.assertEquals("",msgName.getValue());
+		Assert.assertEquals("0",msgAge.getValue());
+		Assert.assertEquals("0",msgScore.getValue());
+		
+		
+		inpName.replace("Chen").tab();
+		inpAge.replace("3").tab();
+		inpScore.replace("-1").tab();
+		save.click();
+		Assert.assertEquals("",msgName.getValue());
+		Assert.assertEquals("0",msgAge.getValue());
+		Assert.assertEquals("0",msgScore.getValue());
+		List<Widget> errorPopup = findWidgets(".z-errbox.z-popup");
+		Assert.assertEquals(3,errorPopup.size());
+		
+		
+		inpName.replace("Lin").tab();
+		inpAge.replace("5").tab();
+		inpScore.replace("-2").tab();
+		save.click();
+		Assert.assertEquals("",msgName.getValue());
+		Assert.assertEquals("0",msgAge.getValue());
+		Assert.assertEquals("0",msgScore.getValue());
+		errorPopup = findWidgets(".z-errbox.z-popup");
+		Assert.assertEquals(2,errorPopup.size());
+		
+		inpAge.replace("24").tab();
+		inpScore.replace("-3").tab();
+		save.click();
+		Assert.assertEquals("",msgName.getValue());
+		Assert.assertEquals("0",msgAge.getValue());
+		Assert.assertEquals("0",msgScore.getValue());
+		errorPopup = findWidgets(".z-errbox.z-popup");
+		Assert.assertEquals(1,errorPopup.size());
+		
+		inpScore.replace("34").tab();
+		save.click();
+		Assert.assertEquals("Lin",msgName.getValue());
+		Assert.assertEquals("24",msgAge.getValue());
+		Assert.assertEquals("34",msgScore.getValue());
+		errorPopup = findWidgets(".z-errorbox.z-popup");
+		Assert.assertEquals(0,errorPopup.size());
+	}
+	
+	@Test
+	public void b00878WrongValueException2(){
+		navigate(getTestCaseUrl("/bind/issue/B00878WrongValueException2.zul"));
+		
+		Widget focus = findWidget("@button");
+		Widget l = findWidget("$l1");
+		Widget inp = findWidget("$inp1");
+		List<Widget> errorPopup = null;
+		//bandbox
+		Assert.assertEquals("",l.getValue());
+		
+		inp.replace("A");
+		focus.focus();
+		Assert.assertEquals("A",l.getValue());
+		errorPopup = findWidgets(".z-errbox.z-popup");
+		Assert.assertEquals(0,errorPopup.size());
+		
+		inp.replace("");
+		focus.focus();
+		Assert.assertEquals("A",l.getValue());
+		errorPopup = findWidgets(".z-errbox.z-popup");
+		Assert.assertEquals(1,errorPopup.size());
+		
+		inp.replace("B");
+		focus.focus();
+		Assert.assertEquals("B",l.getValue());
+		errorPopup = findWidgets(".z-errbox.z-popup");
+		Assert.assertEquals(0,errorPopup.size());
+		
+		//combobox
+		l = findWidget("$l2");
+		inp = findWidget("$inp2");
+		Assert.assertEquals("",l.getValue());
+		
+		inp.replace("C");
+		focus.focus();
+		Assert.assertEquals("C",l.getValue());
+		errorPopup = findWidgets(".z-errbox.z-popup");
+		Assert.assertEquals(0,errorPopup.size());
+		
+		inp.replace("");
+		focus.focus();
+		Assert.assertEquals("C",l.getValue());
+		errorPopup = findWidgets(".z-errbox.z-popup");
+		Assert.assertEquals(1,errorPopup.size());
+		
+		inp.replace("D");
+		focus.focus();
+		Assert.assertEquals("D",l.getValue());
+		errorPopup = findWidgets(".z-errbox.z-popup");
+		Assert.assertEquals(0,errorPopup.size());
+		
+		//textbox
+		l = findWidget("$l10");
+		inp = findWidget("$inp10");
+		Assert.assertEquals("",l.getValue());
+		
+		inp.replace("E");
+		focus.focus();
+		Assert.assertEquals("E",l.getValue());
+		errorPopup = findWidgets(".z-errbox.z-popup");
+		Assert.assertEquals(0,errorPopup.size());
+		
+		inp.replace("");
+		focus.focus();
+		Assert.assertEquals("E",l.getValue());
+		errorPopup = findWidgets(".z-errbox.z-popup");
+		Assert.assertEquals(1,errorPopup.size());
+		
+		inp.replace("F");
+		focus.focus();
+		Assert.assertEquals("F",l.getValue());
+		errorPopup = findWidgets(".z-errbox.z-popup");
+		Assert.assertEquals(0,errorPopup.size());
+		
+		
+		//decimalbox
+		l = findWidget("$l4");
+		inp = findWidget("$inp4");
+		Assert.assertEquals("",l.getValue());
+		
+		inp.replace("1");
+		focus.focus();
+		Assert.assertEquals("1.0",l.getValue());
+		errorPopup = findWidgets(".z-errbox.z-popup");
+		Assert.assertEquals(0,errorPopup.size());
+		
+		inp.replace("-1");
+		focus.focus();
+		Assert.assertEquals("1.0",l.getValue());
+		errorPopup = findWidgets(".z-errbox.z-popup");
+		Assert.assertEquals(1,errorPopup.size());
+		
+		inp.replace("2");
+		focus.focus();
+		Assert.assertEquals("2.0",l.getValue());
+		errorPopup = findWidgets(".z-errbox.z-popup");
+		Assert.assertEquals(0,errorPopup.size());
+		
+		//doublebox
+		l = findWidget("$l5");
+		inp = findWidget("$inp5");
+		Assert.assertEquals("",l.getValue());
+		
+		inp.replace("3");
+		focus.focus();
+		Assert.assertEquals("3.0",l.getValue());
+		errorPopup = findWidgets(".z-errbox.z-popup");
+		Assert.assertEquals(0,errorPopup.size());
+		
+		inp.replace("-3");
+		focus.focus();
+		Assert.assertEquals("3.0",l.getValue());
+		errorPopup = findWidgets(".z-errbox.z-popup");
+		Assert.assertEquals(1,errorPopup.size());
+		
+		inp.replace("4");
+		focus.focus();
+		Assert.assertEquals("4.0",l.getValue());
+		errorPopup = findWidgets(".z-errbox.z-popup");
+		Assert.assertEquals(0,errorPopup.size());
+		
+		//doublespinner
+		l = findWidget("$l6");
+		inp = findWidget("$inp6");
+		Assert.assertEquals("",l.getValue());
+		
+		inp.replace("5");
+		focus.focus();
+		Assert.assertEquals("5.0",l.getValue());
+		errorPopup = findWidgets(".z-errbox.z-popup");
+		Assert.assertEquals(0,errorPopup.size());
+		
+		inp.replace("-5");
+		focus.focus();
+		Assert.assertEquals("5.0",l.getValue());
+		errorPopup = findWidgets(".z-errbox.z-popup");
+		Assert.assertEquals(1,errorPopup.size());
+		
+		inp.replace("6");
+		focus.focus();
+		Assert.assertEquals("6.0",l.getValue());
+		errorPopup = findWidgets(".z-errbox.z-popup");
+		Assert.assertEquals(0,errorPopup.size());
+		
+		//intbox
+		l = findWidget("$l7");
+		inp = findWidget("$inp7");
+		Assert.assertEquals("",l.getValue());
+		
+		inp.replace("7");
+		focus.focus();
+		Assert.assertEquals("7",l.getValue());
+		errorPopup = findWidgets(".z-errbox.z-popup");
+		Assert.assertEquals(0,errorPopup.size());
+		
+		inp.replace("-7");
+		focus.focus();
+		Assert.assertEquals("7",l.getValue());
+		errorPopup = findWidgets(".z-errbox.z-popup");
+		Assert.assertEquals(1,errorPopup.size());
+		
+		inp.replace("8");
+		focus.focus();
+		Assert.assertEquals("8",l.getValue());
+		errorPopup = findWidgets(".z-errbox.z-popup");
+		Assert.assertEquals(0,errorPopup.size());
+		
+		
+		//longbox
+		l = findWidget("$l8");
+		inp = findWidget("$inp8");
+		Assert.assertEquals("",l.getValue());
+		
+		inp.replace("9");
+		focus.focus();
+		Assert.assertEquals("9",l.getValue());
+		errorPopup = findWidgets(".z-errbox.z-popup");
+		Assert.assertEquals(0,errorPopup.size());
+		
+		inp.replace("-9");
+		focus.focus();
+		Assert.assertEquals("9",l.getValue());
+		errorPopup = findWidgets(".z-errbox.z-popup");
+		Assert.assertEquals(1,errorPopup.size());
+		
+		inp.replace("10");
+		focus.focus();
+		Assert.assertEquals("10",l.getValue());
+		errorPopup = findWidgets(".z-errbox.z-popup");
+		Assert.assertEquals(0,errorPopup.size());
+		
+		//spinner
+		l = findWidget("$l9");
+		inp = findWidget("$inp9");
+		Assert.assertEquals("",l.getValue());
+		
+		inp.replace("11");
+		focus.focus();
+		Assert.assertEquals("11",l.getValue());
+		errorPopup = findWidgets(".z-errbox.z-popup");
+		Assert.assertEquals(0,errorPopup.size());
+		
+		inp.replace("-11");
+		focus.focus();
+		Assert.assertEquals("11",l.getValue());
+		errorPopup = findWidgets(".z-errbox.z-popup");
+		Assert.assertEquals(1,errorPopup.size());
+		
+		inp.replace("12");
+		focus.focus();
+		Assert.assertEquals("12",l.getValue());
+		errorPopup = findWidgets(".z-errbox.z-popup");
+		Assert.assertEquals(0,errorPopup.size());
+		
+		
+		//datebox
+		l = findWidget("$l3");
+		inp = findWidget("$inp3");
+		Assert.assertEquals("",l.getValue());
+		
+		inp.replace("20120223");
+		focus.focus();
+		Assert.assertEquals("20120223",l.getValue());
+		errorPopup = findWidgets(".z-errbox.z-popup");
+		Assert.assertEquals(0,errorPopup.size());
+		
+		inp.replace("20110101");
+		focus.focus();
+		Assert.assertEquals("20120223",l.getValue());
+		errorPopup = findWidgets(".z-errbox.z-popup");
+		Assert.assertEquals(1,errorPopup.size());
+		
+		inp.replace("20120320");
+		focus.focus();
+		Assert.assertEquals("20120320",l.getValue());
+		errorPopup = findWidgets(".z-errbox.z-popup");
+		Assert.assertEquals(0,errorPopup.size());
+		
+		//timebox
+		l = findWidget("$l11");
+		inp = findWidget("$inp11");
+		Assert.assertEquals("",l.getValue());
+		
+		inp.replace("13:00");
+		focus.focus();
+		Assert.assertEquals("13:00",l.getValue());
+		errorPopup = findWidgets(".z-errbox.z-popup");
+		Assert.assertEquals(0,errorPopup.size());
+		
+		inp.replace("10:00");
+		focus.focus();
+		Assert.assertEquals("13:00",l.getValue());
+		errorPopup = findWidgets(".z-errbox.z-popup");
+		Assert.assertEquals(1,errorPopup.size());
+		
+		inp.replace("14:02");
+		focus.focus();
+		Assert.assertEquals("14:02",l.getValue());
+		errorPopup = findWidgets(".z-errbox.z-popup");
+		Assert.assertEquals(0,errorPopup.size());
+	}
+	
+	@Test
+	public void b00877NPEInSaveOnlyBinding(){
+		navigate(getTestCaseUrl("/bind/issue/B00877NPEInSaveOnlyBinding.zul"));
+		
+		Widget msg = findWidget("$msg");
+		Widget tb = findWidget("$tb");
+		List<Widget> errorPopup = null;
+		
+		tb.replace("abc").tab();
+		errorPopup = findWidgets(".z-errbox.z-popup");
+		Assert.assertEquals("", msg.getValue());
+		Assert.assertEquals(1,errorPopup.size());
+		
+		tb.replace("Lin").tab();
+		Assert.assertEquals("Lin", msg.getValue());
+		errorPopup = findWidgets(".z-errbox.z-popup");
+		Assert.assertEquals(0,errorPopup.size());
+		
+	}
 }
