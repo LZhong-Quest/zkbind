@@ -1236,4 +1236,29 @@ public class BugsTestCase0500 extends TestCaseBase{
 		Assert.assertEquals(0,errorPopup.size());
 		
 	}
+	
+	@Test
+	public void b00869Serialization(){
+		navigate(getTestCaseUrl("/bind/issue/B00869Serialization.zul"));
+		
+		Widget msg = findWidget("$msg");
+		Widget selected = findWidget("$selected");
+		Widget listbox = findWidget("$listbox");
+		Widget tb1 = findWidget("$tb1");
+		Widget save = findWidget("$save");
+		Widget serialize = findWidget("$serialize");
+		
+		listbox.findWidgets("@listitem").get(0).click();
+		Assert.assertEquals("A", selected.getValue());
+		Assert.assertEquals("A", tb1.getValue());
+		
+		tb1.replace("XYZ");
+		save.click();
+		Assert.assertEquals("XYZ", selected.getValue());
+		
+		serialize.click();
+		
+		Assert.assertTrue(msg.getValue().toString().startsWith("size :"));
+		
+	}
 }
