@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="forumdemo">
+        <wb-resource deploy-path="/" source-path="/src/main/webapp"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <dependent-module archiveName="zk-6.0.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/zk6/zk6">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="zcommon-6.0.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/zcommon6/zcommon6">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="java-output-path" value="/forumdemo/target/classes"/>
+        <property name="context-root" value="forumdemo"/>
+    </wb-module>
+</project-modules>
