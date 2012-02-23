@@ -779,4 +779,26 @@ public class FeaturesTestCase0500 extends TestCaseBase{
 		Assert.assertEquals("C", combobox.getValue());
 		Assert.assertEquals("C", l1.getValue());
 	}
+	
+	@Test
+	public void f00864ValidationContextEasier() {
+		navigate(getTestCaseUrl("/bind/issue/F00864ValidationContextEasier.zul"));
+		Widget msg1 = findWidget("$msg1");
+		Widget msg2 = findWidget("$msg2");
+		Widget inp1 = findWidget("$inp1");
+		Widget inp2 = findWidget("$inp2");
+		Widget save1 = findWidget("$save1");
+		Widget err = findWidget("$err");
+		
+		Assert.assertEquals("", err.getValue());
+		inp1.replace("Dennis");
+		inp2.replace("100");
+		save1.click();
+		
+		Assert.assertEquals("", err.getValue());
+		Assert.assertEquals("Dennis", msg1.getValue());
+		Assert.assertEquals("100", msg2.getValue());
+
+		
+	}
 }
