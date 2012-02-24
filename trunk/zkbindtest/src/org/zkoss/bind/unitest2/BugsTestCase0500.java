@@ -1247,18 +1247,45 @@ public class BugsTestCase0500 extends TestCaseBase{
 		Widget tb1 = findWidget("$tb1");
 		Widget save = findWidget("$save");
 		Widget serialize = findWidget("$serialize");
+		Widget children = findWidget("$children");
 		
-		listbox.findWidgets("@listitem").get(0).click();
 		Assert.assertEquals("A", selected.getValue());
 		Assert.assertEquals("A", tb1.getValue());
+		Assert.assertEquals("B", children.findWidgets("@label").get(1).getValue());
 		
-		tb1.replace("XYZ");
+		listbox.findWidgets("@listitem").get(1).click();
+		Assert.assertEquals("B", selected.getValue());
+		Assert.assertEquals("B", tb1.getValue());
+		
+		tb1.replace("BX");
 		save.click();
-		Assert.assertEquals("XYZ", selected.getValue());
+		Assert.assertEquals("BX", selected.getValue());
+		Assert.assertEquals("BX", children.findWidgets("@label").get(1).getValue());
+		Assert.assertEquals("BX", listbox.findWidgets("@listitem").get(1).findWidgets("@listcell").get(1).getLabel());
 		
 		serialize.click();
 		
-		Assert.assertTrue(msg.getValue().toString().startsWith("size :"));
+		//refine
+		msg = findWidget("$msg");
+		selected = findWidget("$selected");
+		listbox = findWidget("$listbox");
+		tb1 = findWidget("$tb1");
+		save = findWidget("$save");
+		serialize = findWidget("$serialize");
+		children = findWidget("$children");
+		
+		
+		Assert.assertTrue(msg.getValue().toString().startsWith("done deserialize:"));
+		
+		listbox.findWidgets("@listitem").get(2).click();
+		Assert.assertEquals("C", selected.getValue());
+		Assert.assertEquals("C", tb1.getValue());
+		
+		tb1.replace("CY");
+		save.click();
+		Assert.assertEquals("CY", selected.getValue());
+		Assert.assertEquals("CY", children.findWidgets("@label").get(2).getValue());
+		Assert.assertEquals("CY", listbox.findWidgets("@listitem").get(2).findWidgets("@listcell").get(1).getLabel());
 		
 	}
 }
