@@ -801,4 +801,74 @@ public class FeaturesTestCase0500 extends TestCaseBase{
 
 		
 	}
+	
+	@Test
+	public void f00889ChildrenBindingConverter() {
+		navigate(getTestCaseUrl("/bind/issue/F00889ChildrenBindingConverter.zul"));
+		Widget item1 = findWidget("$item1");
+		Widget set1 = findWidget("$set1");
+		Widget list1 = findWidget("$list1");
+		Widget array1 = findWidget("$array1");
+		Widget enum1 = findWidget("$enum1");
+		Widget item2 = findWidget("$item2");
+		Widget set2 = findWidget("$set2");
+		Widget list2 = findWidget("$list2");
+		Widget array2 = findWidget("$array2");
+		Widget enum2 = findWidget("$enum2");
+		
+		
+		List<Widget> ls = item1.findWidgets("@label"); 
+		Assert.assertEquals(1,ls.size());
+		Assert.assertEquals("A",ls.get(0).getValue());
+		
+		ls = set1.findWidgets("@label"); 
+		Assert.assertEquals(3,ls.size());
+		
+		ls = list1.findWidgets("@label"); 
+		Assert.assertEquals(3,ls.size());
+		Assert.assertEquals("A",ls.get(0).getValue());
+		Assert.assertEquals("B",ls.get(1).getValue());
+		Assert.assertEquals("C",ls.get(2).getValue());
+		
+		ls = array1.findWidgets("@label"); 
+		Assert.assertEquals(3,ls.size());
+		Assert.assertEquals("A",ls.get(0).getValue());
+		Assert.assertEquals("B",ls.get(1).getValue());
+		Assert.assertEquals("C",ls.get(2).getValue());
+		
+		ls = enum1.findWidgets("@label"); 
+		Assert.assertEquals(3,ls.size());
+		Assert.assertEquals("A",ls.get(0).getValue());
+		Assert.assertEquals("B",ls.get(1).getValue());
+		Assert.assertEquals("C",ls.get(2).getValue());
+		
+		
+		//for 2
+		ls = item2.findWidgets("@label"); 
+		Assert.assertEquals(1,ls.size());
+		Assert.assertEquals("D",ls.get(0).getValue());
+		
+		ls = set2.findWidgets("@label"); 
+		Assert.assertEquals(3,ls.size());
+		
+		ls = list2.findWidgets("@label"); 
+		Assert.assertEquals(3,ls.size());
+		Assert.assertEquals("D",ls.get(0).getValue());
+		Assert.assertEquals("E",ls.get(1).getValue());
+		Assert.assertEquals("F",ls.get(2).getValue());
+		
+		ls = array2.findWidgets("@label"); 
+		Assert.assertEquals(3,ls.size());
+		Assert.assertEquals("D",ls.get(0).getValue());
+		Assert.assertEquals("E",ls.get(1).getValue());
+		Assert.assertEquals("F",ls.get(2).getValue());
+		
+		ls = enum2.findWidgets("@label"); 
+		Assert.assertEquals(3,ls.size());
+		Assert.assertEquals("D",ls.get(0).getValue());
+		Assert.assertEquals("E",ls.get(1).getValue());
+		Assert.assertEquals("F",ls.get(2).getValue());
+		
+		
+	}
 }
