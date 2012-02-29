@@ -1288,4 +1288,35 @@ public class BugsTestCase0500 extends TestCaseBase{
 		Assert.assertEquals("CY", listbox.findWidgets("@listitem").get(2).findWidgets("@listcell").get(1).getLabel());
 		
 	}
+	
+	@Test
+	public void b00892ChildBindingUnderListbox(){
+		navigate(getTestCaseUrl("/bind/issue/B00892ChildBindingUnderListbox.zul"));
+		
+		Widget outerbox = findWidget("$outerbox");
+		
+		List<Widget> items = outerbox.findWidgets("@listitem");
+		
+		Assert.assertEquals(4, items.size());
+		
+		List<Widget> cell = items.get(0).findWidgets("@listcell");
+		Assert.assertEquals(2, cell.size());
+		Assert.assertEquals("0", cell.get(0).getLabel());
+		Assert.assertEquals("A", cell.get(1).getLabel());
+		
+		cell = items.get(1).findWidgets("@listcell");
+		Assert.assertEquals(2, cell.size());
+		Assert.assertEquals("1", cell.get(0).getLabel());
+		Assert.assertEquals("B", cell.get(1).getLabel());
+		
+		cell = items.get(2).findWidgets("@listcell");
+		Assert.assertEquals(2, cell.size());
+		Assert.assertEquals("2", cell.get(0).getLabel());
+		Assert.assertEquals("C", cell.get(1).getLabel());
+		
+		cell = items.get(3).findWidgets("@listcell");
+		Assert.assertEquals(2, cell.size());
+		Assert.assertEquals("3", cell.get(0).getLabel());
+		Assert.assertEquals("D", cell.get(1).getLabel());
+	}
 }
