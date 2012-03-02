@@ -871,4 +871,160 @@ public class FeaturesTestCase0500 extends TestCaseBase{
 		
 		
 	}
+	
+	
+	@Test
+	public void f00901ReferenceBinding() {
+		navigate(getTestCaseUrl("/bind/issue/F00901ReferenceBinding.zul"));
+		Widget tb11 = findWidget("$tb11");
+		Widget tb12 = findWidget("$tb12");
+		Widget tb13 = findWidget("$tb13");
+		
+		Widget tb21 = findWidget("$tb21");
+		Widget tb22 = findWidget("$tb22");
+		Widget tb23 = findWidget("$tb23");
+		
+		Widget tb32 = findWidget("$tb32");
+		Widget tb33 = findWidget("$tb33");
+		
+		Widget tb43 = findWidget("$tb43");
+		
+		Widget replace1 = findWidget("$replace1");
+		Widget replace2 = findWidget("$replace2");
+		
+		Assert.assertEquals("Dennis", tb11.getValue());
+		Assert.assertEquals("Dennis", tb21.getValue());
+		
+		
+		Assert.assertEquals("1234", tb12.getValue());
+		Assert.assertEquals("1234", tb22.getValue());
+		Assert.assertEquals("1234", tb32.getValue());
+		
+		Assert.assertEquals("11 street", tb13.getValue());
+		Assert.assertEquals("11 street", tb23.getValue());
+		Assert.assertEquals("11 street", tb33.getValue());
+		Assert.assertEquals("11 street", tb43.getValue());
+	
+		tb11.replace("Ray").tab();
+		Assert.assertEquals("Ray", tb11.getValue());
+		Assert.assertEquals("Ray", tb21.getValue());
+		Assert.assertEquals("1234", tb12.getValue());
+		Assert.assertEquals("1234", tb22.getValue());
+		Assert.assertEquals("1234", tb32.getValue());
+		Assert.assertEquals("11 street", tb13.getValue());
+		Assert.assertEquals("11 street", tb23.getValue());
+		Assert.assertEquals("11 street", tb33.getValue());
+		Assert.assertEquals("11 street", tb43.getValue());
+		
+		tb21.replace("Bluce").tab();
+		Assert.assertEquals("Bluce", tb11.getValue());
+		Assert.assertEquals("Bluce", tb21.getValue());
+		Assert.assertEquals("1234", tb12.getValue());
+		Assert.assertEquals("1234", tb22.getValue());
+		Assert.assertEquals("1234", tb32.getValue());
+		Assert.assertEquals("11 street", tb13.getValue());
+		Assert.assertEquals("11 street", tb23.getValue());
+		Assert.assertEquals("11 street", tb33.getValue());
+		Assert.assertEquals("11 street", tb43.getValue());
+		
+		
+		tb12.replace("111").tab();
+		Assert.assertEquals("Bluce", tb11.getValue());
+		Assert.assertEquals("Bluce", tb21.getValue());
+		Assert.assertEquals("111", tb12.getValue());
+		Assert.assertEquals("111", tb22.getValue());
+		Assert.assertEquals("111", tb32.getValue());
+		Assert.assertEquals("11 street", tb13.getValue());
+		Assert.assertEquals("11 street", tb23.getValue());
+		Assert.assertEquals("11 street", tb33.getValue());
+		Assert.assertEquals("11 street", tb43.getValue());
+		
+		tb22.replace("222").tab();
+		Assert.assertEquals("Bluce", tb11.getValue());
+		Assert.assertEquals("Bluce", tb21.getValue());
+		Assert.assertEquals("222", tb12.getValue());
+		Assert.assertEquals("222", tb22.getValue());
+		Assert.assertEquals("222", tb32.getValue());
+		Assert.assertEquals("11 street", tb13.getValue());
+		Assert.assertEquals("11 street", tb23.getValue());
+		Assert.assertEquals("11 street", tb33.getValue());
+		Assert.assertEquals("11 street", tb43.getValue());
+		
+		tb32.replace("333").tab();
+		Assert.assertEquals("Bluce", tb11.getValue());
+		Assert.assertEquals("Bluce", tb21.getValue());
+		Assert.assertEquals("333", tb12.getValue());
+		Assert.assertEquals("333", tb22.getValue());
+		Assert.assertEquals("333", tb32.getValue());
+		Assert.assertEquals("11 street", tb13.getValue());
+		Assert.assertEquals("11 street", tb23.getValue());
+		Assert.assertEquals("11 street", tb33.getValue());
+		Assert.assertEquals("11 street", tb43.getValue());
+		
+		tb13.replace("street1").tab();
+		Assert.assertEquals("Bluce", tb11.getValue());
+		Assert.assertEquals("Bluce", tb21.getValue());
+		Assert.assertEquals("333", tb12.getValue());
+		Assert.assertEquals("333", tb22.getValue());
+		Assert.assertEquals("333", tb32.getValue());
+		Assert.assertEquals("street1", tb13.getValue());
+		Assert.assertEquals("street1", tb23.getValue());
+		Assert.assertEquals("street1", tb33.getValue());
+		Assert.assertEquals("street1", tb43.getValue());
+		
+		tb23.replace("street2").tab();
+		Assert.assertEquals("Bluce", tb11.getValue());
+		Assert.assertEquals("Bluce", tb21.getValue());
+		Assert.assertEquals("333", tb12.getValue());
+		Assert.assertEquals("333", tb22.getValue());
+		Assert.assertEquals("333", tb32.getValue());
+		Assert.assertEquals("street2", tb13.getValue());
+		Assert.assertEquals("street2", tb23.getValue());
+		Assert.assertEquals("street2", tb33.getValue());
+		Assert.assertEquals("street2", tb43.getValue());
+		
+		tb33.replace("street3").tab();
+		Assert.assertEquals("Bluce", tb11.getValue());
+		Assert.assertEquals("Bluce", tb21.getValue());
+		Assert.assertEquals("333", tb12.getValue());
+		Assert.assertEquals("333", tb22.getValue());
+		Assert.assertEquals("333", tb32.getValue());
+		Assert.assertEquals("street3", tb13.getValue());
+		Assert.assertEquals("street3", tb23.getValue());
+		Assert.assertEquals("street3", tb33.getValue());
+		Assert.assertEquals("street3", tb43.getValue());
+		
+		tb43.replace("street4").tab();
+		Assert.assertEquals("Bluce", tb11.getValue());
+		Assert.assertEquals("Bluce", tb21.getValue());
+		Assert.assertEquals("333", tb12.getValue());
+		Assert.assertEquals("333", tb22.getValue());
+		Assert.assertEquals("333", tb32.getValue());
+		Assert.assertEquals("street4", tb13.getValue());
+		Assert.assertEquals("street4", tb23.getValue());
+		Assert.assertEquals("street4", tb33.getValue());
+		Assert.assertEquals("street4", tb43.getValue());
+		
+		replace1.click();
+		Assert.assertEquals("Alex", tb11.getValue());
+		Assert.assertEquals("Alex", tb21.getValue());
+		Assert.assertEquals("888", tb12.getValue());
+		Assert.assertEquals("888", tb22.getValue());
+		Assert.assertEquals("888", tb32.getValue());
+		Assert.assertEquals("888 st", tb13.getValue());
+		Assert.assertEquals("888 st", tb23.getValue());
+		Assert.assertEquals("888 st", tb33.getValue());
+		Assert.assertEquals("888 st", tb43.getValue());
+		
+		replace2.click();
+		Assert.assertEquals("Alex", tb11.getValue());
+		Assert.assertEquals("Alex", tb21.getValue());
+		Assert.assertEquals("999", tb12.getValue());
+		Assert.assertEquals("999", tb22.getValue());
+		Assert.assertEquals("999", tb32.getValue());
+		Assert.assertEquals("999 st", tb13.getValue());
+		Assert.assertEquals("999 st", tb23.getValue());
+		Assert.assertEquals("999 st", tb33.getValue());
+		Assert.assertEquals("999 st", tb43.getValue());
+	}
 }
