@@ -1027,4 +1027,58 @@ public class FeaturesTestCase0500 extends TestCaseBase{
 		Assert.assertEquals("999 st", tb33.getValue());
 		Assert.assertEquals("999 st", tb43.getValue());
 	}
+	
+	@Test
+	public void f00862BeanValidator4Form() {
+		navigate(getTestCaseUrl("/bind/issue/F00862BeanValidator4Form.zul"));
+		Widget tb1 = findWidget("$tb1");
+		Widget tb2 = findWidget("$tb2");
+		Widget tb3 = findWidget("$tb3");
+		
+		Widget msg1 = findWidget("$msg1");
+		Widget msg2 = findWidget("$msg2");
+		Widget msg3 = findWidget("$msg3");
+		
+		Widget l1 = findWidget("$l1");
+		Widget l2 = findWidget("$l2");
+		Widget l3 = findWidget("$l3");
+		
+		Widget save = findWidget("$save");
+		
+		tb1.replace("").tab();
+		Assert.assertEquals("name can not be null", msg1.getValue());
+		
+		tb1.replace("Alex").tab();
+		Assert.assertEquals("", msg1.getValue());
+		
+		tb2.replace("").tab();
+		Assert.assertEquals("Last name can not be null", msg2.getValue());
+		
+		tb2.replace("Wu").tab();
+		Assert.assertEquals("", msg1.getValue());
+		
+		tb3.replace("a@b").tab();
+		Assert.assertEquals("email lenght must large than 8", msg3.getValue());
+		
+		Assert.assertEquals("Dennis", l1.getValue());
+		Assert.assertEquals("Chen", l2.getValue());
+		Assert.assertEquals("", l3.getValue());
+		
+		save.click();
+		
+		Assert.assertEquals("email lenght must large than 8", msg3.getValue());
+		Assert.assertEquals("Dennis", l1.getValue());
+		Assert.assertEquals("Chen", l2.getValue());
+		Assert.assertEquals("", l3.getValue());
+
+		tb3.replace("a@b.cdefg").tab();
+		Assert.assertEquals("", msg1.getValue());
+		
+		save.click();
+		
+		Assert.assertEquals("", msg1.getValue());
+		Assert.assertEquals("Alex", l1.getValue());
+		Assert.assertEquals("Wu", l2.getValue());
+		Assert.assertEquals("a@b.cdefg", l3.getValue());
+	}
 }
