@@ -1319,4 +1319,90 @@ public class BugsTestCase0500 extends TestCaseBase{
 		Assert.assertEquals("3", cell.get(0).getLabel());
 		Assert.assertEquals("D", cell.get(1).getLabel());
 	}
+	
+	@Test
+	public void b00913ValueReload(){
+		navigate(getTestCaseUrl("/bind/issue/B00913ValueReload.zul"));
+		
+		Widget tb1 = findWidget("$tb1");
+		Widget l1 = findWidget("$l1");
+		Widget msg1 = findWidget("$msg1");
+		
+		Assert.assertEquals("",msg1.getValue());
+		
+		tb1.replace("abc").tab();
+		
+		Assert.assertEquals("value has to be def",msg1.getValue());
+		Assert.assertEquals("abc",tb1.getValue());
+		Assert.assertEquals("KGB",l1.getValue());
+		
+		tb1.replace("def").tab();
+		Assert.assertEquals("",msg1.getValue());
+		Assert.assertEquals("def",tb1.getValue());
+		Assert.assertEquals("def",l1.getValue());
+		
+	}
+	
+	@Test
+	public void b00905FormNotifyChange(){
+		navigate(getTestCaseUrl("/bind/issue/B00905FormNotifyChange.zul"));
+		
+		Widget tb = findWidget("$tb");
+		Widget l1 = findWidget("$l1");
+		Widget l2 = findWidget("$l2");
+		Widget l3 = findWidget("$l3");
+		Widget btn = findWidget("$btn");
+		Widget msg = findWidget("$msg");
+		
+		
+		Assert.assertEquals("Dennis", tb.getValue());
+		Assert.assertEquals("Dennis", l1.getValue());
+		Assert.assertEquals("Dennis", l2.getValue());
+		Assert.assertEquals("Dennis", l3.getValue());
+		Assert.assertEquals("Dennis", msg.getValue());
+		
+		tb.replace("Alex").tab();
+		Assert.assertEquals("Alex", tb.getValue());
+		Assert.assertEquals("Alex", l1.getValue());
+		Assert.assertEquals("Alex", l2.getValue());
+		Assert.assertEquals("Alex", l3.getValue());
+		Assert.assertEquals("Dennis", msg.getValue());
+		
+		btn.click();
+		Assert.assertEquals("Alex", tb.getValue());
+		Assert.assertEquals("Alex", l1.getValue());
+		Assert.assertEquals("Alex", l2.getValue());
+		Assert.assertEquals("Alex", l3.getValue());
+		Assert.assertEquals("Alex", msg.getValue());
+		
+	}
+	
+	@Test
+	public void b00911FormNotifyChange(){
+		navigate(getTestCaseUrl("/bind/issue/B00911FormNotifyChange.zul"));
+		
+		Widget l1 = findWidget("$l1");
+		Widget l2 = findWidget("$l2");
+		Widget l3 = findWidget("$l3");
+		Widget l4 = findWidget("$l4");
+		Widget l5 = findWidget("$l5");
+		Widget l6 = findWidget("$l6");
+		Widget btn = findWidget("$btn");
+		
+		Assert.assertEquals("Dennis", l1.getValue());
+		Assert.assertEquals("Dennis", l2.getValue());
+		Assert.assertEquals("Dennis", l3.getValue());
+		Assert.assertEquals("A", l4.getValue());
+		Assert.assertEquals("A", l5.getValue());
+		Assert.assertEquals("A", l6.getValue());
+		
+		btn.click();
+		Assert.assertEquals("Alex", l1.getValue());
+		Assert.assertEquals("Alex", l2.getValue());
+		Assert.assertEquals("Alex", l3.getValue());
+		Assert.assertEquals("A", l4.getValue());
+		Assert.assertEquals("A", l5.getValue());
+		Assert.assertEquals("A", l6.getValue());
+		
+	}
 }
