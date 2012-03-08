@@ -1072,11 +1072,74 @@ public class FeaturesTestCase0500 extends TestCaseBase{
 		Assert.assertEquals("", l3.getValue());
 
 		tb3.replace("a@b.cdefg").tab();
-		Assert.assertEquals("", msg1.getValue());
+		Assert.assertEquals("", msg3.getValue());
 		
 		save.click();
 		
+		Assert.assertEquals("", msg3.getValue());
+		Assert.assertEquals("Alex", l1.getValue());
+		Assert.assertEquals("Wu", l2.getValue());
+		Assert.assertEquals("a@b.cdefg", l3.getValue());
+	}
+	
+	@Test
+	public void f00916FormBeanValidator() {
+		navigate(getTestCaseUrl("/bind/issue/F00916FormBeanValidator.zul"));
+		Widget tb1 = findWidget("$tb1");
+		Widget tb2 = findWidget("$tb2");
+		Widget tb3 = findWidget("$tb3");
+		
+		Widget msg1 = findWidget("$msg1");
+		Widget msg2 = findWidget("$msg2");
+		Widget msg3 = findWidget("$msg3");
+		
+		Widget l1 = findWidget("$l1");
+		Widget l2 = findWidget("$l2");
+		Widget l3 = findWidget("$l3");
+		
+		Widget save = findWidget("$save");
+
+		Assert.assertEquals("Dennis", l1.getValue());
+		Assert.assertEquals("Chen", l2.getValue());
+		Assert.assertEquals("", l3.getValue());
+		
+		tb1.replace("").tab();
+		tb2.replace("").tab();
+		tb3.replace("").tab();
+		
+		save.click();
+		Assert.assertEquals("name can not be null", msg1.getValue());
+		Assert.assertEquals("Last name can not be null", msg2.getValue());
+		Assert.assertEquals("email lenght must large than 8", msg3.getValue());
+		
+		tb1.replace("Alex").tab();
+		save.click();
 		Assert.assertEquals("", msg1.getValue());
+		Assert.assertEquals("Last name can not be null", msg2.getValue());
+		Assert.assertEquals("email lenght must large than 8", msg3.getValue());
+		
+		tb2.replace("Wu").tab();
+		save.click();
+		Assert.assertEquals("", msg1.getValue());
+		Assert.assertEquals("", msg2.getValue());
+		Assert.assertEquals("email lenght must large than 8", msg3.getValue());
+		
+		Assert.assertEquals("Dennis", l1.getValue());
+		Assert.assertEquals("Chen", l2.getValue());
+		Assert.assertEquals("", l3.getValue());
+		
+		tb3.replace("a@b").tab();
+		save.click();
+		
+		Assert.assertEquals("email lenght must large than 8", msg3.getValue());
+		
+		
+		tb3.replace("a@b.cdefg").tab();
+		save.click();
+		Assert.assertEquals("", msg1.getValue());
+		Assert.assertEquals("", msg2.getValue());
+		Assert.assertEquals("", msg3.getValue());
+		
 		Assert.assertEquals("Alex", l1.getValue());
 		Assert.assertEquals("Wu", l2.getValue());
 		Assert.assertEquals("a@b.cdefg", l3.getValue());
