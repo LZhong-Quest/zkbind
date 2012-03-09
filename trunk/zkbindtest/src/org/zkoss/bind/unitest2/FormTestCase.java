@@ -101,7 +101,7 @@ public class FormTestCase extends TestCaseBase {
 		Assert.assertEquals("Last1", findWidget("$l2").getAttribute("value"));
 		Assert.assertEquals("First1 Last1",
 				findWidget("$l3").getAttribute("value"));
-		Assert.assertEquals("First1", findWidget("$l4").getAttribute("value"));
+		Assert.assertEquals("XXX", findWidget("$l4").getAttribute("value"));
 		Assert.assertEquals("First1", findWidget("$l5").getAttribute("value"));
 
 		Assert.assertEquals("", findWidget("$l6").getAttribute("value"));
@@ -109,12 +109,12 @@ public class FormTestCase extends TestCaseBase {
 		Assert.assertEquals("", findWidget("$l8").getAttribute("value"));
 
 		findWidget("$btn2").click();
-		Assert.assertEquals("First1", findWidget("$l4").getAttribute("value"));
+		Assert.assertEquals("Last1", findWidget("$l4").getAttribute("value"));
 		Assert.assertEquals("Last1", findWidget("$l5").getAttribute("value"));
 		Assert.assertEquals("", findWidget("$l8").getAttribute("value"));
 
 		findWidget("$btn3").click();
-		Assert.assertEquals("First1", findWidget("$l4").getAttribute("value"));
+		Assert.assertEquals("First1 Last1", findWidget("$l4").getAttribute("value"));
 		Assert.assertEquals("First1 Last1",
 				findWidget("$l5").getAttribute("value"));
 		Assert.assertEquals("", findWidget("$l8").getAttribute("value"));
@@ -138,7 +138,7 @@ public class FormTestCase extends TestCaseBase {
 		findWidget("$btn1").focus();
 
 		findWidget("$btn1").click();
-		Assert.assertEquals("XXX Last1", findWidget("$l4")
+		Assert.assertEquals("YYY", findWidget("$l4")
 				.getAttribute("value"));
 		Assert.assertEquals("XXX", findWidget("$l5").getAttribute("value"));
 		Assert.assertEquals("XXX Last1", findWidget("$l8")
@@ -167,7 +167,7 @@ public class FormTestCase extends TestCaseBase {
 		
 		findWidget("$t1").clear().keys("X").tab();
 		Assert.assertEquals("true", findWidget("$dirty").getValue());
-		Assert.assertEquals("Dennis", findWidget("$l1").getValue());
+		Assert.assertEquals("X", findWidget("$l1").getValue());
 		
 		findWidget("$t1").clear().keys("Dennis").tab();
 		Assert.assertEquals("false", findWidget("$dirty").getValue());
@@ -175,7 +175,7 @@ public class FormTestCase extends TestCaseBase {
 		
 		findWidget("$t1").clear().keys("Y").tab();
 		Assert.assertEquals("true", findWidget("$dirty").getValue());
-		Assert.assertEquals("Dennis", findWidget("$l1").getValue());
+		Assert.assertEquals("Y", findWidget("$l1").getValue());
 		
 		findWidget("$btn2").click();
 		Assert.assertEquals("old-name Dennis", findWidget("$msg").getValue());
