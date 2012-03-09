@@ -15,48 +15,16 @@
 	<property name="debuglevel" value="source,lines,vars" />
 	<property name="target" value="1.5" />
 	<property name="source" value="1.5" />
-	<path id="Maven Dependencies.libraryclasspath">
-		<pathelement location="../../../../../home/dennis/.m2/repository/org/seleniumhq/selenium/selenium-java/2.11.0/selenium-java-2.11.0.jar" />
-		<pathelement location="../../../../../home/dennis/.m2/repository/org/seleniumhq/selenium/selenium-android-driver/2.11.0/selenium-android-driver-2.11.0.jar" />
-		<pathelement location="../../../../../home/dennis/.m2/repository/org/seleniumhq/selenium/selenium-remote-driver/2.11.0/selenium-remote-driver-2.11.0.jar" />
-		<pathelement location="../../../../../home/dennis/.m2/repository/cglib/cglib-nodep/2.1_3/cglib-nodep-2.1_3.jar" />
-		<pathelement location="../../../../../home/dennis/.m2/repository/org/json/json/20080701/json-20080701.jar" />
-		<pathelement location="../../../../../home/dennis/.m2/repository/org/seleniumhq/selenium/selenium-chrome-driver/2.11.0/selenium-chrome-driver-2.11.0.jar" />
-		<pathelement location="../../../../../home/dennis/.m2/repository/org/seleniumhq/selenium/selenium-htmlunit-driver/2.11.0/selenium-htmlunit-driver-2.11.0.jar" />
-		<pathelement location="../../../../../home/dennis/.m2/repository/org/seleniumhq/selenium/selenium-api/2.11.0/selenium-api-2.11.0.jar" />
-		<pathelement location="../../../../../home/dennis/.m2/repository/com/google/guava/guava/10.0.1/guava-10.0.1.jar" />
-		<pathelement location="../../../../../home/dennis/.m2/repository/com/google/code/findbugs/jsr305/1.3.9/jsr305-1.3.9.jar" />
-		<pathelement location="../../../../../home/dennis/.m2/repository/net/sourceforge/htmlunit/htmlunit/2.9/htmlunit-2.9.jar" />
-		<pathelement location="../../../../../home/dennis/.m2/repository/xalan/xalan/2.7.1/xalan-2.7.1.jar" />
-		<pathelement location="../../../../../home/dennis/.m2/repository/xalan/serializer/2.7.1/serializer-2.7.1.jar" />
-		<pathelement location="../../../../../home/dennis/.m2/repository/commons-collections/commons-collections/3.2.1/commons-collections-3.2.1.jar" />
-		<pathelement location="../../../../../home/dennis/.m2/repository/commons-lang/commons-lang/2.6/commons-lang-2.6.jar" />
-		<pathelement location="../../../../../home/dennis/.m2/repository/org/apache/httpcomponents/httpmime/4.1.2/httpmime-4.1.2.jar" />
-		<pathelement location="../../../../../home/dennis/.m2/repository/commons-codec/commons-codec/1.4/commons-codec-1.4.jar" />
-		<pathelement location="../../../../../home/dennis/.m2/repository/net/sourceforge/htmlunit/htmlunit-core-js/2.9/htmlunit-core-js-2.9.jar" />
-		<pathelement location="../../../../../home/dennis/.m2/repository/xerces/xercesImpl/2.9.1/xercesImpl-2.9.1.jar" />
-		<pathelement location="../../../../../home/dennis/.m2/repository/xml-apis/xml-apis/1.3.04/xml-apis-1.3.04.jar" />
-		<pathelement location="../../../../../home/dennis/.m2/repository/net/sourceforge/nekohtml/nekohtml/1.9.15/nekohtml-1.9.15.jar" />
-		<pathelement location="../../../../../home/dennis/.m2/repository/net/sourceforge/cssparser/cssparser/0.9.5/cssparser-0.9.5.jar" />
-		<pathelement location="../../../../../home/dennis/.m2/repository/org/w3c/css/sac/1.3/sac-1.3.jar" />
-		<pathelement location="../../../../../home/dennis/.m2/repository/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar" />
-		<pathelement location="../../../../../home/dennis/.m2/repository/org/apache/httpcomponents/httpclient/4.1.2/httpclient-4.1.2.jar" />
-		<pathelement location="../../../../../home/dennis/.m2/repository/org/apache/httpcomponents/httpcore/4.1.2/httpcore-4.1.2.jar" />
-		<pathelement location="../../../../../home/dennis/.m2/repository/org/seleniumhq/selenium/selenium-firefox-driver/2.11.0/selenium-firefox-driver-2.11.0.jar" />
-		<pathelement location="../../../../../home/dennis/.m2/repository/commons-io/commons-io/2.0.1/commons-io-2.0.1.jar" />
-		<pathelement location="../../../../../home/dennis/.m2/repository/org/seleniumhq/selenium/selenium-ie-driver/2.11.0/selenium-ie-driver-2.11.0.jar" />
-		<pathelement location="../../../../../home/dennis/.m2/repository/net/java/dev/jna/jna/3.3.0/jna-3.3.0.jar" />
-		<pathelement location="../../../../../home/dennis/.m2/repository/org/seleniumhq/selenium/selenium-iphone-driver/2.11.0/selenium-iphone-driver-2.11.0.jar" />
-		<pathelement location="../../../../../home/dennis/.m2/repository/org/seleniumhq/selenium/selenium-support/2.11.0/selenium-support-2.11.0.jar" />
-		<pathelement location="../../../../../home/dennis/.m2/repository/org/zkoss/zktc/zktc-core/0.9.0-SNAPSHOT/zktc-core-0.9.0-SNAPSHOT.jar" />
-		<pathelement location="../../../../../home/dennis/.m2/repository/junit/junit/4.4/junit-4.4.jar" />
-	</path>
 	<path id="zkbindtest.classpath">
 		<pathelement location="target/classes" />
-		<path refid="Maven Dependencies.libraryclasspath" />
+		<fileset dir="libs">
+			<filename name="*.jar"/>
+		</fileset>
 	</path>
 	<target name="usage">
 		<echo>Use following target to test and generate report</echo>
+		<echo>  ant clean build</echo>
+		<echo>  ant pack</echo>
 		<echo>  ant reportAll</echo>
 		<echo>  ant reportAllBasic</echo>
 		<echo>  ant reportAllCollection</echo>
@@ -75,8 +43,6 @@
 	<target name="clean">
 		<delete dir="target/classes" />
 	</target>
-	<target depends="clean" name="cleanall" >
-	</target>
 	<target depends="build-subprojects,build-project" name="build" />
 	<target name="build-subprojects" />
 	<target depends="init" name="build-project">
@@ -86,6 +52,23 @@
 			<classpath refid="zkbindtest.classpath" />
 		</javac>
 	</target>
+	
+	
+	<target name="pack" depends="clean, build">
+		<zip destfile="./zkbindtest.zip">
+			<fileset dir="." >
+				<include name="target/**"/>
+				<include name="libs/**"/>
+				<include name="build.xml" />
+				<include name="junit"/>
+			</fileset>
+			
+		</zip>
+	</target>
+	
+	
+	
+	
 	<target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects" />
 	<target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
 		<copy todir="${ant.library.dir}">
@@ -215,9 +198,9 @@
 	</target>
 
 	<target name="runAll" depends="runAllBasic, runAllCollection, runAllFeature, runAllBug"/>
-	<target name="reportAll" depends="cleanall, runAll, junitreport" />
+	<target name="reportAll" depends="runAll, junitreport" />
 
-	<target name="runAllBasic" depends="clean, build">
+	<target name="runAllBasic">
 		<antcall target="LoadTestCase" />
 		<antcall target="FormTestCase" />
 		<antcall target="LoadSaveTestCase" />
@@ -225,25 +208,25 @@
 		<antcall target="MiscTestCase" />
 		<antcall target="ComponentTestCase" />
 	</target>
-	<target name="reportAllBasic" depends="cleanall, runAllBasic, junitreport" />
+	<target name="reportAllBasic" depends="runAllBasic, junitreport" />
 	
-	<target name="runAllCollection" depends="clean, build">
+	<target name="runAllCollection" >
 		<antcall target="ChildrenTestCase" />
 		<antcall target="CollectionTestCase" />
 	</target>
-	<target name="reportAllCollection" depends="cleanall, runAllCollection, junitreport" />	
+	<target name="reportAllCollection" depends="runAllCollection, junitreport" />	
 
-	<target name="runAllFeature" depends="clean, build">
+	<target name="runAllFeature" >
 		<antcall target="FeaturesTestCase0001" />
 		<antcall target="FeaturesTestCase0500" />
 	</target>
-	<target name="reportAllFeature" depends="cleanall, runAllFeature, junitreport" />
+	<target name="reportAllFeature" depends="runAllFeature, junitreport" />
 
-	<target name="runAllBug" depends="clean, build">
+	<target name="runAllBug" >
 		<antcall target="BugsTestCase0001" />
 		<antcall target="BugsTestCase0500" />
 	</target>
-	<target name="reportAllBug" depends="cleanall, runAllBug, junitreport" />
+	<target name="reportAllBug" depends="runAllBug, junitreport" />
 
 
 	

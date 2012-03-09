@@ -1144,4 +1144,18 @@ public class FeaturesTestCase0500 extends TestCaseBase{
 		Assert.assertEquals("Wu", l2.getValue());
 		Assert.assertEquals("a@b.cdefg", l3.getValue());
 	}
+	
+	@Test
+	public void f00921SystemConverterValidator() {
+		navigate(getTestCaseUrl("/bind/issue/F00921SystemConverterValidator.zul"));
+		Widget l1 = findWidget("$l1");
+		Widget l2 = findWidget("$l2");
+		Widget l3 = findWidget("$l3");
+		Widget l4 = findWidget("$l4");
+		
+		Assert.assertEquals("XConverterX", l1.getValue());
+		Assert.assertEquals("YConverterY", l2.getValue());
+		Assert.assertEquals("XValidator", l3.getValue());
+		Assert.assertEquals("YValidator", l4.getValue());
+	}
 }
