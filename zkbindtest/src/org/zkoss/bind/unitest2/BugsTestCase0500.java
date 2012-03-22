@@ -1405,4 +1405,66 @@ public class BugsTestCase0500 extends TestCaseBase{
 		Assert.assertEquals("A", l6.getValue());
 		
 	}
+	
+	@Test
+	public void b00950ReferenceChange(){
+		navigate(getTestCaseUrl("/bind/issue/B00950ReferenceChange.zul"));
+		
+		Widget listbox = findWidget("$listbox");
+		Widget l11 = findWidget("$l11");
+		Widget l12 = findWidget("$l12");
+		Widget l13 = findWidget("$l13");
+		Widget l21 = findWidget("$l21");
+		Widget l22 = findWidget("$l22");
+		Widget l23 = findWidget("$l23");
+		Widget clear = findWidget("$clear");
+		
+		Assert.assertEquals("", l11.getValue());
+		Assert.assertEquals("", l12.getValue());
+		Assert.assertEquals("", l13.getValue());
+		Assert.assertEquals("", l21.getValue());
+		Assert.assertEquals("", l22.getValue());
+		Assert.assertEquals("", l23.getValue());
+		
+		listbox.findWidgets("@listitem").get(0).click();
+		Assert.assertEquals("Dennis", l11.getValue());
+		Assert.assertEquals("Chen", l12.getValue());
+		Assert.assertEquals("Dennis Chen", l13.getValue());
+		Assert.assertEquals("Dennis", l21.getValue());
+		Assert.assertEquals("Chen", l22.getValue());
+		Assert.assertEquals("Dennis Chen", l23.getValue());
+		
+		listbox.findWidgets("@listitem").get(1).click();
+		Assert.assertEquals("Alice", l11.getValue());
+		Assert.assertEquals("Lin", l12.getValue());
+		Assert.assertEquals("Alice Lin", l13.getValue());
+		Assert.assertEquals("Alice", l21.getValue());
+		Assert.assertEquals("Lin", l22.getValue());
+		Assert.assertEquals("Alice Lin", l23.getValue());
+		
+		listbox.findWidgets("@listitem").get(2).click();
+		Assert.assertEquals("", l11.getValue());
+		Assert.assertEquals("", l12.getValue());
+		Assert.assertEquals("", l13.getValue());
+		Assert.assertEquals("", l21.getValue());
+		Assert.assertEquals("", l22.getValue());
+		Assert.assertEquals("", l23.getValue());
+		
+		listbox.findWidgets("@listitem").get(1).click();
+		listbox.findWidgets("@listitem").get(1).findWidget("@textbox").replace("Grace").tab();
+		Assert.assertEquals("Grace", l11.getValue());
+		Assert.assertEquals("Lin", l12.getValue());
+		Assert.assertEquals("Grace Lin", l13.getValue());
+		Assert.assertEquals("Grace", l21.getValue());
+		Assert.assertEquals("Lin", l22.getValue());
+		Assert.assertEquals("Grace Lin", l23.getValue());
+		
+		clear.click();
+		Assert.assertEquals("", l11.getValue());
+		Assert.assertEquals("", l12.getValue());
+		Assert.assertEquals("", l13.getValue());
+		Assert.assertEquals("", l21.getValue());
+		Assert.assertEquals("", l22.getValue());
+		Assert.assertEquals("", l23.getValue());
+	}
 }
