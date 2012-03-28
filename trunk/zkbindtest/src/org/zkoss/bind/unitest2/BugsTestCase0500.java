@@ -1913,4 +1913,28 @@ public class BugsTestCase0500 extends TestCaseBase{
 		Assert.assertEquals("1", vmsize.getValue());
 		Assert.assertEquals("false", vmempty.getValue());
 	}
+	
+	@Test
+	public void b00758Indirect(){
+		navigate(getTestCaseUrl("/bind/issue/B00758Indirect.zul"));
+		Widget grid = findWidget("$grid");
+		Widget btn1 = findWidget("$btn1");
+		Widget btn2 = findWidget("$btn2");
+		List<Widget> rows = grid.findWidgets("@row");
+		Assert.assertEquals("First0",rows.get(0).findWidgets("@textbox").get(0).getValue());
+		Assert.assertEquals("Last0",rows.get(0).findWidgets("@textbox").get(1).getValue());
+		Assert.assertEquals("First0 Last0",rows.get(0).findWidget("@label").getValue());
+		
+		btn1.click();
+		rows = grid.findWidgets("@row");
+		Assert.assertEquals("Tom",rows.get(0).findWidgets("@textbox").get(0).getValue());
+		Assert.assertEquals("Last0",rows.get(0).findWidgets("@textbox").get(1).getValue());
+		Assert.assertEquals("Tom Last0",rows.get(0).findWidget("@label").getValue());
+		
+		btn2.click();
+		rows = grid.findWidgets("@row");
+		Assert.assertEquals("Henri",rows.get(0).findWidgets("@textbox").get(0).getValue());
+		Assert.assertEquals("Chen",rows.get(0).findWidgets("@textbox").get(1).getValue());
+		Assert.assertEquals("Henri Chen",rows.get(0).findWidget("@label").getValue());
+	}
 }
