@@ -1937,4 +1937,54 @@ public class BugsTestCase0500 extends TestCaseBase{
 		Assert.assertEquals("Chen",rows.get(0).findWidgets("@textbox").get(1).getValue());
 		Assert.assertEquals("Henri Chen",rows.get(0).findWidget("@label").getValue());
 	}
+	
+	@Test
+	public void b00B00994InitParam(){
+		navigate(getTestCaseUrl("/bind/issue/B00994InitParam.zul"));
+		Widget l1 = findWidget("$l1");
+		Widget l2 = findWidget("$l2");
+		
+		Assert.assertEquals("foo", l1.getValue());
+		Assert.assertEquals("bar", l2.getValue());
+	}
+	
+	@Test
+	public void b00993IncludeReload(){
+		navigate(getTestCaseUrl("/bind/issue/B00993IncludeReload.zul"));
+		Widget l1 = findWidget("$l1");
+		Widget l2 = findWidget("$l2");
+		Widget reload = findWidget("$reload");
+		
+		String val1 = (String)l1.getValue();
+		String val2 = (String)l2.getValue();
+		reload.click();
+		l1 = findWidget("$l1");
+		l2 = findWidget("$l2");
+		Assert.assertNotSame(val1, l1.getValue());
+		Assert.assertNotSame(val2, l2.getValue());
+		
+		val1 = (String)l1.getValue();
+		val2 = (String)l2.getValue();
+		reload.click();
+		l1 = findWidget("$l1");
+		l2 = findWidget("$l2");
+		Assert.assertNotSame(val1, l1.getValue());
+		Assert.assertNotSame(val2, l2.getValue());
+		
+		val1 = (String)l1.getValue();
+		val2 = (String)l2.getValue();
+		reload.click();
+		l1 = findWidget("$l1");
+		l2 = findWidget("$l2");
+		Assert.assertNotSame(val1, l1.getValue());
+		Assert.assertNotSame(val2, l2.getValue());
+		
+		val1 = (String)l1.getValue();
+		val2 = (String)l2.getValue();
+		reload.click();
+		l1 = findWidget("$l1");
+		l2 = findWidget("$l2");
+		Assert.assertNotSame(val1, l1.getValue());
+		Assert.assertNotSame(val2, l2.getValue());
+	}
 }
