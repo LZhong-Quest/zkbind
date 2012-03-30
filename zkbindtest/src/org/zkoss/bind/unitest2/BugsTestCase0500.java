@@ -1987,4 +1987,25 @@ public class BugsTestCase0500 extends TestCaseBase{
 		Assert.assertNotSame(val1, l1.getValue());
 		Assert.assertNotSame(val2, l2.getValue());
 	}
+	
+	@Test
+	public void b00992SubModel(){
+		navigate(getTestCaseUrl("/bind/issue/B00992SubModel.zul"));
+		Widget combobox = findWidget("$combobox");
+		Widget lab = findWidget("$lab");
+		
+		combobox.replace("9").tab();
+		Assert.assertEquals("9", lab.getValue());
+		
+		combobox.call("open");
+		
+		waitForTrip(1, 1000);
+		
+		Widget w = combobox.findWidgets("@comboitem").get(10);
+		
+		Assert.assertEquals("99", w.getLabel());
+		w.click();
+		
+		Assert.assertEquals("99", lab.getValue());
+	}
 }
