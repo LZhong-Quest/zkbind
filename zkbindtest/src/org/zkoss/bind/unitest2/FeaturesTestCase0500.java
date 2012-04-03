@@ -1158,4 +1158,101 @@ public class FeaturesTestCase0500 extends TestCaseBase{
 		Assert.assertEquals("XValidator", l3.getValue());
 		Assert.assertEquals("YValidator", l4.getValue());
 	}
+	
+	@Test
+	public void f00995ValidationMessages() {
+		navigate(getTestCaseUrl("/bind/issue/F00995ValidationMessages.zul"));
+		Widget l1 = findWidget("$l1");
+		Widget t1 = findWidget("$t1");
+		
+		Widget msg11 = findWidget("$msg11");
+		Widget msg12 = findWidget("$msg12");
+		Widget msg13 = findWidget("$msg13");
+		
+		Widget msg21 = findWidget("$msg21");
+		Widget msg22 = findWidget("$msg22");
+		
+		Widget msg31 = findWidget("$msg31");
+		Widget msg32 = findWidget("$msg32");
+		Widget msg33 = findWidget("$msg33");
+		Widget msg34 = findWidget("$msg34");
+		
+		Widget msg41 = findWidget("$msg41");
+		Widget msg42 = findWidget("$msg42");
+		Widget msg43 = findWidget("$msg43");
+		Widget msg44 = findWidget("$msg44");
+		
+		Widget msggrid1 = findWidget("$msggrid1");
+		Widget msggrid2 = findWidget("$msggrid2");
+		Widget msggrid3 = findWidget("$msggrid3");
+		
+		Assert.assertEquals("ABC", l1.getValue());
+		Assert.assertEquals("ABC", t1.getValue());
+		
+		
+		Assert.assertEquals("", msg11.getValue());
+		Assert.assertEquals("", msg12.getValue());
+		Assert.assertEquals("", msg13.getValue());
+		
+		Assert.assertEquals("", msg21.getValue());
+		Assert.assertEquals("", msg22.getValue());
+		
+		Assert.assertEquals("true", msg31.getValue());
+		Assert.assertEquals("true", msg32.getValue());
+		Assert.assertEquals("false", msg33.getValue());
+		Assert.assertEquals("false", msg34.getValue());
+		
+		Assert.assertEquals("", msg41.getValue());
+		Assert.assertEquals("", msg42.getValue());
+		Assert.assertEquals("", msg43.getValue());
+		Assert.assertEquals("", msg44.getValue());
+		
+		Assert.assertEquals(0, msggrid1.findWidgets("@row").size());
+		Assert.assertEquals(0, msggrid2.findWidgets("@row").size());
+		Assert.assertEquals(0, msggrid3.findWidgets("@row").size());
+		
+		
+		t1.replace("ABCa").tab();
+		
+		Assert.assertEquals("ABC", l1.getValue());
+		Assert.assertEquals("ABCa", t1.getValue());
+		
+		Assert.assertEquals("[1] value must equals ignore case 'abc', but is ABCa", msg11.getValue());
+		Assert.assertEquals("[1] value must equals ignore case 'abc', but is ABCa", msg12.getValue());
+		Assert.assertEquals("[1] value must equals ignore case 'abc', but is ABCa", msg13.getValue());
+		
+		Assert.assertEquals("", msg21.getValue());
+		Assert.assertEquals("", msg22.getValue());
+		
+		Assert.assertEquals("false", msg31.getValue());
+		Assert.assertEquals("false", msg32.getValue());
+		Assert.assertEquals("true", msg33.getValue());
+		Assert.assertEquals("true", msg34.getValue());
+		
+		Assert.assertEquals("[2] value must equals ignore case 'abc', but is ABCa", msg41.getValue());
+		Assert.assertEquals("[2] value must equals ignore case 'abc', but is ABCa", msg42.getValue());
+		Assert.assertEquals("[2] value must equals ignore case 'abc', but is ABCa", msg43.getValue());
+		Assert.assertEquals("[2] value must equals ignore case 'abc', but is ABCa", msg44.getValue());
+		
+		Assert.assertEquals(3, msggrid1.findWidgets("@row").size());
+		Assert.assertEquals(3, msggrid2.findWidgets("@row").size());
+		Assert.assertEquals(3, msggrid3.findWidgets("@row").size());
+		
+		int i=1;
+		for(Widget row:msggrid1.findWidgets("@row")){
+			Assert.assertEquals("["+i+++"] value must equals ignore case 'abc', but is ABCa", row.findWidget("@label").getValue());
+		}
+		
+		i=1;
+		for(Widget row:msggrid2.findWidgets("@row")){
+			Assert.assertEquals("["+i+++"] value must equals ignore case 'abc', but is ABCa", row.findWidget("@label").getValue());
+		}
+		
+		i=1;
+		for(Widget row:msggrid3.findWidgets("@row")){
+			Assert.assertEquals("["+i+++"] value must equals ignore case 'abc', but is ABCa", row.findWidget("@label").getValue());
+		}
+		
+		
+	}
 }
