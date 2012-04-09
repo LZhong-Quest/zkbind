@@ -225,6 +225,7 @@
 	<target name="runAllBug" >
 		<antcall target="BugsTestCase0001" />
 		<antcall target="BugsTestCase0500" />
+		<antcall target="BugsTestCase1000" />
 	</target>
 	<target name="reportAllBug" depends="runAllBug, junitreport" />
 
