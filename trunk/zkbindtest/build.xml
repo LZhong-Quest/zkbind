@@ -219,6 +219,7 @@
 	<target name="runAllFeature" >
 		<antcall target="FeaturesTestCase0001" />
 		<antcall target="FeaturesTestCase0500" />
+		<antcall target="FeaturesTestCase1000" />
 	</target>
 	<target name="reportAllFeature" depends="runAllFeature, junitreport" />
 
