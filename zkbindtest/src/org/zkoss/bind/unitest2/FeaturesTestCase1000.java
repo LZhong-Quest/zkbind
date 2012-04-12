@@ -1,10 +1,5 @@
 package org.zkoss.bind.unitest2;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.zkoss.zktc.core.junit.TestCaseBase;
@@ -32,5 +27,20 @@ public class FeaturesTestCase1000 extends TestCaseBase{
 		
 		btn.click();
 		Assert.assertEquals("evt1:onClick,evt2:onClick, cmd:cmd",msg.getValue());
+	}
+	
+	@Test
+	public void f01033InitClass(){
+		navigate(getTestCaseUrl("/bind/issue/F01033InitClass.zul"));
+		
+		Widget l11 = findWidget("$l11");
+		Widget l12 = findWidget("$l12");
+		Widget l21 = findWidget("$l21");
+		Widget l22 = findWidget("$l22");
+
+		Assert.assertEquals("",l11.getValue());
+		Assert.assertEquals("Chen",l12.getValue());
+		Assert.assertEquals("Ian",l21.getValue());
+		Assert.assertEquals("Tasi",l22.getValue());
 	}
 }
