@@ -8,14 +8,14 @@ import java.util.Set;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
 
-public class ViewModel {
+public class MoveSelectionVM {
 
 	Set<String> selection1;
 	List<String> list1;
 	Set<String> selection2;
 	List<String> list2;
 	
-	public ViewModel(){
+	public MoveSelectionVM(){
 		list1 = new ArrayList<String>();
 		list2 = new ArrayList<String>();
 		selection1 = new HashSet<String>();
@@ -37,10 +37,6 @@ public class ViewModel {
 		return list1;
 	}
 
-	public void setList1(List<String> list1) {
-		this.list1 = list1;
-	}
-
 	public Set<String> getSelection2() {
 		return selection2;
 	}
@@ -51,10 +47,6 @@ public class ViewModel {
 
 	public List<String> getList2() {
 		return list2;
-	}
-
-	public void setList2(List<String> list2) {
-		this.list2 = list2;
 	}
 	
 	@Command
