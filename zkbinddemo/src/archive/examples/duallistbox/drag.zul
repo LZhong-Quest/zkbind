@@ -8,7 +8,7 @@
 				<template name="model">
 					<listitem draggable="true" droppable="true"
 					label="@load(each.name)" attributes.item="@load(each)"
-					onDrop="@command('insertToList1',item=event.dragged.attributes.item, base=self.attributes.item)"/>
+					onDrop="@command('insertToList1',item=event.dragged.attributes.item, base=each)"/>
 				</template>
 			</listbox>
 		</vlayout>
@@ -22,7 +22,7 @@
 				<template name="model">
 					<listitem draggable="true" droppable="true" 
 					label="@load(each.name)" attributes.item="@load(each)"
-					onDrop="@command('insertToList2',item=event.dragged.attributes.item, base=self.attributes.item)"/>
+					onDrop="@command('insertToList2',item=event.dragged.attributes.item, base=each)"/>
 				</template>
 			</listbox>
 		</vlayout>
