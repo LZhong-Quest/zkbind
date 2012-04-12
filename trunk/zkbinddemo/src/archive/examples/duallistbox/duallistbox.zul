@@ -1,0 +1,17 @@
+<window apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('org.zkoss.mvvm.examples.duallistbox.ViewModel')">
+	
+	<hlayout>
+		<vlayout>
+			List1
+			<listbox model="@bind(vm.list1)" selectedItems="@bind(vm.selection1)" multiple="true" width="300px" height="300px"/>
+		</vlayout>
+		<vlayout>
+			<button label="to list2" onClick="@command('moveToList2')"/>
+			<button label="to list1" onClick="@command('moveToList1')"/>
+		</vlayout>
+		<vlayout>
+			List2
+			<listbox model="@bind(vm.list2)" selectedItems="@bind(vm.selection2)" multiple="true" width="300px" height="300px"/>
+		</vlayout>
+	</hlayout>
+</window>
