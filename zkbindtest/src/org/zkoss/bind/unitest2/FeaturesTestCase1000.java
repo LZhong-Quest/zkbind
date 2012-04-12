@@ -43,4 +43,20 @@ public class FeaturesTestCase1000 extends TestCaseBase{
 		Assert.assertEquals("Ian",l21.getValue());
 		Assert.assertEquals("Tasi",l22.getValue());
 	}
+	
+	@Test
+	public void f01046PublicEvent(){
+		navigate(getTestCaseUrl("/bind/issue/F01046PublicEvent.zul"));
+		
+		Widget msg1 = findWidget("$msg1");
+		Widget btn1 = findWidget("$btn1");
+		Widget msg2 = findWidget("$msg2");
+		Widget btn2 = findWidget("$btn2");
+		
+		btn1.click();
+		Assert.assertEquals("Hello i am a vm",msg2.getValue());
+		
+		btn2.click();
+		Assert.assertEquals("Hello i am a composer",msg1.getValue());
+	}
 }

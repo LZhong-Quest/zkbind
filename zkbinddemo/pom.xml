@@ -238,11 +238,6 @@
 		</dependency>
 -->		
 		<dependency>
-			<groupId>org.zkoss.common</groupId>
-			<artifactId>zel</artifactId>
-			<version>${zkel.version}</version>
-		</dependency>
-		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
 			<version>${commons-lang.version}</version>
