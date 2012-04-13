@@ -1255,4 +1255,23 @@ public class FeaturesTestCase0500 extends TestCaseBase{
 		
 		
 	}
+	
+	@Test
+	public void f00986CloseWindow() {
+		navigate(getTestCaseUrl("/bind/issue/F00986CloseWindow.zul"));
+		
+		Widget detach = findWidget("$detach");
+		
+		Assert.assertNotNull(findWidget("$win1"));
+		Assert.assertNotNull(findWidget("$win2"));
+		Assert.assertNotNull(findWidget("$win3"));
+		Assert.assertNull(findWidget("$win4",1));
+		
+		detach.click();
+		
+		Assert.assertNull(findWidget("$win1",1));
+		Assert.assertNotNull(findWidget("$win2"));
+		Assert.assertNull(findWidget("$win3",1));
+		Assert.assertNull(findWidget("$win4",1));
+	}
 }
