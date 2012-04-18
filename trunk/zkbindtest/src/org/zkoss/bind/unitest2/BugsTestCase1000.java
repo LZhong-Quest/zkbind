@@ -103,4 +103,28 @@ public class BugsTestCase1000 extends TestCaseBase{
 	}
 	
 	
+	@Test
+	public void b01066IncorrectFormValue() {
+		navigate(getTestCaseUrl("/bind/issue/B01066IncorrectFormValue.zul"));
+		
+		Widget tb1 = findWidget("$tb1");
+		Widget save = findWidget("$save");
+		
+		
+		Widget lb1 = findWidget("$lb1");
+		Widget lb2 = findWidget("$lb2");
+		
+		Assert.assertEquals("A", lb1.getValue());
+		Assert.assertEquals("A", lb2.getValue());
+		
+		tb1.replace("Abc").tab();
+		
+		Assert.assertEquals("A", lb1.getValue());
+		Assert.assertEquals("A", lb2.getValue());
+		
+		save.click();
+		
+		Assert.assertEquals("Abc", lb1.getValue());
+		Assert.assertEquals("Abc", lb2.getValue());
+	}	
 }
