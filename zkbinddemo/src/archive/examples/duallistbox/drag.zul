@@ -4,11 +4,11 @@
 		<vlayout>
 			List1
 			<listbox model="@bind(vm.list1)" width="300px" height="300px" droppable="true"
-			onDrop="@command('dropToList1',item=event.dragged.attributes.item)">
+			onDrop="@command('dropToList1',item=event.dragged.value)">
 				<template name="model">
 					<listitem draggable="true" droppable="true"
-					label="@load(each.name)" attributes.item="@load(each)"
-					onDrop="@command('insertToList1',item=event.dragged.attributes.item, base=each)"/>
+					label="@load(each.name)"
+					onDrop="@command('insertToList1',item=event.dragged.value, base=each)"/>
 				</template>
 			</listbox>
 		</vlayout>
@@ -18,11 +18,11 @@
 		<vlayout>
 			List2
 			<listbox model="@bind(vm.list2)" width="300px" height="300px" droppable="true"
-			onDrop="@command('dropToList2',item=event.dragged.attributes.item)">
+			onDrop="@command('dropToList2',item=event.dragged.value)">
 				<template name="model">
 					<listitem draggable="true" droppable="true" 
-					label="@load(each.name)" attributes.item="@load(each)"
-					onDrop="@command('insertToList2',item=event.dragged.attributes.item, base=each)"/>
+					label="@load(each.name)"
+					onDrop="@command('insertToList2',item=event.dragged.value, base=each)"/>
 				</template>
 			</listbox>
 		</vlayout>

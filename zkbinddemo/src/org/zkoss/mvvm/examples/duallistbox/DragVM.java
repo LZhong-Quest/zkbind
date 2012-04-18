@@ -51,7 +51,7 @@ public class DragVM {
 	@Command
 	@NotifyChange({"list1","list2"})
 	public void insertToList1(@BindingParam("base") Item base,@BindingParam("item") Item item){
-		if(item!=null && base!=null && list1.contains(base)){
+		if(item!=null && base!=null && list1.contains(base) && list2.contains(item)){
 			list1.add(list1.indexOf(base),item);
 			list2.remove(item);
 		}
@@ -60,7 +60,7 @@ public class DragVM {
 	@Command
 	@NotifyChange({"list1","list2"})
 	public void insertToList2(@BindingParam("base") Item base,@BindingParam("item") Item item){
-		if(item!=null && base!=null && list2.contains(base)){
+		if(item!=null && base!=null && list2.contains(base) && list1.contains(item)){
 			list2.add(list2.indexOf(base),item);
 			list1.remove(item);
 		}
