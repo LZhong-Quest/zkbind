@@ -127,4 +127,35 @@ public class BugsTestCase1000 extends TestCaseBase{
 		Assert.assertEquals("Abc", lb1.getValue());
 		Assert.assertEquals("Abc", lb2.getValue());
 	}	
+	
+	
+	@Test
+	public void b01062NullIntValue(){
+		navigate(getTestCaseUrl("/bind/issue/B01062NullIntValue.zul"));
+		Widget lb11 = findWidget("$lb11");
+		Widget lb12 = findWidget("$lb12");
+		Widget lb21 = findWidget("$lb21");
+		Widget lb22 = findWidget("$lb22");
+		
+		Widget msg1 = findWidget("$msg1");
+		Widget msg2 = findWidget("$msg2");
+		
+		Widget save = findWidget("$save");
+		
+		Assert.assertEquals("", lb11.getValue());
+		Assert.assertEquals("0", lb12.getValue());
+		Assert.assertEquals("", lb21.getValue());
+		Assert.assertEquals("0", lb22.getValue());
+		
+		save.click();
+		
+		Assert.assertEquals("", lb11.getValue());
+		Assert.assertEquals("0", lb12.getValue());
+		Assert.assertEquals("", lb21.getValue());
+		Assert.assertEquals("0", lb22.getValue());
+		
+		Assert.assertEquals("value1 is null, value2 is 0", msg1.getValue());
+		Assert.assertEquals("value1 is null, value2 is 0", msg2.getValue());
+		
+	}
 }
