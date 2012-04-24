@@ -139,7 +139,7 @@ public class FeaturesTestCase0500 extends TestCaseBase{
 	
 	
 	@Test
-	public void f00718(){
+	public void f00718BeanValidator(){
 		navigate(getTestCaseUrl("/bind/issue/F00718.zul"));
 		
 		Widget tb1 = findWidget("$tb1");
