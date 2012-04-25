@@ -36,6 +36,11 @@
 				A order CRUD example v3
 			</n:a>
 		</n:li>
+		<n:li>
+			<n:a href="zk/order">
+				A order Richlet example as same sa CRUD example v3
+			</n:a>
+		</n:li>
 		<!-- 
 		<n:li>
 			<n:a href="order/orderForm.zul">
