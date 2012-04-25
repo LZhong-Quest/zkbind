@@ -8,10 +8,10 @@
 	</columns>
 	<rows>
 		<row id="row1">
-			<!-- notify change inside converter -->
+			<!-- notify change inside converter (deprecated since 4/25) -->
 			<textbox value="@bind(fx.firstName) @converter('firstName')"/>
 			<textbox value="@bind(fx.lastName) @converter('lastName')"/>
-			<label value="@bind(fx) @converter('fullName')"/>
+			<label value="@bind(fx) @converter('fullName')"/> <!--  --> there is a bug, that fx is not notified after form reload-->
 		</row>
 	</rows>
 </grid>

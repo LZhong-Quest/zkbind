@@ -18,6 +18,8 @@ import org.zkoss.bind.BindComposer;
 import org.zkoss.bind.BindContext;
 import org.zkoss.bind.Converter;
 import org.zkoss.bind.Form;
+import org.zkoss.bind.annotation.BindingParam;
+import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.DependsOn;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
@@ -33,7 +35,7 @@ public class ZKBindSave1Composer extends BindComposer {
 		
 		addConverter("fullName", new Converter() {
 			//person -> fullName
-			@DependsOn({"firstName", "lastName"})
+//			@DependsOn({"firstName", "lastName"}) //dependson on converter depreacted since 4/25
 			public Object coerceToUi(Object val, Component component, BindContext ctx) {
 				if (val instanceof Form) {
 					final Form bean = (Form) val;
@@ -54,7 +56,7 @@ public class ZKBindSave1Composer extends BindComposer {
 				return val;
 			}
 	
-			@NotifyChange("firstName")
+//			@NotifyChange("firstName") //notify change on converter depreacted since 4/25
 			public Object coerceToBean(Object val, Component component, BindContext ctx) {
 				return val;
 			}
@@ -64,7 +66,7 @@ public class ZKBindSave1Composer extends BindComposer {
 				return val;
 			}
 	
-			@NotifyChange("lastName")
+//			@NotifyChange("lastName") //notify change on converter depreacted since 4/25
 			public Object coerceToBean(Object val, Component component, BindContext ctx) {
 				return val;
 			}
@@ -79,9 +81,9 @@ public class ZKBindSave1Composer extends BindComposer {
 	public void setP1(Person p) {
 		_p1 = p;
 	}
-	
-	public void myCommand(Map args) {
-		System.out.println("myCommand executed:"+args);
+	 @Command @NotifyChange("p1")
+	public void myCommand() {
+		System.out.println("myCommand executed:");
 	}
 	
 	private String _fieldName = "firstName";
@@ -92,9 +94,9 @@ public class ZKBindSave1Composer extends BindComposer {
 	public String getFieldName() {
 		return _fieldName;
 	}
-	@NotifyChange("fieldName")
-	public void changeFieldName(Map args) {
-		setFieldName((String)args.get("fieldName"));
+	@NotifyChange("fieldName") @Command
+	public void changeFieldName(@BindingParam("fieldName") String fieldName) {
+		setFieldName(fieldName);
 	}
 }
 
