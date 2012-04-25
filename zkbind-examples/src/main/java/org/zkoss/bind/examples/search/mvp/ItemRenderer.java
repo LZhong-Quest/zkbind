@@ -11,7 +11,7 @@ public class ItemRenderer implements ListitemRenderer<Item>{
 
 	static DecimalFormat priceFormatter = new DecimalFormat("$ ###,###,###,##0.00");
 
-	public void render(Listitem item, Item data){
+	public void render(Listitem item, Item data, int index){
 		
 		Listcell nameCell = new Listcell();
 		nameCell.setLabel(data.getName());
