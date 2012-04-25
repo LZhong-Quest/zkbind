@@ -21,9 +21,9 @@
 				<listitem >
 					<listcell label="@bind(item.id)"/>				
 					<listcell label="@bind(item.quantity)"/>
-					<listcell label="@bind(item.price) @converter(numberFormatConverter, format='###,##0.00')"/>
-					<listcell label="@bind(item.creationDate) @converter(dateFormatConverter, format='yyyy/MM/dd')"/>
-					<listcell label="@bind(item.shippingDate) @converter(dateFormatConverter, format='yyyy/MM/dd')"/>
+					<listcell label="@bind(item.price) @converter('formatedNumber', format='###,##0.00')"/>
+					<listcell label="@bind(item.creationDate) @converter('formatedDate', format='yyyy/MM/dd')"/>
+					<listcell label="@bind(item.shippingDate) @converter('formatedDate', format='yyyy/MM/dd')"/>
 				</listitem>
 			</template>
 		</listbox>
@@ -56,7 +56,7 @@
 							<label value="@bind(vmsgs[pbox])" sclass="red" />
 						</hlayout>
 					</row>
-					<row>Total Price <label value="@bind(vm.selected.totalPrice) @converter(numberFormatConverter, format='###,##0.00')" /></row>
+					<row>Total Price <label value="@bind(vm.selected.totalPrice) @converter('formatedNumber', format='###,##0.00')" /></row>
 					<row>Creation Date 
 						<hlayout> 
 							<datebox id="cdbox" value="@load(vm.selected.creationDate) @save(vm.selected.creationDate,before='saveOrder')
