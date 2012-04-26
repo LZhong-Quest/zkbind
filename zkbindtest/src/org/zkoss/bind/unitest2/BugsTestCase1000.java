@@ -158,4 +158,69 @@ public class BugsTestCase1000 extends TestCaseBase{
 		Assert.assertEquals("value1 is null, value2 is 0", msg2.getValue());
 		
 	}
+	
+	@Test
+	public void b01085NPEReferenceBinding(){
+		navigate(getTestCaseUrl("/bind/issue/B01085NPEReferenceBinding.zul"));
+		
+		Widget listbox1 = findWidget("$listbox1");
+		Widget listbox2 = findWidget("$listbox2");
+		Widget listbox3 = findWidget("$listbox3");
+		Widget listbox4 = findWidget("$listbox4");
+		Widget listbox5 = findWidget("$listbox5");
+		Widget listbox6 = findWidget("$listbox6");
+		
+		Widget lb1 = findWidget("$lb1");
+		Widget lb2 = findWidget("$lb2");
+		
+		Assert.assertEquals(-1L,ListboxUtil.getSelectedIndex(listbox1));
+		Assert.assertEquals(-1L,ListboxUtil.getSelectedIndex(listbox2));
+		Assert.assertEquals(-1L,ListboxUtil.getSelectedIndex(listbox3));
+		Assert.assertEquals("", lb1.getValue());
+		
+		Assert.assertEquals(1L,ListboxUtil.getSelectedIndex(listbox4));
+		Assert.assertEquals(1L,ListboxUtil.getSelectedIndex(listbox5));
+		Assert.assertEquals(1L,ListboxUtil.getSelectedIndex(listbox6));
+		Assert.assertEquals("1", lb2.getValue());
+		
+		
+		listbox1.findWidgets("@listitem").get(0).click();
+		Assert.assertEquals(0L,ListboxUtil.getSelectedIndex(listbox2));
+		Assert.assertEquals(0L,ListboxUtil.getSelectedIndex(listbox3));
+		Assert.assertEquals("0", lb1.getValue());
+		
+		listbox2.findWidgets("@listitem").get(1).click();
+		Assert.assertEquals(1L,ListboxUtil.getSelectedIndex(listbox1));
+		Assert.assertEquals(1L,ListboxUtil.getSelectedIndex(listbox3));
+		Assert.assertEquals("1", lb1.getValue());
+		
+		
+		listbox3.findWidgets("@listitem").get(2).click();
+		Assert.assertEquals(2L,ListboxUtil.getSelectedIndex(listbox1));
+		Assert.assertEquals(2L,ListboxUtil.getSelectedIndex(listbox2));
+		Assert.assertEquals("2", lb1.getValue());
+		
+		
+		listbox4.findWidgets("@listitem").get(0).click();
+		Assert.assertEquals(1L,ListboxUtil.getSelectedIndex(listbox5));
+		Assert.assertEquals(1L,ListboxUtil.getSelectedIndex(listbox6));
+		Assert.assertEquals("1", lb2.getValue());
+		Assert.assertEquals(1,findWidgets(".z-window-modal").size());
+		findWidget(".z-window-modal @button").click();
+		
+		listbox5.findWidgets("@listitem").get(0).click();
+		Assert.assertEquals(0L,ListboxUtil.getSelectedIndex(listbox4));
+		Assert.assertEquals(1L,ListboxUtil.getSelectedIndex(listbox6));
+		Assert.assertEquals("1", lb2.getValue());
+		Assert.assertEquals(1,findWidgets(".z-window-modal").size());
+		findWidget(".z-window-modal @button").click();
+		
+		listbox6.findWidgets("@listitem").get(0).click();
+		Assert.assertEquals(0L,ListboxUtil.getSelectedIndex(listbox4));
+		Assert.assertEquals(0L,ListboxUtil.getSelectedIndex(listbox5));
+		Assert.assertEquals("1", lb2.getValue());
+		Assert.assertEquals(1,findWidgets(".z-window-modal").size());
+		findWidget(".z-window-modal @button").click();
+		
+	}
 }
