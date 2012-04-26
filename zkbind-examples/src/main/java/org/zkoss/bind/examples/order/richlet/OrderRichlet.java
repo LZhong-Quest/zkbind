@@ -111,7 +111,7 @@ public class OrderRichlet extends GenericRichlet{
 		public Component[] create(Component parent, Component insertBefore,
 				VariableResolver resolver, Composer composer){
 			
-			//create template components
+			//create template components & add binding expressions
 			Listitem listitem = new Listitem();
 			Listcell idCell = new Listcell();
 			listitem.appendChild(idCell);
@@ -129,7 +129,7 @@ public class OrderRichlet extends GenericRichlet{
 			listitem.appendChild(shippingDateCell);
 			binder.addPropertyLoadBindings(shippingDateCell, "label", "item.shippingDate", null, null, null, SYS_DATE_CONVERTER, formatedDateArg);
 
-			//append template children
+			//append to the parent
 			if (insertBefore ==null){
 				parent.appendChild(listitem);
 			}else{
