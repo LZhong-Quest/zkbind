@@ -51,6 +51,8 @@ public class OrderRichlet extends GenericRichlet{
 		formatedDateArg.put("format","yyyy/MM/dd");
 	}
 
+	private Binder binder;
+	
 	public void service(Page page) {
 
 		//initialize UI
@@ -59,7 +61,7 @@ public class OrderRichlet extends GenericRichlet{
 		window.setPage(page);
 
 		//initialize binder, use DefaultBinder
-		Binder binder = new DefaultBinder(); 
+		binder = new DefaultBinder(); 
 		binder.init(window, new OrderVM4());  
 		window.setAttribute("vm", binder.getViewModel());
 
@@ -105,12 +107,6 @@ public class OrderRichlet extends GenericRichlet{
 	
 	class ListboxTemplate implements Template{
 		
-		
-		private Binder binder;
-		
-		public ListboxTemplate(Binder binder){
-			this.binder = binder;
-		}
 		@SuppressWarnings("rawtypes")
 		public Component[] create(Component parent, Component insertBefore,
 				VariableResolver resolver, Composer composer){
@@ -172,7 +168,7 @@ public class OrderRichlet extends GenericRichlet{
 		binder.addPropertySaveBindings(listbox, "selectedItem", "vm.selected", null, null, null, null, null,null,null);
 		//can't create private class org.zkoss.zk.ui.impl.UiEngineImpl.TemplateImpl
 
-		listbox.setTemplate("model", new ListboxTemplate(binder));		
+		listbox.setTemplate("model", new ListboxTemplate());		
 		return listbox;
 	}
 
