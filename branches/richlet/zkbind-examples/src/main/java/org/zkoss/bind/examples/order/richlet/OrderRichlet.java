@@ -2,14 +2,17 @@ package org.zkoss.bind.examples.order.richlet;
 
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.zkoss.bind.Binder;
 import org.zkoss.bind.DefaultBinder;
-import org.zkoss.bind.examples.order.OrderVM3;
+import org.zkoss.xel.VariableResolver;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.GenericRichlet;
 import org.zkoss.zk.ui.Page;
 import org.zkoss.zk.ui.event.Events;
+import org.zkoss.zk.ui.util.Composer;
+import org.zkoss.zk.ui.util.Template;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Column;
 import org.zkoss.zul.Columns;
@@ -23,8 +26,10 @@ import org.zkoss.zul.Image;
 import org.zkoss.zul.Intbox;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Listbox;
+import org.zkoss.zul.Listcell;
 import org.zkoss.zul.Listhead;
 import org.zkoss.zul.Listheader;
+import org.zkoss.zul.Listitem;
 import org.zkoss.zul.Row;
 import org.zkoss.zul.Rows;
 import org.zkoss.zul.Style;
@@ -36,7 +41,15 @@ import org.zkoss.zul.Window.Mode;
 
 
 public class OrderRichlet extends GenericRichlet{
-
+	private static HashMap<String, Object> formatedNumberArg = new HashMap<String, Object>();
+	private static HashMap<String, Object> formatedDateArg = new HashMap<String, Object>();
+	private static final String SYS_DATE_CONVERTER = "'formatedDate'"; 
+	private static final String SYS_NUMBER_CONVERTER = "'formatedNumber'";
+	
+	static {
+		formatedNumberArg.put("format", "###,##0.00");
+		formatedDateArg.put("format","yyyy/MM/dd");
+	}
 
 	public void service(Page page) {
 
@@ -61,34 +74,88 @@ public class OrderRichlet extends GenericRichlet{
 		buildConfirmDialog(binder, window);
 
 
-		Groupbox initTestBox = new Groupbox();
-		initTestBox.setParent(vbox);
+		
+		
+//		Groupbox initTestBox = new Groupbox();
+//		initTestBox.setParent(vbox);
+//		Groupbox formTestBox = new Groupbox();
+//		formTestBox.setParent(vbox);
+//		binder.addFormInitBinding(formTestBox, "fx", "vm.myForm", null);
+//		Label formLabel = new Label("Form init with 'init'");
+//		Textbox formTextbox = new Textbox();
+//		formTestBox.appendChild(formLabel);
+//		formTestBox.appendChild(formTextbox);
+//
+//		binder.addPropertyInitBinding(formTextbox, "value", "fx.init", null, null, null);
+		
 		//test init binding
-		((OrderVM3)binder.getViewModel()).getValidationMessages().put("init", "init");
-
-		Label label = new Label("Init with 'init'");
-		Textbox textbox = new Textbox();
-		initTestBox.appendChild(label);
-		initTestBox.appendChild(textbox);
-
-		binder.addPropertyInitBinding(textbox, "value", "vm.validationMessages['init']", null, null, null);
-		// Must load value to components once, call it after all "add property binding" statements
-		
-		Groupbox formTestBox = new Groupbox();
-		formTestBox.setParent(vbox);
-		binder.addFormInitBinding(formTestBox, "fx", "vm.myForm", null);
-		Label formLabel = new Label("Form init with 'init'");
-		Textbox formTextbox = new Textbox();
-		formTestBox.appendChild(formLabel);
-		formTestBox.appendChild(formTextbox);
-
-		binder.addPropertyInitBinding(formTextbox, "value", "fx.init", null, null, null);
-		
+//		((OrderVM3)binder.getViewModel()).getValidationMessages().put("init", "init");
+//
+//		Label label = new Label("Init with 'init'");
+//		Textbox textbox = new Textbox();
+//		initTestBox.appendChild(label);
+//		initTestBox.appendChild(textbox);
+//
+//		binder.addPropertyInitBinding(textbox, "value", "vm.validationMessages['init']", null, null, null);
 		//loadComponent(component, true)
+		
+		// Must load value to components once, call it after all "add property binding" statements
 		binder.loadComponent(window,true); 
 	}
+	
+	class ListboxTemplate implements Template{
+		
+		
+		private Binder binder;
+		
+		public ListboxTemplate(Binder binder){
+			this.binder = binder;
+		}
+		@SuppressWarnings("rawtypes")
+		public Component[] create(Component parent, Component insertBefore,
+				VariableResolver resolver, Composer composer){
+			
+			//create template components
+			Listitem listitem = new Listitem();
+			Listcell idCell = new Listcell();
+			listitem.appendChild(idCell);
+			binder.addPropertyLoadBindings(idCell, "label", "item.id", null, null, null, null, null);
+			Listcell quantityCell = new Listcell();
+			listitem.appendChild(quantityCell);
+			binder.addPropertyLoadBindings(quantityCell, "label", "item.quantity", null, null, null, null, null);
+			Listcell priceCell = new Listcell();
+			listitem.appendChild(priceCell);
+			binder.addPropertyLoadBindings(priceCell, "label", "item.price", null, null, null, SYS_NUMBER_CONVERTER, formatedNumberArg);
+			Listcell creationDateCell = new Listcell();
+			listitem.appendChild(creationDateCell);
+			binder.addPropertyLoadBindings(creationDateCell, "label", "item.creationDate", null, null, null, SYS_DATE_CONVERTER, formatedDateArg);
+			Listcell shippingDateCell = new Listcell();
+			listitem.appendChild(shippingDateCell);
+			binder.addPropertyLoadBindings(shippingDateCell, "label", "item.shippingDate", null, null, null, SYS_DATE_CONVERTER, formatedDateArg);
 
-	private Listbox buildOrderListbox(Binder binder){
+			//append template children
+			if (insertBefore ==null){
+				parent.appendChild(listitem);
+			}else{
+				parent.insertBefore(listitem, insertBefore);
+			}
+			
+			Component[] components = new Component[1];
+			components [0] = listitem;
+			
+			return components;
+		}
+		public Map<String, Object> getParameters(){
+			Map<String,Object> parameters = new HashMap<String, Object>();
+			//set binding variable
+			parameters.put("var","item");
+			
+			return parameters;
+		}
+		
+	}
+
+	private Component buildOrderListbox(Binder binder){
 		Listbox listbox = new Listbox();
 		listbox.setHeight("200px");
 		listbox.setHflex("true");
@@ -100,8 +167,12 @@ public class OrderRichlet extends GenericRichlet{
 		head.appendChild(new Listheader("Creation Date"));
 		head.appendChild(new Listheader("Shipping Date"));
 
-		//FIXME can't use template
-//		listbox.setTemplate(name, template)
+		binder.addPropertyLoadBindings(listbox, "model", "vm.orders", null, null, null, null, null);
+		binder.addPropertyLoadBindings(listbox, "selectedItem", "vm.selected", null, null, null, null, null);
+		binder.addPropertySaveBindings(listbox, "selectedItem", "vm.selected", null, null, null, null, null,null,null);
+		//can't create private class org.zkoss.zk.ui.impl.UiEngineImpl.TemplateImpl
+
+		listbox.setTemplate("model", new ListboxTemplate(binder));		
 		return listbox;
 	}
 
@@ -202,10 +273,9 @@ public class OrderRichlet extends GenericRichlet{
 		totalRow.appendChild(new Label("Total Price"));
 		Label totalPriceLabel = new Label();
 		totalRow.appendChild(totalPriceLabel);
-		HashMap<String, Object> totalPriceArg = new HashMap<String, Object>();
-		totalPriceArg.put("format", "###,##0.00");
+
 //		format='###,##0.00'
-		binder.addPropertyLoadBindings(totalPriceLabel, "value", "vm.selected.totalPrice", null, null, null, "'formatedNumber'", totalPriceArg);
+		binder.addPropertyLoadBindings(totalPriceLabel, "value", "vm.selected.totalPrice", null, null, null, SYS_NUMBER_CONVERTER, formatedNumberArg);
 		
 		Row creationRow = new Row();
 		creationRow.appendChild(new Label("Creation Date"));
