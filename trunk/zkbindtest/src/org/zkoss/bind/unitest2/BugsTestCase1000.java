@@ -223,4 +223,81 @@ public class BugsTestCase1000 extends TestCaseBase{
 		findWidget(".z-window-modal @button").click();
 		
 	}
+	
+	@Test
+	public void b01088FormUpdate(){
+		navigate(getTestCaseUrl("/bind/issue/B01088FormUpdate.zul"));
+		
+		Widget lb11 = findWidget("$lb11");
+		Widget lb12 = findWidget("$lb12");
+		
+		Widget tb11 = findWidget("$tb11");
+		Widget tb12 = findWidget("$tb12");
+		
+		Widget lb21 = findWidget("$lb21");
+		Widget lb22 = findWidget("$lb22");
+		
+		Widget reload = findWidget("$reload");
+		Widget save = findWidget("$save");
+		
+		Assert.assertEquals("Dennis", lb11.getValue());
+		Assert.assertEquals("Chen", lb12.getValue());
+		
+		Assert.assertEquals("Dennis", tb11.getValue());
+		Assert.assertEquals("Chen", tb12.getValue());
+		
+		Assert.assertEquals("Dennis Chen", lb21.getValue());
+		Assert.assertEquals("false", lb22.getValue());
+		
+		
+		tb11.replace("Alex").tab();
+		Assert.assertEquals("Dennis Chen", lb21.getValue());
+		Assert.assertEquals("true", lb22.getValue());
+		
+		reload.click();
+		Assert.assertEquals("Dennis", tb11.getValue());
+		Assert.assertEquals("Chen", tb12.getValue());
+		
+		Assert.assertEquals("Dennis Chen", lb21.getValue());
+		Assert.assertEquals("false", lb22.getValue());
+		
+		tb11.replace("Alex").tab();
+		tb12.replace("Wang").tab();
+		Assert.assertEquals("Dennis Chen", lb21.getValue());
+		Assert.assertEquals("true", lb22.getValue());
+		
+		save.click();
+		Assert.assertEquals("Alex", lb11.getValue());
+		Assert.assertEquals("Wang", lb12.getValue());
+		
+		Assert.assertEquals("Alex", tb11.getValue());
+		Assert.assertEquals("Wang", tb12.getValue());
+		
+		Assert.assertEquals("Alex Wang", lb21.getValue());
+		Assert.assertEquals("false", lb22.getValue());
+	}
+	
+	@Test
+	public void b01139LoadInit(){
+		navigate(getTestCaseUrl("/bind/issue/B01139LoadInit.zul"));
+		Widget liChk = findWidget("$liChk");
+		Widget changeNameBtn = findWidget("$changeNameBtn");
+		Widget nameTexb = findWidget("$nameTexb");
+		Widget nameLbl = findWidget("$nameLbl");
+		
+		
+		nameTexb.replace("XYZ");
+		changeNameBtn.click();
+		Assert.assertEquals("XYZ",nameLbl.getValue());
+		
+		nameTexb.replace("XXX");
+		liChk.click();
+		changeNameBtn.click();
+		Assert.assertEquals("XYZ",nameLbl.getValue());
+		
+		nameTexb.replace("XXX");
+		liChk.click();
+		changeNameBtn.click();
+		Assert.assertEquals("XXX",nameLbl.getValue());
+	}
 }

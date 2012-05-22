@@ -1960,32 +1960,32 @@ public class BugsTestCase0500 extends TestCaseBase{
 		reload.click();
 		l1 = findWidget("$l1");
 		l2 = findWidget("$l2");
-		Assert.assertNotSame(val1, l1.getValue());
-		Assert.assertNotSame(val2, l2.getValue());
+		Assert.assertFalse(val1.equals(l1.getValue()));
+		Assert.assertFalse(val2.equals(l2.getValue()));
 		
 		val1 = (String)l1.getValue();
 		val2 = (String)l2.getValue();
 		reload.click();
 		l1 = findWidget("$l1");
 		l2 = findWidget("$l2");
-		Assert.assertNotSame(val1, l1.getValue());
-		Assert.assertNotSame(val2, l2.getValue());
+		Assert.assertFalse(val1.equals(l1.getValue()));
+		Assert.assertFalse(val2.equals(l2.getValue()));
 		
 		val1 = (String)l1.getValue();
 		val2 = (String)l2.getValue();
 		reload.click();
 		l1 = findWidget("$l1");
 		l2 = findWidget("$l2");
-		Assert.assertNotSame(val1, l1.getValue());
-		Assert.assertNotSame(val2, l2.getValue());
+		Assert.assertFalse(val1.equals(l1.getValue()));
+		Assert.assertFalse(val2.equals(l2.getValue()));
 		
 		val1 = (String)l1.getValue();
 		val2 = (String)l2.getValue();
 		reload.click();
 		l1 = findWidget("$l1");
 		l2 = findWidget("$l2");
-		Assert.assertNotSame(val1, l1.getValue());
-		Assert.assertNotSame(val2, l2.getValue());
+		Assert.assertFalse(val1.equals(l1.getValue()));
+		Assert.assertFalse(val2.equals(l2.getValue()));
 	}
 	
 	@Test
