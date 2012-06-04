@@ -300,4 +300,31 @@ public class BugsTestCase1000 extends TestCaseBase{
 		changeNameBtn.click();
 		Assert.assertEquals("XXX",nameLbl.getValue());
 	}
+	
+	@Test
+	public void b01165InnerViewMdel(){
+		navigate(getTestCaseUrl("/bind/issue/B01165NestedBinder.zul"));
+		Widget outerPidLb = findWidget("$outerPidLb");
+		Widget outerPDescLb = findWidget("$outerPDescLb");
+		Widget pidLb = findWidget("$pidLb");
+		Widget pDescLb = findWidget("$pDescLb");
+		Widget vmsSelIdLb = findWidget("$vmsSelIdLb");
+		Widget vmsSelDescLb = findWidget("$vmsSelDescLb");
+		
+		
+		
+		Assert.assertEquals("b3",outerPidLb.getValue());
+		Assert.assertEquals("this is b3",outerPDescLb.getValue());
+		Assert.assertEquals("b3",pidLb.getValue());
+		Assert.assertEquals("this is b3",pDescLb.getValue());
+		Assert.assertEquals("b3",vmsSelIdLb.getValue());
+		Assert.assertEquals("this is b3",vmsSelDescLb.getValue());
+	}
+	
+	@Test
+	public void b01164RenderedImage(){
+		navigate(getTestCaseUrl("/bind/issue/B01164ImageContentType.zul"));
+		Widget img = findWidget("$img");
+		Assert.assertNotNull(img);
+	}
 }
