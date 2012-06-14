@@ -11,14 +11,14 @@
 		<format property="build.time" pattern="yyMMddHHmmss" />
 	</tstamp>
 	<property name="junit.output.dir" value="junit/snapshoot-${build.time}" />
-	
+
 	<property name="debuglevel" value="source,lines,vars" />
 	<property name="target" value="1.5" />
 	<property name="source" value="1.5" />
 	<path id="zkbindtest.classpath">
 		<pathelement location="target/classes" />
 		<fileset dir="libs">
-			<filename name="*.jar"/>
+			<filename name="*.jar" />
 		</fileset>
 	</path>
 	<target name="usage">
@@ -52,23 +52,23 @@
 			<classpath refid="zkbindtest.classpath" />
 		</javac>
 	</target>
-	
-	
+
+
 	<target name="pack" depends="clean, build">
 		<zip destfile="./zkbindtest.zip">
-			<fileset dir="." >
-				<include name="target/**"/>
-				<include name="libs/**"/>
+			<fileset dir=".">
+				<include name="target/**" />
+				<include name="libs/**" />
 				<include name="build.xml" />
-				<include name="junit"/>
+				<include name="junit" />
 			</fileset>
-			
+
 		</zip>
 	</target>
-	
-	
-	
-	
+
+
+
+
 	<target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects" />
 	<target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
 		<copy todir="${ant.library.dir}">
@@ -83,7 +83,7 @@
 		<property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter" />
 		<antcall target="build" />
 	</target>
-	
+
 	<target name="LoadTestCase">
 		<mkdir dir="${junit.output.dir}" />
 		<junit fork="yes" printsummary="withOutAndErr">
@@ -116,6 +116,14 @@
 			<classpath refid="zkbindtest.classpath" />
 		</junit>
 	</target>
+	<target name="BugsTestCase1000">
+		<mkdir dir="${junit.output.dir}" />
+		<junit fork="yes" printsummary="withOutAndErr">
+			<formatter type="xml" />
+			<test name="org.zkoss.bind.unitest2.BugsTestCase1000" todir="${junit.output.dir}" />
+			<classpath refid="zkbindtest.classpath" />
+		</junit>
+	</target>
 	<target name="MemoryTest">
 		<mkdir dir="${junit.output.dir}" />
 		<junit fork="yes" printsummary="withOutAndErr">
@@ -139,7 +147,15 @@
 			<test name="org.zkoss.bind.unitest2.FeaturesTestCase0500" todir="${junit.output.dir}" />
 			<classpath refid="zkbindtest.classpath" />
 		</junit>
-	</target>	
+	</target>
+	<target name="FeaturesTestCase1000">
+		<mkdir dir="${junit.output.dir}" />
+		<junit fork="yes" printsummary="withOutAndErr">
+			<formatter type="xml" />
+			<test name="org.zkoss.bind.unitest2.FeaturesTestCase1000" todir="${junit.output.dir}" />
+			<classpath refid="zkbindtest.classpath" />
+		</junit>
+	</target>
 	<target name="MiscTestCase">
 		<mkdir dir="${junit.output.dir}" />
 		<junit fork="yes" printsummary="withOutAndErr">
@@ -163,7 +179,7 @@
 			<test name="org.zkoss.bind.unitest2.ComponentTestCase" todir="${junit.output.dir}" />
 			<classpath refid="zkbindtest.classpath" />
 		</junit>
-	</target>			
+	</target>
 	<target name="ChildrenTestCase">
 		<mkdir dir="${junit.output.dir}" />
 		<junit fork="yes" printsummary="withOutAndErr">
@@ -197,7 +213,7 @@
 		</junitreport>
 	</target>
 
-	<target name="runAll" depends="runAllBasic, runAllCollection, runAllFeature, runAllBug"/>
+	<target name="runAll" depends="runAllBasic, runAllCollection, runAllFeature, runAllBug" />
 	<target name="reportAll" depends="runAll, junitreport" />
 
 	<target name="runAllBasic">
@@ -209,21 +225,21 @@
 		<antcall target="ComponentTestCase" />
 	</target>
 	<target name="reportAllBasic" depends="runAllBasic, junitreport" />
-	
-	<target name="runAllCollection" >
+
+	<target name="runAllCollection">
 		<antcall target="ChildrenTestCase" />
 		<antcall target="CollectionTestCase" />
 	</target>
-	<target name="reportAllCollection" depends="runAllCollection, junitreport" />	
+	<target name="reportAllCollection" depends="runAllCollection, junitreport" />
 
-	<target name="runAllFeature" >
+	<target name="runAllFeature">
 		<antcall target="FeaturesTestCase0001" />
 		<antcall target="FeaturesTestCase0500" />
 		<antcall target="FeaturesTestCase1000" />
 	</target>
 	<target name="reportAllFeature" depends="runAllFeature, junitreport" />
 
-	<target name="runAllBug" >
+	<target name="runAllBug">
 		<antcall target="BugsTestCase0001" />
 		<antcall target="BugsTestCase0500" />
 		<antcall target="BugsTestCase1000" />
@@ -231,5 +247,5 @@
 	<target name="reportAllBug" depends="runAllBug, junitreport" />
 
 
-	
+
 </project>
