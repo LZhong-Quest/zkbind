@@ -311,8 +311,6 @@ public class BugsTestCase1000 extends TestCaseBase{
 		Widget vmsSelIdLb = findWidget("$vmsSelIdLb");
 		Widget vmsSelDescLb = findWidget("$vmsSelDescLb");
 		
-		
-		
 		Assert.assertEquals("b3",outerPidLb.getValue());
 		Assert.assertEquals("this is b3",outerPDescLb.getValue());
 		Assert.assertEquals("b3",pidLb.getValue());
@@ -326,5 +324,130 @@ public class BugsTestCase1000 extends TestCaseBase{
 		navigate(getTestCaseUrl("/bind/issue/B01164ImageContentType.zul"));
 		Widget img = findWidget("$img");
 		Assert.assertNotNull(img);
+	}
+	
+	@Test
+	public void b01189FormNotifyChange1(){
+		navigate(getTestCaseUrl("/bind/issue/B01189FormNotifyChange.zul"));
+		Widget tb1 = findWidget("$tb1");
+		Widget tb2 = findWidget("$tb2");
+		Widget tb3 = findWidget("$tb3");
+		Widget tb4 = findWidget("$tb4");
+		
+		Widget save1 = findWidget("$save1");
+		Widget lb1 = findWidget("$lb1");
+		
+		Assert.assertEquals("", tb1.getValue());
+		Assert.assertEquals("", tb2.getValue());
+		Assert.assertEquals("", tb3.getValue());
+		Assert.assertEquals("", tb4.getValue());
+		Assert.assertEquals("", lb1.getValue());
+		
+		tb1.replace("A").tab();
+		Assert.assertEquals("A", tb2.getValue());
+		Assert.assertEquals("", tb3.getValue());
+		Assert.assertEquals("A", tb4.getValue());
+		save1.click();
+		Assert.assertEquals("A", lb1.getValue());
+		
+		
+		tb2.replace("B").tab();
+		Assert.assertEquals("B", tb1.getValue());
+		Assert.assertEquals("", tb3.getValue());
+		Assert.assertEquals("B", tb4.getValue());
+		save1.click();
+		Assert.assertEquals("B", lb1.getValue());
+		
+		
+		tb3.replace("C").tab();
+		Assert.assertEquals("B", tb1.getValue());
+		Assert.assertEquals("B", tb2.getValue());
+		Assert.assertEquals("C", tb4.getValue());
+		save1.click();
+		Assert.assertEquals("C", lb1.getValue());
+		
+		tb4.replace("D").tab();
+		Assert.assertEquals("B", tb1.getValue());
+		Assert.assertEquals("B", tb2.getValue());
+		Assert.assertEquals("C", tb3.getValue());
+		save1.click();
+		Assert.assertEquals("D", lb1.getValue());
+		
+		
+		tb1.replace("E").tab();
+		Assert.assertEquals("E", tb2.getValue());
+		Assert.assertEquals("C", tb3.getValue());
+		Assert.assertEquals("E", tb4.getValue());
+		save1.click();
+		Assert.assertEquals("E", lb1.getValue());
+		
+		
+		tb2.replace("F").tab();
+		Assert.assertEquals("F", tb1.getValue());
+		Assert.assertEquals("C", tb3.getValue());
+		Assert.assertEquals("F", tb4.getValue());
+		save1.click();
+		Assert.assertEquals("F", lb1.getValue());
+		
+		
+		tb3.replace("G").tab();
+		Assert.assertEquals("F", tb1.getValue());
+		Assert.assertEquals("F", tb2.getValue());
+		Assert.assertEquals("G", tb4.getValue());
+		save1.click();
+		Assert.assertEquals("G", lb1.getValue());
+		
+		tb4.replace("H").tab();
+		Assert.assertEquals("F", tb1.getValue());
+		Assert.assertEquals("F", tb2.getValue());
+		Assert.assertEquals("G", tb3.getValue());
+		save1.click();
+		Assert.assertEquals("H", lb1.getValue());
+	}
+	
+	@Test
+	public void b01189FormNotifyChange2(){
+		navigate(getTestCaseUrl("/bind/issue/B01189FormNotifyChange.zul"));
+		
+		Widget tb5 = findWidget("$tb5");
+		Widget tb6 = findWidget("$tb6");
+		Widget tb7 = findWidget("$tb7");
+		Widget tb8 = findWidget("$tb8");
+		
+		Widget save2 = findWidget("$save2");
+		Widget lb2 = findWidget("$lb2");
+		Widget lb3 = findWidget("$lb3");
+		
+		Assert.assertEquals("", tb5.getValue());
+		Assert.assertEquals("", tb6.getValue());
+		Assert.assertEquals("", tb7.getValue());
+		Assert.assertEquals("", tb8.getValue());
+		Assert.assertEquals("", lb2.getValue());
+		Assert.assertEquals("", lb3.getValue());
+		
+		tb5.replace("A").tab();
+		Assert.assertEquals("A", tb6.getValue());
+		Assert.assertEquals("", tb7.getValue());
+		Assert.assertEquals("", tb8.getValue());
+		
+		tb6.replace("B").tab();
+		Assert.assertEquals("B", tb5.getValue());
+		Assert.assertEquals("", tb7.getValue());
+		Assert.assertEquals("", tb8.getValue());
+		
+		tb7.replace("C").tab();
+		Assert.assertEquals("B", tb5.getValue());
+		Assert.assertEquals("B", tb6.getValue());
+		Assert.assertEquals("C", tb8.getValue());
+		
+		tb8.replace("D").tab();
+		Assert.assertEquals("B", tb5.getValue());
+		Assert.assertEquals("B", tb6.getValue());
+		Assert.assertEquals("D", tb7.getValue());
+		
+		save2.click();
+		
+		Assert.assertEquals("B", lb2.getValue());
+		Assert.assertEquals("D", lb3.getValue());
 	}
 }
