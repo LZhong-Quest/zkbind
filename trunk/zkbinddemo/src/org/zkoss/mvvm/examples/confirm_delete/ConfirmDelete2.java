@@ -29,6 +29,17 @@ public class ConfirmDelete2 extends ConfirmDeleteBase{
 		});
 	}
 	
+	@Override
+	protected boolean daoDelete(String data){
+		try{
+			super.daoDelete(data);
+			return true;
+		}catch(Exception x){
+			Messagebox.show(x.getMessage());
+		}
+		return false;
+	}
+	
 	public boolean isNeedToConfirm(){
 		//simulate C doesn't need to be confirm
 		if("C".equals(selected)){

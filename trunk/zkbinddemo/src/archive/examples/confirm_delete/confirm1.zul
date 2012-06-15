@@ -19,10 +19,9 @@
 		<window title="Confirm " mode="modal" visible="@load(not empty vm.confirmMessage)" border="1" width="300px">
 			<vbox hflex="1" pack="center" align="center" style="padding:10px">
 				<label value="@load(vm.confirmMessage)"/>
-				<hlayout>
-					<button label="Cancel" onClick="@command('cancelConfirm')" />
-					| 
+				<hlayout> 
 					<button label="Delete" onClick="@command('delete')" />
+					<button label="Cancel" onClick="@command('cancelConfirm')" />
 				</hlayout>
 			</vbox>
 		</window>
