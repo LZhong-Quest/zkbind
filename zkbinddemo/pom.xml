@@ -4,8 +4,7 @@
 	<groupId>org.zkoss.zk</groupId>
 	<artifactId>zkbinddemo</artifactId>
 	<properties>
-		<zkel.version>2.2.1</zkel.version>
-		<zk.version>6.0.1-SNAPSHOT</zk.version>
+		<zk.version>6.0.2-SNAPSHOT</zk.version>
 		<commons-lang.version>2.4</commons-lang.version>
 		<bsh.version>2.0b4</bsh.version>
 		<commons-fileupload.version>1.2.1</commons-fileupload.version>
@@ -24,7 +23,7 @@
 		<zuljsp.version>1.5</zuljsp.version>
 		<hsqldb.version>2.2.4</hsqldb.version>
 	</properties>
-	<version>6.0.1-SNAPSHOT</version>
+	<version>6.0.2-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<licenses>
 		<license>
