@@ -40,14 +40,25 @@ public class ConfirmDeleteBase {
 	public void delete(){
 		if(selected==null){
 			message = "You have to select an item";
-		}else if("B".equals(selected)){
-			//simulate show message when error
-			message = "Oops, I simulate delete "+selected+" fial here";
-			selected = null;
 		}else{
-			items.remove(selected);
-			message = selected + " was deleted";
-			selected = null;
+			try{
+				if(daoDelete(selected)){
+					items.remove(selected);
+					message = selected + " was deleted";
+					selected = null;
+				}else{
+					message = selected + " wasn't deleted";
+				}
+			}catch(Exception x){
+				message = x.getMessage();
+			}
 		}
+	}
+	
+	protected boolean daoDelete(String data){
+		if("B".equals(selected)){
+			throw new RuntimeException("Oops, I simulate delete "+data+" fial here");
+		}
+		return true;
 	}
 }
