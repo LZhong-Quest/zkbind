@@ -1,5 +1,7 @@
 package org.zkoss.bind.unitest2;
 
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.zkoss.zktc.core.junit.TestCaseBase;
@@ -449,5 +451,68 @@ public class BugsTestCase1000 extends TestCaseBase{
 		
 		Assert.assertEquals("B", lb2.getValue());
 		Assert.assertEquals("D", lb3.getValue());
+	}
+	
+	@Test
+	public void b01188MixingELWithRef1(){
+		navigate(getTestCaseUrl("/bind/issue/B01188MixingELWithRef.zul"));
+		
+		Widget lb = findWidget("$lb");
+		
+		List<Widget> outerItems = lb.findWidgets("@listitem.outer");
+		Assert.assertEquals(2, outerItems.size());
+		Assert.assertEquals("Today",outerItems.get(0).findWidget("@listcell.outer @label").getValue());
+		Assert.assertEquals("Tomorrow",outerItems.get(1).findWidget("@listcell.outer @label").getValue());
+		
+		
+		List<Widget> innerItems = outerItems.get(0).findWidgets("@listbox @listitem.inner");
+		Assert.assertEquals(2, innerItems.size());
+		Assert.assertEquals("Item 1",innerItems.get(0).findWidget("@listcell.inner @label").getValue());
+		Assert.assertEquals("Item 2",innerItems.get(1).findWidget("@listcell.inner @label").getValue());
+		
+		innerItems = outerItems.get(1).findWidgets("@listbox @listitem.inner");
+		Assert.assertEquals(2, innerItems.size());
+		Assert.assertEquals("Item 3",innerItems.get(0).findWidget("@listcell.inner @label").getValue());
+		Assert.assertEquals("Item 4",innerItems.get(1).findWidget("@listcell.inner @label").getValue());
+	}
+	
+	@Test
+	public void b01188MixingELWithRef2(){
+		navigate(getTestCaseUrl("/bind/issue/B01188MixingELWithRefAll.zul"));
+		
+		List<Widget> items = findWidget("$halyout1").findWidgets("@label");
+		Assert.assertEquals("0.Item 1",items.get(0).getValue());
+		Assert.assertEquals("1.Item 2",items.get(1).getValue());
+	
+		
+		items = findWidget("$listbox1").findWidgets("@listitem");
+		Assert.assertEquals("0.Item 1",items.get(0).findWidget("@listcell @label").getValue());
+		Assert.assertEquals("1.Item 2",items.get(1).findWidget("@listcell @label").getValue());
+		
+		items = findWidget("$grid1").findWidgets("@row");
+		Assert.assertEquals("0.Item 1",items.get(0).findWidget("@label").getValue());
+		Assert.assertEquals("1.Item 2",items.get(1).findWidget("@label").getValue());
+		
+		findWidget("$combobox1").call("open");
+		waitForTrip(1, 500);
+		items = findWidget("$combobox1").findWidgets("@comboitem");
+		Assert.assertEquals("0.Item 1",items.get(0).getLabel());
+		Assert.assertEquals("1.Item 2",items.get(1).getLabel());
+		
+		items = findWidget("$radiogroup1").findWidgets("@radio");
+		Assert.assertEquals("0.Item 1",items.get(0).getLabel());
+		Assert.assertEquals("1.Item 2",items.get(1).getLabel());
+		
+		//cannot verify selectbox items yet
+//		items = findWidget("$selectbox1").findWidgets("@label");
+//		Assert.assertEquals("0.Item 1",items.get(0).getValue());
+//		Assert.assertEquals("1.Item 2",items.get(1).getValue());
+		
+		
+		items = findWidget("$tree1").findWidgets("@treecell");
+		Assert.assertEquals("0.Item 1",items.get(0).getLabel());
+		Assert.assertEquals("0.Item 1-1",items.get(1).getLabel());
+		Assert.assertEquals("1.Item 1-2",items.get(2).getLabel());
+		Assert.assertEquals("1.Item 2",items.get(3).getLabel());
 	}
 }
