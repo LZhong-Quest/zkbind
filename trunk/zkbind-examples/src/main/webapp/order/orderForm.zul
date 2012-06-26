@@ -32,7 +32,7 @@
 			<!-- show confirm dialog when selected is persisted -->
 			<button label="Delete" onClick="@command(empty vm.selected.id?'deleteOrder':'confirmDelete')" disabled="@load(empty vm.selected)" />
 		</toolbar>
-		<groupbox form="@id('fx') @load(vm.selected) @save(vm.selected, before='saveOrder') @validator(vm.shippingDateValidator)" visible="@bind(not empty vm.selected)" hflex="true" mold="3d">
+		<groupbox id="formGroup" form="@id('fx') @load(vm.selected) @save(vm.selected, before='saveOrder') @validator(vm.shippingDateValidator)" visible="@bind(not empty vm.selected)" hflex="true" mold="3d">
 			<grid hflex="true" >
 				<columns>
 					<column width="120px"/>
@@ -69,7 +69,7 @@
 					<row>Shipping Date 
 						<hlayout> 
 							<datebox id="sdbox" value="@bind(fx.shippingDate)"/>
-							<label value="@load(vmsgs[sdbox])" sclass="red" />
+							<label value="@load(vmsgs[formGroup])" sclass="red" />
 						</hlayout>
 					</row>	
 				</rows>
