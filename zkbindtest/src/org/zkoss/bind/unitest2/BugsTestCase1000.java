@@ -515,4 +515,11 @@ public class BugsTestCase1000 extends TestCaseBase{
 		Assert.assertEquals("1.Item 1-2",items.get(2).getLabel());
 		Assert.assertEquals("1.Item 2",items.get(3).getLabel());
 	}
+	
+	@Test
+	public void B01196BinderUiLcConfusion(){
+		navigate(getTestCaseUrl("/bind/issue/B01196BinderUiLcConfusion.zul"));
+		List<Widget> listItems = findWidget("@listbox").findWidgets("@listitem");
+		Assert.assertEquals(5, listItems.size());
+	}
 }
