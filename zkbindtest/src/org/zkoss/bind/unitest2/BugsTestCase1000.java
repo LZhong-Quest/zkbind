@@ -522,4 +522,15 @@ public class BugsTestCase1000 extends TestCaseBase{
 		List<Widget> listItems = findWidget("@listbox").findWidgets("@listitem");
 		Assert.assertEquals(5, listItems.size());
 	}
+	
+	@Test
+	public void B01185CollectionBindingNPE(){
+		navigate(getTestCaseUrl("/bind/issue/B01185CollectionBindingNPE.zul"));
+		findWidget("$addPersonBtn").click();
+		findWidget("$delPerson_0").click();
+		findWidget("$addUrlBtn").click();
+		findWidget("$delUrl_0").click();
+		Widget widget = findWidget("$delUrl_0");
+		Assert.assertEquals(true, widget==null);
+	}
 }
