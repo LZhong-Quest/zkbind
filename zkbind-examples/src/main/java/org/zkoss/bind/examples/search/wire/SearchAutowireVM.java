@@ -14,14 +14,13 @@ package org.zkoss.bind.examples.search.wire;
 import java.text.DecimalFormat;
 
 import org.zkoss.bind.BindContext;
-import org.zkoss.bind.Binder;
 import org.zkoss.bind.Converter;
+import org.zkoss.bind.annotation.AfterCompose;
+import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
-import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
-import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.examples.search.FakeSearchService;
 import org.zkoss.bind.examples.search.Item;
 import org.zkoss.bind.examples.search.SearchService;
@@ -54,13 +53,12 @@ public class SearchAutowireVM{
 	@Wire("#msg")
 	Label msg;
 
-	@Init
+	@AfterCompose
 	public void init(@ContextParam(ContextType.VIEW) Component view){
 		Selectors.wireComponents(view, this, false);
 		//wire event listener
-//		Selectors.wireEventListeners(component, this);
+//		Selectors.wireEventListeners(view, this);
 	}
-	
 	
 	protected SearchService getSearchService(){
 		return new FakeSearchService();
