@@ -54,7 +54,7 @@ public class SearchAutowireVM{
 	Label msg;
 
 	@AfterCompose
-	public void init(@ContextParam(ContextType.VIEW) Component view){
+	public void afterCompose(@ContextParam(ContextType.VIEW) Component view){
 		Selectors.wireComponents(view, this, false);
 		//wire event listener
 //		Selectors.wireEventListeners(view, this);
