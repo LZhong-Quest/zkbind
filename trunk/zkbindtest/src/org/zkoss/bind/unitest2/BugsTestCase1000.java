@@ -533,4 +533,54 @@ public class BugsTestCase1000 extends TestCaseBase{
 		Widget widget = findWidget("$delUrl_0");
 		Assert.assertEquals(true, widget==null);
 	}
+	
+	@Test
+	public void B01299RefNPE(){
+		navigate(getTestCaseUrl("/bind/issue/B01299RefNPE.zul"));
+		
+		findWidget("$tba1").replace("AA").tab();
+		Assert.assertEquals("AA",findWidget("$lba1").getValue());
+		
+		findWidget("$tba2").replace("BB").tab();
+		Assert.assertEquals("BB",findWidget("$lba2").getValue());
+		
+		findWidget("$tba3").replace("CC").tab();
+		Assert.assertEquals("CC",findWidget("$lba31").getValue());
+		Assert.assertEquals("CC",findWidget("$lba32").getValue());
+		Assert.assertEquals("CC",findWidget("$lba33").getValue());
+		Assert.assertEquals("CC",findWidget("$lba34").getValue());
+		
+		//condition
+		
+		findWidget("$tbb1").replace("D").tab();
+		findWidget("$btnb1").click();
+		Assert.assertEquals("D",findWidget("$lbb1").getValue());
+		
+		findWidget("$tbb2").replace("E").tab();
+		findWidget("$btnb2").click();
+		Assert.assertEquals("E",findWidget("$lbb2").getValue());
+		
+		findWidget("$tbb3").replace("F").tab();
+		findWidget("$btnb3").click();
+		Assert.assertEquals("F",findWidget("$lbb3").getValue());
+		
+		findWidget("$tbb4").replace("G").tab();
+		findWidget("$btnb4").click();
+		Assert.assertEquals("G",findWidget("$lbb41").getValue());
+		Assert.assertEquals("G",findWidget("$lbb42").getValue());
+		Assert.assertEquals("G",findWidget("$lbb43").getValue());
+		Assert.assertEquals("G",findWidget("$lbb44").getValue());
+		
+		findWidget("$tbb5").replace("H").tab();
+		findWidget("$btnb5").click();
+		Assert.assertEquals("H",findWidget("$lbb5").getValue());
+		
+		findWidget("$tbb6").replace("I").tab();
+		findWidget("$btnb6").click();
+		Assert.assertEquals("I",findWidget("$lbb61").getValue());
+		Assert.assertEquals("I",findWidget("$lbb62").getValue());
+		Assert.assertEquals("I",findWidget("$lbb63").getValue());
+		Assert.assertEquals("I",findWidget("$lbb64").getValue());
+		
+	}
 }
