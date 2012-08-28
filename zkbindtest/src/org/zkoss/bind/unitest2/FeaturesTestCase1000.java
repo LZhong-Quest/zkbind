@@ -59,4 +59,42 @@ public class FeaturesTestCase1000 extends TestCaseBase{
 		btn2.click();
 		Assert.assertEquals("Hello i am a composer",msg1.getValue());
 	}
+	
+	@Test
+	public void F01231AfterComposeVM(){
+		navigate(getTestCaseUrl("/bind/issue/F01231AfterComposeVM.zul"));
+		
+		Widget myWin = findWidget("$myWin");
+		Widget headerLb = findWidget("$headerLb");
+		Widget nameLb = findWidget("$nameLb");
+		Widget descTxb = findWidget("$descTxb");
+		
+		Assert.assertEquals("AAAA", myWin.getAttribute("title"));
+		Assert.assertEquals("This is a label", headerLb.getValue());
+		Assert.assertEquals("admin", nameLb.getValue());
+		Assert.assertEquals("this is desc", descTxb.getValue());
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

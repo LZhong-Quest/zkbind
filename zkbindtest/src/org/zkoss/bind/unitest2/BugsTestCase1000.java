@@ -583,4 +583,79 @@ public class BugsTestCase1000 extends TestCaseBase{
 		Assert.assertEquals("I",findWidget("$lbb64").getValue());
 		
 	}
+	
+	@Test
+	public void B01194NestedVMInit(){
+		navigate(getTestCaseUrl("/bind/issue/B01194NestedVMInit.zul"));
+		
+		Widget headerNameLb = findWidget("$headerNameLb");
+		
+		Widget vmsNameTxb = findWidget("$vmsNameTxb");
+		Widget vmsDescTxb = findWidget("$vmsDescTxb");
+		Widget vmInnerVmDescTxb = findWidget("$vmInnerVmDescTxb");
+		Widget vmInnerVmDescLb = findWidget("$vmInnerVmDescLb");
+		
+		Widget outerNameLb = findWidget("$outerNameLb");
+		Widget outerDescTxb = findWidget("$outerDescTxb");
+		
+		String text = headerNameLb.getValue().toString();
+		Assert.assertEquals(true, text.length() > 0);
+		Assert.assertEquals(text, vmsNameTxb.getValue());
+		Assert.assertEquals(text, outerNameLb.getValue());
+		
+		text = vmsDescTxb.getValue().toString();
+		Assert.assertEquals(true, text.length() > 0);
+		Assert.assertEquals(text,vmInnerVmDescTxb.getValue());
+		Assert.assertEquals(text,vmInnerVmDescLb.getValue());
+		Assert.assertEquals(text,outerDescTxb.getValue());
+		
+		text = "Ian Tsai 1";
+		vmsNameTxb.replace(text).tab();
+		Assert.assertEquals(text,headerNameLb.getValue());
+		Assert.assertEquals(text,outerNameLb.getValue());
+		
+		
+		text = "AAA";
+		vmsDescTxb.replace(text).tab();
+		Assert.assertEquals(text,vmInnerVmDescTxb.getValue());
+		Assert.assertEquals(text,vmInnerVmDescLb.getValue());
+		Assert.assertEquals(text,outerDescTxb.getValue());
+		
+		
+		text = "BBB";
+		vmInnerVmDescTxb.replace(text).tab();
+		Assert.assertEquals(text,vmsDescTxb.getValue());
+		Assert.assertEquals(text,vmInnerVmDescLb.getValue());
+		Assert.assertEquals(text,outerDescTxb.getValue());
+	
+		
+		text = "CCC";
+		outerDescTxb.replace(text).tab();
+		Assert.assertEquals(text,vmsDescTxb.getValue());
+		Assert.assertEquals(text,vmInnerVmDescLb.getValue());
+		Assert.assertEquals(text,vmInnerVmDescTxb.getValue());
+	}
+	
+	
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
