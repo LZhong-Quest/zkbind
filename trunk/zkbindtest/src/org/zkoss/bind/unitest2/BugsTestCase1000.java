@@ -599,12 +599,12 @@ public class BugsTestCase1000 extends TestCaseBase{
 		Widget outerDescTxb = findWidget("$outerDescTxb");
 		
 		String text = headerNameLb.getValue().toString();
-		Assert.assertEquals(true, text.length() > 0);
+		Assert.assertTrue(text.length() > 0);
 		Assert.assertEquals(text, vmsNameTxb.getValue());
 		Assert.assertEquals(text, outerNameLb.getValue());
 		
 		text = vmsDescTxb.getValue().toString();
-		Assert.assertEquals(true, text.length() > 0);
+		Assert.assertTrue(text.length() > 0);
 		Assert.assertEquals(text,vmInnerVmDescTxb.getValue());
 		Assert.assertEquals(text,vmInnerVmDescLb.getValue());
 		Assert.assertEquals(text,outerDescTxb.getValue());
@@ -637,7 +637,12 @@ public class BugsTestCase1000 extends TestCaseBase{
 	}
 	
 	
-	
+	@Test
+	public void B01268UnsupportChildExp(){
+		navigate(getTestCaseUrl("/bind/issue/B01268UnsupportChildExp.zul"));
+		Widget listbox = findWidget("@listbox");
+		Assert.assertTrue(listbox!=null);//check if the page can show up.
+	}
 }
 
 
