@@ -665,6 +665,26 @@ public class BugsTestCase1000 extends TestCaseBase{
 		Widget listbox = findWidget("@listbox");
 		Assert.assertTrue(listbox!=null);//check if the page can show up.
 	}
+	
+	@Test
+	public void B01366RadioSelectedItem(){
+		navigate(getTestCaseUrl("/bind/issue/B01366RadioSelectedItem.zul"));
+		Widget rg1 = findWidget("$radiogroup1");
+		Widget rg2 = findWidget("$radiogroup2");
+		Widget lb1 = findWidget("$lb1");
+		
+		rg1.findWidgets("@radio").get(0).click();
+		Assert.assertEquals(true,rg2.findWidgets("@radio").get(0).getAttribute("checked"));
+		Assert.assertEquals(false,rg2.findWidgets("@radio").get(1).getAttribute("checked"));
+		Assert.assertEquals(false,rg2.findWidgets("@radio").get(2).getAttribute("checked"));
+		Assert.assertEquals("name 0",lb1.getValue());
+		
+		rg2.findWidgets("@radio").get(1).click();
+		Assert.assertEquals(false,rg1.findWidgets("@radio").get(0).getAttribute("checked"));
+		Assert.assertEquals(true,rg1.findWidgets("@radio").get(1).getAttribute("checked"));
+		Assert.assertEquals(false,rg1.findWidgets("@radio").get(2).getAttribute("checked"));
+		Assert.assertEquals("name 1",lb1.getValue());
+	}
 }
 
 
