@@ -685,6 +685,80 @@ public class BugsTestCase1000 extends TestCaseBase{
 		Assert.assertEquals(false,rg1.findWidgets("@radio").get(2).getAttribute("checked"));
 		Assert.assertEquals("name 1",lb1.getValue());
 	}
+	
+	
+	@Test
+	public void B01259HaskMapInFx1(){
+		navigate(getTestCaseUrl("/bind/issue/B01259HaskMapInFx1.zul"));
+		Widget l11 = findWidget("$l11");
+		Widget l12 = findWidget("$l12");
+		Widget l13 = findWidget("$l13");
+		Widget l14 = findWidget("$l14");
+		Widget l15 = findWidget("$l15");
+		
+		Widget t21 = findWidget("$t21");
+		Widget t22 = findWidget("$t22");
+		Widget btn2 = findWidget("$btn2");
+		
+		Widget t31 = findWidget("$t31");
+		Widget t32 = findWidget("$t32");
+		Widget btn3 = findWidget("$btn3");
+		
+		Assert.assertEquals("Hello World",l11.getValue());
+		Assert.assertEquals("Hello World",l12.getValue());
+		Assert.assertEquals("Hello World",l13.getValue());
+		Assert.assertEquals("Hi Dennis",l14.getValue());
+		Assert.assertEquals("Hi Dennis",l15.getValue());
+		
+		t21.replace("AAA");
+		t22.replace("BBB");
+		t22.tab();
+		Assert.assertEquals("Hello World",l11.getValue());
+		Assert.assertEquals("Hello World",l12.getValue());
+		Assert.assertEquals("Hello World",l13.getValue());
+		Assert.assertEquals("Hi Dennis",l14.getValue());
+		Assert.assertEquals("Hi Dennis",l15.getValue());
+		
+		btn2.click();
+		Assert.assertEquals("AAA",l11.getValue());
+		Assert.assertEquals("AAA",l12.getValue());
+		Assert.assertEquals("AAA",l13.getValue());
+		Assert.assertEquals("BBB",l14.getValue());
+		Assert.assertEquals("BBB",l15.getValue());
+		
+		t31.replace("CCC");
+		t32.replace("DDD");
+		t32.tab();
+		
+		Assert.assertEquals("AAA",l11.getValue());
+		Assert.assertEquals("CCC",l12.getValue());
+		Assert.assertEquals("AAA",l13.getValue());
+		Assert.assertEquals("BBB",l14.getValue());
+		Assert.assertEquals("DDD",l15.getValue());
+		
+		btn3.click();
+		Assert.assertEquals("CCC",l11.getValue());
+		Assert.assertEquals("CCC",l12.getValue());
+		Assert.assertEquals("CCC",l13.getValue());
+		Assert.assertEquals("DDD",l14.getValue());
+		Assert.assertEquals("DDD",l15.getValue());
+	}
+	
+	@Test
+	public void B01259HaskMapInFx2(){
+		navigate(getTestCaseUrl("/bind/issue/B01259HaskMapInFx2.zul"));
+		Widget l11 = findWidget("$l11");
+		Widget l12 = findWidget("$l12");
+		Widget l13 = findWidget("$l13");
+		Widget l14 = findWidget("$l14");
+		Widget l15 = findWidget("$l15");
+		
+		Assert.assertEquals("Hello World",l11.getValue());
+		Assert.assertEquals("Hello World",l12.getValue());
+		Assert.assertEquals("Hello World",l13.getValue());
+		Assert.assertEquals("Hi Dennis",l14.getValue());
+		Assert.assertEquals("Hi Dennis",l15.getValue());
+	}
 }
 
 
