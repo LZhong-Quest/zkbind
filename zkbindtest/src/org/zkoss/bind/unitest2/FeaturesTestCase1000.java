@@ -74,6 +74,60 @@ public class FeaturesTestCase1000 extends TestCaseBase{
 		Assert.assertEquals("admin", nameLb.getValue());
 		Assert.assertEquals("this is desc", descTxb.getValue());
 	}
+	
+	
+	@Test
+	public void f01416DefaultCommand(){
+		navigate(getTestCaseUrl("/bind/issue/F01416DefaultCommand.zul"));
+		
+		Widget btn1 = findWidget("$btn1");
+		Widget btn2 = findWidget("$btn2");
+		Widget btng1 = findWidget("$btng1");
+		Widget btng2 = findWidget("$btng2");
+		Widget lb1 = findWidget("$lb1");
+		
+		Widget btn3 = findWidget("$btn3");
+		Widget btn4 = findWidget("$btn4");
+		Widget btng3 = findWidget("$btng3");
+		Widget btng4 = findWidget("$btng4");
+		Widget lb2 = findWidget("$lb2");
+		
+		
+		Assert.assertEquals("Dennis",lb1.getValue());
+		Assert.assertEquals("Dennis",lb2.getValue());
+		
+		btn1.click();
+		Assert.assertEquals("do command1",lb1.getValue());
+		Assert.assertEquals("Dennis",lb2.getValue());
+		
+		btn2.click();
+		Assert.assertEquals("do command cmd2",lb1.getValue());
+		Assert.assertEquals("Dennis",lb2.getValue());
+		
+		btng1.click();
+		Assert.assertEquals("do globa-command1",lb1.getValue());
+		Assert.assertEquals("do globa-command1",lb2.getValue());
+		
+		btng2.click();
+		Assert.assertEquals("do globa-command gcmd2",lb1.getValue());
+		Assert.assertEquals("do globa-command gcmd2",lb2.getValue());
+		
+		btn3.click();
+		Assert.assertEquals("do globa-command gcmd2",lb1.getValue());
+		Assert.assertEquals("do command3",lb2.getValue());
+		
+		btn4.click();
+		Assert.assertEquals("do globa-command gcmd2",lb1.getValue());
+		Assert.assertEquals("do command cmd4",lb2.getValue());
+		
+		btng3.click();
+		Assert.assertEquals("do globa-command3",lb1.getValue());
+		Assert.assertEquals("do globa-command3",lb2.getValue());
+		
+		btng4.click();
+		Assert.assertEquals("do globa-command gcmd4",lb1.getValue());
+		Assert.assertEquals("do globa-command gcmd4",lb2.getValue());
+	}
 }
 
 
