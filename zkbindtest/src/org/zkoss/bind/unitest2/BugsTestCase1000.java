@@ -759,6 +759,18 @@ public class BugsTestCase1000 extends TestCaseBase{
 		Assert.assertEquals("Hi Dennis",l14.getValue());
 		Assert.assertEquals("Hi Dennis",l15.getValue());
 	}
+	
+	@Test
+	public void B01469ScopeParamRef(){
+		navigate(getTestCaseUrl("/bind/issue/B01469ScopeParamRef.zul"));
+		Widget l1 = findWidget("$l1");
+		Widget l2 = findWidget("$l2");
+		Widget l3 = findWidget("$l3");
+		
+		Assert.assertEquals("ABC",l1.getValue());
+		Assert.assertEquals("ABC",l2.getValue());
+		Assert.assertEquals("ABC",l3.getValue());
+	}
 }
 
 
