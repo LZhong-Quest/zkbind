@@ -771,6 +771,55 @@ public class BugsTestCase1000 extends TestCaseBase{
 		Assert.assertEquals("ABC",l2.getValue());
 		Assert.assertEquals("ABC",l3.getValue());
 	}
+	
+	@Test
+	public void B01468RefInclude(){
+		navigate(getTestCaseUrl("/bind/issue/B01468RefInclude.zul"));
+		Widget lb1 = findWidget("$lb1");
+		Widget lb2 = findWidget("$lb2");
+		Widget lb3 = findWidget("$lb3");
+		Widget lb4 = findWidget("$lb4");
+		Widget lb5 = findWidget("$lb5");
+		Widget lb6 = findWidget("$lb6");
+		
+		Widget tb1 = findWidget("$tb1");
+		
+		Assert.assertEquals("ABC",lb1.getValue());
+		Assert.assertEquals("ABC",lb2.getValue());
+		Assert.assertEquals("ABC",lb3.getValue());
+		Assert.assertEquals("ABC",lb4.getValue());
+		Assert.assertEquals("ABC",lb5.getValue());
+		Assert.assertEquals("ABC",lb6.getValue());
+		
+		tb1.replace("XYZ").tab();
+		Assert.assertEquals("XYZ",lb1.getValue());
+		Assert.assertEquals("XYZ",lb2.getValue());
+		Assert.assertEquals("XYZ",lb3.getValue());
+		Assert.assertEquals("XYZ",lb4.getValue());
+		Assert.assertEquals("XYZ",lb5.getValue());
+		Assert.assertEquals("XYZ",lb6.getValue());
+	}
+	
+	@Test
+	public void B01472BindIncludeArg(){
+		navigate(getTestCaseUrl("/bind/issue/B01472BindIncludeArg.zul"));
+		Widget lb1 = findWidget("$lb1");
+		Widget lb2 = findWidget("$lb2");
+			
+		Widget tb1 = findWidget("$tb1");
+		Widget btn1 = findWidget("$btn1");
+		
+		Assert.assertEquals("ABC",lb1.getValue());
+		Assert.assertEquals("ABC",lb2.getValue());
+		
+		tb1.replace("XYZ").tab();
+		btn1.click();
+		
+		
+		lb2 = findWidget("$lb2");//get again, it was changed
+		Assert.assertEquals("XYZ",lb1.getValue());
+		Assert.assertEquals("XYZ",lb2.getValue());
+	}
 }
 
 
