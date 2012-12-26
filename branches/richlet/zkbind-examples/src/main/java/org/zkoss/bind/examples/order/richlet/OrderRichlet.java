@@ -55,14 +55,16 @@ public class OrderRichlet extends GenericRichlet{
 	
 	public void service(Page page) {
 
-		//initialize UI
+		 //1.Create root component which is to be associated with binder
 		Window window = new Window("Order Management", "normal", false);
 		window.setWidth("600px");
 		window.setPage(page);
 
-		//initialize binder, use DefaultBinder
+		//2. Instantiate a binder instance. Use DefaultBinder
 		binder = new DefaultBinder(); 
+		//3. Initialize it with View model and root component
 		binder.init(window, new OrderVM4());  
+		//4. Set binder as an attribute on the root component
 		window.setAttribute("vm", binder.getViewModel());
 
 
@@ -74,32 +76,6 @@ public class OrderRichlet extends GenericRichlet{
 		vbox.appendChild(buildToolbar(binder));
 		vbox.appendChild(buildFormArea(binder));
 		buildConfirmDialog(binder, window);
-
-
-		
-		
-//		Groupbox initTestBox = new Groupbox();
-//		initTestBox.setParent(vbox);
-//		Groupbox formTestBox = new Groupbox();
-//		formTestBox.setParent(vbox);
-//		binder.addFormInitBinding(formTestBox, "fx", "vm.myForm", null);
-//		Label formLabel = new Label("Form init with 'init'");
-//		Textbox formTextbox = new Textbox();
-//		formTestBox.appendChild(formLabel);
-//		formTestBox.appendChild(formTextbox);
-//
-//		binder.addPropertyInitBinding(formTextbox, "value", "fx.init", null, null, null);
-		
-		//test init binding
-//		((OrderVM3)binder.getViewModel()).getValidationMessages().put("init", "init");
-//
-//		Label label = new Label("Init with 'init'");
-//		Textbox textbox = new Textbox();
-//		initTestBox.appendChild(label);
-//		initTestBox.appendChild(textbox);
-//
-//		binder.addPropertyInitBinding(textbox, "value", "vm.validationMessages['init']", null, null, null);
-		//loadComponent(component, true)
 		
 		// Must load value to components once, call it after all "add property binding" statements
 		binder.loadComponent(window,true); 
