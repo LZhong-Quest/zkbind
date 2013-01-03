@@ -820,6 +820,40 @@ public class BugsTestCase1000 extends TestCaseBase{
 		Assert.assertEquals("XYZ",lb1.getValue());
 		Assert.assertEquals("XYZ",lb2.getValue());
 	}
+	
+	@Test
+	public void B01529SelectedItemsIndex(){
+		navigate(getTestCaseUrl("/bind/issue/B01529SelectedItemsIndex.zul"));
+		Widget listbox = findWidget("$listbox");
+		Widget lb = findWidget("$lb");
+		
+		List<Widget> items = listbox.findWidgets("@listitem");
+		
+		items.get(1).click();
+		Assert.assertEquals("[1]",lb.getValue());
+		
+		items.get(8).click();
+		Assert.assertEquals("[1, 8]",lb.getValue());
+		
+		items.get(9).click();
+		Assert.assertEquals("[1, 8, 9]",lb.getValue());
+		
+		items.get(4).click();
+		Assert.assertEquals("[1, 8, 9, 4]",lb.getValue());
+		
+		items.get(8).click();
+		Assert.assertEquals("[1, 9, 4]",lb.getValue());
+		
+		items.get(8).click();
+		Assert.assertEquals("[1, 9, 4, 8]",lb.getValue());
+		
+		items.get(1).click();
+		Assert.assertEquals("[9, 4, 8]",lb.getValue());
+		
+		items.get(2).click();
+		Assert.assertEquals("[9, 4, 8, 2]",lb.getValue());
+		
+	}
 }
 
 
