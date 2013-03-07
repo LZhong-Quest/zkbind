@@ -128,27 +128,64 @@ public class FeaturesTestCase1000 extends TestCaseBase{
 		Assert.assertEquals("do globa-command gcmd4",lb1.getValue());
 		Assert.assertEquals("do globa-command gcmd4",lb2.getValue());
 	}
+	
+	@Test
+	public void F01048FormBindingMessage(){
+		navigate(getTestCaseUrl("/bind/issue/F01048FormBindingMessage.zul"));
+		
+		Widget tb1 = findWidget("$tb1");
+		Widget tb2 = findWidget("$tb2");
+		Widget tb3 = findWidget("$tb3");
+		
+		Widget lb1 = findWidget("$lb1");
+		Widget lb2 = findWidget("$lb2");
+		Widget lb3 = findWidget("$lb3");
+		
+		Widget save = findWidget("$save");
+		
+		save.click();
+		Assert.assertEquals("First name is missing.", lb1.getValue());
+		Assert.assertEquals("Last name is missing.", lb2.getValue());
+		Assert.assertEquals("Age is missing.", lb3.getValue());
+		
+		tb1.replace("Dennis").tab();
+		Assert.assertEquals("", lb1.getValue());
+		
+		tb2.replace("Chen").tab();
+		Assert.assertEquals("", lb2.getValue());
+		
+		tb3.replace("35").tab();
+		Assert.assertEquals("", lb3.getValue());
+		
+		tb1.replace("").tab();
+		tb3.replace("").tab();
+		
+		
+		Assert.assertEquals("", lb1.getValue());
+		Assert.assertEquals("", lb2.getValue());
+		Assert.assertEquals("", lb3.getValue());
+		
+		save.click();
+		
+		Assert.assertEquals("First name is missing.", lb1.getValue());
+		Assert.assertEquals("", lb2.getValue());
+		Assert.assertEquals("Age is missing.", lb3.getValue());
+		
+		
+		tb1.replace("DennisA").tab();
+		Assert.assertEquals("", lb1.getValue());
+		
+		tb2.replace("ChenB").tab();
+		Assert.assertEquals("", lb2.getValue());
+		
+		tb3.replace("37").tab();
+		Assert.assertEquals("", lb3.getValue());
+		
+		save.click();
+		Assert.assertEquals("", lb1.getValue());
+		Assert.assertEquals("", lb2.getValue());
+		Assert.assertEquals("", lb3.getValue());
+		Assert.assertEquals("Update DennisA,ChenB,37", findWidget("$msg").getValue());
+	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
