@@ -854,24 +854,128 @@ public class BugsTestCase1000 extends TestCaseBase{
 		Assert.assertEquals("[9, 4, 8, 2]",lb.getValue());
 		
 	}
+	
+	@Test
+	public void B01528NPEInPagingMold(){
+		navigate(getTestCaseUrl("/bind/issue/B01528NPEInPagingMold.zul"));
+		Widget listbox = findWidget("$listbox");
+		
+		
+		List<Widget> items = listbox.findWidgets("@listitem");
+		items.get(9).click();
+		
+		Assert.assertEquals("Item 9",findWidget("$tb").getValue());
+		
+		findWidget("$delete").click();
+		
+		Object val = findWidget("$tb").getValue();
+		Assert.assertEquals(true,val==null || val.equals(""));
+		items = listbox.findWidgets("@listitem");
+		
+		Assert.assertEquals(9,items.size());	
+	}
+	
+	@Test
+	public void B01528NPEInPagingMold2(){
+		navigate(getTestCaseUrl("/bind/issue/B01528NPEInPagingMold2.zul"));
+		Widget listbox = findWidget("$listbox");
+		
+		findWidget("$btn1").click();
+		Assert.assertEquals("Item 0 Updated",listbox.findWidgets("@listitem").get(0).findWidget("@listcell").getAttribute("label"));
+		
+		findWidget("$btn2").click();
+		Assert.assertEquals("Item 2 Updated",listbox.findWidgets("@listitem").get(2).findWidget("@listcell").getAttribute("label"));
+		
+		findWidget("$btn3").click();
+		Assert.assertEquals("Item 5 Updated",listbox.findWidgets("@listitem").get(5).findWidget("@listcell").getAttribute("label"));
+		
+		
+		findWidget("$btn4").click();
+		Assert.assertEquals("Item 9 Updated",listbox.findWidgets("@listitem").get(9).findWidget("@listcell").getAttribute("label"));
+		
+		
+		
+	}
+	
+	@Test
+	public void B01595SelectedItems(){
+		navigate(getTestCaseUrl("/bind/issue/B01595SelectedItems.zul"));
+		Widget listbox = findWidget("$listbox");
+		Widget lb = findWidget("$lb");
+		
+		List<Widget> items = listbox.findWidgets("@listitem");
+		
+		items.get(1).click();
+		Assert.assertEquals("[1]",lb.getValue());
+		
+		items.get(8).click();
+		Assert.assertEquals("[1, 8]",lb.getValue());
+		
+		items.get(9).click();
+		Assert.assertEquals("[1, 8, 9]",lb.getValue());
+		
+		items.get(4).click();
+		Assert.assertEquals("[1, 8, 9, 4]",lb.getValue());
+		
+		items.get(8).click();
+		Assert.assertEquals("[1, 9, 4]",lb.getValue());
+		
+		items.get(8).click();
+		Assert.assertEquals("[1, 9, 4, 8]",lb.getValue());
+		
+		items.get(1).click();
+		Assert.assertEquals("[9, 4, 8]",lb.getValue());
+		
+		items.get(2).click();
+		Assert.assertEquals("[9, 4, 8, 2]",lb.getValue());
+		
+	}
+	
+	@Test
+	public void B01615ChildrenBindingInForm(){
+		navigate(getTestCaseUrl("/bind/issue/B01615ChildrenBindingInForm.zul"));
+		List<Widget> labs1 = findWidgets("$w1 @label");
+		List<Widget> labs2 = findWidgets("$w2 @label");
+		List<Widget> labs3 = findWidgets("$w3 @label");
+		
+		
+		Assert.assertEquals(3, labs1.size());
+		Assert.assertEquals(3, labs2.size());
+		Assert.assertEquals(3, labs3.size());
+		
+		Assert.assertEquals("A", labs1.get(0).getValue());
+		Assert.assertEquals("B", labs1.get(1).getValue());
+		Assert.assertEquals("C", labs1.get(2).getValue());
+		
+		Assert.assertEquals("D", labs2.get(0).getValue());
+		Assert.assertEquals("E", labs2.get(1).getValue());
+		Assert.assertEquals("F", labs2.get(2).getValue());
+		
+		Assert.assertEquals("X", labs3.get(0).getValue());
+		Assert.assertEquals("Y", labs3.get(1).getValue());
+		Assert.assertEquals("Z", labs3.get(2).getValue());
+		
+	}
+	
+	@Test
+	public void B01640CommandSend2WrongViewModel(){
+		navigate(getTestCaseUrl("/bind/issue/B01640CommandSend2WrongViewModel.zul"));
+		Widget showChildBtn = findWidget("$showChildBtn");
+		showChildBtn.click();
+		
+		Widget lab = findWidget("$lab");
+		
+		Assert.assertEquals("initialized", lab.getValue());
+		
+		
+		Widget outerBtn = findWidget("$outerBtn");
+		outerBtn.click();
+		Assert.assertEquals("do outerGridCommand", lab.getValue());
+		
+		Widget innerBtn = findWidget("$innerBtn");
+		innerBtn.click();
+		Assert.assertEquals("do innerGridCommand A", lab.getValue());
+		
+	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
