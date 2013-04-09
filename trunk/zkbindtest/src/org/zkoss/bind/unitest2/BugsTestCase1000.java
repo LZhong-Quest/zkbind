@@ -977,5 +977,61 @@ public class BugsTestCase1000 extends TestCaseBase{
 		Assert.assertEquals("do innerGridCommand A", lab.getValue());
 		
 	}
+	
+	@Test
+	public void B01666ToolbarbuttonCheck(){
+		navigate(getTestCaseUrl("/bind/issue/B01666ToolbarbuttonCheck.zul"));
+		Widget checkedLab = findWidget("$checkedLab");
+		Widget messageLab = findWidget("$messageLab");
+		Widget btn1 = findWidget("$btn1");
+		
+		btn1.click();
+		Assert.assertEquals("false", checkedLab.getValue());
+		Assert.assertEquals("checked false", messageLab.getValue());
+		
+		btn1.click();
+		Assert.assertEquals("true", checkedLab.getValue());
+		Assert.assertEquals("checked true", messageLab.getValue());
+		
+	}
+	
+	@Test
+	public void B01691DropuploadNative(){
+		navigate(getTestCaseUrl("/bind/issue/B01691DropuploadNative.zul"));
+		Widget lab1 = findWidget("$lab1");
+		Widget lab2 = findWidget("$lab2");
+		
+		Widget btn1 = findWidget("$btn1");
+		Widget btn2 = findWidget("$btn2");
+		
+		btn1.click();
+		Assert.assertEquals("true", lab1.getValue());
+		btn2.click();
+		Assert.assertEquals("native is true", lab2.getValue());
+		
+		btn1.click();
+		Assert.assertEquals("false", lab1.getValue());
+		btn2.click();
+		Assert.assertEquals("native is false", lab2.getValue());
+		
+	}
+	
+	@Test
+	public void B01699IncludeMultipleTimes(){
+		navigate(getTestCaseUrl("/bind/issue/B01699IncludeMultipleTimes.zul"));
+		Widget lab1 = findWidget("$lb1");
+		Widget lab2 = findWidget("$lb2");
+		Widget btn = findWidget("$btn");
+		
+		Assert.assertEquals("Foo_1", lab1.getValue());
+		Assert.assertEquals("Bar_1", lab2.getValue());
+		btn.click();
+		
+		lab1 = findWidget("$lb1");
+		lab2 = findWidget("$lb2");
+		Assert.assertEquals("FOO_1", lab1.getValue());
+		Assert.assertEquals("BAR_1", lab2.getValue());
+		
+	}
 }
 
