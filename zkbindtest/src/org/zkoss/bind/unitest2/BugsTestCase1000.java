@@ -1033,5 +1033,16 @@ public class BugsTestCase1000 extends TestCaseBase{
 		Assert.assertEquals("BAR_1", lab2.getValue());
 		
 	}
+	
+	@Test
+	public void B01791GlobalCommand(){
+		navigate(getTestCaseUrl("/bind/issue/B01791GlobalCommand.zul"));
+		Widget lab1 = findWidget("$lb1");
+		Widget btn = findWidget("$btn1");
+		
+		btn.click();
+		
+		Assert.assertEquals("global: onClick, global", lab1.getValue());	
+	}
 }
 
