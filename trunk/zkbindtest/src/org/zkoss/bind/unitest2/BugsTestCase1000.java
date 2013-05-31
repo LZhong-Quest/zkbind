@@ -1044,5 +1044,205 @@ public class BugsTestCase1000 extends TestCaseBase{
 		
 		Assert.assertEquals("global: onClick, global", lab1.getValue());	
 	}
+	
+	@Test
+	public void B01787NotifyChangeChildren(){
+		//don't reuse this, data might different
+		String[] btns = new String[]{null,"$updatePath","$updateA","$updateAName","$updateB","$updateBName"};
+		String answer[][] = new String[][]{
+			{"Item A:1","Item B:1","Item A:1","Item B:1"},//children binding load 2 twice at the init
+			{"Item A:2","Item B:2","Item A:2","Item B:2"},
+			{"Item A.*:x:0","Item B:2","Item A.*:0","Item B:1"},
+			{"Item A.name:0","Item B:1","Item A.name:0","Item B:1"},
+			{"Item A:2","Item B.*:x:0","Item A:1","Item B.*:0"},
+			{"Item A:1","Item B.name:0","Item A:1","Item B.name:0"},
+		};
+		
+		
+		for(int i=0;i<btns.length;i++){
+			navigate(getTestCaseUrl("/bind/issue/B01787NotifyChangeChildren.zul"));
+			if(btns[i]!=null){
+				findWidget(btns[i]).click();
+			}
+			List<Widget> comp1s = findWidgets("$comp1 @label");
+			Assert.assertEquals(2, comp1s.size());
+			Assert.assertEquals(answer[i][0], comp1s.get(0).getValue());
+			Assert.assertEquals(answer[i][1], comp1s.get(1).getValue());
+			List<Widget> box1s = findWidgets("$box1 @label");
+			Assert.assertEquals(2, box1s.size());
+			Assert.assertEquals(answer[i][2], box1s.get(0).getValue());
+			Assert.assertEquals(answer[i][3], box1s.get(1).getValue());
+		}	
+	}
+	
+	@Test
+	public void B01787NotifyChangeListbox(){
+		//don't reuse this, data might different
+		String[] btns = new String[]{null,"$updatePath","$updateA","$updateAName","$updateB","$updateBName"};
+		String answer[][] = new String[][]{
+			{"Item A:0","Item B:0","Item A:1","Item B:1"},//children binding load 2 twice at the init
+			{"Item A:1","Item B:1","Item A:2","Item B:2"},
+			{"Item A.*:x:0","Item B:1","Item A.*:0","Item B:1"},
+			{"Item A.name:0","Item B:0","Item A.name:0","Item B:1"},
+			{"Item A:1","Item B.*:x:0","Item A:1","Item B.*:0"},
+			{"Item A:0","Item B.name:0","Item A:1","Item B.name:0"},
+		};
+		
+		
+		for(int i=0;i<btns.length;i++){
+			navigate(getTestCaseUrl("/bind/issue/B01787NotifyChangeListbox.zul"));
+			if(btns[i]!=null){
+				findWidget(btns[i]).click();
+			}
+			List<Widget> comp1s = findWidgets("$listbox @listitem");
+			Assert.assertEquals(2, comp1s.size());
+			Assert.assertEquals(answer[i][0], comp1s.get(0).getLabel());
+			Assert.assertEquals(answer[i][1], comp1s.get(1).getLabel());
+			List<Widget> box1s = findWidgets("$box1 @label");
+			Assert.assertEquals(2, box1s.size());
+			Assert.assertEquals(answer[i][2], box1s.get(0).getValue());
+			Assert.assertEquals(answer[i][3], box1s.get(1).getValue());
+		}	
+	}
+	
+	@Test
+	public void B01787NotifyChangeGrid(){
+		String[] btns = new String[]{null,"$updatePath","$updateA","$updateAName","$updateB","$updateBName"};
+		//don't reuse this, data might different
+		String answer[][] = new String[][]{
+			{"Item A:0","Item B:0","Item A:1","Item B:1"},//children binding load 2 twice at the init
+			{"Item A:1","Item B:1","Item A:2","Item B:2"},
+			{"Item A.*:x:0","Item B:1","Item A.*:0","Item B:1"},
+			{"Item A.name:0","Item B:0","Item A.name:0","Item B:1"},
+			{"Item A:1","Item B.*:x:0","Item A:1","Item B.*:0"},
+			{"Item A:0","Item B.name:0","Item A:1","Item B.name:0"},
+		};
+		
+		
+		for(int i=0;i<btns.length;i++){
+			navigate(getTestCaseUrl("/bind/issue/B01787NotifyChangeGrid.zul"));
+			if(btns[i]!=null){
+				findWidget(btns[i]).click();
+			}
+			List<Widget> comp1s = findWidgets("$grid @label");
+			Assert.assertEquals(2, comp1s.size());
+			Assert.assertEquals(answer[i][0], comp1s.get(0).getValue());
+			Assert.assertEquals(answer[i][1], comp1s.get(1).getValue());
+			List<Widget> box1s = findWidgets("$box1 @label");
+			Assert.assertEquals(2, box1s.size());
+			Assert.assertEquals(answer[i][2], box1s.get(0).getValue());
+			Assert.assertEquals(answer[i][3], box1s.get(1).getValue());
+		}	
+	}
+
+	@Test
+	public void B01787NotifyChangeCombobox(){
+		String[] btns = new String[]{null,"$updatePath","$updateA","$updateAName","$updateB","$updateBName"};
+		//don't reuse this, data might different
+		String answer[][] = new String[][]{
+			{"Item A:0","Item B:0","Item A:1","Item B:1"},//children binding load 2 twice at the init
+			{"Item A:1","Item B:1","Item A:2","Item B:2"},
+			{"Item A.*:x:0","Item B:1","Item A.*:0","Item B:1"},
+			{"Item A.name:0","Item B:0","Item A.name:0","Item B:1"},
+			{"Item A:1","Item B.*:x:0","Item A:1","Item B.*:0"},
+			{"Item A:0","Item B.name:0","Item A:1","Item B.name:0"},
+		};
+		
+		
+		for(int i=0;i<btns.length;i++){
+			navigate(getTestCaseUrl("/bind/issue/B01787NotifyChangeCombobox.zul"));
+			if(btns[i]!=null){
+				findWidget(btns[i]).click();
+			}
+			findWidget("$combobox").call("open");
+			List<Widget> comp1s = findWidgets("$combobox @comboitem");
+			Assert.assertEquals(2, comp1s.size());
+			Assert.assertEquals(answer[i][0], comp1s.get(0).getLabel());
+			Assert.assertEquals(answer[i][1], comp1s.get(1).getLabel());
+			List<Widget> box1s = findWidgets("$box1 @label");
+			Assert.assertEquals(2, box1s.size());
+			Assert.assertEquals(answer[i][2], box1s.get(0).getValue());
+			Assert.assertEquals(answer[i][3], box1s.get(1).getValue());
+		}	
+	}
+	
+	@Test
+	public void B01787NotifyChangeRadiogroup(){  
+		String[] btns = new String[]{null,"$updatePath","$updateA","$updateAName","$updateB","$updateBName"};
+		//don't reuse this, data might different
+		String answer[][] = new String[][]{
+			{"Item A:0","Item B:0","Item A:1","Item B:1"},//children binding load 2 twice at the init
+			{"Item A:1","Item B:1","Item A:2","Item B:2"},
+			{"Item A.*:x:0","Item B:1","Item A.*:0","Item B:1"},
+			{"Item A.name:0","Item B:0","Item A.name:0","Item B:1"},
+			{"Item A:1","Item B.*:x:0","Item A:1","Item B.*:0"},
+			{"Item A:0","Item B.name:0","Item A:1","Item B.name:0"},
+		};
+		
+		
+		for(int i=0;i<btns.length;i++){
+			navigate(getTestCaseUrl("/bind/issue/B01787NotifyChangeRadiogroup.zul"));
+			if(btns[i]!=null){
+				findWidget(btns[i]).click();
+			}
+			List<Widget> comp1s = findWidgets("$radiogroup @radio");
+			Assert.assertEquals(2, comp1s.size());
+			Assert.assertEquals(answer[i][0], comp1s.get(0).getLabel());
+			Assert.assertEquals(answer[i][1], comp1s.get(1).getLabel());
+			List<Widget> box1s = findWidgets("$box1 @label");
+			Assert.assertEquals(2, box1s.size());
+			Assert.assertEquals(answer[i][2], box1s.get(0).getValue());
+			Assert.assertEquals(answer[i][3], box1s.get(1).getValue());
+		}	
+	}
+	
+	@Test
+	public void B01787NotifyChangeTree(){  
+		String[] btns = new String[]{null,"$updatePath","$updateA","$updateAName","$updateB","$updateBName"};
+		//don't reuse this, data might different
+		String answer[][] = new String[][]{
+			{"Item A:0","Item A1:0","Item A2:0","Item B:0","Item B1:0","Item B2:0","Item A:1","Item B:1"},//children binding load 2 twice at the init
+			{"Item A:1","Item A1:0","Item A2:0","Item B:1","Item B1:0","Item B2:0","Item A:2","Item B:2"},
+			{"Item A.*:x:0","Item A1:1","Item A2:1","Item B:1","Item B1:1","Item B2:1","Item A.*:0","Item B:1"},
+			{"Item A.name:0","Item A1:0","Item A2:0","Item B:0","Item B1:0","Item B2:0","Item A.name:0","Item B:1"},
+			{"Item A:1","Item A1:1","Item A2:1","Item B.*:x:0","Item B1:1","Item B2:1","Item A:1","Item B.*:0"},
+			{"Item A:0","Item A1:0","Item A2:0","Item B.name:0","Item B1:0","Item B2:0","Item A:1","Item B.name:0"},
+		};
+		
+		
+		for(int i=0;i<btns.length;i++){
+			navigate(getTestCaseUrl("/bind/issue/B01787NotifyChangeTree.zul"));
+			if(btns[i]!=null){
+				findWidget(btns[i]).click();
+			}
+			
+			List<Widget> comp1s = findWidgets("$tree @treecell");
+			Assert.assertEquals(6, comp1s.size());
+			Assert.assertEquals(answer[i][0], comp1s.get(0).getLabel());
+			Assert.assertEquals(answer[i][1], comp1s.get(1).getLabel());
+			Assert.assertEquals(answer[i][2], comp1s.get(2).getLabel());
+			Assert.assertEquals(answer[i][3], comp1s.get(3).getLabel());
+			Assert.assertEquals(answer[i][4], comp1s.get(4).getLabel());
+			Assert.assertEquals(answer[i][5], comp1s.get(5).getLabel());
+			List<Widget> box1s = findWidgets("$box1 @label");
+			Assert.assertEquals(2, box1s.size());
+			Assert.assertEquals(answer[i][6], box1s.get(0).getValue());
+			Assert.assertEquals(answer[i][7], box1s.get(1).getValue());
+		}	
+	}
+	
+	@Test
+	public void B01795NestedTemplate(){
+		navigate(getTestCaseUrl("/bind/issue/B01795NestedTemplate.zul"));
+		List<Widget> box1s = findWidgets("@grid @label");
+		Assert.assertEquals(6, box1s.size());
+		Assert.assertEquals("[AJAX]", box1s.get(0).getValue());
+		Assert.assertEquals("[AJAX]", box1s.get(1).getValue());
+		Assert.assertEquals("[AJAX]", box1s.get(2).getValue());
+		Assert.assertEquals("[Java, C]", box1s.get(3).getValue());
+		Assert.assertEquals("[Java, C]", box1s.get(4).getValue());
+		Assert.assertEquals("[Java, C]", box1s.get(5).getValue());
+	}
+	
 }
 
