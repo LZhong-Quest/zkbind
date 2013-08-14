@@ -1244,5 +1244,19 @@ public class BugsTestCase1000 extends TestCaseBase{
 		Assert.assertEquals("[Java, C]", box1s.get(5).getValue());
 	}
 	
+	@Test
+	public void B01887DetachAttach(){
+		navigate(getTestCaseUrl("/bind/issue/B01887DetachAttach.zul"));
+		Assert.assertEquals("/bind/issue/B01887DetachAttachInner1.zul", findWidget("$lab1").getValue());;
+		Assert.assertNull(findWidget("$lab2"));
+		
+		findWidget("$btn2").click();
+		Assert.assertEquals("/bind/issue/B01887DetachAttachInner2.zul", findWidget("$lab2").getValue());;
+		Assert.assertNull(findWidget("$lab1"));
+		
+		findWidget("$btn1").click();
+		Assert.assertEquals("/bind/issue/B01887DetachAttachInner1.zul", findWidget("$lab1").getValue());;
+		Assert.assertNull(findWidget("$lab2"));
+	}
 }
 
